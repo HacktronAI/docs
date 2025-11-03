@@ -1,0 +1,35 @@
+---
+title: "Shell commands"
+description: "Enter shell mode, or allow Hacktron to run shell commands"
+---
+
+## Shell mode
+
+When in an interactive session, you can enter shell mode by typing `!`.
+
+Once in shell mode, you can run shell commands by typing them directly.
+
+```bash
+whoami
+```
+
+To exit shell mode, press the `ESC` key.
+
+## Execution modes
+
+The CLI can run commands on behalf of the AI agent.
+
+To allow Hacktron to run commands, run the CLI with the `--insecure` flag.
+
+```bash
+hacktron --insecure
+```
+
+Each command will still require your explicit approval.
+
+To run commands automatically without approval, run the CLI with the `--auto-exec` flag.
+Note that this is dangerous and should only be used if you trust the codebase, or are running in a secure environment.
+
+```bash
+hacktron --auto-exec
+```

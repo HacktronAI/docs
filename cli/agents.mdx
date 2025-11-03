@@ -1,0 +1,38 @@
+---
+title: "Agents"
+description: "Use powerful agents based on elite security knowledge"
+---
+
+## What are Agent Packs?
+
+Hacktron Agent Packs are collections of powerful agents designed to identify specific types of vulnerabilities. 
+They rely on Hacktron's proprietary knowledge base, with contributions from our world-class security researchers.
+
+## Using Agent Packs
+
+When you give Hacktron a task in an interactive session, it will automatically find and use the most appropriate agents to perform the task.
+However, you can also specify agent packs, such as `react`, which will run a collection of agents to find vulnerabilities in React applications.
+
+This is useful if you know what technologies you are using, or want to focus on a specific type of vulnerability.
+
+To see the list of available agent packs, run:
+
+```bash
+hacktron agent list --public
+```
+
+To run a specific agent pack, specify its name after the `--agents` flag:
+
+```bash
+hacktron --agents react
+```
+
+## Personal Agents
+
+Hacktron learns from collaborating with you and automatically creates personal agents customised to your codebase.
+
+These agents are dynamically created when you use Hacktron. You can see a list of your personal agents by running:
+
+```bash
+hacktron agent list --my-agents
+```

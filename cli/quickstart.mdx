@@ -1,0 +1,92 @@
+---
+title: "Quickstart"
+description: "Get started with the Hacktron CLI in under 5 minutes"
+---
+
+## Before you begin
+
+Make sure you have:
+
+- A terminal open
+- An account on the [Hacktron Platform](https://app.hacktron.ai)
+
+## Get started in three steps
+
+<Steps>
+  <Step title="Install the Hacktron CLI">
+
+<Warning>
+  If you are on Windows, you need to use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
+</Warning>
+
+```bash
+curl -fsSL https://cli.hacktron.ai/install.sh | bash
+```
+
+  </Step>
+  <Step title="Verify installation">
+    ```bash
+    hacktron --version
+    ```
+  </Step>
+  <Step title="Login to your account">
+    The Hacktron CLI requires an account on the [Hacktron Platform](https://app.hacktron.ai).
+    You only need to login once, and the CLI will remember your credentials.
+
+    ```bash
+    hacktron login
+    ```
+  </Step>
+</Steps>
+
+## Start your first session
+
+Open your terminal in any directory containing code you want to scan, and start the Hacktron CLI.
+
+```bash
+cd /path/to/your/project
+hacktron
+```
+
+<Card img="/images/cli_home.png">
+  You'll see the welcome screen with a list of available commands.
+</Card>
+
+## Give your first task
+
+You are now in an interactive session. Try one of these commands:
+
+```text
+Check for XSS vulnerabilities
+```
+
+Hacktron will analyse the codebase and perform a vulnerability scan, using taint analysis to find potential vulnerabilities.
+
+You can also ask more general questions to understand the codebase.
+
+```text
+What technologies does this project use?
+```
+
+```text
+What are the API endpoints?
+```
+
+## What's next?
+
+Explore more advanced features:
+
+<Columns cols={2}>
+  <Card title="Agents" icon="robot" href="/cli/agents">
+    Learn how to use agents in the CLI.
+  </Card>
+  <Card title="Shell commands" icon="terminal" href="/cli/shell">
+    Learn how to use shell commands in the CLI.
+  </Card>
+</Columns>
+
+You can use the `/help` command at any time within an interactive session to get more information on how to use the CLI.
+
+```text
+/help
+```
