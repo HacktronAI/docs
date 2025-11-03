@@ -11,7 +11,7 @@ They rely on Hacktron's proprietary knowledge base, with contributions from our 
 ## Using Agent Packs
 
 When you give Hacktron a task in an interactive session, it will automatically find and use the most appropriate agents to perform the task.
-However, you can also specify agent packs, such as `react`, which will run a collection of agents to find vulnerabilities in React applications.
+However, you can also specify agent packs explicitly. For example, the `react` agent pack will run a collection of agents to find vulnerabilities in React applications.
 
 This is useful if you know what technologies you are using, or want to focus on a specific type of vulnerability.
 
@@ -21,10 +21,10 @@ To see the list of available agent packs, run:
 hacktron agent list --public
 ```
 
-To run a specific agent pack, specify its name after the `--agents` flag:
+To run a specific agent pack, specify its name after the `--agent` flag:
 
 ```bash
-hacktron --agents react
+hacktron --agent react
 ```
 
 ## Personal Agents
@@ -35,4 +35,10 @@ These agents are dynamically created when you use Hacktron. You can see a list o
 
 ```bash
 hacktron agent list --my-agents
+```
+
+To run a specific personal agent, specify its name after the `--my-agent` flag:
+
+```bash
+hacktron --my-agent my-agent-name
 ```

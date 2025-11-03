@@ -1,0 +1,50 @@
+---
+title: "Overview"
+description: "The Hacktron CLI is an agentic security tool that lives in your terminal."
+---
+
+Find out why security researchers and engineers love the Hacktron CLI.
+
+<Card title="Quickstart" icon="rocket" href="/cli/quickstart" horizontal>
+  Get started with the Hacktron CLI in under 5 minutes.
+</Card>
+
+
+## Agent Packs
+
+Agent packs are collections of agents for specific technologies or types of vulnerabilities.
+
+Hacktron's community agents are available to all users and are continually updated to keep up to date with the latest vulnerabilities and security research.
+
+<AccordionGroup>
+  <Accordion title="Community agents" icon="globe">
+    We continually perform security research, finding zero-day vulnerabilities in products like **ChatGPT Atlas, Perplexity's Comet Browser, Windsurf, and Lovable**.
+
+    Beyond standard vulnerability patterns, we synthesise our novel findings into agent packs that can be used to find similar vulnerabilities in your codebase.
+
+    This ensures that Hacktron can find **variants of real vulnerabilities that top engineering teams have missed**.
+  </Accordion>
+
+    <Accordion title="Personal agents" icon="user">
+    Hacktron **learns from collaborating with you** and automatically creates personal agents customised to your codebase.
+
+    These agents are dynamically created when you use Hacktron, and are **private to you**.
+  </Accordion>
+</AccordionGroup>
+
+## Actionable Findings
+
+The CLI stores all findings securely in your local filesystem.
+
+<Card img="/images/cli_finding.png">
+  All findings are **validated**, and come with **code snippets, proof-of-concept exploits, and remediation steps**.
+</Card>
+
+## Takes Action
+
+<Warning>
+  Needs to be explicitly enabled with the `--insecure` flag. Only use this if you trust the codebase, or are running in a secure environment.
+</Warning>
+
+Hacktron's agents can **directly read files, run commands, and write exploit scripts**.
+It works directly in your terminal, and you can also run your own shell commands while interacting with the CLI.

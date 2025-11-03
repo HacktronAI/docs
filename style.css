@@ -1,3 +1,4 @@
-#topbar-cta-button * {
+.bg-primary-dark,
+.bg-primary-dark * {
   color: #121212;
 }

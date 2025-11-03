@@ -3,7 +3,7 @@
   "theme": "almond",
   "name": "Hacktron Docs",
   "colors": {
-    "primary": "#FDF6E3",
+    "primary": "#060000",
     "light": "#FDF6E3",
     "dark": "#FDF6E3"
   },
@@ -19,15 +19,21 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Documentation",
+        "tab": "Home",
         "groups": [
           {
             "group": "Getting started",
             "pages": ["index"]
-          },
+          }
+        ]
+      },
+      {
+        "tab": "CLI Documentation",
+        "groups": [
           {
             "group": "CLI",
             "pages": [
+              "cli/overview",
               "cli/quickstart",
               "cli/agents",
               "cli/shell",
@@ -48,6 +54,11 @@
           "anchor": "Community",
           "href": "https://discord.gg/eRHCHsvDKh",
           "icon": "discord"
+        },
+        {
+          "anchor": "Trust Center",
+          "href": "https://trust.hacktron.ai",
+          "icon": "shield"
         }
       ]
     }
@@ -56,6 +67,10 @@
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
   },
+  "thumbnails": {
+    "appearance": "dark"
+  },
+  "background": {},
   "navbar": {
     "links": [
       {
