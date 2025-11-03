@@ -1,43 +1,120 @@
-# Mintlify Starter Kit
+# Hacktron Documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+Welcome to the Hacktron documentation repository! This repository contains the [official documentation](https://docs.hacktron.ai) for Hacktron, powered by [Mintlify](https://mintlify.com/).
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+Before contributing, please read this document carefully to understand our documentation standards and contribution process.
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+## Contributing
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+We welcome contributions from the community to improve our documentation, e.g. fixing typos, adding examples, or expanding explanations. To contribute, please follow these steps:
 
-## Development
+1. Fork this repository
+2. Create a new branch for your changes
+3. Make your changes in the appropriate `.mdx` files
+4. Test your changes locally
+5. Submit a pull request describing your changes
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
+### Prerequisites
 
+* Node.js 18 or higher
+
+* Git
+
+* A code editor (we recommend VS Code with MDX extension)
+
+### Local Development
+
+1. Start the development server:
+
+```bash
+mintlify dev
 ```
-npm i -g mint
+
+1. Visit `http://localhost:3000` to preview changes
+
+2. Make changes to `.mdx` files and see them live-reload
+
+### Environment Setup
+
+For VS Code users, we recommend installing these extensions:
+
+* MDX
+
+* Prettier
+
+* Tailwind CSS IntelliSense
+
+## Writing Guidelines
+
+### Document Structure
+
+Each document should follow this structure:
+
+```mdx
+---
+title: 'Document Title'
+description: 'A brief description of the content'
+---
+
+## Overview
+
+Brief introduction to the topic.
+
+## Main Content
+
+Your primary content sections.
+
+## Related
+- Link to related doc 1
+- Link to related doc 2
 ```
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
+### Component Usage
 
+Use Mintlify components to enhance documentation:
+
+```mdx
+<Tabs>
+  <Tab title="Example 1">
+    Content for example 1
+  </Tab>
+  <Tab title="Example 2">
+    Content for example 2
+  </Tab>
+</Tabs>
+
+<Steps>
+  <Step title="First Step">
+    Instructions for first step
+  </Step>
+</Steps>
+
+<Card>
+  Important information here
+</Card>
 ```
-mint dev
+
+### Code Examples
+
+* Use syntax highlighting
+
+* Include comments and write idiomatic code
+
+* Keep examples concise
+
+* Test all code examples
+
+Good example:
+
+```python
+def greet(name):
+    """Return a greeting message."""
+    return f"Hello, {name}!"
 ```
 
-View your local preview at `http://localhost:3000`.
+Bad example:
 
-## Publishing changes
-
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
-
-## Need help?
-
-### Troubleshooting
-
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
-
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+```python
+def greet(name):
+    return "Hello, " + name
+```
