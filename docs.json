@@ -15,6 +15,10 @@
       "family": "Titillium Web"
     }
   },
+  "banner": {
+    "content": "🚀 The Hacktron CLI is now in private beta. Get early access by [joining the waitlist](https://app.hacktron.ai).",
+    "dismissible": true
+  },
   "favicon": "/favicon.png",
   "navigation": {
     "tabs": [
@@ -24,6 +28,10 @@
           {
             "group": "Getting started",
             "pages": ["index"]
+          },
+          {
+            "group": "Resources",
+            "pages": ["privacy", "security"]
           }
         ]
       },
@@ -31,14 +39,12 @@
         "tab": "CLI Documentation",
         "groups": [
           {
-            "group": "CLI",
-            "pages": [
-              "cli/overview",
-              "cli/quickstart",
-              "cli/agents",
-              "cli/shell",
-              "cli/changelog"
-            ]
+            "group": "Getting started",
+            "pages": ["cli/overview", "cli/quickstart"]
+          },
+          {
+            "group": "Reference",
+            "pages": ["cli/agents", "cli/shell"]
           }
         ]
       }
