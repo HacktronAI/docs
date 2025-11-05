@@ -1,0 +1,10 @@
+export const PromptInjectionWarning = () => {
+  return (
+    <Warning>
+      This makes your system vulnerable to <Tooltip
+        tip="An attacker may construct a codebase that appears legitimate, but is designed to cause our agents to execute malicious commands when auditing it."
+      >prompt injection</Tooltip>.
+      Only use this if you trust the codebase, or are running in a secure environment.
+    </Warning>
+  )
+}

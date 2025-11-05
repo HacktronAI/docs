@@ -3,6 +3,8 @@ title: "Overview"
 description: "The Hacktron CLI is an agentic security tool that lives in your terminal."
 ---
 
+import { PromptInjectionWarning } from "/snippets/prompt-injection-warning.mdx";
+
 Find out why security researchers and engineers love the Hacktron CLI.
 
 <Card title="Quickstart" icon="rocket" href="/cli/quickstart" horizontal>
@@ -32,6 +34,8 @@ Hacktron's community agents are available to all users and are continually updat
   </Accordion>
 </AccordionGroup>
 
+Learn more about agent packs [here](/cli/agents).
+
 ## Actionable Findings
 
 The CLI stores all findings securely in your local filesystem.
@@ -42,9 +46,9 @@ The CLI stores all findings securely in your local filesystem.
 
 ## Takes Action
 
-<Warning>
-  Needs to be explicitly enabled with the `--insecure` flag. Only use this if you trust the codebase, or are running in a secure environment.
-</Warning>
+<PromptInjectionWarning />
 
 Hacktron's agents can **directly read files, run commands, and write exploit scripts**.
 It works directly in your terminal, and you can also run your own shell commands while interacting with the CLI.
+
+Learn more about shell commands [here](/cli/shell).

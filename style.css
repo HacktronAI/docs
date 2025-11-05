@@ -2,3 +2,9 @@
 .bg-primary-dark * {
   color: #060000 !important;
 }
+
+.dark
+  .prose
+  :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  border-bottom: 1px solid rgb(var(--primary-dark)) !important;
+}

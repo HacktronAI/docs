@@ -3,6 +3,8 @@ title: "Shell commands"
 description: "Enter shell mode, or allow Hacktron to run shell commands"
 ---
 
+import { PromptInjectionWarning } from "/snippets/prompt-injection-warning.mdx";
+
 ## Shell mode
 
 When in an interactive session, you can enter shell mode by typing `!`.
@@ -17,6 +19,8 @@ To exit shell mode, press the `ESC` key.
 
 ## Execution modes
 
+<PromptInjectionWarning />
+
 The CLI can run commands on behalf of the AI agent.
 
 To allow Hacktron to run commands, run the CLI with the `--insecure` flag.
@@ -27,9 +31,8 @@ hacktron --insecure
 
 Each command will still require your explicit approval.
 
-To run commands automatically without approval, run the CLI with the `--auto-exec` flag.
-Note that this is dangerous and should only be used if you trust the codebase, or are running in a secure environment.
+To run commands automatically without approval, you can run the CLI with the `--auto-exec` flag.
 
 ```bash
-hacktron --auto-exec
+hacktron --insecure --auto-exec
 ```
