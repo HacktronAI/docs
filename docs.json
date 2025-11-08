@@ -45,6 +45,10 @@
           {
             "group": "Reference",
             "pages": ["cli/agents", "cli/shell"]
+          },
+          {
+            "group": "Resources",
+            "pages": ["cli/changelog"]
           }
         ]
       }
