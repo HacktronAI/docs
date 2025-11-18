@@ -25,10 +25,16 @@ To see the list of available agent packs, run:
 hacktron agent list --public
 ```
 
-To run a specific agent pack, specify its name after the `--agent` flag:
+To run a specific agent pack, specify its name after the `agent pack` command:
 
 ```bash
-hacktron --agent react
+hacktron agent pack react
+```
+
+You can also provide your task directly instead of typing it in the interactive session.
+
+```bash
+hacktron agent pack react task "Check for XSS vulnerabilities in my-component.jsx"
 ```
 
 ## Personal Agents
@@ -38,11 +44,11 @@ Hacktron learns from collaborating with you and automatically creates personal a
 These agents are dynamically created when you use Hacktron. You can see a list of your personal agents by running:
 
 ```bash
-hacktron agent list --my-agents
+hacktron agent list --personal
 ```
 
-To run a specific personal agent, specify its name after the `--my-agent` flag:
+To run a specific personal agent, specify its name after the `--personal` flag:
 
 ```bash
-hacktron --my-agent my-agent-name
+hacktron agent --personal my-agent-name
 ```
