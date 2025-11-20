@@ -44,7 +44,7 @@
           },
           {
             "group": "Reference",
-            "pages": ["cli/agents", "cli/shell"]
+            "pages": ["cli/agents", "cli/sessions", "cli/shell"]
           },
           {
             "group": "Resources",

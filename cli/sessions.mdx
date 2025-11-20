@@ -1,0 +1,52 @@
+---
+title: "Sessions"
+description: "Pick up where you left off by restoring previous sessions"
+---
+
+## What are sessions?
+
+Sessions are automatically saved when you exit the CLI and can be restored to continue where you left off.
+
+You can see a list of your saved sessions by running:
+
+```bash
+hacktron sessions list
+```
+
+This will output a list of your saved sessions, including the pack name, run ID, and last updated time.
+
+```text
+Saved Sessions
+
+• my-agent-name
+  Pack: my-agent-name
+  Run ID: <run-id> | Messages: 100 | Updated: 1 hour ago
+
+• tui-session-1763477833405643777
+  Interactive session - test
+  Run ID: <run-id> | Messages: 200 | Updated: 1 day ago
+```
+
+## Restoring Sessions
+
+You can restore a session by providing the run ID:
+
+```bash
+hacktron sessions restore tui-session-1763476909486569264
+```
+
+This will restore all messages from the session, and you can continue the conversation from there.
+
+## Managing Sessions
+
+To delete a specific session, run:
+
+```bash
+hacktron sessions delete tui-session-1763476909486569264
+```
+
+You can also clean up your sessions by deleting all sessions older than a certain number of days.
+For example, to delete all sessions older than 30 days, run:
+
+```bash
+hacktron sessions clean --days 30
