@@ -3,19 +3,37 @@ title: "Agents"
 description: "Use powerful agents based on elite security knowledge"
 ---
 
-## What are Agent Packs?
+## What are Agents?
 
-Hacktron Agent Packs are collections of powerful agents designed to identify specific types of vulnerabilities. 
+Hacktron comes with a collection of powerful agents designed to identify specific types of vulnerabilities in your codebase. 
 They rely on Hacktron's proprietary knowledge base, with contributions from our world-class security researchers.
 
-In addition, Hacktron learns from collaborating with you and automatically creates personal agents customised to your codebase.
+In addition, Hacktron learns from collaborating with you and automatically creates agents customised to your codebase
+where there lacks relevant coverage in our knowledge base. This helps Hacktron improve over time as it learns from your
+codebase.
 
-![Agent Packs](/images/agent_packs.svg)
+![Agents](/images/agent_packs.svg)
 
-## Using Agent Packs
 
-When you give Hacktron a task in an interactive session, it will automatically find and use the most appropriate agents to perform the task.
-However, you can also specify agent packs explicitly. For example, the `react` agent pack will run a collection of agents to find vulnerabilities in React applications.
+## Dynamic Agent Discovery
+
+When you give Hacktron a security audit task in an interactive session, it enters deep vulnerability research mode and 
+automatically finds and uses the most appropriate agents to perform the task. At a high level, Hacktron will:
+
+- Fetch relevant agents from our knowledge base
+- Create AI-suggested agents which are not in the knowledge base and will be dynamically created
+
+to create a vulnerability scanning plan. Each agent will be run in sequence, and the results will be aggregated for you
+to review via the `hacktron findings list` command.
+
+<Card img="/images/dynamic_agents.png">
+  Select which patterns you want to keep and which you want to discard, and edit the AI-suggested patterns to your liking.
+</Card>
+
+## Agent Packs
+
+You can also specify agent packs explicitly. For example, the `react` agent pack will run a collection of agents
+to find vulnerabilities in React applications.
 
 This is useful if you know what technologies you are using, or want to focus on a specific type of vulnerability.
 
@@ -39,9 +57,11 @@ hacktron agent pack react task "Check for XSS vulnerabilities in my-component.js
 
 ## Personal Agents
 
-Hacktron learns from collaborating with you and automatically creates personal agents customised to your codebase.
+Hacktron learns from collaborating with you and automatically creates agents customised to your codebase where
+there lacks relevant coverage in our knowledge base.
 
-These agents are dynamically created when you use Hacktron. You can see a list of your personal agents by running:
+These agents are dynamically created when you use Hacktron and are **private to you**.
+You can see a list of your personal agents by running:
 
 ```bash
 hacktron agent pack list --personal
