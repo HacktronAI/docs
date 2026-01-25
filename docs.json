@@ -16,7 +16,7 @@
     }
   },
   "banner": {
-    "content": "🚀 The Hacktron CLI is now in private beta. Get early access by [joining the waitlist](https://app.hacktron.ai).",
+    "content": "🚀 The Hacktron CLI is now in beta. Start for free [here](https://app.hacktron.ai).",
     "dismissible": true
   },
   "favicon": "/favicon.png",
