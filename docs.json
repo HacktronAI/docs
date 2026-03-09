@@ -16,7 +16,7 @@
     }
   },
   "banner": {
-    "content": "🚀 Hacktron Workbench is now in beta. Start for free [here](https://app.hacktron.ai).",
+    "content": "New: Explore the [Hacktron Platform](/platform/overview) for org-wide setup, reviews, billing, and pentests.",
     "dismissible": true
   },
   "favicon": "/favicon.png",
@@ -32,6 +32,20 @@
           {
             "group": "Resources",
             "pages": ["privacy", "security"]
+          }
+        ]
+      },
+      {
+        "tab": "Platform",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "platform/overview",
+              "platform/code-reviews",
+              "platform/billing-access",
+              "platform/pentests"
+            ]
           }
         ]
       },
@@ -82,7 +96,7 @@
         {
           "anchor": "Trust Center",
           "href": "https://trust.hacktron.ai",
-          "icon": "shield"
+          "icon": "shield-halved"
         }
       ]
     }

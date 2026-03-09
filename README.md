@@ -16,7 +16,7 @@ We welcome contributions from the community to improve our documentation, e.g. f
 
 ### Prerequisites
 
-* Node.js 18 or higher
+* Node.js 24
 
 * Git
 
@@ -24,15 +24,21 @@ We welcome contributions from the community to improve our documentation, e.g. f
 
 ### Local Development
 
-1. Start the development server:
+1. Install dependencies:
 
 ```bash
-mintlify dev
+pnpm install
 ```
 
-1. Visit `http://localhost:3000` to preview changes
+2. Start the development server:
 
-2. Make changes to `.mdx` files and see them live-reload
+```bash
+pnpm dev
+```
+
+3. Visit `http://localhost:3000` to preview changes
+
+4. Make changes to `.mdx` files and see them live-reload
 
 ### Environment Setup
 

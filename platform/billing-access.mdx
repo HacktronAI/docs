@@ -1,0 +1,128 @@
+---
+title: "Billing & Access"
+description: "Understand seats, roles, trials, credits, and organization access in the Hacktron Platform."
+---
+
+This page explains two things that are easy to confuse in the Platform: who has access, and what your organization is paying for.
+
+<Card img="/images/platform-people-dark.png">
+  Use **People** to manage who is in the organization and what access each person has.
+</Card>
+
+<Card img="/images/platform-billing-dark.png">
+  Use **Billing** to manage shared budgets, seats, and credits for your organization.
+</Card>
+
+## Start with the mental model
+
+Think of the Platform as two separate admin areas:
+
+- **People** controls access
+- **Billing** controls what your organization has purchased or can use
+
+That separation matters because a person can appear in your organization without having normal platform access, and someone can have platform access without using any paid product entitlement.
+
+## Roles decide what someone can do
+
+The RBAC model in the product docs has four org roles:
+
+- **Viewer**: read-only access to the organization, members, resources, and results
+- **Member**: can work with scans and findings
+- **Admin**: can manage members, seats, invitations, integrations, and org settings
+- **Owner**: handles billing, payment methods, ownership changes, org deletion, and pentest starts
+
+If you only need a practical rule of thumb:
+
+- **Viewers** can see what is happening
+- **Members** can do day-to-day security work
+- **Admins** can manage the team and product setup
+- **Owners** control money and organization-level changes
+
+## Seats decide what product access someone has
+
+Seats are separate from roles.
+
+- **Dev seat**: PR review coverage for code reviews
+- **Sec seat**: security workflow access such as CLI and broader platform usage tied to that entitlement
+- **Role**: normal platform permission level
+
+This means:
+
+- A developer can have a **Dev seat** without being able to sign into the Platform
+- A person can have a **role** without having code review or CLI access
+- A user needs a **Sec seat** for CLI access; role alone is not enough
+
+The RBAC doc is explicit that platform-only users are not charged unless they also hold a Dev seat or Sec seat.
+
+## Common access patterns
+
+These combinations are normal:
+
+- A developer opens PRs and gets reviewed, but never signs into the Platform
+- A billing owner manages payment and subscriptions, but does not use Workbench
+- A security engineer has normal platform access plus a Sec seat for CLI usage
+
+The Platform is designed to support those cases without forcing everyone into the same setup.
+
+## Trial and credits
+
+For new organizations, the PR review trial lasts **14 days** and starts when the GitHub App is installed on the organization.
+
+During the trial:
+
+- Dev seats auto-assign as PR activity comes in
+- There is no hard seat cap, but usage is limited to **200 PRs per seat**
+- The organization creator starts with **200 free credits**
+
+Once a paid Sec seat workflow is assigned, that free 200-credit allowance is removed. In practice, this lets a team start small, validate the flow, and then expand access deliberately.
+
+## What gets billed
+
+The current Billing page is split into:
+
+- **Seats plan**
+- **Pentest credits**
+- **CLI credits**
+
+For admins, the clearest way to think about billing is:
+
+- **Dev seats** affect code review billing
+- **Sec seats** affect Workbench-related entitlement
+- **Pentest credits** are shared across the organization
+- **Platform roles by themselves are not the thing being billed**
+
+For code reviews specifically, the Billing & Platform Access spec says billing is based on the **maximum seats used during the billing period**.
+
+## If you remove a seat
+
+The billing spec is very specific here:
+
+1. The seat becomes unassigned right away
+2. That seat can be reused by someone else during the current billing cycle
+3. The organization is still billed for the peak seats used in that cycle
+4. If the seat is not reused, it drops out of the next billing cycle
+
+This is meant to avoid wasting value in the current month while still making billing predictable.
+
+## Who can manage billing
+
+The RBAC doc splits billing actions by role:
+
+- **Viewer+** can view subscription details and credit balances
+- **Admin+** can access the seats tab and apply coupon codes
+- **Owner** configures payment methods, cancels or reactivates subscriptions, purchases pentest credits, and starts pentests
+
+## Pentest access
+
+Pentests use shared org-wide credits, and starting a pentest is currently limited to organization owners.
+
+If there are not enough pentest credits available, non-owners are prompted to ask an owner to top up credits. Owners can go directly to checkout for the difference instead of starting the pentest silently.
+
+<Columns cols={2}>
+  <Card title="Code Reviews" icon="code-pull-request" href="/platform/code-reviews">
+    Learn how code reviews get set up and where seats matter.
+  </Card>
+  <Card title="Pentests" icon="shield-halved" href="/platform/pentests">
+    Learn how pentest credits and permissions work.
+  </Card>
+</Columns>

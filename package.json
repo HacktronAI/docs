@@ -1,0 +1,14 @@
+{
+  "name": "@hacktron/docs",
+  "private": true,
+  "packageManager": "pnpm@10.29.3",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "dev": "mintlify dev"
+  },
+  "devDependencies": {
+    "mintlify": "4.2.417"
+  }
+}
