@@ -5,9 +5,9 @@ description: "Use the Hacktron Platform to manage integrations, reviews, access,
 
 The Hacktron Platform is the shared workspace for setting up Hacktron across your organization.
 
-Use it to connect your tools, choose which repositories Hacktron should watch, manage who has access, and run larger workflows like pentests.
+Start here if you need to connect GitHub, choose which repositories Hacktron should review, manage access, or handle billing and pentests for the organization.
 
-## See the onboarding flow
+## What you will see first
 
 <video controls playsInline muted style={{ width: "100%", borderRadius: "16px" }}>
   <source src="/images/organizations_feb2026.mp4" type="video/mp4" />
@@ -17,13 +17,41 @@ Use it to connect your tools, choose which repositories Hacktron should watch, m
   Most teams start in **Integrations**, then move through repositories, people, billing, and pentests as they roll Hacktron out.
 </Card>
 
-## How teams usually get started
+When you first arrive, the path depends on how you got here:
 
-Most teams begin by connecting GitHub in **Integrations**, then heading to **Repositories** to decide where Hacktron should run. From there, **People** and **Billing** are where admins shape access and budgets for the rest of the organization. Once that setup is in place, the Platform becomes the shared place to monitor rollout and run larger workflows like pentests.
+- If you are setting up a new organization, you will be asked whether you are here **By myself** or **With my team**.
+- Choose **By myself** if you want the individual path for the CLI and VS Code extension. Choose **With my team** if you want shared setup, collaboration, and pull request scanning.
+- If you were invited, you do not need to go through onboarding. You sign in or create an account, then join the organization directly.
+- If you arrived from `hacktron login`, you may need to sign in first and then continue from there.
 
-## What each area is for
+If you choose **With my team**, GitHub is usually the main setup step. Slack is optional, and repository coverage can stay off until you are ready to turn it on.
 
-Each area has a clear job:
+## Who the Platform is for
+
+The Platform is for shared, organization-level work. It also connects directly to Workbench, because this is where seats and access are managed for the organization.
+
+<Columns cols={2}>
+  <Card img="/images/platform-persona-team-reference.png">
+    Use the Platform for shared setup across the organization, including continuous code reviews across repositories, pentests, teammates, and centralised billing.
+  </Card>
+  <Card img="/images/platform-persona-individual-reference.png">
+    Use Workbench for work that happens directly in code. The CLI and the IDE extensions work alongside the Platform to provide security workflows in your terminal and editor.
+  </Card>
+</Columns>
+
+## Initial setup
+
+One common way to get started is:
+
+1. Connect GitHub in **Integrations**
+2. Open **Repositories** and choose where Hacktron should run
+3. Use **People** to check who can access the organization and what role they have
+4. Use **Billing** if an owner needs to add payment information, manage seats, or buy credits
+5. Use **Pentests** when you want a larger scoped assessment
+
+## Pages overview
+
+The Platform is split into a few key pages:
 
 - **Integrations** connects GitHub and other supporting tools
 - **Repositories** decides where Hacktron should actually run
@@ -33,9 +61,18 @@ Each area has a clear job:
 
 ## Platform vs Workbench
 
-The Platform is for shared, organization-level setup and management.
+Workbench is an integral part of the Platform, built for individual usage.
 
-Hacktron Workbench is for individual usage in the CLI or IDE. Use Workbench when you want to work directly in code. Use the Platform when you need team-wide setup, access control, billing, and visibility.
+Apart from providing access to Workbench, the Platform is used to manage:
+
+- repository coverage
+- people and roles
+- billing, seats, and credits
+- pentests and other org-level activity
+
+Use Workbench when you are doing the work itself in code through the CLI or IDE.
+
+For example, someone might be invited through the Platform, assigned a Sec seat there, and then use that access and those credits in Workbench.
 
 <Columns cols={2}>
   <Card title="Code Reviews" icon="code-pull-request" href="/platform/code-reviews">

@@ -5,6 +5,18 @@ description: "Understand seats, roles, trials, credits, and organization access 
 
 Use **People** to manage access. Use **Billing** to manage seats, credits, and payment.
 
+This page answers two questions:
+
+- What can someone do in the Platform?
+- What does the organization pay for?
+
+In short:
+
+- **Roles** control access in the Platform
+- **Seats** control paid product access
+
+For example, users with the *Owner* role handle payment methods, subscriptions, and pentest starts. However, their pull requests are only reviewed if they also have a *Dev seat*.
+
 <Card img="/images/platform-people-dark.png">
   Use **People** to manage who is in the organization and what access each person has.
 </Card>
@@ -15,7 +27,7 @@ Use **People** to manage access. Use **Billing** to manage seats, credits, and p
 
 ## Roles
 
-Organization roles control what someone can do in the Platform.
+Roles control what someone can do in the Platform.
 
 | Role | Access |
 | --- | --- |
@@ -28,13 +40,12 @@ Organization roles control what someone can do in the Platform.
 
 Seats are separate from roles.
 
-- **Dev seat** gives a user PR review coverage for code reviews.
-- **Sec seat** gives a user security workflow access such as CLI usage.
-- **Role** gives a user platform permissions.
+- A **Dev seat** covers pull request reviews.
+- A **Sec seat** is assigned in the Platform and gives access to Workbench and the CLI.
 
-A user can have a seat without platform access. A user can also have platform access without a seat. CLI access requires a **Sec seat**. Role alone is not enough.
+In short, a **Role** controls Platform permissions, while a **Seat** controls paid product access. A person can have a seat without Platform access, and a person can also have Platform access without a seat.
 
-Platform-only users are not charged unless they also have a Dev seat or Sec seat.
+Someone with Platform access only is not charged unless they also have a Dev seat or Sec seat.
 
 ## Billing
 
@@ -47,30 +58,32 @@ The Billing page is split into:
 Billing is driven by product entitlements:
 
 - **Dev seats** affect code review billing
-- **Sec seats** affect Workbench-related entitlement
+- **Sec seats** affect Workbench and CLI entitlement, including the credits available there
 - **Pentest credits** are shared across the organization
 - **Roles** do not create charges by themselves
 
-For code reviews, billing is based on the **maximum seats used during the billing period**.
+For code reviews, billing is based on the **maximum number of seats used during the billing period**.
 
 ## Trial
 
-The code review trial lasts **14 days** and starts when an admin chooses to start it from the **Billing** page.
+The code review trial lasts **14 days**. It starts when any organization **owner** adds payment information from the **Billing** page and chooses to start the trial.
 
 During the trial:
 
 - Dev seats auto-assign as PR activity comes in
 - There is no hard seat cap, but usage is limited to **200 PRs per seat**
-- The organization creator starts with **200 free credits**
+- The organization creator starts with **200 free Workbench credits**
 
-Once a paid Sec seat workflow is assigned, that free 200-credit allowance is removed.
+Once a paid Sec seat is assigned, that free 200-credit Workbench allowance is removed.
 
 ## Seat changes
 
-1. The seat becomes unassigned right away
-2. That seat can be reused by someone else during the current billing cycle
-3. The organization is still billed for the peak seats used in that cycle
-4. If the seat is not reused, it drops out of the next billing cycle
+If a seat is removed:
+
+- The seat becomes unassigned right away
+- That seat can be reused by someone else during the current billing cycle
+- The organization is still billed for the peak seats used in that cycle
+- If the seat is not reused, it drops out of the next billing cycle
 
 ## Billing permissions
 
@@ -84,7 +97,7 @@ Billing actions are split by role:
 
 Pentests use shared org-wide credits, and starting a pentest is currently limited to organization owners.
 
-If there are not enough pentest credits available, non-owners are prompted to ask an owner to top up credits. Owners can go directly to checkout for the difference instead of starting the pentest silently.
+If there are not enough pentest credits available, anyone who is not an owner is prompted to ask an owner to top up credits. Owners can go directly to checkout for the difference.
 
 <Columns cols={2}>
   <Card title="Code Reviews" icon="code-pull-request" href="/platform/code-reviews">

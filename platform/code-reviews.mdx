@@ -1,11 +1,11 @@
 ---
 title: "Code Reviews"
-description: "Set up PR review workflows in the Hacktron Platform and understand how dev seats are assigned."
+description: "Set up pull request review workflows in the Hacktron Platform and understand how dev seats are assigned."
 ---
 
-Hacktron Code Reviews lets your team review pull requests from the Platform.
+Use Code Reviews when you want Hacktron to review pull requests and comment directly on the pull request (PR).
 
-Connect GitHub, choose the repositories you want covered, and Hacktron will review qualifying pull requests. When code reviews are enabled for a repository, Hacktron leaves comments directly on the PR.
+To get it running, connect GitHub, choose the repositories you want covered, and let Hacktron review qualifying pull requests.
 
 <Card img="/images/platform-repositories-dark.png">
   Use the **Repositories** page to choose where Hacktron should run and to confirm that your repositories are synced correctly.
@@ -13,34 +13,41 @@ Connect GitHub, choose the repositories you want covered, and Hacktron will revi
 
 ## What enabling code reviews does
 
-After GitHub is connected, enable coverage from the **Repositories** page. If a repository is enabled and the PR qualifies for coverage, Hacktron reviews the pull request and comments on the PR.
+After GitHub is connected, turn coverage on from the **Repositories** page. You can choose to cover PRs across all branches, or only to specific branches.
 
-## Setup
+If a repository is enabled and a PR is made, Hacktron checks if the PR's target branch is configured. If it is, Hacktron reviews the PR.
+
+Hacktron comments on the PR with the vulnerabilities it finds, and provides quicklinks to fixing them with AI.
+
+## How to get started
 
 1. Connect GitHub in **Integrations**
-2. Open **Repositories** and turn on the repositories you want covered
-3. Let your team keep working in PRs as usual
-4. Review coverage and findings from the dashboard
+2. Open **Repositories** and choose which repositories should be covered
+3. For each repository, choose which branches should be covered
+4. Let your team keep working in PRs as usual
+5. Review coverage and findings from the dashboard
 
-You do not need to manually invite every developer before getting started. Hacktron can discover developers from repository activity as reviews start running.
+You do not need to manually invite every developer before reviews can start. Hacktron can discover developers from repository activity as reviews begin running.
+
+If GitHub was skipped during onboarding, no PRs will be reviewed until the integration is connected and the repository is enabled.
 
 ## If a PR is not being reviewed
 
-The first things to check are:
+Check these first:
 
 - GitHub is connected in **Integrations**
 - The repository is enabled in **Repositories**
 - The organization still has review capacity available
 
-If someone is not covered, Hacktron does not silently pretend the review ran. Instead, the product behavior is to leave a PR comment indicating that a seat is not assigned.
+If a developer is not covered, Hacktron leaves a PR comment explaining that no seat is assigned. It does not act like the review ran when it did not.
 
 ## During the trial
 
-For new organizations:
+For a new organization:
 
 - The free trial lasts **14 days**
-- The trial begins when you choose to start it from the **Billing** page
-- During the trial, seats auto-assign as developers open PRs
+- The trial begins when any organization **owner** adds payment information in **Billing**
+- During the trial, Dev seats auto-assign as developers open PRs
 
 <Columns cols={2}>
   <Card title="Billing & Access" icon="users" href="/platform/billing-access">
