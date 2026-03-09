@@ -16,7 +16,7 @@
     }
   },
   "banner": {
-    "content": "🚀 The Hacktron CLI is now in beta. Start for free [here](https://app.hacktron.ai).",
+    "content": "🚀 Hacktron Workbench is now in beta. Start for free [here](https://app.hacktron.ai).",
     "dismissible": true
   },
   "favicon": "/favicon.png",
@@ -36,19 +36,33 @@
         ]
       },
       {
-        "tab": "CLI Documentation",
+        "tab": "Workbench",
         "groups": [
           {
-            "group": "Getting started",
-            "pages": ["cli/overview", "cli/quickstart"]
+            "group": "Overview",
+            "pages": ["workbench/overview", "workbench/skills"]
           },
           {
-            "group": "Reference",
-            "pages": ["cli/agents", "cli/sessions", "cli/shell"]
+            "group": "CLI",
+            "pages": [
+              "workbench/cli/quickstart",
+              "workbench/cli/agents",
+              "workbench/cli/sessions",
+              "workbench/cli/shell"
+            ]
+          },
+          {
+            "group": "IDE Extensions",
+            "pages": [
+              "workbench/ide-extensions/quickstart",
+              "workbench/ide-extensions/background-sessions",
+              "workbench/ide-extensions/byok",
+              "workbench/ide-extensions/personal-agents"
+            ]
           },
           {
             "group": "Resources",
-            "pages": ["cli/changelog"]
+            "pages": ["workbench/changelog"]
           }
         ]
       }
