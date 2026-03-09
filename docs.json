@@ -16,7 +16,7 @@
     }
   },
   "banner": {
-    "content": "🚀 The Hacktron CLI is now in beta. Start for free [here](https://app.hacktron.ai).",
+    "content": "🚀 Hacktron Workbench (CLI + IDE extension) is now in beta. Start for free [here](https://app.hacktron.ai).",
     "dismissible": true
   },
   "favicon": "/favicon.png",
@@ -36,11 +36,11 @@
         ]
       },
       {
-        "tab": "CLI Documentation",
+        "tab": "Hacktron Workbench",
         "groups": [
           {
             "group": "Getting started",
-            "pages": ["cli/overview", "cli/quickstart"]
+            "pages": ["cli/overview", "cli/quickstart", "cli/ide-extension"]
           },
           {
             "group": "Reference",
