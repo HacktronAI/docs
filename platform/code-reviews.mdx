@@ -3,9 +3,9 @@ title: "Code Reviews"
 description: "Set up PR review workflows in the Hacktron Platform and understand how dev seats are assigned."
 ---
 
-Hacktron Code Reviews let your team run security review on pull requests from the Platform.
+Hacktron Code Reviews lets your team review pull requests from the Platform.
 
-You connect GitHub, choose the repositories you want covered, and Hacktron handles review coverage from there. Once code reviews are enabled for a repository, Hacktron starts reviewing pull requests and leaving comments directly on the PR.
+Connect GitHub, choose the repositories you want covered, and Hacktron will review qualifying pull requests. When code reviews are enabled for a repository, Hacktron leaves comments directly on the PR.
 
 <Card img="/images/platform-repositories-dark.png">
   Use the **Repositories** page to choose where Hacktron should run and to confirm that your repositories are synced correctly.
@@ -13,11 +13,9 @@ You connect GitHub, choose the repositories you want covered, and Hacktron handl
 
 ## What enabling code reviews does
 
-After GitHub is connected, you enable coverage from the **Repositories** page. From that point on, your team can keep using PRs as usual while Hacktron reviews activity in the background. The important user-facing behavior is simple: if a repository is enabled and the PR qualifies for coverage, Hacktron will leave review comments on the pull request.
+After GitHub is connected, enable coverage from the **Repositories** page. If a repository is enabled and the PR qualifies for coverage, Hacktron reviews the pull request and comments on the PR.
 
-## What the setup usually looks like
-
-Most teams follow a straightforward flow:
+## Setup
 
 1. Connect GitHub in **Integrations**
 2. Open **Repositories** and turn on the repositories you want covered
@@ -41,10 +39,8 @@ If someone is not covered, Hacktron does not silently pretend the review ran. In
 For new organizations:
 
 - The free trial lasts **14 days**
-- The trial begins when the GitHub App is installed on the organization
+- The trial begins when you choose to start it from the **Billing** page
 - During the trial, seats auto-assign as developers open PRs
-
-The billing details live on the next page, but the operational story here is simple: connect GitHub, enable repositories, and Hacktron can begin commenting on pull requests.
 
 <Columns cols={2}>
   <Card title="Billing & Access" icon="users" href="/platform/billing-access">

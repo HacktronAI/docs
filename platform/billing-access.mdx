@@ -3,7 +3,7 @@ title: "Billing & Access"
 description: "Understand seats, roles, trials, credits, and organization access in the Hacktron Platform."
 ---
 
-This page explains two things that are easy to confuse in the Platform: who has access, and what your organization is paying for.
+Use **People** to manage access. Use **Billing** to manage seats, credits, and payment.
 
 <Card img="/images/platform-people-dark.png">
   Use **People** to manage who is in the organization and what access each person has.
@@ -13,60 +13,49 @@ This page explains two things that are easy to confuse in the Platform: who has 
   Use **Billing** to manage shared budgets, seats, and credits for your organization.
 </Card>
 
-## Start with the mental model
+## Roles
 
-Think of the Platform as two separate admin areas:
+Organization roles control what someone can do in the Platform.
 
-- **People** controls access
-- **Billing** controls what your organization has purchased or can use
+| Role | Access |
+| --- | --- |
+| **Viewer** | Read-only access to the organization, members, resources, and results |
+| **Member** | Can work with scans and findings |
+| **Admin** | Can manage members, seats, invitations, integrations, and org settings |
+| **Owner** | Can manage billing, payment methods, ownership changes, org deletion, and pentest starts |
 
-That separation matters because a person can appear in your organization without having normal platform access, and someone can have platform access without using any paid product entitlement.
-
-## Roles decide what someone can do
-
-The RBAC model in the product docs has four org roles:
-
-- **Viewer**: read-only access to the organization, members, resources, and results
-- **Member**: can work with scans and findings
-- **Admin**: can manage members, seats, invitations, integrations, and org settings
-- **Owner**: handles billing, payment methods, ownership changes, org deletion, and pentest starts
-
-If you only need a practical rule of thumb:
-
-- **Viewers** can see what is happening
-- **Members** can do day-to-day security work
-- **Admins** can manage the team and product setup
-- **Owners** control money and organization-level changes
-
-## Seats decide what product access someone has
+## Seats
 
 Seats are separate from roles.
 
-- **Dev seat**: PR review coverage for code reviews
-- **Sec seat**: security workflow access such as CLI and broader platform usage tied to that entitlement
-- **Role**: normal platform permission level
+- **Dev seat** gives a user PR review coverage for code reviews.
+- **Sec seat** gives a user security workflow access such as CLI usage.
+- **Role** gives a user platform permissions.
 
-This means:
+A user can have a seat without platform access. A user can also have platform access without a seat. CLI access requires a **Sec seat**. Role alone is not enough.
 
-- A developer can have a **Dev seat** without being able to sign into the Platform
-- A person can have a **role** without having code review or CLI access
-- A user needs a **Sec seat** for CLI access; role alone is not enough
+Platform-only users are not charged unless they also have a Dev seat or Sec seat.
 
-The RBAC doc is explicit that platform-only users are not charged unless they also hold a Dev seat or Sec seat.
+## Billing
 
-## Common access patterns
+The Billing page is split into:
 
-These combinations are normal:
+- **Seats plan**
+- **Pentest credits**
+- **CLI credits**
 
-- A developer opens PRs and gets reviewed, but never signs into the Platform
-- A billing owner manages payment and subscriptions, but does not use Workbench
-- A security engineer has normal platform access plus a Sec seat for CLI usage
+Billing is driven by product entitlements:
 
-The Platform is designed to support those cases without forcing everyone into the same setup.
+- **Dev seats** affect code review billing
+- **Sec seats** affect Workbench-related entitlement
+- **Pentest credits** are shared across the organization
+- **Roles** do not create charges by themselves
 
-## Trial and credits
+For code reviews, billing is based on the **maximum seats used during the billing period**.
 
-For new organizations, the PR review trial lasts **14 days** and starts when the GitHub App is installed on the organization.
+## Trial
+
+The code review trial lasts **14 days** and starts when an admin chooses to start it from the **Billing** page.
 
 During the trial:
 
@@ -74,39 +63,18 @@ During the trial:
 - There is no hard seat cap, but usage is limited to **200 PRs per seat**
 - The organization creator starts with **200 free credits**
 
-Once a paid Sec seat workflow is assigned, that free 200-credit allowance is removed. In practice, this lets a team start small, validate the flow, and then expand access deliberately.
+Once a paid Sec seat workflow is assigned, that free 200-credit allowance is removed.
 
-## What gets billed
-
-The current Billing page is split into:
-
-- **Seats plan**
-- **Pentest credits**
-- **CLI credits**
-
-For admins, the clearest way to think about billing is:
-
-- **Dev seats** affect code review billing
-- **Sec seats** affect Workbench-related entitlement
-- **Pentest credits** are shared across the organization
-- **Platform roles by themselves are not the thing being billed**
-
-For code reviews specifically, the Billing & Platform Access spec says billing is based on the **maximum seats used during the billing period**.
-
-## If you remove a seat
-
-The billing spec is very specific here:
+## Seat changes
 
 1. The seat becomes unassigned right away
 2. That seat can be reused by someone else during the current billing cycle
 3. The organization is still billed for the peak seats used in that cycle
 4. If the seat is not reused, it drops out of the next billing cycle
 
-This is meant to avoid wasting value in the current month while still making billing predictable.
+## Billing permissions
 
-## Who can manage billing
-
-The RBAC doc splits billing actions by role:
+Billing actions are split by role:
 
 - **Viewer+** can view subscription details and credit balances
 - **Admin+** can access the seats tab and apply coupon codes
