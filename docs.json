@@ -41,7 +41,7 @@
           {
             "group": "Overview",
             "pages": [
-              "platform/overview",
+              "platform/quickstart",
               "platform/code-reviews",
               "platform/billing-access",
               "platform/pentests"
