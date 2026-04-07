@@ -42,13 +42,12 @@ Roles control what someone can do in the Platform.
 Seats are separate from roles.
 
 - A **Dev seat** covers pull request reviews.
-- A **Sec seat** is assigned in the Platform and gives access to Workbench.
 
 In short, a **Role** controls Platform permissions, while a **Seat** controls paid product access. A person can have a seat without Platform access, and a person can also have Platform access without a seat.
 
 If someone has no Platform role assigned, they appear as **Unassigned** in **People**.
 
-Someone with Platform access only is not charged unless they also have a Dev seat or Sec seat.
+Someone with Platform access only is not charged unless they also have a Dev seat.
 
 ## Example scenarios
 
@@ -61,11 +60,10 @@ Someone with Platform access only is not charged unless they also have a Dev sea
 | Email | `john@hacktron.ai` |
 | Role | **Unassigned** |
 | Dev seat | Yes |
-| Sec seat | Yes |
 
-Transition: An owner invites the person by email and assigns seats.
+Transition: An owner invites the person by email and assigns a seat.
 
-Access: Workbench only. No Platform access until an admin assigns a role.
+Access: No Platform access until an admin assigns a role.
 
 #### State 2: signed in with GitHub, still no role
 
@@ -75,11 +73,10 @@ Access: Workbench only. No Platform access until an admin assigns a role.
 | Email | `john@hacktron.ai` |
 | Role | **Unassigned** |
 | Dev seat | Yes |
-| Sec seat | Yes |
 
 Transition: The person signs in and their identity is linked to the existing record.
 
-Access: Workbench only. They still do not have Platform access.
+Access: They still do not have Platform access.
 
 #### State 3: role assigned
 
@@ -88,11 +85,10 @@ Access: Workbench only. They still do not have Platform access.
 | Email | `john@hacktron.ai` |
 | Role | **Viewer** |
 | Dev seat | Yes |
-| Sec seat | Yes |
 
 Transition: An admin assigns a Platform role such as **Viewer**.
 
-Access: Viewer access in the Platform, plus Workbench access.
+Access: Viewer access in the Platform.
 
 ### Existing GitHub developer
 
@@ -104,7 +100,6 @@ Access: Viewer access in the Platform, plus Workbench access.
 | Email | `-` |
 | Role | **Unassigned** |
 | Dev seat | Yes |
-| Sec seat | No |
 
 Transition: A developer opens a PR and is added to **People** with a Dev seat.
 
@@ -118,24 +113,22 @@ Access: No Platform access. PR reviews are covered because the person has a Dev 
 | Email | `john@hacktron.ai` |
 | Role | **Unassigned** |
 | Dev seat | Yes |
-| Sec seat | No |
 
 Transition: The person signs in and their email is linked to the existing record.
 
 Access: Still no Platform access.
 
-#### State 3: role and Sec seat assigned
+#### State 3: role assigned
 
 | State | Value |
 | --- | --- |
 | Email | `john@hacktron.ai` |
 | Role | **Viewer** |
 | Dev seat | Yes |
-| Sec seat | Yes |
 
-Transition: An admin assigns a Platform role and optionally adds a Sec seat.
+Transition: An admin assigns a Platform role.
 
-Access: Viewer access in the Platform, plus Workbench access.
+Access: Viewer access in the Platform.
 
 ## Billing
 
@@ -143,12 +136,10 @@ The Billing page is split into:
 
 - **Seats plan**
 - **Pentest credits**
-- **CLI credits**
 
 Billing is driven by product entitlements:
 
 - **Dev seats** affect code review billing
-- **Sec seats** affect Workbench entitlement, including the credits available there
 - **Pentest credits** are shared across the organization
 - **Roles** do not create charges by themselves
 
@@ -162,9 +153,6 @@ During the trial:
 
 - Dev seats auto-assign as PR activity comes in
 - There is no hard seat cap, but usage is limited to **200 PRs per seat**
-- The organization creator starts with **200 free Workbench credits**
-
-Once a paid Sec seat is assigned, that free 200-credit Workbench allowance is removed.
 
 ## Seat changes
 
