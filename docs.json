@@ -48,37 +48,6 @@
             ]
           }
         ]
-      },
-      {
-        "tab": "Workbench",
-        "groups": [
-          {
-            "group": "Overview",
-            "pages": ["workbench/overview", "workbench/skills"]
-          },
-          {
-            "group": "CLI",
-            "pages": [
-              "workbench/cli/quickstart",
-              "workbench/cli/agents",
-              "workbench/cli/sessions",
-              "workbench/cli/shell"
-            ]
-          },
-          {
-            "group": "IDE Extensions",
-            "pages": [
-              "workbench/ide-extensions/quickstart",
-              "workbench/ide-extensions/background-sessions",
-              "workbench/ide-extensions/byok",
-              "workbench/ide-extensions/personal-agents"
-            ]
-          },
-          {
-            "group": "Resources",
-            "pages": ["workbench/changelog"]
-          }
-        ]
       }
     ],
     "global": {
