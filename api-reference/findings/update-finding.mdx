@@ -13,7 +13,7 @@ Updates the `state`, `severity`, or both on a single finding. Every change is re
 ## Request
 
 ```bash
-curl -X PATCH https://api.hacktron.ai/api/v1/rest/findings/d1e2f3a4-b5c6-7890-1234-567890abcdef \
+curl -X PATCH https://api.hacktron.ai/v1/findings/d1e2f3a4-b5c6-7890-1234-567890abcdef \
   -H "X-Api-Key: $HACKTRON_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{

@@ -13,7 +13,7 @@ Returns findings across every scan in the organization, with filtering and sorti
 ## Request
 
 ```bash
-curl "https://api.hacktron.ai/api/v1/rest/findings?severity=critical&state=open&sort_by=found_at&sort_order=DESC&page=1&limit=50" \
+curl "https://api.hacktron.ai/v1/findings?severity=critical&state=open&sort_by=found_at&sort_order=DESC&page=1&limit=50" \
   -H "X-Api-Key: $HACKTRON_API_KEY"
 ```
 

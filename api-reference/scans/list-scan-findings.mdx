@@ -15,7 +15,7 @@ Only findings that have passed automated verification (`verification_status = ap
 ## Request
 
 ```bash
-curl "https://api.hacktron.ai/api/v1/rest/scans/a1b2c3d4-e5f6-7890-abcd-ef1234567890/findings?severity=high&state=open&page=1&limit=50" \
+curl "https://api.hacktron.ai/v1/scans/a1b2c3d4-e5f6-7890-abcd-ef1234567890/findings?severity=high&state=open&page=1&limit=50" \
   -H "X-Api-Key: $HACKTRON_API_KEY"
 ```
 

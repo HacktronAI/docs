@@ -13,7 +13,7 @@ Appends a comment to a finding's triage thread. Comments appear in the dashboard
 ## Request
 
 ```bash
-curl -X POST https://api.hacktron.ai/api/v1/rest/findings/d1e2f3a4-b5c6-7890-1234-567890abcdef/comments \
+curl -X POST https://api.hacktron.ai/v1/findings/d1e2f3a4-b5c6-7890-1234-567890abcdef/comments \
   -H "X-Api-Key: $HACKTRON_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{

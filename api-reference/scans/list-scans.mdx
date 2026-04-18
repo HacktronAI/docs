@@ -13,7 +13,7 @@ Returns scans in your organization, with filtering by type and status.
 ## Request
 
 ```bash
-curl "https://api.hacktron.ai/api/v1/rest/scans?status=completed&sort_by=created_at&sort_order=DESC&page=1&limit=25" \
+curl "https://api.hacktron.ai/v1/scans?status=completed&sort_by=created_at&sort_order=DESC&page=1&limit=25" \
   -H "X-Api-Key: $HACKTRON_API_KEY"
 ```
 

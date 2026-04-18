@@ -30,7 +30,7 @@ To iterate all pages:
 ```bash
 page=1
 while : ; do
-  curl -s "https://api.hacktron.ai/api/v1/rest/findings?page=$page&limit=100" \
+  curl -s "https://api.hacktron.ai/v1/findings?page=$page&limit=100" \
     -H "X-Api-Key: $HACKTRON_API_KEY"
   # ... extract data, break when (page * limit) >= total
   page=$((page + 1))
@@ -99,6 +99,6 @@ There is no OR operator. Call the endpoint multiple times and merge results clie
 Fetch the 25 most recently updated high‑severity findings that are still open:
 
 ```bash
-curl "https://api.hacktron.ai/api/v1/rest/findings?severity=high&state=open&sort_by=updated_at&sort_order=DESC&page=1&limit=25" \
+curl "https://api.hacktron.ai/v1/findings?severity=high&state=open&sort_by=updated_at&sort_order=DESC&page=1&limit=25" \
   -H "X-Api-Key: $HACKTRON_API_KEY"
 ```

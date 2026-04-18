@@ -44,7 +44,7 @@ hacktron_3s9K1sP7m2nXvT8YhLq0ZbW4...
 Send your API key in the `X-Api-Key` header on every request:
 
 ```bash
-curl https://api.hacktron.ai/api/v1/rest/scans \
+curl https://api.hacktron.ai/v1/scans \
   -H "X-Api-Key: hacktron_3s9K1sP7m2nXvT8YhLq0ZbW4..."
 ```
 
@@ -77,14 +77,14 @@ Revoked keys are kept in the dashboard audit trail (with last‑used timestamps)
 To verify a key is working, list scans:
 
 ```bash
-curl https://api.hacktron.ai/api/v1/rest/scans?limit=1 \
+curl https://api.hacktron.ai/v1/scans?limit=1 \
   -H "X-Api-Key: $HACKTRON_API_KEY"
 ```
 
 A successful response returns HTTP `200` and a JSON body containing `data`, `total`, `page`, and `limit` fields.
 
 <Tip>
-  Endpoints can also be exercised interactively in the Swagger UI at [https://api.hacktron.ai/api-docs](https://api.hacktron.ai/api-docs). The "Authorize" button accepts an `X-Api-Key` value and persists it for subsequent requests.
+  Endpoints can also be exercised interactively in the Swagger UI at [https://api.hacktron.ai/docs](https://api.hacktron.ai/docs). The "Authorize" button accepts an `X-Api-Key` value and persists it for subsequent requests.
 </Tip>
 
 Common failures:
