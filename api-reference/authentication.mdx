@@ -1,0 +1,96 @@
+---
+title: "Authentication"
+description: "Create API keys and authenticate requests to the Hacktron REST API."
+---
+
+The Hacktron REST API authenticates every request with an organization‑scoped API key sent in the `X-Api-Key` header.
+
+API keys are:
+
+- **Organization‑scoped** — each key belongs to exactly one organization. You never need to pass an organization ID alongside the key.
+- **Scoped** — each key declares one or more scopes (`read`, `write`, `delete`) that gate which endpoints it can call.
+
+## Creating an API key
+
+API keys are created from the Hacktron dashboard. You must have the **Admin** or **Owner** role in the organization you are creating a key for.
+
+1. Sign in to [app.hacktron.ai](https://app.hacktron.ai) and switch to the organization you want the key to belong to.
+2. Open **Settings → API keys**.
+3. Click **Create API key**.
+4. Give the key a descriptive name (for example `ci-pipeline`, `backstage-integration`).
+5. Choose the scopes the key needs — pick the minimum set your integration requires. See [Scopes](#scopes).
+6. Optionally set an expiration date.
+7. Click **Create**.
+
+<Warning>
+  The full API key is shown **only once**, immediately after creation. Copy it and store it in a secret manager right away. If you lose it, you will need to revoke the key and create a new one.
+</Warning>
+
+Each organization can have at most **10 active API keys** at a time. Revoke unused keys before creating new ones if you hit the limit.
+
+### Key format
+
+Hacktron API keys look like this:
+
+```
+hacktron_3s9K1sP7m2nXvT8YhLq0ZbW4...
+```
+
+- They always start with the `hacktron_` prefix.
+- The first 12 characters (for example `hacktron_3s9`) are stored as a non‑secret prefix so you can recognise keys in your logs and in the dashboard. The full key is never stored server‑side — only a SHA‑256 hash.
+
+## Making authenticated requests
+
+Send your API key in the `X-Api-Key` header on every request:
+
+```bash
+curl https://api.hacktron.ai/v1/scans \
+  -H "X-Api-Key: hacktron_3s9K1sP7m2nXvT8YhLq0ZbW4..."
+```
+
+You do **not** need to send `X-Organization-Id` or any other header — the organization is resolved from the key.
+
+<Tip>
+  Never hardcode API keys in source control or client-side code. Load them from environment variables or a secret manager at runtime.
+</Tip>
+
+## Scopes
+
+Scopes control what an API key is allowed to do. They are declared when you create the key and cannot be changed afterwards — create a new key if you need different scopes.
+
+| Scope    | Grants access to                                                                                                                  |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `read`   | All `GET` endpoints: list and read scans, findings, and cost estimations.                                                         |
+| `write`  | Mutating endpoints: trigger scans, create cost estimations, update findings, add comments. Implies `read` for the same resources. |
+| `delete` | Reserved for future use.                                                                                                          |
+
+Each endpoint in this reference states the scope it requires. Calling an endpoint with a key that is missing the required scope returns `403 Forbidden`.
+
+## Revoking a key
+
+You can revoke a key at any time from **Settings → API keys** in the dashboard. Revocation takes effect immediately — the next request with that key will fail with `401 Unauthorized`.
+
+Revoked keys are kept in the dashboard audit trail (with last‑used timestamps) but can never be reactivated.
+
+## Testing your key
+
+To verify a key is working, list scans:
+
+```bash
+curl https://api.hacktron.ai/v1/scans?limit=1 \
+  -H "X-Api-Key: $HACKTRON_API_KEY"
+```
+
+A successful response returns HTTP `200` and a JSON body containing `data`, `total`, `page`, and `limit` fields.
+
+<Tip>
+  Endpoints can also be exercised interactively in the Swagger UI at [https://api.hacktron.ai/docs](https://api.hacktron.ai/docs). The "Authorize" button accepts an `X-Api-Key` value and persists it for subsequent requests.
+</Tip>
+
+Common failures:
+
+| Status | Meaning                                                                                      |
+| ------ | -------------------------------------------------------------------------------------------- |
+| `401`  | Missing, malformed, revoked, or expired API key.                                             |
+| `403`  | Key is valid but is missing the required scope.                                              |
+| `429`  | You have hit the rate limit for this key. See [Rate limits](/api-reference/rate-limits).    |

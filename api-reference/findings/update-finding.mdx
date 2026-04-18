@@ -1,0 +1,65 @@
+---
+title: "Update finding"
+api: "PATCH /findings/{id}"
+description: "Change a finding's state and/or severity."
+---
+
+Updates the `state`, `severity`, or both on a single finding. Every change is recorded to the finding's audit trail and propagated to connected integrations (GitHub, Slack, Jira, Linear).
+
+<Info>
+  **Scope required**: `write`
+</Info>
+
+## Request
+
+```bash
+curl -X PATCH https://api.hacktron.ai/v1/findings/d1e2f3a4-b5c6-7890-1234-567890abcdef \
+  -H "X-Api-Key: $HACKTRON_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "state": "true_positive",
+    "severity": "critical",
+    "reason": "Confirmed reproducible against staging. Raising from high to critical."
+  }'
+```
+
+### Path parameters
+
+| Parameter | Type | Description       |
+| --------- | ---- | ----------------- |
+| `id`      | UUID | Finding UUID.     |
+
+### Body
+
+At least one of `state` or `severity` must be provided. Providing neither returns `400`.
+
+| Field             | Type   | Description                                                                                                  |
+| ----------------- | ------ | ------------------------------------------------------------------------------------------------------------ |
+| `state`           | enum   | New state. One of `open`, `true_positive`, `false_positive`, `accepted_risk`, `resolved`.                    |
+| `severity`        | enum   | New severity. One of `critical`, `high`, `medium`, `low`, `info`.                                            |
+| `state_reason`    | string | Reason for the state change. Max 2000 chars. Falls back to `reason` if omitted.                              |
+| `severity_reason` | string | Reason for the severity change. Max 2000 chars. Falls back to `reason` if omitted.                           |
+| `reason`          | string | Shorthand applied to both state and severity when their specific reason fields are omitted. Max 2000 chars.  |
+
+<Tip>
+  Pass `reason` alone when the same justification applies to both state and severity. Use `state_reason` and `severity_reason` only when the justifications differ.
+</Tip>
+
+## Response
+
+`200 OK`
+
+```json
+{
+  "id": "d1e2f3a4-b5c6-7890-1234-567890abcdef",
+  "state": "true_positive",
+  "severity": "critical"
+}
+```
+
+The response contains only the updated state and severity. Fetch the full finding via [`GET /findings/{id}`](/api-reference/findings/get-finding) for the remaining fields.
+
+## Errors
+
+- `400` — neither `state` nor `severity` provided, or field validation failed.
+- `404` — finding not found, still in verification, or not visible to your organization.

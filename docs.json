@@ -48,6 +48,49 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/authentication",
+              "api-reference/rate-limits",
+              "api-reference/pagination-filtering",
+              "api-reference/errors"
+            ]
+          },
+          {
+            "group": "Cost Estimations",
+            "pages": [
+              "api-reference/cost-estimations/create-cost-estimation",
+              "api-reference/cost-estimations/list-cost-estimations",
+              "api-reference/cost-estimations/get-cost-estimation"
+            ]
+          },
+          {
+            "group": "Scans",
+            "pages": [
+              "api-reference/scans/create-scan",
+              "api-reference/scans/list-scans",
+              "api-reference/scans/get-scan",
+              "api-reference/scans/get-scan-status",
+              "api-reference/scans/list-scan-findings",
+              "api-reference/scans/export-scan-findings"
+            ]
+          },
+          {
+            "group": "Findings",
+            "pages": [
+              "api-reference/findings/list-findings",
+              "api-reference/findings/get-finding",
+              "api-reference/findings/update-finding",
+              "api-reference/findings/add-finding-comment"
+            ]
+          }
+        ]
       }
     ],
     "global": {

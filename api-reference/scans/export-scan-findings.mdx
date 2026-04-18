@@ -1,0 +1,66 @@
+---
+title: "Export scan findings"
+api: "GET /scans/{id}/findings/export"
+description: "Download all findings for a scan as JSON, CSV, or SARIF."
+---
+
+Returns every approved finding for a scan in one of three formats. Unlike [List scan findings](/api-reference/scans/list-scan-findings), this endpoint is **not paginated**; all findings are returned in a single response.
+
+<Info>
+  **Scope required**: `read`
+</Info>
+
+## Request
+
+```bash
+curl "https://api.hacktron.ai/v1/scans/a1b2c3d4-e5f6-7890-abcd-ef1234567890/findings/export?format=sarif" \
+  -H "X-Api-Key: $HACKTRON_API_KEY" \
+  -o findings.sarif
+```
+
+### Path parameters
+
+| Parameter | Type | Description   |
+| --------- | ---- | ------------- |
+| `id`      | UUID | Scan UUID.    |
+
+### Query parameters
+
+| Parameter | Type | Required | Description                                   |
+| --------- | ---- | -------- | --------------------------------------------- |
+| `format`  | enum | Yes      | One of `json`, `csv`, `sarif`.                |
+
+## Response
+
+The `Content-Type` and `Content-Disposition` headers depend on the requested format.
+
+### `format=json`
+
+```http
+Content-Type: application/json; charset=utf-8
+```
+
+Returns a JSON array of finding objects, each matching the schema described in [List findings](/api-reference/findings/list-findings#finding-fields).
+
+### `format=csv`
+
+```http
+Content-Type: text/csv; charset=utf-8
+Content-Disposition: attachment; filename="findings-<scanId>.csv"
+```
+
+Returns a CSV document with one row per finding and a header row. Intended for spreadsheets, BI tools, and ad‑hoc review.
+
+### `format=sarif`
+
+```http
+Content-Type: application/sarif+json; charset=utf-8
+Content-Disposition: attachment; filename="findings-<scanId>.sarif"
+```
+
+Returns a [SARIF 2.1.0](https://sarifweb.azurewebsites.net/) document. SARIF is consumed by GitHub code scanning, Azure DevOps, and most IDE security plugins; use this format to integrate Hacktron findings into existing security tooling.
+
+## Errors
+
+- `400` — missing or invalid `format` query parameter.
+- `404` — scan not found or not visible to your organization.

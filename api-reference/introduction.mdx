@@ -1,0 +1,60 @@
+---
+title: "Introduction"
+description: "Programmatic access to Hacktron scans, findings, and cost estimations."
+---
+
+The Hacktron REST API lets you trigger pentest scans, browse and triage findings, and run cost estimations from your own tooling.
+
+Everything you can do in the Hacktron dashboard as a scan operator or reviewer is available through the API, scoped to a single organization per key.
+
+## Base URL
+
+```
+https://api.hacktron.ai/v1
+```
+
+All endpoints in this reference are relative to this base URL.
+
+## Interactive API reference
+
+A Swagger UI rendered from the live OpenAPI spec is hosted at [https://api.hacktron.ai/docs](https://api.hacktron.ai/docs). It covers the same endpoints documented here with raw request and response schemas and a "Try it out" console, useful for verifying field names or cross-checking schemas against production.
+
+## What you can do
+
+<Columns cols={2}>
+  <Card title="Run pentest scans" icon="shield-halved" href="/api-reference/scans/create-scan">
+    Start full pentest scans against one or more repositories and track their status.
+  </Card>
+  <Card title="Estimate cost" icon="calculator" href="/api-reference/cost-estimations/create-cost-estimation">
+    Generate a cost estimation for a set of repositories before committing credits.
+  </Card>
+  <Card title="Browse findings" icon="magnifying-glass" href="/api-reference/findings/list-findings">
+    List, filter, and inspect findings across scans, including their full triage context.
+  </Card>
+  <Card title="Triage findings" icon="check" href="/api-reference/findings/update-finding">
+    Update finding state, adjust severity, and add comments from your own systems.
+  </Card>
+</Columns>
+
+## Requirements
+
+- A Hacktron organization with an **Admin** or **Owner** role (required to create API keys).
+- An API key — see [Authentication](/api-reference/authentication) for how to create one.
+- An HTTP client that can set custom headers.
+
+## Next steps
+
+<Columns cols={2}>
+  <Card title="Authentication" icon="key" href="/api-reference/authentication">
+    Create an API key and make your first authenticated request.
+  </Card>
+  <Card title="Rate limits" icon="gauge-high" href="/api-reference/rate-limits">
+    Understand request quotas and how to handle 429 responses.
+  </Card>
+  <Card title="Pagination & filtering" icon="list" href="/api-reference/pagination-filtering">
+    Learn the shared query conventions used across list endpoints.
+  </Card>
+  <Card title="Errors" icon="triangle-exclamation" href="/api-reference/errors">
+    HTTP status codes and error shapes you should handle.
+  </Card>
+</Columns>

@@ -1,0 +1,108 @@
+---
+title: "Create cost estimation"
+api: "POST /cost-estimations"
+description: "Estimate the credit cost of scanning one or more repositories before starting a scan."
+---
+
+A cost estimation resolves the repositories you plan to scan, detects applications within them, and returns a predicted credit cost. A completed cost estimation is required before calling [`POST /scans`](/api-reference/scans/create-scan).
+
+Cost estimations run asynchronously. The `POST` returns a record in `pending` or `running` state; poll [`GET /cost-estimations/{id}`](/api-reference/cost-estimations/get-cost-estimation) until `status` reaches `completed`, `partial`, or `failed`.
+
+<Info>
+  **Scope required**: `write`
+</Info>
+
+## Request
+
+```bash
+curl -X POST https://api.hacktron.ai/v1/cost-estimations \
+  -H "X-Api-Key: $HACKTRON_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "nightly-estimate",
+    "repos": [
+      {
+        "source": "connected",
+        "repo_url": "https://github.com/acme/backend",
+        "branch": "main"
+      }
+    ]
+  }'
+```
+
+### Body
+
+| Field   | Type     | Required | Description                                                                                      |
+| ------- | -------- | -------- | ------------------------------------------------------------------------------------------------ |
+| `name`  | string   | No       | Friendly label for this estimation. Max 255 chars.                                               |
+| `repos` | object[] | Yes      | 1–20 repositories to estimate. Each entry is one of the repo shapes below, identified by `source`. |
+
+### Repo shapes
+
+Repositories use a discriminated union on the `source` field.
+
+#### `connected` — a repository already synced to Hacktron via GitHub, GitLab, or Bitbucket
+
+| Field                    | Type   | Required | Description                                          |
+| ------------------------ | ------ | -------- | ---------------------------------------------------- |
+| `source`                 | `"connected"` | Yes | Discriminator.                                  |
+| `repo_url`               | string | Yes      | Full HTTPS URL of the repository. Max 500 chars.     |
+| `branch`                 | string | Yes      | Branch to estimate. Max 255 chars.                   |
+| `github_installation_id` | int    | No       | Specific GitHub App installation ID to use.          |
+
+#### `public` — a public git repository Hacktron can clone anonymously
+
+| Field      | Type   | Required | Description                               |
+| ---------- | ------ | -------- | ----------------------------------------- |
+| `source`   | `"public"` | Yes  | Discriminator.                            |
+| `repo_url` | string | Yes      | Full HTTPS URL. Max 500 chars.            |
+| `branch`   | string | Yes      | Branch to estimate. Max 255 chars.        |
+
+#### `upload` — a previously uploaded archive
+
+| Field        | Type   | Required | Description                         |
+| ------------ | ------ | -------- | ----------------------------------- |
+| `source`     | `"upload"` | Yes  | Discriminator.                      |
+| `archive_id` | UUID   | Yes      | ID of a scan archive you uploaded.  |
+
+## Response
+
+`201 Created` — the estimation is queued. Poll `GET /cost-estimations/{id}` until `status` reaches a terminal value.
+
+```json
+{
+  "id": "b4f5c6a1-2d3e-4f56-9a8b-0c1d2e3f4a5b",
+  "organization_id": "f336d0bc-b841-465b-8045-024475c079dd",
+  "user_id": "e5a6d7c8-9b0a-1c2d-3e4f-5a6b7c8d9e0f",
+  "name": "nightly-estimate",
+  "task_id": "cost_est_acme-backend_1712345678",
+  "status": "pending",
+  "repos": [
+    {
+      "source": "connected",
+      "repo_url": "https://github.com/acme/backend",
+      "branch": "main"
+    }
+  ],
+  "total_credits": null,
+  "repo_results": null,
+  "error": null,
+  "created_at": "2026-04-13T12:00:00.000Z",
+  "updated_at": "2026-04-13T12:00:00.000Z"
+}
+```
+
+### Terminal statuses
+
+| Status      | Meaning                                                                         |
+| ----------- | ------------------------------------------------------------------------------- |
+| `completed` | All repos were estimated successfully. `total_credits` is populated.            |
+| `partial`   | Some repos completed, others failed. Check `repo_results[].status` for details. |
+| `failed`    | The whole estimation failed. `error` contains a message.                        |
+
+Once in a terminal state, an estimation is immutable. Pass its `id` as `cost_estimation_id` to [`POST /scans`](/api-reference/scans/create-scan) to start the scan.
+
+## Errors
+
+- `400` — invalid or missing fields (for example, more than 20 repos, invalid `source`, or missing `repo_url`).
+- `401` / `403` — authentication or scope failure.

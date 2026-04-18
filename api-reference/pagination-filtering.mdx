@@ -1,0 +1,104 @@
+---
+title: "Pagination, filtering & sorting"
+description: "Shared query conventions used by list endpoints."
+---
+
+List endpoints in the Hacktron REST API share a consistent set of query parameters for pagination, sorting, and filtering.
+
+## Pagination
+
+Most list endpoints use **page‑based pagination**:
+
+| Parameter | Type    | Default | Max | Description                   |
+| --------- | ------- | ------- | --- | ----------------------------- |
+| `page`    | integer | `1`     | —   | 1‑based page number.          |
+| `limit`   | integer | `15`    | `100` | Number of items per page.   |
+
+The response echoes the current `page` and `limit`, and includes `total` for building pagination controls or iterating until exhausted:
+
+```json
+{
+  "data": [/* items for this page */],
+  "total": 284,
+  "page": 2,
+  "limit": 50
+}
+```
+
+To iterate all pages:
+
+```bash
+page=1
+while : ; do
+  curl -s "https://api.hacktron.ai/v1/findings?page=$page&limit=100" \
+    -H "X-Api-Key: $HACKTRON_API_KEY"
+  # ... extract data, break when (page * limit) >= total
+  page=$((page + 1))
+done
+```
+
+<Note>
+  **Cost Estimations** use offset‑based pagination instead, with `limit` (default `50`, max `100`) and `offset` (default `0`). This is called out explicitly on the [List Cost Estimations](/api-reference/cost-estimations/list-cost-estimations) page.
+</Note>
+
+## Sorting
+
+Endpoints that support sorting accept two parameters:
+
+| Parameter    | Type   | Description                                       |
+| ------------ | ------ | ------------------------------------------------- |
+| `sort_by`    | enum   | Which field to sort by. Valid values vary per endpoint. |
+| `sort_order` | enum   | `ASC` or `DESC`. Defaults to `DESC`.              |
+
+The allowed `sort_by` values are documented on each list endpoint. Examples:
+
+- **List scans**: `created_at`, `updated_at`, `status`
+- **List findings**: `found_at`, `updated_at`, `severity`
+
+If `sort_by` is omitted, the endpoint-specific default applies (see each list page).
+
+## Filtering
+
+Filters are passed as additional query parameters. Each list endpoint documents the filters it supports. The patterns below are shared across list endpoints.
+
+### Enum filters
+
+Enum filters accept the canonical lower‑snake‑case value and return only records that match:
+
+```bash
+# Only critical findings
+GET /findings?severity=critical
+
+# Only scans that have finished successfully
+GET /scans?status=completed
+```
+
+### Scoped filters
+
+Some filters restrict results to a related resource:
+
+```bash
+# Findings for a specific scan
+GET /findings?scan_id=123e4567-e89b-12d3-a456-426614174000
+```
+
+Scoped filters validate that the target resource belongs to your organization. `404` is returned if the resource does not exist or is not visible to the key.
+
+### Combining filters
+
+Multiple filters combine with AND semantics:
+
+```bash
+GET /findings?severity=high&state=open&scan_id=...
+```
+
+There is no OR operator. Call the endpoint multiple times and merge results client-side if a union is required.
+
+## Example
+
+Fetch the 25 most recently updated high‑severity findings that are still open:
+
+```bash
+curl "https://api.hacktron.ai/v1/findings?severity=high&state=open&sort_by=updated_at&sort_order=DESC&page=1&limit=25" \
+  -H "X-Api-Key: $HACKTRON_API_KEY"
+```
