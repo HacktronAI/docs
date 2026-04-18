@@ -1,0 +1,57 @@
+---
+title: "Get scan"
+api: "GET /scans/{id}"
+description: "Fetch a single scan, including its findings summary."
+---
+
+Returns the full record for a single scan, including its findings summary.
+
+<Info>
+  **Scope required**: `read`
+</Info>
+
+## Request
+
+```bash
+curl "https://api.hacktron.ai/api/v1/rest/scans/a1b2c3d4-e5f6-7890-abcd-ef1234567890" \
+  -H "X-Api-Key: $HACKTRON_API_KEY"
+```
+
+### Path parameters
+
+| Parameter | Type | Description     |
+| --------- | ---- | --------------- |
+| `id`      | UUID | Scan UUID.      |
+
+## Response
+
+`200 OK`
+
+```json
+{
+  "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "task_id": "web_scan_1712345678",
+  "scan_type": "full",
+  "status": "completed",
+  "name": "acme/backend@main",
+  "repo_url": "https://github.com/acme/backend",
+  "branch": "main",
+  "pr_number": null,
+  "target_urls": ["https://staging.acme.com"],
+  "findings_summary": {
+    "critical": 1,
+    "high": 3,
+    "medium": 7,
+    "low": 12,
+    "info": 4
+  },
+  "created_at": "2026-04-13T12:00:00.000Z",
+  "updated_at": "2026-04-13T13:42:18.000Z"
+}
+```
+
+See [List scans](/api-reference/scans/list-scans) for a description of each field.
+
+## Errors
+
+- `404` — scan not found or not visible to your organization.

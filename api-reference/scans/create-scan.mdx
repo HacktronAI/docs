@@ -1,0 +1,87 @@
+---
+title: "Trigger a pentest scan"
+api: "POST /scans"
+description: "Start a pentest scan against one or more repositories."
+---
+
+Starts a full pentest scan against the repositories attached to a completed cost estimation. Scans run asynchronously; the endpoint returns immediately with a scan `id` for polling.
+
+<Info>
+  **Scope required**: `write`
+</Info>
+
+## Prerequisites
+
+1. Create a cost estimation with [`POST /cost-estimations`](/api-reference/cost-estimations/create-cost-estimation) and wait for it to reach `completed` status.
+2. Ensure your organization has enough pentest credits (visible in **Billing** in the dashboard). Insufficient credits return `402 Payment Required`.
+
+## Request
+
+```bash
+curl -X POST https://api.hacktron.ai/api/v1/rest/scans \
+  -H "X-Api-Key: $HACKTRON_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "cost_estimation_id": "b4f5c6a1-2d3e-4f56-9a8b-0c1d2e3f4a5b",
+    "repos": [
+      {
+        "url": "https://github.com/acme/backend",
+        "branch": "main",
+        "source": "connected"
+      }
+    ],
+    "target_urls": ["https://staging.acme.com"],
+    "auth_instructions": "Use test account test@acme.com / hunter2",
+    "custom_context": "Focus on the payment flow under /api/v1/checkout"
+  }'
+```
+
+### Body
+
+| Field                  | Type     | Required | Description                                                                                                             |
+| ---------------------- | -------- | -------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `cost_estimation_id`   | UUID     | Yes      | ID of a completed cost estimation. The first repo in `repos` must match the estimation.                                  |
+| `repos`                | object[] | Yes      | At least one repository. The first is the primary target; any additional entries are scanned as related repositories.  |
+| `target_urls`          | string[] | No       | Live URLs to include in the pentest (for example a staging environment).                                                |
+| `auth_instructions`    | string   | No       | Credentials or steps the scanner should follow to authenticate. Max 2000 chars.                                          |
+| `custom_context`       | string   | No       | Additional context: scope, areas to emphasise, exclusions. Max 2000 chars.                                             |
+| `context_document_ids` | UUID[]   | No       | IDs of context documents to attach to the scan.                                                                         |
+
+### Repo object
+
+| Field    | Type   | Required | Description                                                             |
+| -------- | ------ | -------- | ----------------------------------------------------------------------- |
+| `url`    | string | Yes      | HTTPS URL of the repository.                                            |
+| `branch` | string | Yes      | Branch to scan.                                                         |
+| `source` | enum   | No       | `connected`, `public`, or `upload`. Defaults to `connected`.            |
+
+## Response
+
+`201 Created`
+
+```json
+{
+  "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "task_id": "web_scan_1712345678",
+  "status": "pending",
+  "message": "Scan started"
+}
+```
+
+| Field     | Type   | Description                                                   |
+| --------- | ------ | ------------------------------------------------------------- |
+| `id`      | UUID   | Scan UUID. Use this to fetch status, details, and findings. |
+| `task_id` | string | Internal task identifier (also visible in the dashboard).    |
+| `status`  | string | Always `pending` at creation time.                           |
+| `message` | string | Status message suitable for display.                          |
+
+## Errors
+
+- `400` — missing `repos`, invalid `cost_estimation_id`, or validation failure.
+- `401` / `403` — authentication or scope failure.
+- `402` — insufficient pentest credits. Top up from the **Billing** page in the dashboard.
+
+## Next steps
+
+- Poll [`GET /scans/{id}/status`](/api-reference/scans/get-scan-status) until status is `completed`.
+- Fetch findings with [`GET /scans/{id}/findings`](/api-reference/scans/list-scan-findings) or export them with [`GET /scans/{id}/findings/export`](/api-reference/scans/export-scan-findings).

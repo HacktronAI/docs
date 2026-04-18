@@ -1,0 +1,87 @@
+---
+title: "List findings"
+api: "GET /findings"
+description: "List findings across all scans in your organization."
+---
+
+Returns findings across every scan in the organization, with filtering and sorting. Only findings that have passed automated verification (`verification_status = approved`) are returned.
+
+<Info>
+  **Scope required**: `read`
+</Info>
+
+## Request
+
+```bash
+curl "https://api.hacktron.ai/api/v1/rest/findings?severity=critical&state=open&sort_by=found_at&sort_order=DESC&page=1&limit=50" \
+  -H "X-Api-Key: $HACKTRON_API_KEY"
+```
+
+### Query parameters
+
+| Parameter    | Type    | Default    | Description                                                                                             |
+| ------------ | ------- | ---------- | ------------------------------------------------------------------------------------------------------- |
+| `page`       | integer | `1`        | 1‑based page number.                                                                                    |
+| `limit`      | integer | `15`       | Items per page. Max `100`.                                                                              |
+| `severity`   | enum    | —          | Filter by severity: `critical`, `high`, `medium`, `low`, `info`.                                        |
+| `state`      | enum    | —          | Filter by state: `open`, `true_positive`, `false_positive`, `accepted_risk`, `resolved`.                |
+| `scan_id`    | UUID    | —          | Only return findings produced by this scan. The scan must exist in the organization.                   |
+| `sort_by`    | enum    | `found_at` | One of `found_at`, `updated_at`, `severity`.                                                            |
+| `sort_order` | enum    | `DESC`     | `ASC` or `DESC`.                                                                                        |
+
+## Response
+
+`200 OK`
+
+```json
+{
+  "data": [
+    {
+      "id": "d1e2f3a4-b5c6-7890-1234-567890abcdef",
+      "title": "SQL injection in /api/v1/checkout",
+      "category": "injection",
+      "severity": "critical",
+      "state": "open",
+      "description": "User-supplied cart ID is concatenated into a SQL query...",
+      "affected_file": "apps/api/src/checkout/checkout.service.ts",
+      "affected_code": "const rows = await conn.query(`SELECT * FROM carts WHERE id = '${cartId}'`);",
+      "proof_of_concept": "POST /api/v1/checkout with cart_id=1' OR '1'='1",
+      "impact": "Full read access to the carts table, including other customers' items.",
+      "root_cause": "String interpolation instead of parameterised query.",
+      "remediation": "Use parameterised queries via the driver's placeholder API.",
+      "tags": ["injection", "sql"],
+      "scan_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "found_at": "2026-04-13T12:15:00.000Z",
+      "updated_at": "2026-04-13T12:20:00.000Z"
+    }
+  ],
+  "total": 284,
+  "page": 1,
+  "limit": 50
+}
+```
+
+### Finding fields
+
+| Field              | Type          | Description                                                                 |
+| ------------------ | ------------- | --------------------------------------------------------------------------- |
+| `id`               | UUID          | Finding identifier.                                                         |
+| `title`            | string        | Short summary.                                                              |
+| `category`         | string        | Vulnerability category (for example `injection`, `auth`, `xss`).            |
+| `severity`         | enum          | `critical`, `high`, `medium`, `low`, `info`.                                |
+| `state`            | enum          | `open`, `true_positive`, `false_positive`, `accepted_risk`, `resolved`.     |
+| `description`      | string        | Long‑form description of the issue.                                         |
+| `affected_file`    | string        | Path relative to the repository root.                                       |
+| `affected_code`    | string        | Code snippet of the affected location.                                      |
+| `proof_of_concept` | string\|null  | Reproduction steps or payload. `null` if none was captured.                 |
+| `impact`           | string\|null  | Impact narrative.                                                           |
+| `root_cause`       | string\|null  | Root-cause narrative.                                                       |
+| `remediation`      | string\|null  | Suggested fix.                                                              |
+| `tags`             | string[]      | Free‑form tags.                                                             |
+| `scan_id`          | UUID\|null    | Scan that produced this finding.                                            |
+| `found_at`         | string        | ISO 8601 timestamp when the finding was first discovered.                   |
+| `updated_at`       | string        | ISO 8601 timestamp of the most recent state or severity change.             |
+
+## Errors
+
+- `404` — `scan_id` was provided but the scan does not exist or is not visible.

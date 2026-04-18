@@ -1,0 +1,65 @@
+---
+title: "Errors"
+description: "HTTP status codes and error response shapes."
+---
+
+The Hacktron REST API uses standard HTTP status codes to indicate success and failure.
+
+## Status codes
+
+| Status | Meaning                                                                                                    |
+| ------ | ---------------------------------------------------------------------------------------------------------- |
+| `200`  | Successful `GET` or `PATCH`.                                                                               |
+| `201`  | Successful `POST` — a new resource was created.                                                            |
+| `204`  | Successful request with no response body (for example, revoking a key).                                    |
+| `400`  | Bad request. Typically a validation failure; `message` identifies the field that failed validation.        |
+| `401`  | Missing, malformed, revoked, or expired API key.                                                           |
+| `402`  | Payment required. Returned by `POST /scans` when the organization has insufficient pentest credits.        |
+| `403`  | Your API key does not have the required scope.                                                             |
+| `404`  | The resource does not exist, or is not visible to your organization.                                       |
+| `409`  | Conflict. For example, exceeding the maximum active API key count when creating a new key.                 |
+| `429`  | Rate limit exceeded. See [Rate limits](/api-reference/rate-limits).                                        |
+| `500`  | Unexpected server error. Safe to retry with backoff; contact support if it persists.                       |
+
+## Error body shape
+
+Errors are returned as JSON with a consistent shape:
+
+```json
+{
+  "statusCode": 400,
+  "message": "At least one repository is required",
+  "error": "Bad Request"
+}
+```
+
+Validation errors may return `message` as an array of field‑level errors:
+
+```json
+{
+  "statusCode": 400,
+  "message": [
+    "repos must contain at least 1 elements",
+    "cost_estimation_id must be a UUID"
+  ],
+  "error": "Bad Request"
+}
+```
+
+## Common failure modes
+
+### "This endpoint requires API key authentication"
+
+A REST endpoint was called with a dashboard session token instead of an API key. REST endpoints under `/api/v1/rest/*` require the `X-Api-Key` header.
+
+### "API key missing required scope: write"
+
+The key was created with `read` only but the request targets a write endpoint. Create a new key that includes the `write` scope and retry.
+
+### "Insufficient credits to start this scan"
+
+The organization does not have enough pentest credits for the requested scan. Top up from **Billing** in the dashboard, or submit a smaller cost estimation.
+
+### "Finding not found"
+
+Returned when the finding does not exist, has not yet reached the approved verification state, or belongs to a different organization. Hacktron does not distinguish between these cases in the response to avoid leaking cross‑tenant information.

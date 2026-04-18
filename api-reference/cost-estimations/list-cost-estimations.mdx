@@ -1,0 +1,86 @@
+---
+title: "List cost estimations"
+api: "GET /cost-estimations"
+description: "List cost estimations for your organization."
+---
+
+Returns cost estimations for the organization, most recent first. Use offset-based pagination to page through results.
+
+<Info>
+  **Scope required**: `read`
+</Info>
+
+<Note>
+  Unlike most list endpoints, cost estimations use **offset‑based pagination** (`limit` + `offset`) instead of `page` + `limit`. See [Pagination, filtering & sorting](/api-reference/pagination-filtering) for the general conventions.
+</Note>
+
+## Request
+
+```bash
+curl "https://api.hacktron.ai/api/v1/rest/cost-estimations?limit=20&offset=0" \
+  -H "X-Api-Key: $HACKTRON_API_KEY"
+```
+
+### Query parameters
+
+| Parameter | Type    | Default | Max | Description                          |
+| --------- | ------- | ------- | --- | ------------------------------------ |
+| `limit`   | integer | `50`    | `100` | Number of items to return.         |
+| `offset`  | integer | `0`     | —   | Number of items to skip.             |
+
+## Response
+
+`200 OK`
+
+```json
+{
+  "data": [
+    {
+      "id": "b4f5c6a1-2d3e-4f56-9a8b-0c1d2e3f4a5b",
+      "organization_id": "f336d0bc-b841-465b-8045-024475c079dd",
+      "user_id": "e5a6d7c8-9b0a-1c2d-3e4f-5a6b7c8d9e0f",
+      "name": "nightly-estimate",
+      "task_id": "cost_est_acme-backend_1712345678",
+      "status": "completed",
+      "repos": [
+        {
+          "source": "connected",
+          "repo_url": "https://github.com/acme/backend",
+          "branch": "main",
+          "commit_sha": "abc123def456"
+        }
+      ],
+      "total_credits": 4200,
+      "repo_results": [
+        {
+          "repo_url": "https://github.com/acme/backend",
+          "branch": "main",
+          "commit_sha": "abc123def456",
+          "status": "completed",
+          "from_cache": false,
+          "credits": 4200,
+          "applications": [
+            {
+              "app_name": "backend-api",
+              "app_root_path": "apps/api",
+              "architecture": "NestJS REST API with PostgreSQL"
+            }
+          ]
+        }
+      ],
+      "created_at": "2026-04-13T12:00:00.000Z",
+      "updated_at": "2026-04-13T12:03:21.000Z"
+    }
+  ],
+  "total": 42
+}
+```
+
+### Fields
+
+| Field   | Type     | Description                                         |
+| ------- | -------- | --------------------------------------------------- |
+| `data`  | object[] | The estimations on this page.                       |
+| `total` | integer  | Total number of estimations in the organization.    |
+
+See [Create cost estimation](/api-reference/cost-estimations/create-cost-estimation) for the full estimation object shape.

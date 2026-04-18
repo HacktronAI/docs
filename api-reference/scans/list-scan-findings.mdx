@@ -1,0 +1,75 @@
+---
+title: "List scan findings"
+api: "GET /scans/{id}/findings"
+description: "Paginate through the findings produced by a scan."
+---
+
+Returns findings produced by a specific scan, with the same filtering and sorting controls as [List findings](/api-reference/findings/list-findings).
+
+Only findings that have passed automated verification (`verification_status = approved`) are returned.
+
+<Info>
+  **Scope required**: `read`
+</Info>
+
+## Request
+
+```bash
+curl "https://api.hacktron.ai/api/v1/rest/scans/a1b2c3d4-e5f6-7890-abcd-ef1234567890/findings?severity=high&state=open&page=1&limit=50" \
+  -H "X-Api-Key: $HACKTRON_API_KEY"
+```
+
+### Path parameters
+
+| Parameter | Type | Description   |
+| --------- | ---- | ------------- |
+| `id`      | UUID | Scan UUID.    |
+
+### Query parameters
+
+| Parameter    | Type    | Default | Description                                                                              |
+| ------------ | ------- | ------- | ---------------------------------------------------------------------------------------- |
+| `page`       | integer | `1`     | 1‑based page number.                                                                     |
+| `limit`      | integer | `15`    | Items per page. Max `100`.                                                               |
+| `severity`   | enum    | —       | Filter by severity: `critical`, `high`, `medium`, `low`, `info`.                         |
+| `state`      | enum    | —       | Filter by state: `open`, `true_positive`, `false_positive`, `accepted_risk`, `resolved`. |
+| `sort_by`    | enum    | `found_at` | One of `found_at`, `updated_at`, `severity`.                                          |
+| `sort_order` | enum    | `DESC`  | `ASC` or `DESC`.                                                                         |
+
+## Response
+
+`200 OK`
+
+```json
+{
+  "data": [
+    {
+      "id": "d1e2f3a4-b5c6-7890-1234-567890abcdef",
+      "title": "SQL injection in /api/v1/checkout",
+      "category": "injection",
+      "severity": "critical",
+      "state": "open",
+      "description": "User-supplied cart ID is concatenated into a SQL query...",
+      "affected_file": "apps/api/src/checkout/checkout.service.ts",
+      "affected_code": "const rows = await conn.query(`SELECT * FROM carts WHERE id = '${cartId}'`);",
+      "proof_of_concept": "POST /api/v1/checkout with cart_id=1' OR '1'='1",
+      "impact": "Full read access to the carts table, including other customers' items.",
+      "root_cause": "String interpolation instead of parameterised query.",
+      "remediation": "Use parameterised queries via the driver's placeholder API.",
+      "tags": ["injection", "sql"],
+      "scan_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "found_at": "2026-04-13T12:15:00.000Z",
+      "updated_at": "2026-04-13T12:20:00.000Z"
+    }
+  ],
+  "total": 11,
+  "page": 1,
+  "limit": 50
+}
+```
+
+See [List findings](/api-reference/findings/list-findings#finding-fields) for the field reference.
+
+## Errors
+
+- `404` — scan not found or not visible to your organization.

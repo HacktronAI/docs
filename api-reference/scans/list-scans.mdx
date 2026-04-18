@@ -1,0 +1,94 @@
+---
+title: "List scans"
+api: "GET /scans"
+description: "List scans with pagination, filtering, and sorting."
+---
+
+Returns scans in your organization, with filtering by type and status.
+
+<Info>
+  **Scope required**: `read`
+</Info>
+
+## Request
+
+```bash
+curl "https://api.hacktron.ai/api/v1/rest/scans?status=completed&sort_by=created_at&sort_order=DESC&page=1&limit=25" \
+  -H "X-Api-Key: $HACKTRON_API_KEY"
+```
+
+### Query parameters
+
+| Parameter    | Type    | Default | Description                                                         |
+| ------------ | ------- | ------- | ------------------------------------------------------------------- |
+| `page`       | integer | `1`     | 1‑based page number.                                                |
+| `limit`      | integer | `15`    | Items per page. Max `100`.                                          |
+| `scan_type`  | enum    | —       | Filter by scan type. Values: `pr`, `full`.                          |
+| `status`     | enum    | —       | Filter by status. See [Scan statuses](#scan-statuses).              |
+| `sort_by`    | enum    | `created_at` | One of `created_at`, `updated_at`, `status`.                   |
+| `sort_order` | enum    | `DESC`  | `ASC` or `DESC`.                                                    |
+
+### Scan statuses
+
+| Value                   | Meaning                                                        |
+| ----------------------- | -------------------------------------------------------------- |
+| `pending`               | Scan queued, not yet started.                                  |
+| `running`               | Scan is in progress.                                           |
+| `pending_verification`  | Findings are being verified automatically.                     |
+| `pending_triage`        | Findings are ready for triage.                                 |
+| `completed`             | Scan finished successfully.                                    |
+| `failed`                | Scan failed. See scan detail for error context.                |
+| `stopped` / `cancelled` | Scan was stopped or cancelled before completion.               |
+| `skipped`               | Scan was skipped (no applicable content).                      |
+| `draft`                 | Scan was created but never started.                            |
+
+## Response
+
+`200 OK`
+
+```json
+{
+  "data": [
+    {
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "task_id": "web_scan_1712345678",
+      "scan_type": "full",
+      "status": "completed",
+      "name": "acme/backend@main",
+      "repo_url": "https://github.com/acme/backend",
+      "branch": "main",
+      "pr_number": null,
+      "target_urls": ["https://staging.acme.com"],
+      "findings_summary": {
+        "critical": 1,
+        "high": 3,
+        "medium": 7,
+        "low": 12,
+        "info": 4
+      },
+      "created_at": "2026-04-13T12:00:00.000Z",
+      "updated_at": "2026-04-13T13:42:18.000Z"
+    }
+  ],
+  "total": 142,
+  "page": 1,
+  "limit": 25
+}
+```
+
+### Scan object fields
+
+| Field               | Type          | Description                                                      |
+| ------------------- | ------------- | ---------------------------------------------------------------- |
+| `id`                | UUID          | Scan identifier.                                                 |
+| `task_id`           | string        | Internal task ID for correlation with the dashboard.             |
+| `scan_type`         | enum          | `pr` or `full`.                                                  |
+| `status`            | enum          | Current scan status.                                             |
+| `name`              | string\|null  | Display name. Defaults to `repo@branch`.                         |
+| `repo_url`          | string\|null  | Primary repository URL.                                          |
+| `branch`            | string\|null  | Primary branch scanned.                                          |
+| `pr_number`         | integer\|null | GitHub PR number (PR scans only).                                |
+| `target_urls`       | string[]\|null| Live targets (pentest scans).                                    |
+| `findings_summary`  | object        | Approved finding counts by severity.                             |
+| `created_at`        | string        | ISO 8601 timestamp.                                              |
+| `updated_at`        | string        | ISO 8601 timestamp.                                              |

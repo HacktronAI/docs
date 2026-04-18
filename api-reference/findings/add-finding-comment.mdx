@@ -1,0 +1,51 @@
+---
+title: "Add finding comment"
+api: "POST /findings/{id}/comments"
+description: "Append a comment to a finding's triage thread."
+---
+
+Appends a comment to a finding's triage thread. Comments appear in the dashboard alongside comments from GitHub, Slack, and other integrations.
+
+<Info>
+  **Scope required**: `write`
+</Info>
+
+## Request
+
+```bash
+curl -X POST https://api.hacktron.ai/api/v1/rest/findings/d1e2f3a4-b5c6-7890-1234-567890abcdef/comments \
+  -H "X-Api-Key: $HACKTRON_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "comment": "Confirmed reproducible on staging. Opened JIRA-4821."
+  }'
+```
+
+### Path parameters
+
+| Parameter | Type | Description       |
+| --------- | ---- | ----------------- |
+| `id`      | UUID | Finding UUID.     |
+
+### Body
+
+| Field     | Type   | Required | Description                                |
+| --------- | ------ | -------- | ------------------------------------------ |
+| `comment` | string | Yes      | Comment text. 1–4000 characters.           |
+
+## Response
+
+`201 Created`
+
+```json
+{
+  "comment_id": "c0ffee01-feed-4bad-badc-0ffee0000002"
+}
+```
+
+The comment is tagged with `source: "api"` and attributed to the API key's creator. It then appears in the finding's [`triage_thread`](/api-reference/findings/get-finding).
+
+## Errors
+
+- `400` — comment missing or exceeds 4000 characters.
+- `404` — finding not found or not visible to your organization.
