@@ -16,7 +16,7 @@
     }
   },
   "banner": {
-    "content": "New: Explore the [Hacktron Platform](/platform/overview) for org-wide setup, reviews, billing, and pentests.",
+    "content": "New: Explore the [Hacktron Platform](/platform/quickstart) for org-wide setup, reviews, billing, and pentests.",
     "dismissible": true
   },
   "favicon": "/favicon.png",
