@@ -1,0 +1,52 @@
+---
+title: "Rate limits"
+description: "Request quotas, 429 behaviour, and how to back off."
+---
+
+The Hacktron REST API rate limits requests per API key.
+
+## Limit
+
+- **100 requests per 60 seconds** per API key, across all REST endpoints.
+
+The window is rolling; there is no fixed start or end. After 100 requests at `t=0`, the next request is accepted at approximately `t=60s`.
+
+Requests authenticated with dashboard sessions (not API keys) do not count against this limit.
+
+## 429 responses
+
+When a key exceeds the limit, the API returns `429 Too Many Requests`:
+
+```http
+HTTP/1.1 429 Too Many Requests
+Content-Type: application/json
+
+{
+  "statusCode": 429,
+  "message": "ThrottlerException: Too Many Requests"
+}
+```
+
+The request body is not consumed; the request is rejected before it reaches the application.
+
+## Backing off
+
+Recommended client behaviour on a `429`:
+
+1. Stop issuing requests with the affected key.
+2. Retry with exponential backoff (for example 1s, 2s, 4s, 8s).
+3. If the limit is hit consistently, spread the workload over a longer window or contact Hacktron support about a higher quota.
+
+For workloads that require higher sustained throughput (for example, backfilling findings into an external system), contact [support](mailto:founders@hacktron.ai) with the use case.
+
+## Concurrency and long‑running scans
+
+`POST /scans` enqueues the scan and returns immediately; no long‑lived connection is required while the scan runs.
+
+The recommended pattern:
+
+1. `POST /scans` to start the scan and capture the returned `id`.
+2. `GET /scans/{id}/status` at a 10–30 second interval to check progress.
+3. Once `status` is `completed`, fetch findings with `GET /scans/{id}/findings` or `GET /scans/{id}/findings/export`.
+
+Polling counts toward the rate limit. Use intervals no shorter than 10 seconds.

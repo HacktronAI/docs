@@ -1,0 +1,90 @@
+---
+title: "Get finding"
+api: "GET /findings/{id}"
+description: "Fetch a single finding with full triage context."
+---
+
+Returns a single finding along with its triage thread, occurrence count, repository URL, scan type, and a Mermaid diagram of the vulnerability trace when one was produced.
+
+<Info>
+  **Scope required**: `read`
+</Info>
+
+## Request
+
+```bash
+curl "https://api.hacktron.ai/v1/findings/d1e2f3a4-b5c6-7890-1234-567890abcdef" \
+  -H "X-Api-Key: $HACKTRON_API_KEY"
+```
+
+### Path parameters
+
+| Parameter | Type | Description       |
+| --------- | ---- | ----------------- |
+| `id`      | UUID | Finding UUID.     |
+
+## Response
+
+`200 OK` — all the fields from [List findings](/api-reference/findings/list-findings#finding-fields), plus:
+
+```json
+{
+  "id": "d1e2f3a4-b5c6-7890-1234-567890abcdef",
+  "title": "SQL injection in /api/v1/checkout",
+  "category": "injection",
+  "severity": "critical",
+  "state": "open",
+  "description": "...",
+  "affected_file": "apps/api/src/checkout/checkout.service.ts",
+  "affected_code": "...",
+  "proof_of_concept": "...",
+  "impact": "...",
+  "root_cause": "...",
+  "remediation": "...",
+  "tags": ["injection", "sql"],
+  "scan_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "found_at": "2026-04-13T12:15:00.000Z",
+  "updated_at": "2026-04-13T12:20:00.000Z",
+  "triage_thread": [
+    {
+      "id": "c0ffee01-feed-4bad-badc-0ffee0000001",
+      "reaction": null,
+      "comment": "Confirmed reproducible on staging — cart_id=1' OR '1'='1 returns 200 with full row dump.",
+      "user_id": "e5a6d7c8-9b0a-1c2d-3e4f-5a6b7c8d9e0f",
+      "username": "alex",
+      "source": "api",
+      "timestamp": "2026-04-13T12:22:00.000Z"
+    }
+  ],
+  "mermaid_trace": "graph TD\n  A[Request] --> B[checkout.service.ts]\n  B --> C[(Postgres)]",
+  "occurrence_count": 1,
+  "repo_url": "https://github.com/acme/backend",
+  "scan_type": "full"
+}
+```
+
+### Extra fields
+
+| Field              | Type            | Description                                                                                   |
+| ------------------ | --------------- | --------------------------------------------------------------------------------------------- |
+| `triage_thread`    | object[]        | Comments and reactions on the finding, aggregated across GitHub, Slack, the web app, and the API. |
+| `mermaid_trace`    | string\|null    | Mermaid diagram source for the vulnerability trace. `null` when Hacktron did not produce one.     |
+| `occurrence_count` | integer         | Number of scans in which this finding has appeared. Minimum `1`.                                  |
+| `repo_url`         | string\|null    | Primary repository URL of the parent scan.                                                        |
+| `scan_type`        | enum\|null      | `pr` or `full`.                                                                               |
+
+### Triage thread entry
+
+| Field       | Type          | Description                                                              |
+| ----------- | ------------- | ------------------------------------------------------------------------ |
+| `id`        | UUID          | Entry identifier.                                                        |
+| `reaction`  | string\|null  | Triage reaction. One of the finding states (`open`, `true_positive`, `false_positive`, `accepted_risk`, `resolved`). `null` for comment-only entries. |
+| `comment`   | string\|null  | Comment text. `null` for reaction-only entries.                          |
+| `user_id`   | UUID          | Author user ID.                                                          |
+| `username`  | string        | Author display name.                                                     |
+| `source`    | enum          | Origin of the entry. One of `github`, `slack`, `web`, `api`, `agent`.    |
+| `timestamp` | string        | ISO 8601 timestamp.                                                      |
+
+## Errors
+
+- `404` — finding not found, still in verification, or not visible to your organization.

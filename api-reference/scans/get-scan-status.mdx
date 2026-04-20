@@ -1,0 +1,50 @@
+---
+title: "Get scan status"
+api: "GET /scans/{id}/status"
+description: "Lightweight endpoint for polling a scan until it completes."
+---
+
+Returns a minimal payload with the scan's current status. Use this for polling; the response omits the findings summary that `GET /scans/{id}` computes.
+
+<Info>
+  **Scope required**: `read`
+</Info>
+
+## Request
+
+```bash
+curl "https://api.hacktron.ai/v1/scans/a1b2c3d4-e5f6-7890-abcd-ef1234567890/status" \
+  -H "X-Api-Key: $HACKTRON_API_KEY"
+```
+
+### Path parameters
+
+| Parameter | Type | Description   |
+| --------- | ---- | ------------- |
+| `id`      | UUID | Scan UUID.    |
+
+## Response
+
+`200 OK`
+
+```json
+{
+  "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "task_id": "web_scan_1712345678",
+  "status": "running",
+  "created_at": "2026-04-13T12:00:00.000Z",
+  "updated_at": "2026-04-13T12:18:04.000Z"
+}
+```
+
+See [List scans](/api-reference/scans/list-scans#scan-statuses) for the full list of status values.
+
+## Recommended polling
+
+A poll interval of **10–30 seconds** is sufficient. Pentest scans complete on the order of minutes; tighter polling provides no additional signal and consumes the [rate limit](/api-reference/rate-limits) quota.
+
+Stop polling when `status` reaches a terminal value: `completed`, `failed`, `stopped`, `cancelled`, or `skipped`.
+
+## Errors
+
+- `404` — scan not found or not visible to your organization.
