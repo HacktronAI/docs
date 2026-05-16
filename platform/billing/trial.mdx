@@ -9,7 +9,7 @@ description: "How the 14-day Dev-seat trial works, what it includes, and when to
 
 Hacktron offers a **14-day Dev-seat trial** for organizations that have never trialed before. The trial is one-time per organization and starts the moment an Owner adds a payment method on the **Billing** page.
 
-This page covers how the trial behaves, what changes when it ends, and the path for organizations that prefer to skip it.
+This page covers how the trial behaves, the three ways it can end, and how to end it early when you're ready to start paid billing now.
 
 ## At a glance
 
@@ -33,10 +33,10 @@ This page covers how the trial behaves, what changes when it ends, and the path 
     The Owner navigates to **Billing** in the Platform.
   </Step>
   <Step title="Add a payment method">
-    Card details go straight to Stripe — Hacktron never sees raw card data. Adding a payment method is required to start the trial.
+    Card details go straight to Stripe — Hacktron never sees raw card data. Adding a payment method on a trial-eligible org auto-starts the trial as soon as the modal closes.
   </Step>
-  <Step title="Start the trial">
-    The Owner confirms the trial. The organization enters the 14-day window immediately.
+  <Step title="Trial is active">
+    The organization enters the 14-day window immediately. `has_used_trial` is set permanently at this moment — see the Warning below.
   </Step>
 </Steps>
 
@@ -72,28 +72,28 @@ The trial ends one of three ways:
   </Tab>
 </Tabs>
 
-## The trial-skip path
+## Skipping the trial
 
 <Note>
-  This is the path for organizations that already know they want a paid plan and prefer to start the billing period today rather than 14 days from now.
+  Use this when the team is ready to start paid billing now and doesn't want to wait out the remaining trial days.
 </Note>
 
-Some teams want to go straight to paid — for example, when migrating from another vendor mid-quarter. To skip the trial:
+There is no separate "Start paid plan" entry point from the No-subscription state — every paid subscription starts as a trial. To get to paid billing immediately, start the trial and end it the same day. Mechanically:
 
 <Steps>
-  <Step title="Owner adds a payment method on Billing">
-    Same as starting the trial.
+  <Step title="Owner starts the trial">
+    Add a payment method on the Billing page. The trial begins as soon as the modal closes; `has_used_trial` is set permanently at this moment.
   </Step>
-  <Step title="Owner chooses 'Start paid plan' instead of 'Start trial'">
-    The Billing page surfaces both options when no subscription exists yet.
+  <Step title="Owner clicks Skip trial on the Billing sidebar">
+    The button appears whenever the subscription is `trialing` and not already pending cancellation.
   </Step>
-  <Step title="Subscription activates immediately">
-    Seats auto-assign as PRs arrive. The billing period starts today. The first invoice issues at the period close.
+  <Step title="Subscription converts to paid immediately">
+    Stripe's `trial_end` is set to "now" and `cancel_at_period_end` is reset to `false`. The first paid invoice issues at the current period close; the period boundary is the moment you skipped.
   </Step>
 </Steps>
 
 <Warning>
-  **The trial is one-time per organization.** Once a trial has been started — even if it was canceled, expired without conversion, or converted and then canceled — that organization can never trial again. This applies to both natural-trial and skip-trial paths: starting the trial flips a permanent flag on the organization. If your organization has already used its trial and you cancel later, your only path back to paid is **Resubscribe**, not a new trial.
+  **The trial is one-time per organization.** Once an Owner adds a payment method on a trial-eligible org, `has_used_trial` flips to true permanently — even if you skip the trial on day 1 or cancel before day 14. Future cancel→reactivate cycles go through **Resubscribe**, not a new trial. There is no admin override.
 </Warning>
 
 ## What's not available during the trial
@@ -104,8 +104,8 @@ Some teams want to go straight to paid — for example, when migrating from anot
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="The Owner clicks 'Start trial' but nothing happens.">
-    Check that a payment method has been attached. Trial activation requires a payment method on file even though no charge is issued.
+  <Accordion title="We clicked 'Add payment method' but the trial didn't start.">
+    Check that the org has not already used its trial — `has_used_trial` is permanent. If `has_used_trial` is true, adding a payment method only attaches the card; it does not start a new trial. The Billing sidebar will show **Resubscribe** for that case.
   </Accordion>
   <Accordion title="We trialed last quarter and canceled. Can we trial again?">
     No. Each organization is permitted one trial only. If the org has used its trial, the Billing page will show **Resubscribe** instead of **Start trial**. There is no admin override.

@@ -41,7 +41,7 @@ The team finishes the period with 6 active seats but is invoiced for 8 — the p
 
 The peak is tracked in the `dev_seat_period_usage` record for the organization's current period:
 
-- **`max_assigned_count`** — the HWM. Monotonically increases during the period.
+- **`max_assigned_count`** — the HWM. Monotonically non-decreasing within a billing period; reset on period rollover.
 - **`billable_dev_seats`** — equals `max_assigned_count`. This is what Stripe's `quantity` is synced to.
 - **`pending_reduction_next_period`** — the difference between the HWM and the current active count. Informational; reflects how many seats will "drop off" at the next period start.
 

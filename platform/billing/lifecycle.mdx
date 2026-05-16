@@ -13,7 +13,7 @@ A Dev-seat subscription moves through a small set of states over its life. This 
 
 | State | What it means | Developers can scan? | Recoverable? |
 | --- | --- | --- | --- |
-| **No subscription** | Org has never had a paid plan or trial | No | Yes — start trial or skip-trial path |
+| **No subscription** | Org has never had a paid plan or trial | No | Yes — add a payment method to start the trial |
 | **Trial active** | 14-day trial window in progress | Yes | — (this is the goal state) |
 | **Paid active** | Paid plan with current invoices | Yes | — |
 | **Grace period** | Owner canceled; period not yet ended | Yes (until period close) | Yes — reactivate before period closes |
@@ -88,12 +88,13 @@ The Billing page surfaces the current state in the subscription card at the top.
 
 | State | Visible actions |
 | --- | --- |
-| No subscription | Add payment method, Start trial, Start paid plan |
-| Trial active | End trial early, Cancel, Change payment method |
+| No subscription | Add payment method (auto-starts the trial) |
+| Trial active | Skip trial, Cancel, Change payment method |
 | Paid active | Cancel, Change payment method, Manage seats |
-| Grace period | Reactivate, Change payment method (Cancel is hidden) |
-| Past-due | Update payment method (highlighted), Cancel |
-| Canceled | Resubscribe, View past invoices |
+| Grace period (cancel pending) | Reactivate, Change payment method (Cancel is hidden) |
+| Past-due | Update payment method (highlighted) |
+| Canceled, trial never used | Start trial (CTA card), View past invoices |
+| Canceled, trial already used | Resubscribe, View past invoices |
 
 ## Troubleshooting
 

@@ -24,7 +24,7 @@ Dev seats and pentest credits are **independent**. You can buy pentest credits w
 
 <CardGroup cols={2}>
   <Card title="Trial & activation" icon="rocket" href="/platform/billing/trial">
-    14-day Dev-seat trial, payment-method requirement, and the "skip the trial" path.
+    14-day Dev-seat trial, payment-method requirement, and the Skip-trial button for ending early.
   </Card>
   <Card title="Seats & peak billing" icon="chart-line" href="/platform/billing/seats">
     How peak (HWM) billing works, with a worked example.
@@ -54,6 +54,8 @@ Roles gate **actions in the Platform**. Seats gate **paid product access**. They
 | Add a payment method, start the trial, buy pentest credits | Owner |
 | Toggle spillover billing | Owner |
 
+The Platform has four roles, from least to most privilege: **Viewer**, **Member**, **Admin**, **Owner**. Each row above is satisfied by the named role and any higher role.
+
 <Info>
   Payment methods, trial activation, and credit purchases are **Owner-only**. If you are an Admin and need a payment change, ask your org Owner.
 </Info>
@@ -65,8 +67,8 @@ These terms recur across the Billing pages. The full glossary is at [Glossary](/
 - **Dev seat** — a paid slot covering one developer's pull request reviews.
 - **Peak (HWM)** — the highest number of Dev seats assigned at any point in a billing period.
 - **Spillover** — billing per overage PR after the per-seat cap is hit, when enabled.
-- **Trial** — a 14-day window with seat scanning enabled. Each org gets at most one.
-- **Trial-skip** — going straight to a paid plan without using the trial. Permanent.
+- **Trial** — a 14-day window with seat scanning enabled and no charge. Each org gets at most one trial, ever.
+- **Skip trial** — the sidebar button that ends an in-progress trial immediately and converts to paid. Not a separate entry point from No-subscription state.
 - **Grace period** — the time between canceling and the period's end, during which access continues.
 
 ## What's next

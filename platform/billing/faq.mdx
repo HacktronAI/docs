@@ -25,11 +25,11 @@ Named scenarios, not generic Q&A. Find your situation in the accordion below.
   </Accordion>
 
   <Accordion title="We want to skip the trial and start paid immediately.">
-    On the Billing page, the Owner adds a payment method and chooses **Start paid plan** instead of **Start trial**. The subscription activates today; the billing period starts today.
+    Every paid subscription starts as a trial first — there is no separate "Start paid plan" entry point. To get to paid billing today: the Owner adds a payment method (which auto-starts the trial), then clicks **Skip trial** on the Billing sidebar. The subscription converts to paid immediately and the billing period starts from the conversion.
 
-    Caveat: starting the trial OR skipping straight to paid both permanently disable any future trial for this organization. There is no second trial.
+    Caveat: this still consumes the org's one and only trial. Even a same-day Skip flips `has_used_trial` permanently — any future cancel/reactivate cycle will go through **Resubscribe**, not a new trial.
 
-    See [Trial & activation](/platform/billing/trial#the-trial-skip-path).
+    See [Trial & activation § Skipping the trial](/platform/billing/trial#skipping-the-trial).
   </Accordion>
 
   <Accordion title="We hit our spillover cap and need to stop the bleeding.">
@@ -96,7 +96,7 @@ These terms appear across the Billing pages. Linked from each page's introductio
 - **Per-seat PR cap** — the maximum number of PRs a single seat can review in a period. Default 50, configurable per org.
 - **Spillover (PR overage)** — billing per overage PR after a seat hits its PR cap. Off by default; Owner-only toggle.
 - **Trial** — a 14-day window with seat scanning enabled and no charge. Each org gets at most one trial, ever.
-- **Trial-skip** — going from no-subscription straight to paid, bypassing the trial. The org's trial eligibility is permanently consumed once any trial path is started or skipped.
+- **Skip trial** — the Billing-sidebar button that ends an in-progress trial immediately and converts to paid. Available only while trialing; not a separate entry point from the No-subscription state.
 - **Grace period** — the time between **Cancel** and the period's end, during which access continues but `cancel_at_period_end` is set.
 - **Past-due** — Stripe could not collect on the invoice. Scanning is blocked; Stripe retries automatically.
 - **Resubscribe** — creating a new paid subscription after a previous one was canceled. Available indefinitely; never re-enables the trial.
