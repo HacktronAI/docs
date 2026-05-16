@@ -32,6 +32,10 @@ A PR is processed as a spillover (overage) event when **all four** of these are 
 
 If any one of those is false, the PR is **denied** when it hits the per-seat cap, with a CI annotation explaining why (see the [Deny reasons](#deny-reasons) table).
 
+<Frame caption="Placeholder — replace with the Spillover toggle card on the Billing sidebar (AppBillingSpilloverCard), showing the title, info tooltip, on/off state indicator, and the USwitch control.">
+  <img src="/images/screenshot-placeholder.svg" alt="Billing sidebar Spillover card: title 'Spillover billing' with info icon, green dot + 'On' state indicator, and toggle switch in the on position." />
+</Frame>
+
 ## How overage PRs are billed
 
 Each overage PR is a single Stripe meter event. The pricing is one fixed amount per overage PR — your invoice line will show a count and a unit price.
@@ -86,6 +90,10 @@ When a PR is denied at the per-seat cap, developers see a CI annotation. The cop
 | Paid org, spillover **not available** (LD off or org not eligible) | "PR review limit reached for this billing period. New PRs will resume at the start of the next cycle." |
 
 Developers can ask Owners directly via a link in the CI annotation. There is no in-product approval queue — toggling on the Billing page is the resolution.
+
+<Frame caption="Placeholder — replace with the People-page spillover banner (AppOrganizationPeopleSpilloverBanner) in the Owner view, showing the warning copy and 'Enable spillover' CTA.">
+  <img src="/images/screenshot-placeholder.svg" alt="People page spillover banner (yellow UAlert) in the Owner view: warning icon, title 'Spillover billing is available', body copy mentioning the PR limit, and 'Enable spillover' action button linking to Billing." />
+</Frame>
 
 ## Recommended use
 

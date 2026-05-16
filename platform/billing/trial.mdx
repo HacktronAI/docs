@@ -42,6 +42,10 @@ This page covers how the trial behaves, what changes when it ends, and the path 
 
 During the trial, Dev seats auto-assign as PRs come in. There is no hard cap on PRs at the organization level — each seat is metered against the per-seat PR cap (50 PRs per billing period by default).
 
+<Frame caption="Placeholder — replace with the post-install Start-trial confirmation modal (AppBillingStartTrialModal). Should show the title 'Start your 14-day trial', the body copy, and the 'Go to Billing' confirm button.">
+  <img src="/images/screenshot-placeholder.svg" alt="Post-install Start-trial confirmation modal: title 'Start your 14-day trial', body copy, and 'Go to Billing' CTA." />
+</Frame>
+
 ## What happens when the trial ends
 
 The trial ends one of three ways:
@@ -56,6 +60,10 @@ The trial ends one of three ways:
     The Owner can end the trial at any time from the Billing page. This converts the organization to a paid plan immediately, with the same HWM reset behavior as natural expiry.
 
     Use this if the team is ready to commit before day 14 and wants the period boundary to start now.
+
+    <Frame caption="Placeholder — replace with the 'End trial early' button on the Billing sidebar (visible when isTrialing && !isCancelling, alongside the Cancel button).">
+      <img src="/images/screenshot-placeholder.svg" alt="Billing sidebar showing the 'End trial early' button next to the Cancel button, with the trial period end date above." />
+    </Frame>
   </Tab>
   <Tab title="Owner cancels during trial">
     Canceling during the trial sets `cancel_at_period_end = true`. The trial continues to run; when day 14 arrives, the subscription is canceled instead of converted. No charges are issued.

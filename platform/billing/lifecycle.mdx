@@ -35,6 +35,10 @@ The grace period exists so that:
 - Teams can cancel proactively without losing access mid-period.
 - The invoice for the current period resolves cleanly — you paid for it, you keep it.
 
+<Frame caption="Placeholder — replace with the Billing sidebar in the Grace period state. Should show the 'Cancels on {date}' message and the 'Reactivate subscription' button.">
+  <img src="/images/screenshot-placeholder.svg" alt="Billing sidebar in Grace period state: 'Your subscription cancels on {date}' message above the 'Reactivate subscription' button." />
+</Frame>
+
 ### Reactivate during grace
 
 Until the period closes, the Owner can **Reactivate** with one click. This sets `cancel_at_period_end = false`. Nothing else changes — seats stay assigned, scans continue uninterrupted.
@@ -56,9 +60,17 @@ Owners receive Stripe's standard payment-failure emails. The fastest fix is usua
   **Past-due cuts off access mid-period.** Unlike the grace period (which preserves access), Past-due immediately blocks Dev-seat scanning. This is to prevent unbilled work from accumulating on a card Stripe can't charge.
 </Warning>
 
+<Frame caption="Placeholder — replace with the org-wide trial-ended banner (AppBillingTrialEndedBanner): red error bar across the top of the app with the message and 'Reactivate billing' link to /[slug]/billing.">
+  <img src="/images/screenshot-placeholder.svg" alt="Trial-ended banner across the top of the app: red bar with alert-triangle icon, body copy explaining the trial has ended, and 'Reactivate billing' link to the Billing page." />
+</Frame>
+
 ## Resubscribe
 
 If a subscription has been **Canceled** (whether by Owner action, payment failure, or trial cancellation), the org can resubscribe. The Billing page shows a **Resubscribe** button when no active subscription exists and a prior one is on file.
+
+<Frame caption="Placeholder — replace with the Billing sidebar in the Canceled state, showing the 'Resubscribe' CTA (or 'Resubscribe — add payment method' when no PM on file).">
+  <img src="/images/screenshot-placeholder.svg" alt="Billing sidebar in Canceled state: 'Your subscription is canceled' message above the 'Resubscribe' button." />
+</Frame>
 
 Resubscribing creates a brand-new Stripe subscription and a fresh DB row. Important details:
 

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Screenshot placeholder">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3a3a3a" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="900" fill="#1c1c1c"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <rect x="40" y="40" width="1520" height="820" fill="none" stroke="#666" stroke-width="2" stroke-dasharray="12,8" rx="12"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle" fill="#cccccc">
+    <text x="800" y="430" font-size="56" font-weight="600">Screenshot placeholder</text>
+    <text x="800" y="490" font-size="26" fill="#999">Replace with the screenshot described in the page's alt text.</text>
+  </g>
+</svg>
