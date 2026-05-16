@@ -21,7 +21,7 @@ A Dev-seat subscription moves through a small set of states over its life. This 
 | **Canceled** | Subscription fully canceled | No | Yes — resubscribe |
 | **Org deleted** | Organization itself removed | No | No |
 
-See the [iva state diagram](https://github.com/HacktronAI/iva/blob/main/docs/billing-state-diagram.md) (internal) for the exhaustive transition list with code citations.
+Each transition runs through a single Stripe-backed subscription record. The Owner-facing actions below are the only way to move between states.
 
 ## Cancel
 
