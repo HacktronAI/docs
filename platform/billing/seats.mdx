@@ -1,0 +1,86 @@
+---
+title: "Seats & peak billing"
+description: "How peak seat counts (HWM) translate into the Dev-seat invoice, with a worked example."
+---
+
+Hacktron bills Dev seats on **peak usage** — the highest number of seats assigned at any point in the billing period. This page explains the mechanic and walks through a concrete scenario.
+
+## The rule
+
+> **You are billed for the maximum number of seats assigned at any one point during the billing period.**
+
+Adding seats mid-period raises the peak immediately. Removing seats mid-period **does not lower** the peak — the org is still billed for the high-water mark (HWM) until the next period starts.
+
+This is sometimes called **HWM billing** or **peak billing**. The trade-off: you can experiment with seat counts without worrying about partial-period proration in either direction. You pay for what you used at the busiest moment.
+
+## A worked example
+
+A team starts a billing period with 5 Dev seats. They hire two engineers in week 2 and a contractor in week 3. The contractor leaves at the end of week 3. Here is how the invoice resolves.
+
+| Day | Event | Seats active | HWM before | HWM after | Stripe quantity | Invoice impact |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | Period starts | 5 | 5 | 5 | 5 | — |
+| 8 | Engineer A joins → seat auto-assigned | 6 | 5 | 6 | 6 | Stripe `quantity` bumped to 6 |
+| 9 | Engineer B joins → seat auto-assigned | 7 | 6 | 7 | 7 | Bumped to 7 |
+| 14 | Contractor joins → seat auto-assigned | 8 | 7 | 8 | 8 | Bumped to 8 |
+| 21 | Contractor leaves → seat unassigned | 7 | 8 | **8** | 8 | No change — HWM holds |
+| 28 | Engineer A leaves → seat unassigned | 6 | 8 | **8** | 8 | No change — HWM holds |
+| 30 | Period closes | 6 | — | — | 8 | **Invoice: 8 seats** |
+
+The team finishes the period with 6 active seats but is invoiced for 8 — the peak from day 14.
+
+<Info>
+  At period close, the next period's starting Stripe quantity is **reset to the active seat count**, not the prior period's HWM. In the example above, the next period starts at 6 seats. If no new seats are added that period, the invoice will be for 6.
+</Info>
+
+## How HWM is tracked
+
+The peak is tracked in the `dev_seat_period_usage` record for the organization's current period:
+
+- **`max_assigned_count`** — the HWM. Monotonically increases during the period.
+- **`billable_dev_seats`** — equals `max_assigned_count`. This is what Stripe's `quantity` is synced to.
+- **`pending_reduction_next_period`** — the difference between the HWM and the current active count. Informational; reflects how many seats will "drop off" at the next period start.
+
+Each seat assignment:
+
+1. Acquires an advisory lock per organization.
+2. Recomputes `activeNow = active dev seat count`.
+3. Sets `max_assigned_count := max(max_assigned_count, activeNow)`.
+4. If the peak increased, calls Stripe `subscriptionItems.update` with the new quantity. `proration_behavior` is `none` — no mid-period proration credit is issued for upgrades.
+
+## Trial → paid: peak resets
+
+When an organization converts from trial to paid (either by natural expiry or by ending the trial early), the peak is **reset to the current active seat count**. This prevents trial peaks — which often spike during initial exploration — from carrying into the first paid invoice.
+
+For example: a trial that peaks at 10 seats but has 3 active when the trial ends starts the first paid period with HWM = 3, not 10.
+
+## Removing seats
+
+Removing a seat:
+
+- Unassigns the seat immediately. The developer's PRs are no longer reviewed.
+- Frees the slot to be reassigned to another developer within the current period at no additional charge.
+- Does **not** reduce the HWM. The org is still billed for the peak.
+
+This is intentional. It means an admin can confidently rotate which developers hold seats without worrying about per-change billing impacts. You only pay more when you exceed your prior peak.
+
+## Downgrading to zero seats
+
+If the org reduces seat count to zero mid-period (for example, after a layoff), the subscription stays `ACTIVE` and the invoice still reflects the period's peak. To stop future billing entirely, the Owner must **cancel** the subscription — see [Lifecycle](/platform/billing/lifecycle).
+
+## Why peak instead of average?
+
+- **Predictability.** The number on the invoice equals a real moment in the period — not a calculated average that depends on day-counts and proration windows.
+- **Bursting.** Teams can scale up for a sprint, ship the work, and scale down — and the bill matches what they actually used at peak. Most teams prefer this to per-day proration.
+- **Operational simplicity.** No proration credits to chase. No mid-period downgrades creating refund accounting.
+
+## What's next
+
+<CardGroup cols={2}>
+  <Card title="Spillover billing" icon="arrow-up-right-from-square" href="/platform/billing/spillover">
+    What happens when a seat hits its per-seat PR cap — and how to opt in to overage.
+  </Card>
+  <Card title="Subscription lifecycle" icon="rotate" href="/platform/billing/lifecycle">
+    Cancel, grace period, reactivate, payment-failure recovery.
+  </Card>
+</CardGroup>

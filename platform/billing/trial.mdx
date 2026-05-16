@@ -1,0 +1,122 @@
+---
+title: "Trial & activation"
+description: "How the 14-day Dev-seat trial works, what it includes, and when to skip it."
+---
+
+<Info>
+  **Owner-only.** Only an organization Owner can start the trial, add the first payment method, or activate paid billing. Admins and Members can view billing details but cannot change them.
+</Info>
+
+Hacktron offers a **14-day Dev-seat trial** for organizations that have never trialed before. The trial is one-time per organization and starts the moment an Owner adds a payment method on the **Billing** page.
+
+This page covers how the trial behaves, what changes when it ends, and the path for organizations that prefer to skip it.
+
+## At a glance
+
+| Property | Trial behavior |
+| --- | --- |
+| **Duration** | 14 days from activation (some orgs have a different negotiated duration) |
+| **Payment method** | Required to start. No charge during the trial. |
+| **Seat assignment** | Auto-approval — Dev seats assign as PRs arrive |
+| **Default seat cap** | 10 seats |
+| **Per-seat PR cap** | Default 50 PRs per billing period (configurable) |
+| **Spillover** | Not available during trial |
+| **One-time** | Each organization gets at most **one** trial, ever |
+
+## How the trial starts
+
+<Steps>
+  <Step title="Connect a SCM provider">
+    GitHub, GitLab, or Bitbucket. See [Quickstart](/platform/quickstart) for the connection flow.
+  </Step>
+  <Step title="An Owner opens Billing">
+    The Owner navigates to **Billing** in the Platform.
+  </Step>
+  <Step title="Add a payment method">
+    Card details go straight to Stripe — Hacktron never sees raw card data. Adding a payment method is required to start the trial.
+  </Step>
+  <Step title="Start the trial">
+    The Owner confirms the trial. The organization enters the 14-day window immediately.
+  </Step>
+</Steps>
+
+During the trial, Dev seats auto-assign as PRs come in. There is no hard cap on PRs at the organization level — each seat is metered against the per-seat PR cap (50 PRs per billing period by default).
+
+## What happens when the trial ends
+
+The trial ends one of three ways:
+
+<Tabs>
+  <Tab title="Trial completes (paid plan)">
+    On day 14, the trial transitions to a paid plan automatically. Stripe issues the first invoice; the **peak seat count** during the trial is **reset**, so the first paid invoice bills only for seats currently active — not the trial peak.
+
+    [See Peak billing](/platform/billing/seats) for the HWM mechanics.
+  </Tab>
+  <Tab title="Owner ends trial early">
+    The Owner can end the trial at any time from the Billing page. This converts the organization to a paid plan immediately, with the same HWM reset behavior as natural expiry.
+
+    Use this if the team is ready to commit before day 14 and wants the period boundary to start now.
+  </Tab>
+  <Tab title="Owner cancels during trial">
+    Canceling during the trial sets `cancel_at_period_end = true`. The trial continues to run; when day 14 arrives, the subscription is canceled instead of converted. No charges are issued.
+
+    The Owner can reactivate any time before day 14 with one click.
+  </Tab>
+</Tabs>
+
+## The trial-skip path
+
+<Note>
+  This is the path for organizations that already know they want a paid plan and prefer to start the billing period today rather than 14 days from now.
+</Note>
+
+Some teams want to go straight to paid — for example, when migrating from another vendor mid-quarter. To skip the trial:
+
+<Steps>
+  <Step title="Owner adds a payment method on Billing">
+    Same as starting the trial.
+  </Step>
+  <Step title="Owner chooses 'Start paid plan' instead of 'Start trial'">
+    The Billing page surfaces both options when no subscription exists yet.
+  </Step>
+  <Step title="Subscription activates immediately">
+    Seats auto-assign as PRs arrive. The billing period starts today. The first invoice issues at the period close.
+  </Step>
+</Steps>
+
+<Warning>
+  **The trial is one-time per organization.** Once a trial has been started — even if it was canceled, expired without conversion, or converted and then canceled — that organization can never trial again. This applies to both natural-trial and skip-trial paths: starting the trial flips a permanent flag on the organization. If your organization has already used its trial and you cancel later, your only path back to paid is **Resubscribe**, not a new trial.
+</Warning>
+
+## What's not available during the trial
+
+- **Spillover billing.** Spillover requires an `ACTIVE` paid subscription — see [Spillover](/platform/billing/spillover). PRs past the per-seat cap during a trial are hard-blocked, not billed as overage.
+- **Pentest credit purchases unrelated to seats.** These are independent — you can buy pentest credits without an active subscription, but seat-level features stay gated by trial/paid status.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The Owner clicks 'Start trial' but nothing happens.">
+    Check that a payment method has been attached. Trial activation requires a payment method on file even though no charge is issued.
+  </Accordion>
+  <Accordion title="We trialed last quarter and canceled. Can we trial again?">
+    No. Each organization is permitted one trial only. If the org has used its trial, the Billing page will show **Resubscribe** instead of **Start trial**. There is no admin override.
+  </Accordion>
+  <Accordion title="What happens to seats assigned during the trial when we convert to paid?">
+    They stay assigned. The peak seat count is reset on conversion so the first paid invoice bills only for currently-active seats, not the trial peak. See [Peak billing](/platform/billing/seats).
+  </Accordion>
+  <Accordion title="Can we shorten or extend the trial?">
+    Trials default to 14 days. If your organization has a negotiated different duration, the Billing page will reflect it. Contact your Hacktron point of contact to negotiate; the default cannot be self-served.
+  </Accordion>
+</AccordionGroup>
+
+## What's next
+
+<CardGroup cols={2}>
+  <Card title="Peak / HWM billing" icon="chart-line" href="/platform/billing/seats">
+    How peak seat counts during a period translate into the invoice.
+  </Card>
+  <Card title="Subscription lifecycle" icon="rotate" href="/platform/billing/lifecycle">
+    Cancel, grace period, reactivate — the full lifecycle past the trial.
+  </Card>
+</CardGroup>

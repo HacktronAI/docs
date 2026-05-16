@@ -1,0 +1,129 @@
+---
+title: "Spillover (PR overage) billing"
+description: "Let PRs continue past the per-seat PR cap, billed per overage PR."
+---
+
+<Info>
+  **Owner-only toggle.** Only an organization Owner can enable or disable spillover billing. Admins and Members can see the setting but cannot change it.
+</Info>
+
+Spillover billing lets pull-request reviews continue past the per-seat PR cap, with each overage PR billed individually. It is **off by default**. Turning it on requires three things to be simultaneously true; turning it off is always allowed.
+
+This page covers when spillover applies, exactly how it's billed, and what happens when you toggle it mid-period.
+
+## When spillover applies
+
+A PR is processed as a spillover (overage) event when **all four** of these are true:
+
+<Steps>
+  <Step title="Subscription is ACTIVE">
+    Not trialing, not past-due, not canceled. Trials hard-block past the cap rather than spilling over.
+  </Step>
+  <Step title="Spillover toggle is on (per-org)">
+    The Owner has enabled spillover billing on the **Billing** page. The setting persists across billing periods.
+  </Step>
+  <Step title="Hacktron has enabled spillover for the org (LaunchDarkly)">
+    Hacktron operates a master switch per organization. Most paid orgs have this on; if yours doesn't, the toggle is hidden in the UI. Contact your point of contact if you need it.
+  </Step>
+  <Step title="The PR is not OSS-exempt">
+    OSS-exempt PRs count toward the per-seat cap but never spill over.
+  </Step>
+</Steps>
+
+If any one of those is false, the PR is **denied** when it hits the per-seat cap, with a CI annotation explaining why (see the [Deny reasons](#deny-reasons) table).
+
+## How overage PRs are billed
+
+Each overage PR is a single Stripe meter event. The pricing is one fixed amount per overage PR — your invoice line will show a count and a unit price.
+
+Mechanically:
+
+1. PR arrives, seat policy check fires.
+2. If the PR is past the per-seat cap AND all four conditions above hold, a `dev_seat_pr_usage` row is created with `overage_at_insert = true`.
+3. A BullMQ job enqueues with `jobId = prUsageId`. The job calls Stripe's meter event API with `identifier = prUsageId`.
+4. On success, `billed_at` is stamped on the row. Subsequent calls for the same row return silently.
+5. Each hour, a reconciliation job sweeps any rows where `overage_at_insert = true AND billed_at IS NULL AND period_end > NOW()`. This catches jobs lost to Redis flushes or deploy races.
+
+The system has three layers of idempotency — the BullMQ jobId, the DB `billed_at` set-once, and the Stripe `identifier` dedup. Double-billing is structurally prevented.
+
+### Lazy meter-item attachment
+
+The Stripe subscription item for overage billing is attached **on the first overage event**, not at subscription creation. This means:
+
+- If you never use spillover, your subscription has no overage line item and no $0 lines.
+- The first overage in your org's history attaches the meter item once and re-uses it from then on.
+- Disabling spillover later leaves the meter item attached. Stripe shows $0 for the line in periods with no events — this is expected and harmless.
+
+## Toggling spillover mid-period
+
+<Tabs>
+  <Tab title="Turning spillover ON mid-period">
+    Effect is **forward-only**:
+
+    - PRs that were previously hard-blocked stay blocked. They are **not** retroactively scanned. The developer must retrigger the PR (push, comment, or close-and-reopen).
+    - PRs arriving after the toggle is enabled flow through the overage path and are billed.
+
+    There is no retroactive credit, no auto-retry of denied PRs, and no notification to developers whose PRs were previously denied.
+  </Tab>
+  <Tab title="Turning spillover OFF mid-period">
+    Effect is **forward-only**:
+
+    - PRs already recorded with `overage_at_insert = true` will still bill via the hourly reconciliation job, even after the toggle is off. Disabling stops **future** overage, not in-flight rows.
+    - New PRs past the per-seat cap will be hard-blocked with a CAPACITY_REACHED deny code.
+
+    If you toggle off because of an unexpected charge, expect a small tail of overage events to land on your next invoice — these were already in flight at the moment you toggled.
+  </Tab>
+</Tabs>
+
+## Deny reasons
+
+When a PR is denied at the per-seat cap, developers see a CI annotation. The copy varies based on context:
+
+| Situation | Reason shown |
+| --- | --- |
+| Org is on a trial | "PR review limit reached for this trial period. Inform your org owner." |
+| Paid org, spillover **available** for the org but **owner has not enabled** it | "PR review limit reached for this billing period. Spillover billing is available for this org but is not enabled. Ask your org owner to enable spillover billing on the billing page, or wait for the next billing cycle." |
+| Paid org, spillover **not available** (LD off or org not eligible) | "PR review limit reached for this billing period. New PRs will resume at the start of the next cycle." |
+
+Developers can ask Owners directly via a link in the CI annotation. There is no in-product approval queue — toggling on the Billing page is the resolution.
+
+## Recommended use
+
+Spillover is most useful when:
+
+- Your team consistently hits the per-seat cap but the cost of adding seats outweighs the cost of paying per overage PR.
+- You have temporary PR spikes (e.g., dependency upgrade sweeps) where you want reviews to continue without permanently raising your seat count.
+- You want a soft ceiling rather than a hard one — and your finance team can absorb a variable line item.
+
+It is **not** useful when:
+
+- The org wants strict cost predictability — peak seat billing alone is more predictable.
+- You'd rather scale seat counts up at the start of a sprint than pay per overage PR. The cost trade-off is per-org.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The spillover toggle is missing from our Billing page.">
+    The org doesn't have Hacktron's master switch enabled. Contact your point of contact. The toggle stays hidden until the master switch is on — this is intentional so that orgs without spillover enabled don't see a misleading control.
+  </Accordion>
+  <Accordion title="We disabled spillover yesterday but still see overage charges on the invoice.">
+    Expected. Disabling stops future overage, not rows already inserted with `overage_at_insert = true`. The hourly reconciliation job bills those rows on its next sweep. The tail rarely exceeds a few hours of PRs.
+  </Accordion>
+  <Accordion title="A developer says their PR was hard-blocked but we have spillover enabled.">
+    Check the CI annotation. The reason text tells you which condition failed: subscription status, OSS exemption, or LD eligibility. If the reason mentions the trial, the org is still on a trial — spillover only applies to ACTIVE paid subscriptions.
+  </Accordion>
+  <Accordion title="Can we cap the spillover spend?">
+    There is no in-product hard cap today. If you need a cap, monitor your overage line on the Billing page and disable the toggle when the spend hits your target. Future work may add a self-serve cap.
+  </Accordion>
+</AccordionGroup>
+
+## What's next
+
+<CardGroup cols={2}>
+  <Card title="Peak / HWM billing" icon="chart-line" href="/platform/billing/seats">
+    The seat-count billing your spillover line sits on top of.
+  </Card>
+  <Card title="Billing FAQ" icon="circle-question" href="/platform/billing/faq">
+    Common scenarios — what to do if you hit the spillover cap unexpectedly.
+  </Card>
+</CardGroup>

@@ -1,0 +1,112 @@
+---
+title: "Subscription lifecycle"
+description: "Cancel, grace period, reactivate, resubscribe, and payment-failure recovery."
+---
+
+<Info>
+  **Owner-only.** All actions on this page — cancel, reactivate, resubscribe, update payment method — require the Owner role. Admins and Members can view subscription state but cannot change it.
+</Info>
+
+A Dev-seat subscription moves through a small set of states over its life. This page covers every state, what triggers each transition, and what changes for developers in each state.
+
+## States
+
+| State | What it means | Developers can scan? | Recoverable? |
+| --- | --- | --- | --- |
+| **No subscription** | Org has never had a paid plan or trial | No | Yes — start trial or skip-trial path |
+| **Trial active** | 14-day trial window in progress | Yes | — (this is the goal state) |
+| **Paid active** | Paid plan with current invoices | Yes | — |
+| **Grace period** | Owner canceled; period not yet ended | Yes (until period close) | Yes — reactivate before period closes |
+| **Past-due** | Invoice payment failed | **No** | Yes — Stripe retries; Owner can update payment method |
+| **Canceled** | Subscription fully canceled | No | Yes — resubscribe |
+| **Org deleted** | Organization itself removed | No | No |
+
+See the [iva state diagram](https://github.com/HacktronAI/iva/blob/main/docs/billing-state-diagram.md) (internal) for the exhaustive transition list with code citations.
+
+## Cancel
+
+To cancel a subscription, the Owner clicks **Cancel subscription** on the Billing page. This sets `cancel_at_period_end = true` on the Stripe subscription. Two things follow:
+
+1. **Access continues until the period closes.** The org is still in the **Grace period** state; developers can still scan, seats stay assigned, and the period's invoice will still issue.
+2. **At the period close, the subscription transitions to Canceled.** All Dev seats unassign. Scanning stops.
+
+The grace period exists so that:
+
+- Teams can cancel proactively without losing access mid-period.
+- The invoice for the current period resolves cleanly — you paid for it, you keep it.
+
+### Reactivate during grace
+
+Until the period closes, the Owner can **Reactivate** with one click. This sets `cancel_at_period_end = false`. Nothing else changes — seats stay assigned, scans continue uninterrupted.
+
+After the period closes, reactivation is no longer available. The path back to active is **Resubscribe**.
+
+## Payment failure
+
+Stripe attempts each invoice payment. On failure, the subscription flips to **Past-due**:
+
+- Developers immediately lose scanning access. CI annotations explain that the org's subscription is past-due.
+- Stripe retries the invoice over the next several days (Stripe's smart retry schedule).
+- On success, the subscription flips back to **Paid active** and access resumes.
+- On final failure (after Stripe's retries are exhausted), the subscription is auto-canceled.
+
+Owners receive Stripe's standard payment-failure emails. The fastest fix is usually to update the payment method on the Billing page; Stripe will retry against the new card immediately.
+
+<Warning>
+  **Past-due cuts off access mid-period.** Unlike the grace period (which preserves access), Past-due immediately blocks Dev-seat scanning. This is to prevent unbilled work from accumulating on a card Stripe can't charge.
+</Warning>
+
+## Resubscribe
+
+If a subscription has been **Canceled** (whether by Owner action, payment failure, or trial cancellation), the org can resubscribe. The Billing page shows a **Resubscribe** button when no active subscription exists and a prior one is on file.
+
+Resubscribing creates a brand-new Stripe subscription and a fresh DB row. Important details:
+
+- **A new billing period starts.** Previously-assigned developers are re-assigned to the new subscription automatically.
+- **The trial cannot be repeated.** Each org has at most one trial in its lifetime. The org goes straight to a paid plan.
+- **Spillover toggle state is preserved** across resubscribe — if you had it on before, it's on again on the new subscription.
+
+## Org deletion
+
+Deleting the organization (a separate, irreversible action) cascade-deletes the subscription, all seat records, all PR usage data, and audit logs. There is no recovery path. Deletion is rarely the right action — for "we want to stop billing" the right path is **Cancel**.
+
+## Seeing your current state
+
+The Billing page surfaces the current state in the subscription card at the top. The page's available actions vary by state:
+
+| State | Visible actions |
+| --- | --- |
+| No subscription | Add payment method, Start trial, Start paid plan |
+| Trial active | End trial early, Cancel, Change payment method |
+| Paid active | Cancel, Change payment method, Manage seats |
+| Grace period | Reactivate, Change payment method (Cancel is hidden) |
+| Past-due | Update payment method (highlighted), Cancel |
+| Canceled | Resubscribe, View past invoices |
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="We canceled but still got an invoice — why?">
+    Cancellation enters the **Grace period**. The current period's invoice still issues because access continued through it. The subscription transitions to **Canceled** at the period close — no further invoices will issue.
+  </Accordion>
+  <Accordion title="Stripe charged a card we removed.">
+    Removing a card from Stripe doesn't retro-cancel attempts already in flight. Update the payment method first; then any retries will hit the new card. If the old card was incorrectly charged, contact us — we'll work with you and Stripe to resolve.
+  </Accordion>
+  <Accordion title="Our subscription went Past-due over a weekend and developers lost access. Can we backfill?">
+    Updating the payment method usually clears Past-due within minutes (Stripe retries against the new card). PRs that were denied during the Past-due window will not auto-rescan; affected developers should push or re-trigger CI on the affected PRs to get a fresh review.
+  </Accordion>
+  <Accordion title="We want to delete our organization and start fresh.">
+    Org deletion is irreversible and removes all history — findings, scans, audit logs. If you only need to stop billing, Cancel is the right path; if you need to restructure, contact Hacktron support before deleting so we can help preserve data.
+  </Accordion>
+</AccordionGroup>
+
+## What's next
+
+<CardGroup cols={2}>
+  <Card title="Billing FAQ" icon="circle-question" href="/platform/billing/faq">
+    Common scenarios across the lifecycle.
+  </Card>
+  <Card title="Trial & activation" icon="rocket" href="/platform/billing/trial">
+    For orgs in the No subscription state, the path to start.
+  </Card>
+</CardGroup>

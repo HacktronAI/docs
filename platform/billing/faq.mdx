@@ -1,0 +1,113 @@
+---
+title: "Billing FAQ"
+description: "Common scenarios for Dev-seat billing — added engineers mid-sprint, hit the spillover cap, canceled mid-period."
+---
+
+Named scenarios, not generic Q&A. Find your situation in the accordion below.
+
+## Common scenarios
+
+<AccordionGroup>
+  <Accordion title="We hired 5 engineers mid-month — what changes on our invoice?">
+    As each new engineer's first PR comes in, a Dev seat auto-assigns. The org's HWM (peak seat count) bumps up. The end-of-month invoice bills for the peak — not the average, not a prorated amount.
+
+    If you previously had 5 seats and now have 10, the invoice will reflect 10 seats. No proration. The new seat count carries into the next period as the starting point unless seats are removed.
+
+    See [Peak / HWM billing](/platform/billing/seats) for the math.
+  </Accordion>
+
+  <Accordion title="We had a PR spike but no new hires. How does the bill look?">
+    If your team stayed within the per-seat PR cap, no change — peak seats didn't move.
+
+    If individual developers hit the per-seat PR cap and **spillover is enabled** for your org, you'll see a separate **overage** line on the invoice for the per-PR overage events. See [Spillover billing](/platform/billing/spillover).
+
+    If spillover is **not enabled**, the PRs past the cap were hard-blocked. Those developers saw a CI annotation explaining they hit the limit. No additional charge — and no review on those PRs until the next period or until you enable spillover.
+  </Accordion>
+
+  <Accordion title="We want to skip the trial and start paid immediately.">
+    On the Billing page, the Owner adds a payment method and chooses **Start paid plan** instead of **Start trial**. The subscription activates today; the billing period starts today.
+
+    Caveat: starting the trial OR skipping straight to paid both permanently disable any future trial for this organization. There is no second trial.
+
+    See [Trial & activation](/platform/billing/trial#the-trial-skip-path).
+  </Accordion>
+
+  <Accordion title="We hit our spillover cap and need to stop the bleeding.">
+    There is no in-product hard cap on spillover spend today. To stop further overage charges:
+
+    1. The Owner navigates to the Billing page.
+    2. Disables the **Spillover billing** toggle.
+    3. New PRs past the per-seat cap will be hard-blocked going forward.
+
+    Expect a small tail of overage events to land on the next invoice — rows already inserted with `overage_at_insert = true` continue to bill via the hourly reconciliation job. The tail rarely exceeds a few hours of PR activity.
+
+    See [Spillover § Toggling spillover mid-period](/platform/billing/spillover#toggling-spillover-mid-period).
+  </Accordion>
+
+  <Accordion title="We want to remove seats after a sprint.">
+    The admin unassigns seats from the Seats page. Each unassignment is immediate — the developer's PRs stop being reviewed.
+
+    But: removing seats does **not** lower the period's HWM. The invoice will still reflect the peak. The next period starts at the current active seat count.
+
+    Said differently: removing seats today saves money next period, not this period.
+  </Accordion>
+
+  <Accordion title="We canceled. Why is there still an invoice?">
+    Cancellation enters a **Grace period** — `cancel_at_period_end = true`. The current period's invoice still issues because access continued through it. At period close, the subscription transitions to **Canceled** and no further invoices issue.
+
+    If you canceled the day before period close, expect one final invoice; if you canceled in week 1, expect the full period invoice. The amount is the peak seat count for the period.
+
+    See [Lifecycle § Cancel](/platform/billing/lifecycle#cancel).
+  </Accordion>
+
+  <Accordion title="Payment failed and our developers can't scan. What now?">
+    The fastest path: the Owner updates the payment method on the Billing page. Stripe retries against the new card immediately; most orgs return to **Paid active** within minutes.
+
+    PRs that were denied during the Past-due window will not auto-rescan. Affected developers should push or re-trigger CI on the affected PRs to get a fresh review.
+
+    See [Lifecycle § Payment failure](/platform/billing/lifecycle#payment-failure).
+  </Accordion>
+
+  <Accordion title="A developer left. Do we get a credit?">
+    No — Hacktron bills on peak, not on day-of-departure. The seat can be reassigned to another developer immediately at no additional charge. If no one takes the seat, the next period will start at one fewer seat.
+
+    The trade-off is intentional: it makes seat rotation low-friction. You pay for capacity at peak; you don't pay extra to shuffle who holds the slot.
+  </Accordion>
+
+  <Accordion title="We're on a trial and we love it. Can we extend?">
+    Trials default to 14 days. If your org has a negotiated different duration, the Billing page will reflect it. The default cannot be self-served; contact your Hacktron point of contact to discuss.
+
+    Most teams find 14 days sufficient. If you want to start the billing period sooner, you can **End trial early** from the Billing page.
+  </Accordion>
+
+  <Accordion title="We trialed last year, canceled, and want to come back.">
+    The Billing page will show **Resubscribe** (not Start trial). Resubscribing creates a new paid subscription immediately — no second trial. Previously-assigned seats are restored; the spillover toggle and other settings are preserved.
+
+    See [Lifecycle § Resubscribe](/platform/billing/lifecycle#resubscribe).
+  </Accordion>
+</AccordionGroup>
+
+## Glossary
+
+These terms appear across the Billing pages. Linked from each page's introduction.
+
+- **Dev seat** — a paid slot covering one developer's pull request reviews. Auto-assigned on first PR; can be reassigned freely within a period.
+- **Peak / HWM (high-water mark)** — the highest number of Dev seats assigned at any point in a billing period. Determines the invoice.
+- **Per-seat PR cap** — the maximum number of PRs a single seat can review in a period. Default 50, configurable per org.
+- **Spillover (PR overage)** — billing per overage PR after a seat hits its PR cap. Off by default; Owner-only toggle.
+- **Trial** — a 14-day window with seat scanning enabled and no charge. Each org gets at most one trial, ever.
+- **Trial-skip** — going from no-subscription straight to paid, bypassing the trial. The org's trial eligibility is permanently consumed once any trial path is started or skipped.
+- **Grace period** — the time between **Cancel** and the period's end, during which access continues but `cancel_at_period_end` is set.
+- **Past-due** — Stripe could not collect on the invoice. Scanning is blocked; Stripe retries automatically.
+- **Resubscribe** — creating a new paid subscription after a previous one was canceled. Available indefinitely; never re-enables the trial.
+
+## What's next
+
+<CardGroup cols={2}>
+  <Card title="Roles & access" icon="users" href="/platform/billing-access">
+    Who can do what across Billing — roles, seats, and the permission matrix.
+  </Card>
+  <Card title="Billing overview" icon="map" href="/platform/billing/overview">
+    The map of every billing topic.
+  </Card>
+</CardGroup>

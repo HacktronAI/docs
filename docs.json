@@ -46,6 +46,17 @@
               "platform/billing-access",
               "platform/pentests"
             ]
+          },
+          {
+            "group": "Billing",
+            "pages": [
+              "platform/billing/overview",
+              "platform/billing/trial",
+              "platform/billing/seats",
+              "platform/billing/spillover",
+              "platform/billing/lifecycle",
+              "platform/billing/faq"
+            ]
           }
         ]
       },

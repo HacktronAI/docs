@@ -1,0 +1,77 @@
+---
+title: "Billing overview"
+description: "What Hacktron bills for, who can change it, and where each topic lives."
+---
+
+Hacktron bills for two things: **Dev seats** (code review on pull requests) and **pentest credits** (pooled, consumed by pentest scans). Everything else — roles, integrations, dashboards — is free.
+
+This page is the map. Follow the links to the topic you need.
+
+## What you pay for
+
+| Product | What you pay for | Charged how | Who buys |
+| --- | --- | --- | --- |
+| **Dev seats** | Each developer whose PRs are reviewed | Per peak seat per billing period (HWM) | Owner |
+| **Pentest credits** | One credit per pentest run, sized by scope | Up-front bundles, consumed per scan | Owner |
+
+Dev seats and pentest credits are **independent**. You can buy pentest credits without an active Dev-seat subscription, and vice versa.
+
+## Where each topic lives
+
+<CardGroup cols={2}>
+  <Card title="Trial & activation" icon="rocket" href="/platform/billing/trial">
+    14-day Dev-seat trial, payment-method requirement, and the "skip the trial" path.
+  </Card>
+  <Card title="Seats & peak billing" icon="chart-line" href="/platform/billing/seats">
+    How peak (HWM) billing works, with a worked example.
+  </Card>
+  <Card title="Spillover (PR overage)" icon="arrow-up-right-from-square" href="/platform/billing/spillover">
+    Letting PRs continue past the per-seat cap, with billing per overage PR.
+  </Card>
+  <Card title="Subscription lifecycle" icon="rotate" href="/platform/billing/lifecycle">
+    Cancel, grace period, reactivate, resubscribe, and payment-failure recovery.
+  </Card>
+  <Card title="Billing FAQ" icon="circle-question" href="/platform/billing/faq">
+    Common scenarios — adding engineers mid-sprint, hitting the spillover cap, removing seats.
+  </Card>
+  <Card title="Roles & access" icon="users" href="/platform/billing-access">
+    Platform roles, seat assignments, and who can do what.
+  </Card>
+</CardGroup>
+
+## How billing relates to roles
+
+Roles gate **actions in the Platform**. Seats gate **paid product access**. They are two separate things — see [Billing & Access](/platform/billing-access) for the full breakdown.
+
+| Action | Role required |
+| --- | --- |
+| View subscription and credit balances | Viewer or higher |
+| Manage seat assignments | Admin or higher |
+| Add a payment method, start the trial, buy pentest credits | Owner |
+| Toggle spillover billing | Owner |
+
+<Info>
+  Payment methods, trial activation, and credit purchases are **Owner-only**. If you are an Admin and need a payment change, ask your org Owner.
+</Info>
+
+## Glossary
+
+These terms recur across the Billing pages. The full glossary is at [Glossary](/platform/billing/faq#glossary) on the FAQ page.
+
+- **Dev seat** — a paid slot covering one developer's pull request reviews.
+- **Peak (HWM)** — the highest number of Dev seats assigned at any point in a billing period.
+- **Spillover** — billing per overage PR after the per-seat cap is hit, when enabled.
+- **Trial** — a 14-day window with seat scanning enabled. Each org gets at most one.
+- **Trial-skip** — going straight to a paid plan without using the trial. Permanent.
+- **Grace period** — the time between canceling and the period's end, during which access continues.
+
+## What's next
+
+<CardGroup cols={2}>
+  <Card title="Start the trial" icon="rocket" href="/platform/billing/trial">
+    How to start a 14-day Dev-seat trial, and the one situation where you'd skip it.
+  </Card>
+  <Card title="Understand peak billing" icon="chart-line" href="/platform/billing/seats">
+    The math behind "we charged you for 8 seats when you only have 5 today".
+  </Card>
+</CardGroup>
