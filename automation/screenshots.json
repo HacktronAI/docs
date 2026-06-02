@@ -1,0 +1,101 @@
+[
+  {
+    "name": "platform-integrations-dark",
+    "route": "/integrations",
+    "auth": true,
+    "theme": "dark",
+    "viewport": { "width": 1440, "height": 900 },
+    "waitFor": "h1:has-text(\"Integrations\")",
+    "mask": [
+      "[data-clerk-component=\"UserButton\"]",
+      ".cl-userButtonBox",
+      "[data-testid=\"user-email\"]"
+    ],
+    "status": "ready",
+    "usedBy": ["platform/quickstart.mdx"],
+    "shows": "Integrations page where teams connect GitHub and supporting tools."
+  },
+  {
+    "name": "platform-repositories-dark",
+    "route": "/repositories",
+    "auth": true,
+    "theme": "dark",
+    "viewport": { "width": 1440, "height": 900 },
+    "waitFor": "h1:has-text(\"Repositories\")",
+    "mask": [
+      "[data-clerk-component=\"UserButton\"]",
+      ".cl-userButtonBox",
+      "[data-testid=\"user-email\"]"
+    ],
+    "status": "ready",
+    "usedBy": ["platform/code-reviews.mdx"],
+    "shows": "Repositories page for choosing where Hacktron runs and confirming sync."
+  },
+  {
+    "name": "platform-people-dark",
+    "route": "/people",
+    "auth": true,
+    "theme": "dark",
+    "viewport": { "width": 1440, "height": 900 },
+    "waitFor": "h1:has-text(\"People\")",
+    "mask": [
+      "[data-clerk-component=\"UserButton\"]",
+      ".cl-userButtonBox",
+      "[data-testid=\"user-email\"]",
+      "[data-testid=\"member-email\"]",
+      "table tbody td:nth-child(2)"
+    ],
+    "status": "ready",
+    "usedBy": ["platform/billing-access.mdx"],
+    "shows": "People page listing members and their roles/seats. Member emails must be masked."
+  },
+  {
+    "name": "platform-billing-dark",
+    "route": "/billing",
+    "auth": true,
+    "theme": "dark",
+    "viewport": { "width": 1440, "height": 900 },
+    "waitFor": "h1:has-text(\"Billing\")",
+    "mask": [
+      "[data-clerk-component=\"UserButton\"]",
+      ".cl-userButtonBox",
+      "[data-testid=\"user-email\"]",
+      "[data-testid=\"payment-method\"]"
+    ],
+    "status": "ready",
+    "usedBy": ["platform/billing-access.mdx"],
+    "shows": "Billing page with seats plan and pentest credits. Payment details must be masked."
+  },
+  {
+    "name": "platform-pentests-dark",
+    "route": "/pentests",
+    "auth": true,
+    "theme": "dark",
+    "viewport": { "width": 1440, "height": 900 },
+    "waitFor": "h1:has-text(\"Pentests\")",
+    "mask": [
+      "[data-clerk-component=\"UserButton\"]",
+      ".cl-userButtonBox",
+      "[data-testid=\"user-email\"]"
+    ],
+    "status": "ready",
+    "usedBy": ["platform/pentests.mdx"],
+    "shows": "Pentests page where the org starts, tracks, and reviews pentest runs."
+  },
+  {
+    "name": "platform-persona-team-reference",
+    "route": "/onboarding",
+    "auth": true,
+    "theme": "dark",
+    "viewport": { "width": 1440, "height": 900 },
+    "waitFor": "text=With my team",
+    "mask": [
+      "[data-clerk-component=\"UserButton\"]",
+      ".cl-userButtonBox",
+      "[data-testid=\"user-email\"]"
+    ],
+    "status": "todo",
+    "usedBy": ["platform/quickstart.mdx"],
+    "shows": "Onboarding persona selection (By myself / With my team). Not reproducible from an already-onboarded seeded org; a human must supply this image or adjust the route."
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "name": "@hacktron/docs-screenshots",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Manifest-driven, self-healing screenshot capture for the Hacktron docs.",
+  "scripts": {
+    "setup": "node setup.mjs",
+    "capture": "node capture.mjs",
+    "placeholder": "node generate-placeholder.mjs"
+  },
+  "dependencies": {
+    "@clerk/testing": "^1.4.0",
+    "pixelmatch": "^6.0.0",
+    "playwright": "^1.49.0",
+    "pngjs": "^7.0.0"
+  }
+}
