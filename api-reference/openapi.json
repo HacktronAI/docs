@@ -1,0 +1,900 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Hacktron REST API",
+    "version": "1.0.0",
+    "description": "Public REST API for Hacktron scans, findings, and cost estimations. Every request is authenticated with an organization-scoped API key sent in the `X-Api-Key` header.",
+    "contact": {
+      "name": "Hacktron Support",
+      "email": "founders@hacktron.ai",
+      "url": "https://hacktron.ai"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.hacktron.ai/v1",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cost Estimations",
+      "description": "Estimate the credit cost of scanning one or more repositories before starting a scan."
+    },
+    {
+      "name": "Scans",
+      "description": "Trigger pentest scans, poll their status, and read the findings they produce."
+    },
+    {
+      "name": "Findings",
+      "description": "Browse, filter, triage, and comment on findings across scans."
+    }
+  ],
+  "paths": {
+    "/cost-estimations": {
+      "post": {
+        "tags": ["Cost Estimations"],
+        "operationId": "createCostEstimation",
+        "summary": "Create cost estimation",
+        "description": "Resolves the repositories you plan to scan, detects applications within them, and returns a predicted credit cost. Cost estimations run asynchronously; the response is returned in `pending` or `running` state. Poll `GET /cost-estimations/{id}` until `status` reaches a terminal value. Requires the `write` scope.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateCostEstimationRequest" },
+              "example": {
+                "name": "nightly-estimate",
+                "repos": [
+                  { "source": "connected", "repo_url": "https://github.com/acme/backend", "branch": "main" }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The estimation was queued.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CostEstimation" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      },
+      "get": {
+        "tags": ["Cost Estimations"],
+        "operationId": "listCostEstimations",
+        "summary": "List cost estimations",
+        "description": "Returns cost estimations for the organization, most recent first. Unlike most list endpoints, cost estimations use offset-based pagination (`limit` + `offset`). Requires the `read` scope.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items to return.",
+            "schema": { "type": "integer", "default": 50, "minimum": 1, "maximum": 100 }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Number of items to skip.",
+            "schema": { "type": "integer", "default": 0, "minimum": 0 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of cost estimations.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": { "type": "array", "items": { "$ref": "#/components/schemas/CostEstimation" } },
+                    "total": { "type": "integer", "description": "Total number of estimations in the organization." }
+                  },
+                  "required": ["data", "total"]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      }
+    },
+    "/cost-estimations/{id}": {
+      "get": {
+        "tags": ["Cost Estimations"],
+        "operationId": "getCostEstimation",
+        "summary": "Get cost estimation",
+        "description": "Returns a single cost estimation. Poll this endpoint on a pending estimation until `status` reaches a terminal value (`completed`, `partial`, or `failed`). Requires the `read` scope.",
+        "parameters": [
+          { "$ref": "#/components/parameters/CostEstimationId" }
+        ],
+        "responses": {
+          "200": {
+            "description": "The cost estimation.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CostEstimation" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      }
+    },
+    "/scans": {
+      "post": {
+        "tags": ["Scans"],
+        "operationId": "createScan",
+        "summary": "Trigger a pentest scan",
+        "description": "Starts a full pentest scan against the repositories attached to a completed cost estimation. Scans run asynchronously; the endpoint returns immediately with a scan `id` for polling. Requires the `write` scope.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateScanRequest" },
+              "example": {
+                "cost_estimation_id": "b4f5c6a1-2d3e-4f56-9a8b-0c1d2e3f4a5b",
+                "repos": [
+                  { "url": "https://github.com/acme/backend", "branch": "main", "source": "connected" }
+                ],
+                "target_urls": ["https://staging.acme.com"],
+                "auth_instructions": "Use test account test@acme.com / hunter2",
+                "custom_context": "Focus on the payment flow under /api/v1/checkout"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The scan was started.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateScanResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "402": { "$ref": "#/components/responses/PaymentRequired" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      },
+      "get": {
+        "tags": ["Scans"],
+        "operationId": "listScans",
+        "summary": "List scans",
+        "description": "Returns scans in your organization, with filtering by type and status, plus pagination and sorting. Requires the `read` scope.",
+        "parameters": [
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" },
+          {
+            "name": "scan_type",
+            "in": "query",
+            "description": "Filter by scan type.",
+            "schema": { "type": "string", "enum": ["pr", "full"] }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by scan status.",
+            "schema": { "$ref": "#/components/schemas/ScanStatusValue" }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "schema": { "type": "string", "enum": ["created_at", "updated_at", "status"], "default": "created_at" }
+          },
+          { "$ref": "#/components/parameters/SortOrder" }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of scans.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/PageEnvelope" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": { "type": "array", "items": { "$ref": "#/components/schemas/Scan" } }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      }
+    },
+    "/scans/{id}": {
+      "get": {
+        "tags": ["Scans"],
+        "operationId": "getScan",
+        "summary": "Get scan",
+        "description": "Returns the full record for a single scan, including its findings summary. Requires the `read` scope.",
+        "parameters": [ { "$ref": "#/components/parameters/ScanId" } ],
+        "responses": {
+          "200": {
+            "description": "The scan.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Scan" } }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      }
+    },
+    "/scans/{id}/status": {
+      "get": {
+        "tags": ["Scans"],
+        "operationId": "getScanStatus",
+        "summary": "Get scan status",
+        "description": "Returns a minimal payload with the scan's current status. Use this for polling; the response omits the findings summary that `GET /scans/{id}` computes. A poll interval of 10-30 seconds is recommended. Requires the `read` scope.",
+        "parameters": [ { "$ref": "#/components/parameters/ScanId" } ],
+        "responses": {
+          "200": {
+            "description": "The scan status.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ScanStatus" } }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      }
+    },
+    "/scans/{id}/findings": {
+      "get": {
+        "tags": ["Scans"],
+        "operationId": "listScanFindings",
+        "summary": "List scan findings",
+        "description": "Returns findings produced by a specific scan, with the same filtering and sorting controls as `GET /findings`. Only findings that have passed automated verification are returned. Requires the `read` scope.",
+        "parameters": [
+          { "$ref": "#/components/parameters/ScanId" },
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" },
+          { "$ref": "#/components/parameters/SeverityFilter" },
+          { "$ref": "#/components/parameters/StateFilter" },
+          { "$ref": "#/components/parameters/FindingSortBy" },
+          { "$ref": "#/components/parameters/SortOrder" }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of findings for the scan.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/PageEnvelope" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": { "type": "array", "items": { "$ref": "#/components/schemas/Finding" } }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      }
+    },
+    "/scans/{id}/findings/export": {
+      "get": {
+        "tags": ["Scans"],
+        "operationId": "exportScanFindings",
+        "summary": "Export scan findings",
+        "description": "Returns every approved finding for a scan in one of three formats. Unlike `GET /scans/{id}/findings`, this endpoint is not paginated; all findings are returned in a single response. Requires the `read` scope.",
+        "parameters": [
+          { "$ref": "#/components/parameters/ScanId" },
+          {
+            "name": "format",
+            "in": "query",
+            "required": true,
+            "description": "Output format.",
+            "schema": { "type": "string", "enum": ["json", "csv", "sarif"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The exported findings. The `Content-Type` and `Content-Disposition` headers depend on the requested format.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Finding" } }
+              },
+              "text/csv": {
+                "schema": { "type": "string", "format": "binary" }
+              },
+              "application/sarif+json": {
+                "schema": { "type": "object", "description": "A SARIF 2.1.0 document." }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      }
+    },
+    "/findings": {
+      "get": {
+        "tags": ["Findings"],
+        "operationId": "listFindings",
+        "summary": "List findings",
+        "description": "Returns findings across every scan in the organization, with filtering and sorting. Only findings that have passed automated verification are returned. Requires the `read` scope.",
+        "parameters": [
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" },
+          { "$ref": "#/components/parameters/SeverityFilter" },
+          { "$ref": "#/components/parameters/StateFilter" },
+          {
+            "name": "scan_id",
+            "in": "query",
+            "description": "Only return findings produced by this scan. The scan must exist in the organization.",
+            "schema": { "type": "string", "format": "uuid" }
+          },
+          { "$ref": "#/components/parameters/FindingSortBy" },
+          { "$ref": "#/components/parameters/SortOrder" }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of findings.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/PageEnvelope" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": { "type": "array", "items": { "$ref": "#/components/schemas/Finding" } }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      }
+    },
+    "/findings/{id}": {
+      "get": {
+        "tags": ["Findings"],
+        "operationId": "getFinding",
+        "summary": "Get finding",
+        "description": "Returns a single finding along with its triage thread, occurrence count, repository URL, scan type, and a Mermaid diagram of the vulnerability trace when one was produced. Requires the `read` scope.",
+        "parameters": [ { "$ref": "#/components/parameters/FindingId" } ],
+        "responses": {
+          "200": {
+            "description": "The finding with full triage context.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/FindingDetail" } }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      },
+      "patch": {
+        "tags": ["Findings"],
+        "operationId": "updateFinding",
+        "summary": "Update finding",
+        "description": "Updates the `state`, `severity`, or both on a single finding. At least one of `state` or `severity` must be provided. Every change is recorded to the finding's audit trail and propagated to connected integrations. Requires the `write` scope.",
+        "parameters": [ { "$ref": "#/components/parameters/FindingId" } ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateFindingRequest" },
+              "example": {
+                "state": "true_positive",
+                "severity": "critical",
+                "reason": "Confirmed reproducible against staging. Raising from high to critical."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated state and severity.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "format": "uuid" },
+                    "state": { "$ref": "#/components/schemas/FindingState" },
+                    "severity": { "$ref": "#/components/schemas/Severity" }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      }
+    },
+    "/findings/{id}/comments": {
+      "post": {
+        "tags": ["Findings"],
+        "operationId": "addFindingComment",
+        "summary": "Add finding comment",
+        "description": "Appends a comment to a finding's triage thread. Comments appear in the dashboard alongside comments from GitHub, Slack, and other integrations. Requires the `write` scope.",
+        "parameters": [ { "$ref": "#/components/parameters/FindingId" } ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["comment"],
+                "properties": {
+                  "comment": { "type": "string", "minLength": 1, "maxLength": 4000, "description": "Comment text." }
+                }
+              },
+              "example": { "comment": "Confirmed reproducible on staging. Opened JIRA-4821." }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The comment was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "comment_id": { "type": "string", "format": "uuid" } }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Api-Key",
+        "description": "Organization-scoped API key. Created from Settings -> API keys in the Hacktron dashboard."
+      }
+    },
+    "parameters": {
+      "Page": {
+        "name": "page",
+        "in": "query",
+        "description": "1-based page number.",
+        "schema": { "type": "integer", "default": 1, "minimum": 1 }
+      },
+      "Limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "Items per page.",
+        "schema": { "type": "integer", "default": 15, "minimum": 1, "maximum": 100 }
+      },
+      "SortOrder": {
+        "name": "sort_order",
+        "in": "query",
+        "schema": { "type": "string", "enum": ["ASC", "DESC"], "default": "DESC" }
+      },
+      "SeverityFilter": {
+        "name": "severity",
+        "in": "query",
+        "description": "Filter by severity.",
+        "schema": { "$ref": "#/components/schemas/Severity" }
+      },
+      "StateFilter": {
+        "name": "state",
+        "in": "query",
+        "description": "Filter by finding state.",
+        "schema": { "$ref": "#/components/schemas/FindingState" }
+      },
+      "FindingSortBy": {
+        "name": "sort_by",
+        "in": "query",
+        "schema": { "type": "string", "enum": ["found_at", "updated_at", "severity"], "default": "found_at" }
+      },
+      "ScanId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "Scan UUID.",
+        "schema": { "type": "string", "format": "uuid" }
+      },
+      "FindingId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "Finding UUID.",
+        "schema": { "type": "string", "format": "uuid" }
+      },
+      "CostEstimationId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "Cost estimation UUID.",
+        "schema": { "type": "string", "format": "uuid" }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Validation failure or malformed request.",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "Unauthorized": {
+        "description": "Missing, malformed, revoked, or expired API key.",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "PaymentRequired": {
+        "description": "Insufficient pentest credits.",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "Forbidden": {
+        "description": "The API key is missing the required scope.",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "NotFound": {
+        "description": "The resource does not exist or is not visible to your organization.",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "TooManyRequests": {
+        "description": "Rate limit exceeded (100 requests per 60 seconds per key).",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "statusCode": { "type": "integer", "example": 400 },
+          "message": {
+            "description": "Human-readable message, or an array of field-level validation errors.",
+            "oneOf": [
+              { "type": "string" },
+              { "type": "array", "items": { "type": "string" } }
+            ]
+          },
+          "error": { "type": "string", "example": "Bad Request" }
+        },
+        "required": ["statusCode", "message"]
+      },
+      "Severity": {
+        "type": "string",
+        "enum": ["critical", "high", "medium", "low", "info"]
+      },
+      "FindingState": {
+        "type": "string",
+        "enum": ["open", "true_positive", "false_positive", "accepted_risk", "resolved"]
+      },
+      "ScanStatusValue": {
+        "type": "string",
+        "enum": [
+          "pending",
+          "running",
+          "pending_verification",
+          "pending_triage",
+          "completed",
+          "failed",
+          "stopped",
+          "cancelled",
+          "skipped",
+          "draft"
+        ]
+      },
+      "PageEnvelope": {
+        "type": "object",
+        "properties": {
+          "total": { "type": "integer", "description": "Total number of items across all pages." },
+          "page": { "type": "integer", "description": "Current 1-based page number." },
+          "limit": { "type": "integer", "description": "Items per page." }
+        },
+        "required": ["total", "page", "limit"]
+      },
+      "CreateCostEstimationRequest": {
+        "type": "object",
+        "required": ["repos"],
+        "properties": {
+          "name": { "type": "string", "maxLength": 255, "description": "Friendly label for this estimation." },
+          "repos": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "description": "1-20 repositories to estimate.",
+            "items": { "$ref": "#/components/schemas/CostEstimationRepoInput" }
+          }
+        }
+      },
+      "CostEstimationRepoInput": {
+        "description": "A repository to estimate. Uses a discriminated union on the `source` field.",
+        "oneOf": [
+          { "$ref": "#/components/schemas/RepoConnected" },
+          { "$ref": "#/components/schemas/RepoPublic" },
+          { "$ref": "#/components/schemas/RepoUpload" }
+        ],
+        "discriminator": { "propertyName": "source" }
+      },
+      "RepoConnected": {
+        "type": "object",
+        "required": ["source", "repo_url", "branch"],
+        "properties": {
+          "source": { "type": "string", "const": "connected" },
+          "repo_url": { "type": "string", "maxLength": 500, "description": "Full HTTPS URL of the repository." },
+          "branch": { "type": "string", "maxLength": 255 },
+          "github_installation_id": { "type": "integer", "description": "Specific GitHub App installation ID to use." }
+        }
+      },
+      "RepoPublic": {
+        "type": "object",
+        "required": ["source", "repo_url", "branch"],
+        "properties": {
+          "source": { "type": "string", "const": "public" },
+          "repo_url": { "type": "string", "maxLength": 500 },
+          "branch": { "type": "string", "maxLength": 255 }
+        }
+      },
+      "RepoUpload": {
+        "type": "object",
+        "required": ["source", "archive_id"],
+        "properties": {
+          "source": { "type": "string", "const": "upload" },
+          "archive_id": { "type": "string", "format": "uuid", "description": "ID of a scan archive you uploaded." }
+        }
+      },
+      "Application": {
+        "type": "object",
+        "properties": {
+          "app_name": { "type": "string" },
+          "app_root_path": { "type": "string" },
+          "architecture": { "type": "string" }
+        }
+      },
+      "RepoResult": {
+        "type": "object",
+        "properties": {
+          "repo_url": { "type": "string" },
+          "branch": { "type": "string" },
+          "commit_sha": { "type": "string" },
+          "status": { "type": "string", "enum": ["completed", "failed"] },
+          "from_cache": { "type": "boolean" },
+          "credits": { "type": "integer" },
+          "applications": { "type": "array", "items": { "$ref": "#/components/schemas/Application" } }
+        }
+      },
+      "CostEstimation": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "organization_id": { "type": "string", "format": "uuid" },
+          "user_id": { "type": "string", "format": "uuid" },
+          "name": { "type": ["string", "null"] },
+          "task_id": { "type": "string" },
+          "status": { "type": "string", "enum": ["pending", "running", "completed", "partial", "failed"] },
+          "repos": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+          "total_credits": { "type": ["integer", "null"] },
+          "repo_results": {
+            "type": ["array", "null"],
+            "items": { "$ref": "#/components/schemas/RepoResult" }
+          },
+          "error": { "type": ["string", "null"] },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "CreateScanRequest": {
+        "type": "object",
+        "required": ["cost_estimation_id", "repos"],
+        "properties": {
+          "cost_estimation_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of a completed cost estimation. The first repo in `repos` must match the estimation."
+          },
+          "repos": {
+            "type": "array",
+            "minItems": 1,
+            "description": "At least one repository. The first is the primary target; additional entries are scanned as related repositories.",
+            "items": { "$ref": "#/components/schemas/ScanRepoInput" }
+          },
+          "target_urls": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Live URLs to include in the pentest (for example a staging environment)."
+          },
+          "auth_instructions": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Credentials or steps the scanner should follow to authenticate."
+          },
+          "custom_context": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Additional context: scope, areas to emphasise, exclusions."
+          },
+          "context_document_ids": {
+            "type": "array",
+            "items": { "type": "string", "format": "uuid" },
+            "description": "IDs of context documents to attach to the scan."
+          }
+        }
+      },
+      "ScanRepoInput": {
+        "type": "object",
+        "required": ["url", "branch"],
+        "properties": {
+          "url": { "type": "string", "description": "HTTPS URL of the repository." },
+          "branch": { "type": "string", "description": "Branch to scan." },
+          "source": {
+            "type": "string",
+            "enum": ["connected", "public", "upload"],
+            "default": "connected"
+          }
+        }
+      },
+      "CreateScanResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid", "description": "Scan UUID. Use this to fetch status, details, and findings." },
+          "task_id": { "type": "string", "description": "Internal task identifier (also visible in the dashboard)." },
+          "status": { "type": "string", "description": "Always `pending` at creation time." },
+          "message": { "type": "string" }
+        }
+      },
+      "FindingsSummary": {
+        "type": "object",
+        "description": "Approved finding counts by severity.",
+        "properties": {
+          "critical": { "type": "integer" },
+          "high": { "type": "integer" },
+          "medium": { "type": "integer" },
+          "low": { "type": "integer" },
+          "info": { "type": "integer" }
+        }
+      },
+      "Scan": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "task_id": { "type": "string" },
+          "scan_type": { "type": "string", "enum": ["pr", "full"] },
+          "status": { "$ref": "#/components/schemas/ScanStatusValue" },
+          "name": { "type": ["string", "null"] },
+          "repo_url": { "type": ["string", "null"] },
+          "branch": { "type": ["string", "null"] },
+          "pr_number": { "type": ["integer", "null"] },
+          "target_urls": { "type": ["array", "null"], "items": { "type": "string" } },
+          "findings_summary": { "$ref": "#/components/schemas/FindingsSummary" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "ScanStatus": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "task_id": { "type": "string" },
+          "status": { "$ref": "#/components/schemas/ScanStatusValue" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Finding": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "title": { "type": "string" },
+          "category": { "type": "string", "description": "Vulnerability category (for example `injection`, `auth`, `xss`)." },
+          "severity": { "$ref": "#/components/schemas/Severity" },
+          "state": { "$ref": "#/components/schemas/FindingState" },
+          "description": { "type": "string" },
+          "affected_file": { "type": "string", "description": "Path relative to the repository root." },
+          "affected_code": { "type": "string" },
+          "proof_of_concept": { "type": ["string", "null"] },
+          "impact": { "type": ["string", "null"] },
+          "root_cause": { "type": ["string", "null"] },
+          "remediation": { "type": ["string", "null"] },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "scan_id": { "type": ["string", "null"], "format": "uuid" },
+          "found_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "TriageEntry": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "reaction": {
+            "description": "Triage reaction (one of the finding states), or `null` for comment-only entries.",
+            "oneOf": [
+              { "$ref": "#/components/schemas/FindingState" },
+              { "type": "null" }
+            ]
+          },
+          "comment": { "type": ["string", "null"] },
+          "user_id": { "type": "string", "format": "uuid" },
+          "username": { "type": "string" },
+          "source": { "type": "string", "enum": ["github", "slack", "web", "api", "agent"] },
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      },
+      "FindingDetail": {
+        "allOf": [
+          { "$ref": "#/components/schemas/Finding" },
+          {
+            "type": "object",
+            "properties": {
+              "triage_thread": { "type": "array", "items": { "$ref": "#/components/schemas/TriageEntry" } },
+              "mermaid_trace": { "type": ["string", "null"], "description": "Mermaid diagram source for the vulnerability trace." },
+              "occurrence_count": { "type": "integer", "minimum": 1 },
+              "repo_url": { "type": ["string", "null"] },
+              "scan_type": { "type": ["string", "null"], "enum": ["pr", "full", null] }
+            }
+          }
+        ]
+      },
+      "UpdateFindingRequest": {
+        "type": "object",
+        "description": "At least one of `state` or `severity` must be provided.",
+        "minProperties": 1,
+        "properties": {
+          "state": { "$ref": "#/components/schemas/FindingState" },
+          "severity": { "$ref": "#/components/schemas/Severity" },
+          "state_reason": { "type": "string", "maxLength": 2000, "description": "Reason for the state change. Falls back to `reason` if omitted." },
+          "severity_reason": { "type": "string", "maxLength": 2000, "description": "Reason for the severity change. Falls back to `reason` if omitted." },
+          "reason": { "type": "string", "maxLength": 2000, "description": "Shorthand applied to both state and severity when their specific reason fields are omitted." }
+        }
+      }
+    }
+  }
+}
