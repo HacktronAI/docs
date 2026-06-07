@@ -16,10 +16,6 @@
       "weight": 500
     }
   },
-  "banner": {
-    "content": "Open source repositories can get PR reviews for free. [Learn more](https://www.hacktron.ai/blog/hacktron-review-for-open-source)",
-    "dismissible": true
-  },
   "favicon": "/favicon.png",
   "navigation": {
     "products": [
