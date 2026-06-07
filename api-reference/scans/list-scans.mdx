@@ -88,7 +88,7 @@ curl "https://api.hacktron.ai/v1/scans?status=completed&sort_by=created_at&sort_
 | `repo_url`          | string\|null  | Primary repository URL.                                          |
 | `branch`            | string\|null  | Primary branch scanned.                                          |
 | `pr_number`         | integer\|null | GitHub PR number (PR scans only).                                |
-| `target_urls`       | string[]\|null| Live targets (pentest scans).                                    |
+| `target_urls`       | string[]\|null| Live targets for Whitebox Scans.                                 |
 | `findings_summary`  | object        | Approved finding counts by severity.                             |
 | `created_at`        | string        | ISO 8601 timestamp.                                              |
 | `updated_at`        | string        | ISO 8601 timestamp.                                              |

@@ -1,33 +1,65 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "almond",
+  "theme": "willow",
   "name": "Hacktron Docs",
   "colors": {
     "primary": "#060000",
     "light": "#FDF6E3",
-    "dark": "#FDF6E3"
+    "dark": "#181611"
   },
   "fonts": {
     "body": {
       "family": "Inter"
     },
     "heading": {
-      "family": "Titillium Web"
+      "family": "Titillium Web",
+      "weight": 500
     }
   },
   "banner": {
-    "content": "New: Explore the [Hacktron Platform](/platform/quickstart) for org-wide setup, reviews, billing, and pentests.",
+    "content": "Open source repositories can get PR reviews for free. [Learn more](https://www.hacktron.ai/blog/hacktron-review-for-open-source)",
     "dismissible": true
   },
   "favicon": "/favicon.png",
   "navigation": {
-    "tabs": [
+    "products": [
       {
-        "tab": "Home",
+        "product": "Platform",
+        "icon": "house",
         "groups": [
           {
-            "group": "Getting started",
-            "pages": ["index"]
+            "group": "Overview",
+            "pages": ["index", "platform/overview"]
+          },
+          {
+            "group": "Setup",
+            "pages": [
+              "platform/integrations",
+              {
+                "group": "Repositories",
+                "pages": [
+                  "platform/repositories",
+                  "platform/repositories/github",
+                  "platform/repositories/github-enterprise-server",
+                  "platform/repositories/gitlab"
+                ]
+              },
+              {
+                "group": "Project Management Apps",
+                "pages": [
+                  "platform/project-management",
+                  "platform/project-management/jira",
+                  "platform/project-management/linear"
+                ]
+              },
+              {
+                "group": "Communication Apps",
+                "pages": [
+                  "platform/communication-apps",
+                  "platform/communication-apps/slack"
+                ]
+              }
+            ]
           },
           {
             "group": "Resources",
@@ -36,21 +68,62 @@
         ]
       },
       {
-        "tab": "Platform",
+        "product": "Code Review",
+        "icon": "code-branch",
         "groups": [
           {
             "group": "Overview",
+            "pages": ["code-review/overview"]
+          },
+          {
+            "group": "Getting started",
+            "pages": ["code-review/setup", "code-review/billing"]
+          },
+          {
+            "group": "Management",
             "pages": [
-              "platform/quickstart",
-              "platform/code-reviews",
-              "platform/billing-access",
-              "platform/pentests"
+              "code-review/people",
+              "code-review/spillover-usage",
+              "code-review/rules"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "code-review/integrations/slack",
+              "code-review/integrations/github-gitlab"
+            ]
+          },
+          {
+            "group": "Operations",
+            "pages": [
+              "code-review/findings-feedback",
+              "code-review/troubleshooting"
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "product": "White-box Pentest",
+        "icon": "magnifying-glass",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": ["white-box-pentest/overview"]
+          },
+          {
+            "group": "Getting started",
+            "pages": ["white-box-pentest/quickstart"]
+          },
+          {
+            "group": "Credits and billing",
+            "pages": ["white-box-pentest/billing"]
+          }
+        ]
+      },
+      {
+        "product": "API Reference",
+        "icon": "code",
         "groups": [
           {
             "group": "Getting started",
@@ -96,19 +169,19 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Blog",
-          "href": "https://hacktron.ai/blog",
-          "icon": "newspaper"
+          "anchor": "Code Review",
+          "href": "/code-review/overview",
+          "icon": "code-branch"
+        },
+        {
+          "anchor": "White-box Pentest",
+          "href": "/white-box-pentest/overview",
+          "icon": "magnifying-glass"
         },
         {
           "anchor": "Community",
           "href": "https://discord.gg/eRHCHsvDKh",
           "icon": "discord"
-        },
-        {
-          "anchor": "Trust Center",
-          "href": "https://trust.hacktron.ai",
-          "icon": "shield-halved"
         }
       ]
     }
@@ -120,12 +193,21 @@
   "thumbnails": {
     "appearance": "dark"
   },
-  "background": {},
+  "background": {
+    "color": {
+      "light": "#FDF6E3",
+      "dark": "#181611"
+    }
+  },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "https://discord.gg/eRHCHsvDKh"
+        "href": "mailto:hello@hacktron.ai"
+      },
+      {
+        "label": "Trust Center",
+        "href": "https://trust.hacktron.ai"
       }
     ],
     "primary": {

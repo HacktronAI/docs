@@ -1,0 +1,72 @@
+---
+title: "Slack"
+description: "Connect Slack and manage findings from Slack."
+---
+
+## Prerequisites
+
+First, make sure that your organization has an active Slack integration.
+
+<Card
+  title="Set up Slack for your organization"
+  icon="slack"
+  href="/platform/communication-apps/slack"
+>
+  Connect Slack and choose the notification channel.
+</Card>
+
+## Manage findings from Slack
+
+When Hacktron's Slack app sends a finding in your configured channel,
+you can leave a triage comment and mark the finding as a false positive or accepted risk,
+or mark the finding as valid.
+
+Open the finding card and click on **Mark Valid** or **Triage Comment**.
+
+<img src="/images/slack_comment.png" alt="Triage comments in Slack" />
+
+## Link your Slack identity
+
+To perform actions on findings directly from Slack and for Hacktron to tag
+you on Slack, you need to link your Slack identity to your Hacktron account
+so that Hacktron can recognize you on Slack.
+
+<Steps>
+  <Step title="Open Account page">
+    Click on your organization name in the top left corner and go to
+    **Account**.
+  </Step>
+  <Step title="Connect Slack">
+    Scroll down to **Connected Accounts** and click on **Connect** next to
+    **Slack**.
+
+    <img src="/images/connected_accounts.png" alt="Connected Accounts" />
+
+  </Step>
+  <Step title="Authorize Hacktron">
+    Sign in to Slack and approve the requested access.
+
+    <Tip>
+      If you are signed in to multiple Slack workspaces, make sure you select the right workspace.
+      The workspace must be the same as the one configured in the [organization-wide Slack integration](/platform/communication-apps/slack).
+    </Tip>
+
+    <img src="/images/authorize_slack.png" alt="Slack authorization" />
+
+    Click on **Accept and continue**.
+
+  </Step>
+  <Step title="Return to Hacktron">
+    After authorization, Hacktron redirects you back to **Account**.
+  </Step>
+</Steps>
+
+You can now provide feedback and act on findings directly from Slack.
+
+<Card
+  title="Findings and feedback"
+  icon="message-dots"
+  href="/code-review/findings-feedback"
+>
+  Understand how feedback you give Hacktron improves future reviews.
+</Card>

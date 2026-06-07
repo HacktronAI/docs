@@ -1,0 +1,91 @@
+---
+title: "Setup"
+description: "Connect a Git provider, enable repositories, and choose which branches Hacktron should review."
+---
+
+Set up Code Review after creating a Hacktron organization and connecting your Git provider. Repository access is controlled first by the Git provider installation, then by the repositories and branches you enable in Hacktron.
+
+## Prerequisites
+
+You need to be a Hacktron organization admin to configure repositories.
+
+You also need permission to connect your Git provider. For more details, choose your Git provider below.
+
+## Configure Code Review
+
+<Steps>
+  <Step title="Connect a Git provider">
+    Open **Integrations** and connect GitHub, GitHub Enterprise Server, or GitLab.
+
+    <Columns cols={2}>
+      <Card title="GitHub" icon="github" href="/platform/repositories/github">
+        Install the Hacktron GitHub App for GitHub.com repositories.
+      </Card>
+      <Card
+        title="GitHub Enterprise Server"
+        icon="github"
+        href="/platform/repositories/github-enterprise-server"
+      >
+        Connect a self-hosted GitHub Enterprise Server instance.
+      </Card>
+      <Card title="GitLab" icon="gitlab" href="/platform/repositories/gitlab">
+        Connect GitLab through a service account and personal access token.
+      </Card>
+    </Columns>
+
+  </Step>
+  <Step title="Enable repository coverage">
+    Open **repositories** and choose which repositories should receive pull request or merge request reviews.
+
+    <img src="/images/repos.png" alt="Repositories" />
+
+  </Step>
+  <Step title="Choose covered branches">
+    For each repository, choose whether Hacktron should review pull requests or
+    merge requests targeting all branches or only specific branches such as
+    `main` or `production`.
+
+    <img src="/images/branches.png" alt="Branches" />
+
+  </Step>
+  <Step title="Trigger your first review (optional)">
+    Go to an existing pull request or merge request and comment `@hacktron review`.
+
+    This will trigger a Hacktron security review for the pull request or merge request immediately.
+
+    <Tip>
+      This is optional, and Hacktron will already automatically review all configured repositories and branches from now on.
+    </Tip>
+
+  </Step>
+</Steps>
+
+You do not need to manually invite every developer before reviews can start. Hacktron discovers developers from repository activity as reviews run.
+
+## Billing and usage
+
+Code Review requires an active trial or paid subscription before reviews can run. Every organization gets a **14-day free trial**.
+
+<Columns cols={2}>
+  <Card
+    title="Start a free trial"
+    icon="credit-card"
+    href="/code-review/billing"
+  >
+    Start a 14-day free trial and manage your subscription.
+  </Card>
+  <Card
+    title="Manage usage"
+    icon="chart-line"
+    href="/code-review/spillover-usage"
+  >
+    Manage pooled review limits and overage usage.
+  </Card>
+</Columns>
+
+## Common checks
+
+- If setup was skipped during onboarding, connect the Git provider before expecting reviews to run.
+- If a repository does not appear, confirm that the Git provider installation includes it.
+- If a pull request is not reviewed, confirm that the repository is enabled and the target branch is covered.
+- If review capacity is unavailable, check **Billing** and **Usage**.

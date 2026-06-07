@@ -1,0 +1,74 @@
+---
+title: "GitLab"
+description: "Configure repository access for GitLab.com."
+---
+
+## Prerequisites
+
+You need to be an owner of the GitLab group you want to connect to Hacktron.
+This is required to create a service account for Hacktron to use.
+
+## Configure access
+
+<Steps>
+  <Step title="Open Service Accounts page">
+      In GitLab, under the group you want to connect to Hacktron, go to
+      **Settings** and select **Service Accounts**.
+    <img src="/images/gitlab_sa.png" alt="GitLab Service Accounts" />
+  </Step>
+  <Step title="Create a new service account">
+    Give the service account a descriptive name, e.g. "Hacktron".
+
+    <img src="/images/create_sa.png" alt="Create Service Account" />
+
+    Click **Create**.
+
+  </Step>
+  <Step title="Grant Maintainer access to the service account">
+    In the Group or Projects you want to connect to Hacktron, grant the
+    service account Maintainer access.
+
+    <img
+      src="/images/invite_sa.png"
+      alt="Grant Service Account Maintainer Access"
+    />
+
+  </Step>
+  <Step title="Create a new personal access token">
+    In the service account page, select the service account and click on
+    **Manage access tokens**.
+
+    <img src="/images/manage_token.png" alt="Manage Service Account Tokens" />
+
+      Click on **Add new token**, and grant it the following permissions:
+      - `read_user`
+      - `read_api`
+      - `api`
+
+    <Info>
+      This is required for Hacktron to receive merge request events and run code
+      reviews. Hacktron does not retain any source code after each review is
+      complete.
+    </Info>
+
+    Click **Generate token**.
+
+    <img src="/images/token.png" alt="Token Permissions" />
+
+    <Warning>
+      **Personal access tokens have expiration dates.** Ensure the expiration date covers the duration of your intended use of Hacktron to avoid service interruption.
+    </Warning>
+
+  </Step>
+  <Step title="Open Integrations page">
+    In Hacktron, go to **Integrations** and click **Connect** under **GitLab**.
+
+    <img src="/images/gitlab.png" alt="GitLab Integration" />
+
+  </Step>
+  <Step title="Enter the token">
+    Enter the token you created earlier, and click **Connect**.
+  </Step>
+</Steps>
+
+That's it! Hacktron will now run security reviews for every pull request in the selected repositories.

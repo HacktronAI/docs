@@ -1,0 +1,50 @@
+---
+title: "Overview"
+description: "Connect communication apps so Hacktron can send security notifications to your team."
+---
+
+Communication Apps let Hacktron send security updates into the team channels where remediation work is coordinated.
+
+Use this page after [connecting a Git provider](/platform/repositories) and enabling repositories. Communication app connections are managed from **Integrations** and are available to organization admins.
+
+## Prerequisites
+
+You need to be a Hacktron organization admin to manage the communication app integration.
+
+You also need permission to authorize apps in the communication app you want Hacktron to use.
+
+## Configure communication apps
+
+<Steps>
+  <Step title="Set up repositories and enable reviews">
+    Set up repositories and enable reviews in [Repositories](/platform/repositories) and [Code Review](/code-review/overview).
+  </Step>
+  <Step title="Connect Slack">
+    In Hacktron, go to **Integrations** and find the **Communication Apps**
+    section. For detailed instructions, select your communication app below.
+
+    <Columns cols={2}>
+      <Card title="Slack" icon="slack" href="/platform/communication-apps/slack">
+        Connect Slack and choose the notification channel.
+      </Card>
+    </Columns>
+
+  </Step>
+  <Step title="Authorize the workspace">
+    Sign in to Slack if required and approve Hacktron for the workspace that
+    should receive security notifications.
+  </Step>
+  <Step title="Choose a notification channel">
+    After Slack is connected, open the Slack settings panel and choose the
+    channel where Hacktron should send scan updates.
+  </Step>
+  <Step title="Receive updates">
+    Hacktron sends notifications and alerts to the selected Slack channel.
+  </Step>
+</Steps>
+
+## Common checks
+
+- If the **Connect** button is disabled, confirm that you are an organization admin on Hacktron.
+- If channels do not appear, confirm that the Slack workspace authorization completed successfully.
+- If notifications are not appearing, confirm that a channel is selected in Slack settings.

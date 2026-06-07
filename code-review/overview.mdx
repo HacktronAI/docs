@@ -1,0 +1,73 @@
+---
+title: "Code Review"
+description: "Use Code Review to run continuous pull request security reviews across connected repositories."
+---
+
+Code Review reviews pull requests and merge requests in the repositories you enable. Hacktron reads each change with repository context, looks for exploitable vulnerabilities, and comments directly on affected code so engineers can fix issues before merge.
+
+Use Code Review for continuous security coverage on day-to-day development. For broader, scoped assessments of a repository or application, use [White-box Pentest](/white-box-pentest/overview).
+
+## Quickstart
+
+<Steps>
+  <Step title="Set up Code Review">
+    <Card title="Setup" icon="code-branch" href="/code-review/setup">
+      Connect a Git provider, enable repositories, and choose covered branches.
+    </Card>
+  </Step>
+  <Step title="Configure integrations">
+    <Columns cols={2}>
+      <Card
+        title="Project Management Apps"
+        icon="square-kanban"
+        href="/platform/project-management"
+      >
+        Connect Jira or Linear and choose the default ticket fields.
+      </Card>
+      <Card
+        title="Communication Apps"
+        icon="slack"
+        href="/platform/communication-apps"
+      >
+        Connect Slack and choose the notification channel.
+      </Card>
+    </Columns>
+  </Step>
+  <Step title="Improve reviews with context">
+    <Columns cols={2}>
+      <Card
+        title="Feedback"
+        icon="message-dots"
+        href="/code-review/findings-feedback"
+      >
+        Understand where Hacktron posts Code Review findings and how feedback
+        improves future reviews.
+      </Card>
+      <Card title="Rules" icon="file-text" href="/code-review/rules">
+        Add `.hacktron/rules.md` so reviews understand your app-specific
+        context.
+      </Card>
+    </Columns>
+  </Step>
+</Steps>
+
+## Next steps
+
+<Columns cols={2}>
+  <Card
+    title="Trial and billing"
+    icon="credit-card"
+    href="/code-review/billing"
+  >
+    Manage payment methods, trials, seats, subscriptions, and invoices.
+  </Card>
+  <Card title="Usage" icon="chart-line" href="/code-review/spillover-usage">
+    Understand pooled review limits, spillover billing, and active-period usage.
+  </Card>
+  <Card title="People" icon="users" href="/code-review/people">
+    Configure Code Review seats, auto-assignment, and developer access.
+  </Card>
+  <Card title="Slack" icon="slack" href="/code-review/integrations/slack">
+    Manage and provide feedback on findings directly from Slack.
+  </Card>
+</Columns>

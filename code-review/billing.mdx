@@ -1,0 +1,78 @@
+---
+title: "Trial and billing"
+description: "Understand Code Review payment methods, trials, seats, and subscription lifecycle."
+---
+
+Code Review billing is based on Code Review seats. A seat covers one developer whose pull requests or merge requests can be reviewed by Hacktron.
+
+Organization owners manage payment methods, invoices, billing details, subscription state, and promotion codes from **Billing**.
+
+## Start a trial
+
+Code Review has a free trial for new organizations.
+
+<Steps>
+  <Step title="Open Billing">Go to **Billing** as an organization owner.</Step>
+  <Step title="Add a payment method">
+    Add a payment method before starting the trial. You are not charged until
+    the trial ends.
+  </Step>
+  <Step title="Start the Code Review trial">
+    Once the trial is active, Hacktron starts running code reviews on all
+    covered repositories.
+  </Step>
+</Steps>
+
+## How seats are billed
+
+Each developer with Code Review enabled counts as one Code Review seat.
+Seats can be assigned manually, or Hacktron can assign seats automatically
+when developers open pull requests in covered repositories.
+
+Code Review is billed as a monthly subscription. At the end of each billing period,
+your organization is charged for the number of Code Review seats that were active
+during that period.
+
+<Info>
+  If a developer no longer needs Code Review, remove their seat from **People**.
+
+The removed seat can be reassigned to someone else during the same billing period,
+but removing a seat in the middle of the billing period will not reduce the
+seat count for the current billing period.
+
+</Info>
+
+## End a trial early
+
+Ending the trial early allows you to start the paid plan immediately and enable [spillover usage](/code-review/spillover-usage).
+
+<Steps>
+  <Step title="Open Billing">Go to **Billing** as an organization owner.</Step>
+  <Step title="End the trial early">
+    Go to **Billing** and end the trial early to start the paid plan immediately.
+
+    <img src="/images/end_early.png" alt="End trial early" />
+
+  </Step>
+  <Step title="Enable spillover">
+    Go to **Usage** to enable spillover billing to continue reviewing pull requests or merge requests
+    after the pooled review limit is reached.
+  </Step>
+</Steps>
+
+## Cancellations and resubscription
+
+If you cancel during a trial or paid subscription, Code Review remains available
+until the end of the current trial or billing period. After cancellation takes effect,
+new pull requests or merge requests are no longer reviewed.
+
+If the organization resubscribes later, Code Review starts as a paid subscription.
+The free trial does not restart.
+
+<Card
+  title="Spillover and usage"
+  icon="chart-line"
+  href="/code-review/spillover-usage"
+>
+  Understand pooled review limits and overage pricing.
+</Card>

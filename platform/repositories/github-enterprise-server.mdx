@@ -1,0 +1,121 @@
+---
+title: "GitHub Enterprise Server"
+description: "Configure repository access for a self-hosted GitHub Enterprise Server instance."
+---
+
+This guide is for GitHub Enterprise Server customers with a custom domain.
+Standard GitHub.com organizations should use the [GitHub.com](/platform/repositories/github) guide instead.
+
+## Configure access
+
+There are two ways to configure repository access for GitHub Enterprise Server:
+
+<Columns cols={2}>
+  <Card title="GitHub App (recommended)" href="#configure-github-app">
+    This will register a GitHub App on your server. You will be redirected to
+    your instance to create it.
+
+    <Info>
+      This flow must be completed by a GitHub organization owner.
+    </Info>
+
+  </Card>
+  <Card title="Personal Access Token" href="#configure-personal-access-token">
+    Create a personal access token that can be used to access repositories for white-box pentests.
+
+    <Warning>
+      PR Reviews are not available with a PAT. Use [GitHub App](#configure-github-app) instead.
+    </Warning>
+
+  </Card>
+</Columns>
+
+## Configure GitHub App
+
+<Steps>
+  <Step title="Open Integrations page">
+    In Hacktron, go to **Integrations** and click **Connect** under **GitHub Enterprise Server**.
+
+    <img src="/images/ghes.png" alt="GitHub Enterprise Server" />
+
+  </Step>
+  <Step title="Initiate GitHub App installation">
+    Enter your server base URL, e.g. `https://github.example.com`, and the organization name.
+
+    <Warning>
+      You must be an owner of the organization to install the GitHub App.
+    </Warning>
+
+  </Step>
+  <Step title="Sign in to your server (if required)">
+    If GitHub prompts you to sign in, enter your GitHub login credentials as you normally would.
+  </Step>
+  <Step title="Register Hacktron as a new GitHub App">
+    GitHub will prompt you to create a new GitHub App. Give it a descriptive name (`hacktron-app` by default).
+    <img src="/images/create_gh_app.png" alt="Create GitHub App" />
+
+    Click **Create GitHub App**. This will create a new GitHub App with the required permissions.
+
+  </Step>
+  <Step title="Install the GitHub App">
+    Your browser will now redirect you to install the app you just registered.
+    <img src="/images/install_gh_app.png" alt="Install GitHub App" />
+    Select the repositories you want to grant access to, then click **Install**.
+
+    <Info>
+      Hacktron requests the following permissions:
+      - Read access to code, members, and metadata
+      - Read and write access to checks, issues, and pull requests
+
+      This is required for code review, issue management, and pull request generation. Hacktron does not retain
+      any source code after each review is complete.
+    </Info>
+
+  </Step>
+</Steps>
+
+## Configure Personal Access Token
+
+<Steps>
+  <Step title="Go to the Personal Access Tokens page">
+    Go to `http://<your-server>/settings/personal-access-tokens/new`, or click on your avatar on the top right and select "Settings",
+    then "Developer settings", then "Personal access tokens".
+
+  </Step>
+
+  <Step title="Create a new personal access token">
+    Give the token a descriptive name, e.g. "Hacktron".
+
+    Select the repositories you want to grant access to.
+      <Tip>
+        This can be changed later.
+      </Tip>
+
+    Select the following permissions:
+    - Read-only access to code
+    - Read-only access to metadata
+
+    <Info>
+      This is required for running white-box pentests.
+    </Info>
+
+    Click "Create token".
+
+    Copy the token and save it in a secure location.
+
+  </Step>
+  <Step title="Add the token to Hacktron">
+    Go to the **Integrations** page in Hacktron and click **Connect** under **GitHub Enterprise Server**.
+
+    Select the **Personal Access Token** option.
+
+    <img src="/images/pat.png" alt="Personal Access Token" />
+
+    Enter the token you created earlier.
+
+    Click **Connect**.
+
+  </Step>
+</Steps>
+
+That's it! Hacktron will now run security reviews for every pull request in the selected repositories.

@@ -1,0 +1,43 @@
+---
+title: "Project rules"
+description: "Use .hacktron/rules.md to give Hacktron repository-specific review context."
+---
+
+Hacktron can use repository-specific context when reviewing pull requests.
+Add a `.hacktron/rules.md` file to describe conventions that matter in your application.
+
+Rules help Hacktron adapt reviews to your codebase and reduce false positives, without ignoring real vulnerabilities.
+
+## What to include
+
+Use rules to explain:
+
+- Internal authentication and authorization patterns
+- Trusted services, domains, and data sources
+- Context outside of code that affect exploitability (e.g. firewalls, network configurations not in IaC, etc.)
+- Files or types of vulnerabilities Hacktron should ignore
+
+## File location
+
+Place the file at the root of the repository:
+
+<Tree>
+  <Tree.Folder name=".hacktron" defaultOpen>
+    <Tree.File name="rules.md" />
+  </Tree.Folder>
+  <Tree.Folder name="apps"></Tree.Folder>
+  <Tree.Folder name="packages"></Tree.Folder>
+  <Tree.File name="package.json" />
+  <Tree.File name="pnpm-lock.yaml" />
+</Tree>
+
+Commit `.hacktron/rules.md` to the branch Hacktron reviews, such as your default branch.
+
+## Example
+
+```markdown
+- Users with the `admin` role are assumed to be trusted and should be exempt from access control checks.
+- Do not report XSS vulnerabilities in admin pages, but report them in user-facing pages.
+- Requests from `internal-api.local` are trusted service-to-service calls.
+- Payment flows under `src/billing/**` are high risk and should be reviewed strictly.
+```

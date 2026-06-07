@@ -1,0 +1,63 @@
+---
+title: "GitHub"
+description: "Configure repository access for GitHub Free, GitHub Team and GitHub Enterprise Cloud."
+---
+
+## Prerequisites
+
+You need to be an owner of the GitHub organization or an admin of the specific repositories you want to connect,
+**or** seek permission from an owner or admin to install the Hacktron GitHub App.
+
+If you are not an owner or repository admin, you can still proceed with the instructions below. You will be prompted by GitHub
+to request approval from an organization owner. After they approve, Hacktron will be installed for the selected repositories.
+
+## Configure access
+
+<Steps>
+  <Step title="Open Integrations page">
+    In Hacktron, go to **Integrations** and choose the GitHub connection.
+  </Step>
+  <Step title="Initiate GitHub App installation">
+    Click **Install App**. Your browser will redirect to GitHub.com.
+    <img src="/images/github.png" alt="GitHub App installation" />
+
+  </Step>
+  <Step title="Sign in to GitHub (if required)">
+    If GitHub prompts you to sign in, enter your GitHub login credentials as you normally would.
+  </Step>
+  <Step title="Select an organization">
+    Choose the organization where you want to install Hacktron.
+    - If you belong to multiple organizations, select from the list.
+    - For personal repositories, select your account name.
+  </Step>
+  <Step title="Select repositories">
+    Select which repositories Hacktron can access:
+    - **All repositories**: Grants access to all current and future repositories owned by this organization, including public repositories.
+    - **Only select repositories**: Limits access to specific repositories you choose from the list.
+
+    <Tip>
+      This can be changed later.
+    </Tip>
+
+  </Step>
+  <Step title="Review and authorize permissions">
+    Review the permissions and then click **Install & Authorize**.
+
+    <Info>
+      Hacktron requests for:
+      - Read access to members and metadata
+      - Read and write access to checks, code, issues, and pull requests
+
+      This is required for code review, issue management, and pull request generation. Hacktron does not retain
+      any source code after each review is complete.
+    </Info>
+
+    <Tip>
+      If you are not an organization owner or repository admin, the button will say **Authorize & Request** instead.
+      Click the button to request approval from an organization owner.
+    </Tip>
+
+  </Step>
+</Steps>
+
+That's it! Hacktron will now run security reviews for every pull request in the selected repositories.

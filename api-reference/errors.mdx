@@ -14,7 +14,7 @@ The Hacktron REST API uses standard HTTP status codes to indicate success and fa
 | `204`  | Successful request with no response body (for example, revoking a key).                                    |
 | `400`  | Bad request. Typically a validation failure; `message` identifies the field that failed validation.        |
 | `401`  | Missing, malformed, revoked, or expired API key.                                                           |
-| `402`  | Payment required. Returned by `POST /scans` when the organization has insufficient pentest credits.        |
+| `402`  | Payment required. Returned by `POST /scans` when the organization has insufficient Whitebox Scan credits. |
 | `403`  | Your API key does not have the required scope.                                                             |
 | `404`  | The resource does not exist, or is not visible to your organization.                                       |
 | `409`  | Conflict. For example, exceeding the maximum active API key count when creating a new key.                 |
@@ -52,13 +52,46 @@ Validation errors may return `message` as an array of field‑level errors:
 
 A REST endpoint was called with a dashboard session token instead of an API key. REST endpoints under `/v1/*` require the `X-Api-Key` header.
 
+### "API key authentication is only supported on /api/v1/rest/ endpoints"
+
+This only appears when calling the backend route directly instead of the public
+API host. Use the public base URL from [Introduction](/api-reference/introduction)
+and call `/v1/*` endpoints with `X-Api-Key`. Dashboard endpoints use session
+authentication and are not part of this API reference.
+
 ### "API key missing required scope: write"
 
 The key was created with `read` only but the request targets a write endpoint. Create a new key that includes the `write` scope and retry.
 
 ### "Insufficient credits to start this scan"
 
-The organization does not have enough pentest credits for the requested scan. Top up from **Billing** in the dashboard, or submit a smaller cost estimation.
+The organization does not have enough Whitebox Scan credits for the requested
+scan. Top up from [Credits and billing](/white-box-pentest/billing) in the
+dashboard, or submit a smaller cost estimation.
+
+### "cost_estimation_id is required for pentest scans"
+
+Whitebox Scan-only inputs such as `target_urls`, `auth_instructions`,
+`custom_context`, or `context_document_ids` require a cost estimation so credits
+can be deducted correctly. Create a cost estimation first, then pass its `id` as
+`cost_estimation_id`.
+
+### "Cost estimation is not ready"
+
+The estimation is still `pending` or `running`. Poll
+[`GET /cost-estimations/{id}`](/api-reference/cost-estimations/get-cost-estimation)
+until the status reaches `completed` or `partial` before starting the scan.
+
+### "Repository or archive ... was not included in the cost estimation"
+
+The scan request does not match the repositories or uploaded archive that were
+estimated. Create a new estimate for the exact scope you want to scan.
+
+### "Branch ... does not match the cost estimation branch"
+
+The repository URL matches the estimate, but the branch does not. Start the scan
+with the same branch used for estimation, or create a new estimate for the new
+branch.
 
 ### "Finding not found"
 

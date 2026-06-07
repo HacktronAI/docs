@@ -1,0 +1,73 @@
+---
+title: "Linear"
+description: "Connect Linear and configure how Hacktron creates Linear issues for security findings."
+---
+
+## Prerequisites
+
+You need to be a Hacktron organization admin to manage the Linear integration.
+
+You also need permission to authorize apps in the Linear workspace you want Hacktron to use.
+
+## Configure Linear
+
+<Steps>
+  <Step title="Open Integrations page">
+    In Hacktron, go to **Integrations** and find **Linear** under **Project
+    Management Apps**.
+
+    <img src="/images/linear.png" alt="Linear integration card in Hacktron" />
+
+  </Step>
+  <Step title="Start the OAuth connection">
+    Click **Connect**. Your browser will redirect to Linear.
+  </Step>
+  <Step title="Authorize Hacktron">
+    Sign in to Linear if required and approve the requested access.
+
+    <img src="/images/authorize.png" alt="Linear authorization" />
+
+    <Info>
+      Hacktron requests read and write access to automatically create Linear issues
+      whenever a security issue is found in your repositories.
+    </Info>
+
+  </Step>
+  <Step title="Return to Hacktron">
+    After authorization, Hacktron redirects you back to **Integrations**.
+  </Step>
+  <Step title="Open Linear configuration">
+    Click the settings icon on the Linear card.
+  </Step>
+  <Step title="Choose a default destination">
+    Select the default Linear team. Optionally, choose a default Linear project.
+
+    <Warning>
+      Linear shows **Setup required** until a default team is saved.
+    </Warning>
+
+    Enable **Automatically create tickets** for Hacktron to automatically create Linear issues for every
+    security finding. If this is not enabled, you can still create Linear issues manually from the finding detail view.
+
+    <img src="/images/linear_config.png" alt="Linear settings" />
+
+  </Step>
+  <Step title="Backfill existing findings (optional)">
+    Use **Backfill existing findings** to create Linear tickets for approved findings that were created before the integration was configured.
+    
+    Click **Backfill now** to start the process.
+  </Step>
+  <Step title="Save settings">
+    Click **Save** to apply the Linear configuration.
+  </Step>
+</Steps>
+
+## Using Linear tickets
+
+After Linear is connected and configured, open an approved finding and choose **Create on Linear** to create a Linear issue manually. If the finding already has a Linear issue, Hacktron shows **View on Linear** instead.
+
+## Common checks
+
+- If Linear shows **Setup required**, open settings and save a default team.
+- If backfill is unavailable, confirm that a default team has been saved.
+- If a ticket already exists for a finding, use **View on Linear** instead of creating another ticket.

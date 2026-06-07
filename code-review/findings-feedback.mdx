@@ -1,0 +1,107 @@
+---
+title: "Findings and feedback"
+description: "Understand where Hacktron posts Code Review findings and how feedback improves future reviews."
+---
+
+Hacktron posts Code Review findings where developers already work.
+
+## Inline findings
+
+Findings are posted inline on GitHub PRs and GitLab MRs when a vulnerability is detected in the code change.
+
+<video
+  autoPlay
+  muted
+  loop
+  playsInline
+  className="w-full aspect-video"
+  src="/images/github_findings.mp4"
+/>
+
+<Tip>
+  <p>
+    Sometimes, a finding may involve code that is not directly within the diff.
+    This can happen when Hacktron detects a vulnerability in e.g. a function
+    that is called by code in the diff.
+  </p>
+  <p>
+    In this case, Hacktron may report the finding in the file affected (if it is
+    changed as part of the PR/MR) or in an expandable **"Findings outside
+    diff"** section.
+  </p>
+</Tip>
+
+## Triage comments
+
+You can leave triage comments on findings to help improve future reviews. This helps Hacktron understand
+whether something is a false positive, accepted risk, or a true positive finding.
+
+Every triage comment your team leaves on a finding becomes training signal.
+Over time, Hacktron Review builds a deep understanding of your specific attack surface and threat model,
+so reviews get sharper, with fewer false positives and more of the bugs that actually matter to your app.
+
+<Tabs>
+  <Tab title="GitHub or GitLab">
+
+    You can comment directly on the finding in GitHub or GitLab with:
+    - `!fp <reason>` to mark the finding as a false positive
+    - `!accepted_risk <reason>` to mark the finding as an accepted risk
+    - `!valid <reason>` to mark the finding as a true positive
+
+    <img src="/images/triage_feedback.png" alt="Triage comments" />
+
+  </Tab>
+  <Tab title="Web Platform">
+
+    From the finding page in the web platform, you can adjust finding severities and
+    states: Open, True Positive, False Positive, Accepted Risk, or Resolved.
+
+    When you adjust the severity or state, you can add a reason for the change.
+    This will be recorded and used to improve future reviews.
+
+    <video autoPlay muted loop playsInline className="w-full aspect-video" src="/images/triage_comment.mp4" />
+
+  </Tab>
+  <Tab title="Slack">
+
+    When Hacktron's Slack app sends a finding in your configured channel,
+    you can leave a triage comment and mark the finding as a false positive or accepted risk,
+    or mark the finding as valid.
+
+    Open the finding card and click on **Mark Valid** or **Triage Comment**.
+
+    <img src="/images/slack_comment.png" alt="Triage comments in Slack" />
+
+  </Tab>
+</Tabs>
+
+## Feedback loop
+
+Triage feedback helps Hacktron adapt to your codebase. Comments and project rules
+give Hacktron signal about what is urgent, trusted, irrelevant, or intentionally ignored for a specific repository.
+
+When a later commit fixes a finding, Hacktron can recognize the remediation and close stale alerts automatically.
+
+<video
+  autoPlay
+  muted
+  loop
+  playsInline
+  className="w-full aspect-video"
+  src="/images/auto_resolve.mp4"
+/>
+
+## Related setup
+
+<Columns cols={2}>
+  <Card title="Project rules" icon="file-text" href="/code-review/rules">
+    Add `.hacktron/rules.md` to provide repository-specific review context.
+  </Card>
+  <Card
+    title="Project Management Apps"
+    icon="square-kanban"
+    href="/platform/project-management"
+  >
+    Send approved findings to Jira or Linear.
+  </Card>
+</Columns>

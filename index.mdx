@@ -1,12 +1,8 @@
 ---
 title: "Welcome"
-description: "Learn how to get started with Hacktron."
+description: "Hacktron is an AI-powered security code-review platform. Its AI agents review your repositories for exploitable vulnerabilities and surface them as pull-request comments and dashboard findings. It works in two modes: per-PR reviews that run on each pull or merge request, and whitebox scans (also called pentests) that analyze a repository's full source."
 mode: "wide"
 ---
-
-Meet the next generation of AI-native tools built for developers, security engineers, and pentesters to find vulnerabiltiies in code.
-
-![Hacktron Logo](/logo/hero.png)
 
 ## Hacktron Platform
 
@@ -14,34 +10,24 @@ Meet the next generation of AI-native tools built for developers, security engin
   <Card
     title="Platform Overview"
     icon="table-columns"
-    href="/platform/quickstart"
-    horizontal
+    href="/platform/overview"
   >
-    Manage integrations, reviews, access, billing, and pentests across your organization.
+    Create an organization and start code reviews and white-box pentests.
+  </Card>
+  <Card title="Integrations" icon="gear" href="/platform/integrations">
+    Connect Git providers, project management, and communication tools.
+  </Card>
+  <Card title="Code Review" icon="code-pull-request" href="/code-review/overview">
+    Connect repositories and run PR review workflows with organization-managed
+    seats.
   </Card>
   <Card
-    title="Code Reviews"
-    icon="code-pull-request"
-    href="/platform/code-reviews"
-    horizontal
-  >
-    Connect repositories and run PR review workflows with organization-managed seats.
-  </Card>
-  <Card
-    title="Billing & Access"
-    icon="users"
-    href="/platform/billing-access"
-    horizontal
-  >
-    Understand roles, seats, trials, and shared credits in the web platform.
-  </Card>
-  <Card
-    title="Pentests"
+    title="White-box Pentest"
     icon="shield-halved"
-    href="/platform/pentests"
-    horizontal
+    href="/white-box-pentest/overview"
   >
-    Run scoped pentests with org-wide credits and owner-controlled initiation.
+    Run scoped white-box pentests with org-wide credits and owner-controlled
+    initiation.
   </Card>
 </Columns>
 
@@ -50,27 +36,17 @@ Meet the next generation of AI-native tools built for developers, security engin
 Programmatic access to scans, findings, and cost estimations.
 
 <Columns cols={2}>
-  <Card
-    title="API Introduction"
-    icon="bolt"
-    href="/api-reference/introduction"
-    horizontal
-  >
+  <Card title="API Introduction" icon="bolt" href="/api-reference/introduction">
     Base URL, conventions, and what you can do with the public REST API.
   </Card>
-  <Card
-    title="Authentication"
-    icon="key"
-    href="/api-reference/authentication"
-    horizontal
-  >
-    Create an API key, set the `X-Api-Key` header, and understand scopes.
+  <Card title="Authentication" icon="key" href="/api-reference/authentication">
+    Create an API key, understand scopes, and learn how to make authenticated
+    requests.
   </Card>
   <Card
     title="Scans"
     icon="shield-halved"
     href="/api-reference/scans/create-scan"
-    horizontal
   >
     Trigger pentest scans, poll status, and list results.
   </Card>
@@ -78,14 +54,7 @@ Programmatic access to scans, findings, and cost estimations.
     title="Findings"
     icon="magnifying-glass"
     href="/api-reference/findings/list-findings"
-    horizontal
   >
     Browse, filter, triage, and comment on findings.
   </Card>
 </Columns>
-
-## Hacktron Workbench (Deprecated)
-
-<Warning>
-  Hacktron Workbench has been deprecated. The CLI and IDE extensions are no longer available.
-</Warning>

@@ -1,0 +1,53 @@
+---
+title: "Overview"
+description: "Choose which connected repositories Hacktron should review and configure how repository access is managed."
+---
+
+**Repositories** is where you decide which codebases Hacktron can review after a Git integration is connected.
+
+## Prerequisites
+
+You need to be a Hacktron organization admin to connect and configure repositories.
+
+## Configure repositories
+
+<Steps>
+  <Step title="Connect a Git provider">
+    Install Hacktron through GitHub, GitHub Enterprise Server, or GitLab. During
+    installation, choose the organizations and repositories Hacktron can access.
+
+    For detailed instructions, choose your Git platform below.
+
+    <Columns cols={2}>
+      <Card title="GitHub.com" icon="github" href="/platform/repositories/github">
+        Configure repositories from GitHub Team or GitHub Enterprise Cloud.
+      </Card>
+      <Card
+        title="GitHub Enterprise Server"
+        icon="github"
+        href="/platform/repositories/github-enterprise-server"
+      >
+        Configure repositories from a self-hosted GitHub Enterprise Server instance.
+      </Card>
+      <Card title="GitLab" icon="gitlab" href="/platform/repositories/gitlab">
+        Configure repositories from GitLab.com.
+      </Card>
+    </Columns>
+
+  </Step>
+  <Step title="Sync repositories">
+    Hacktron imports the repositories that the integration is allowed to see. If
+    a repository is missing, update the provider installation first, then return
+    to Hacktron and sync again.
+  </Step>
+  <Step title="Enable review coverage">
+    Choose which repositories should receive pull request or merge request reviews,
+    and on which branches.
+  </Step>
+</Steps>
+
+## Common checks
+
+- If a repository does not appear, confirm that the Git provider installation includes it.
+- If reviews are not running, confirm that the repository is enabled in Hacktron and that a trial or paid plan is active.
+- If a private repository was recently added, go to the **Repositories** page and click **Sync** to refresh the list.

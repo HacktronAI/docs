@@ -1,0 +1,55 @@
+---
+title: "Overview"
+description: "Connect Jira or Linear so Hacktron can create tickets for approved security findings."
+---
+
+Project Management Apps let Hacktron send security findings into the issue tracker your engineering team already uses.
+
+Use this page after [connecting a Git provider](/platform/repositories) and enabling repositories. Jira and Linear connections are managed from **Integrations** and are available to organization admins.
+
+## Prerequisites
+
+You need to be a Hacktron organization admin to manage the project management app integration.
+
+You also need permission to authorize apps in the project management app you want Hacktron to use.
+
+## Configure project management apps
+
+<Steps>
+  <Step title="Set up repositories and enable reviews">
+    Set up repositories and enable reviews in [Repositories](/platform/repositories) and [Code Review](/code-review/overview).
+  </Step>
+  <Step title="Connect Jira or Linear">
+    In Hacktron, go to **Integrations** and find the **Project Management Apps**
+    section. For detailed instructions, select your project management app below.
+
+    <Columns cols={2}>
+      <Card title="Jira" icon="jira" href="/platform/project-management/jira">
+        Connect Jira and choose default ticket fields.
+      </Card>
+      <Card
+        title="Linear"
+        icon="square-kanban"
+        href="/platform/project-management/linear"
+      >
+        Connect Linear and choose the default team and project.
+      </Card>
+    </Columns>
+
+  </Step>
+  <Step title="Choose ticket defaults">
+    Save the default destination Hacktron should use when creating tickets. Jira
+    uses a project and issue type. Linear uses a team and optional project.
+  </Step>
+  <Step title="Create tickets from findings">
+    Once connected, approved findings can be sent to the selected project
+    management app from the finding detail view. If auto-create is enabled,
+    Hacktron creates tickets automatically for approved findings.
+  </Step>
+</Steps>
+
+## Common checks
+
+- If the **Connect** button is disabled, confirm that you are an organization admin on Hacktron.
+- If ticket creation is unavailable, confirm that Jira or Linear is connected and configured.
+- If auto-created tickets are not appearing, confirm that auto-create is enabled and the required default destination is saved.

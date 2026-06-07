@@ -1,0 +1,62 @@
+---
+title: "Slack"
+description: "Connect Slack and configure where Hacktron sends security notifications."
+---
+
+## Prerequisites
+
+You need to be a Hacktron organization admin to manage the Slack integration.
+
+You also need permission to authorize apps in the Slack workspace you want Hacktron to use.
+
+## Configure Slack
+
+<Steps>
+  <Step title="Open Integrations page">
+    In Hacktron, go to **Integrations** and find **Slack** under
+    **Communication Apps**.
+
+    <img src="/images/slack.png" alt="Slack integration card in Hacktron" />
+
+  </Step>
+  <Step title="Start the OAuth connection">
+    Click **Connect**. Your browser will redirect to Slack.
+  </Step>
+  <Step title="Authorize Hacktron">
+    Sign in to Slack if required, choose the workspace, and approve the
+    requested access.
+
+    <Info>
+      Hacktron uses this access to send security notifications and scan updates
+      to the Slack channel you configure.
+    </Info>
+
+  </Step>
+  <Step title="Return to Hacktron">
+    After authorization, Hacktron redirects you back to **Integrations**.
+  </Step>
+  <Step title="Open Slack configuration">
+    Click the settings icon on the Slack card.
+  </Step>
+  <Step title="Choose a notification channel">
+    Select the Slack channel that should receive Hacktron scan updates. The
+    setting saves when you choose a different channel.
+
+    <img src="/images/slack_config.png" alt="Slack channel configuration" />
+
+  </Step>
+</Steps>
+
+## Updating the channel
+
+Open the Slack settings panel again and choose a different channel. Hacktron removes the previous channel configuration and saves the new one.
+
+## Disconnecting Slack
+
+Open the Slack card in **Integrations** and choose **Disconnect**. Hacktron will stop sending notifications and alerts to Slack.
+
+## Common checks
+
+- If Slack does not connect, retry from **Integrations** so Hacktron can create a fresh OAuth state.
+- If a channel is missing, confirm that the Slack workspace account used for OAuth can access that channel.
+- If notifications are not appearing, confirm that the Slack integration is connected and a channel is selected.

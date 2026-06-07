@@ -1,0 +1,58 @@
+---
+title: "Troubleshooting"
+description: "Check why Hacktron did not review a pull request or merge request."
+---
+
+Use this page when a pull request or merge request was not reviewed, or when Code Review coverage does not behave as expected.
+
+## If a review does not run
+
+Check these first:
+
+- The Git provider is connected in **Integrations**
+- The repository appears in **Repositories**
+- The repository is enabled for Code Review
+- The pull request or merge request targets a covered branch
+- The organization has trial or paid review capacity available
+- The organization has not reached its pooled review limit, or spillover is enabled on a paid plan
+- For GitHub, the GitHub App installation includes the repository
+- For GitLab, the service account still has access and its token has not expired
+
+## Repository is missing
+
+If a repository does not appear in Hacktron:
+
+- Confirm that the Git provider installation includes the repository.
+- If the repository was recently added, go to **Repositories** and sync again.
+- For private repositories, confirm the installation or service account has access.
+
+## Branch is not covered
+
+If only some pull requests or merge requests are reviewed:
+
+- Confirm the target branch is covered in the repository settings.
+- If coverage is limited to specific branches, pull requests targeting other branches are skipped.
+
+## Developer is not covered
+
+If a developer is not covered by a Code Review seat,
+Hacktron leaves a pull request comment explaining that no seat is assigned.
+
+Check **Billing** to confirm the organization has trial or paid review capacity available.
+
+If auto-assigned seats are enabled and a new developer did not get assigned a seat,
+you may need to [increase the auto-assignment seat limit](/code-review/people#configure-the-seat-limit).
+
+## Review limit is reached
+
+Code Review uses a pooled organization review limit each billing period. If the limit is reached:
+
+- On a trial, new reviews stop until the period changes or an owner starts the paid plan
+- On a paid plan with spillover off, new reviews stop until the next billing period or until an owner enables spillover
+- On a paid plan with spillover on, reviews continue and overage reviews are billed as spillover
+
+See [Spillover and usage](/code-review/spillover-usage) for how the pooled limit and spillover work.
+
+## Still stuck?
+
+Email `hello@hacktron.ai` with your organization name and details of the issue.

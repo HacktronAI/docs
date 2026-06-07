@@ -3,7 +3,7 @@ title: "Introduction"
 description: "Programmatic access to Hacktron scans, findings, and cost estimations."
 ---
 
-The Hacktron REST API lets you trigger pentest scans, browse and triage findings, and run cost estimations from your own tooling.
+The Hacktron REST API lets you trigger Whitebox Scans, browse and triage findings, and run cost estimations from your own tooling.
 
 Everything you can do in the Hacktron dashboard as a scan operator or reviewer is available through the API, scoped to a single organization per key.
 
@@ -22,8 +22,8 @@ A Swagger UI rendered from the live OpenAPI spec is hosted at [https://api.hackt
 ## What you can do
 
 <Columns cols={2}>
-  <Card title="Run pentest scans" icon="shield-halved" href="/api-reference/scans/create-scan">
-    Start full pentest scans against one or more repositories and track their status.
+  <Card title="Run Whitebox Scans" icon="shield-halved" href="/api-reference/scans/create-scan">
+    Start Whitebox Scans against one or more repositories and track their status.
   </Card>
   <Card title="Estimate cost" icon="calculator" href="/api-reference/cost-estimations/create-cost-estimation">
     Generate a cost estimation for a set of repositories before committing credits.

@@ -4,7 +4,7 @@ api: "POST /cost-estimations"
 description: "Estimate the credit cost of scanning one or more repositories before starting a scan."
 ---
 
-A cost estimation resolves the repositories you plan to scan, detects applications within them, and returns a predicted credit cost. A completed cost estimation is required before calling [`POST /scans`](/api-reference/scans/create-scan).
+A cost estimation resolves the repositories you plan to scan, detects applications within them, and returns a predicted credit cost. A `completed` or `partial` cost estimation with a positive `total_credits` value is required before calling [`POST /scans`](/api-reference/scans/create-scan).
 
 Cost estimations run asynchronously. The `POST` returns a record in `pending` or `running` state; poll [`GET /cost-estimations/{id}`](/api-reference/cost-estimations/get-cost-estimation) until `status` reaches `completed`, `partial`, or `failed`.
 
@@ -100,7 +100,7 @@ Repositories use a discriminated union on the `source` field.
 | `partial`   | Some repos completed, others failed. Check `repo_results[].status` for details. |
 | `failed`    | The whole estimation failed. `error` contains a message.                        |
 
-Once in a terminal state, an estimation is immutable. Pass its `id` as `cost_estimation_id` to [`POST /scans`](/api-reference/scans/create-scan) to start the scan.
+Once in a terminal state, an estimation is immutable. Pass its `id` as `cost_estimation_id` to [`POST /scans`](/api-reference/scans/create-scan) to start the scan. The scan must use repositories and branches that were included in the estimate.
 
 ## Errors
 

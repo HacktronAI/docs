@@ -1,0 +1,40 @@
+---
+title: "Usage"
+description: "Understand pooled Code Review limits, spillover billing, and active-period usage reporting."
+---
+
+Use **Usage** to track Code Review activity for the active billing period.
+This page shows how many pull requests or merge requests your organization has reviewed,
+and whether any spillover pull requests or merge requests were made.
+
+## Pooled review limit
+
+Your organization has a pooled review limit of **50 pull requests or merge requests per Code Review seat**.
+
+This limit is pooled across the organization. One developer can use more than 50 reviews
+as long as the organization stays within its pooled allowance.
+
+For example, an organization with 10 active billable Code Review seats has a pooled
+limit of 500 pull requests or merge requests for the billing period.
+
+## Spillover billing
+
+Spillover lets Code Review continue after the organization reaches its pooled review limit.
+
+- If spillover is off, reviews stop when the pooled limit is reached
+- If spillover is on, reviews past the pooled limit continue and are billed as overage
+
+Every overage pull request or merge request is billed at **$1 per pull request or merge request**.
+
+<Info>
+  **Spillover is only available on a paid subscription.** If you are still on a
+  trial, you can [**end the trial
+  early**](/code-review/billing#end-a-trial-early) to start the paid plan
+  immediately and enable spillover.
+</Info>
+
+Organization owners can enable spillover from **Usage**.
+
+<img src="/images/spillover.png" alt="Spillover usage" />
+
+<Tip>Spillover is disabled by default.</Tip>

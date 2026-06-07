@@ -1,10 +1,12 @@
 ---
-title: "Trigger a pentest scan"
+title: "Trigger a Whitebox Scan"
 api: "POST /scans"
-description: "Start a pentest scan against one or more repositories."
+description: "Start a Whitebox Scan against one or more repositories."
 ---
 
-Starts a full pentest scan against the repositories attached to a completed cost estimation. Scans run asynchronously; the endpoint returns immediately with a scan `id` for polling.
+Starts a Whitebox Scan against the repositories attached to a completed or
+partial cost estimation. Scans run asynchronously; the endpoint returns
+immediately with a scan `id` for polling.
 
 <Info>
   **Scope required**: `write`
@@ -12,8 +14,20 @@ Starts a full pentest scan against the repositories attached to a completed cost
 
 ## Prerequisites
 
-1. Create a cost estimation with [`POST /cost-estimations`](/api-reference/cost-estimations/create-cost-estimation) and wait for it to reach `completed` status.
-2. Ensure your organization has enough pentest credits (visible in **Billing** in the dashboard). Insufficient credits return `402 Payment Required`.
+1. Create a cost estimation with [`POST /cost-estimations`](/api-reference/cost-estimations/create-cost-estimation).
+2. Wait until the estimation reaches `completed` or `partial` status and has a
+   positive `total_credits` value.
+3. Submit the same repositories and branches that were included in the
+   estimation. Hacktron rejects scans whose repo, archive, or branch does not
+   match the estimate.
+4. Ensure your organization has enough Whitebox Scan credits. Credits are
+   visible in [Credits and billing](/white-box-pentest/billing) in the
+   dashboard. Insufficient credits return `402 Payment Required`.
+
+<Warning>
+  A cost estimation can only be claimed by one started scan. If you need to
+  change repositories, archives, or branches, create a new estimate first.
+</Warning>
 
 ## Request
 
@@ -40,20 +54,25 @@ curl -X POST https://api.hacktron.ai/v1/scans \
 
 | Field                  | Type     | Required | Description                                                                                                             |
 | ---------------------- | -------- | -------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `cost_estimation_id`   | UUID     | Yes      | ID of a completed cost estimation. The first repo in `repos` must match the estimation.                                  |
-| `repos`                | object[] | Yes      | At least one repository. The first is the primary target; any additional entries are scanned as related repositories.  |
-| `target_urls`          | string[] | No       | Live URLs to include in the pentest (for example a staging environment).                                                |
-| `auth_instructions`    | string   | No       | Credentials or steps the scanner should follow to authenticate. Max 2000 chars.                                          |
-| `custom_context`       | string   | No       | Additional context: scope, areas to emphasise, exclusions. Max 2000 chars.                                             |
+| `cost_estimation_id`   | UUID     | Yes      | ID of a completed or partial cost estimation with a positive `total_credits` value.                                      |
+| `repos`                | object[] | Yes      | At least one repository. The first is the primary target; additional entries are scanned as related repositories.         |
+| `target_urls`          | string[] | No       | Public live URLs to include in the assessment, such as staging or production URLs. Private and internal network URLs are rejected. |
+| `auth_instructions`    | string   | No       | Credentials or steps Hacktron should use to authenticate. Max 2000 chars.                                                |
+| `custom_context`       | string   | No       | Additional scope, focus areas, exclusions, or testing notes. Max 2000 chars.                                             |
 | `context_document_ids` | UUID[]   | No       | IDs of context documents to attach to the scan.                                                                         |
 
 ### Repo object
 
 | Field    | Type   | Required | Description                                                             |
 | -------- | ------ | -------- | ----------------------------------------------------------------------- |
-| `url`    | string | Yes      | HTTPS URL of the repository.                                            |
-| `branch` | string | Yes      | Branch to scan.                                                         |
+| `url`    | string | Yes      | HTTPS URL of the repository. Must match a repository in the cost estimation. |
+| `branch` | string | Yes      | Branch to scan. Must match the branch used in the cost estimation.       |
 | `source` | enum   | No       | `connected`, `public`, or `upload`. Defaults to `connected`.            |
+
+<Info>
+  `POST /scans` accepts the REST API repo shape shown above. Cost estimations
+  use `repo_url`; scan creation uses `url`.
+</Info>
 
 ## Response
 
@@ -77,9 +96,13 @@ curl -X POST https://api.hacktron.ai/v1/scans \
 
 ## Errors
 
-- `400` — missing `repos`, invalid `cost_estimation_id`, or validation failure.
+- `400` — missing `repos`, invalid fields, cost estimate not ready, zero-credit
+  estimate, repo not included in the estimate, branch mismatch, private target
+  URL, or a scan that already claimed the estimate.
 - `401` / `403` — authentication or scope failure.
-- `402` — insufficient pentest credits. Top up from the **Billing** page in the dashboard.
+- `402` — insufficient Whitebox Scan credits. Top up from
+  [Credits and billing](/white-box-pentest/billing) in the dashboard.
+- `404` — cost estimation not found or not visible to your organization.
 
 ## Next steps
 

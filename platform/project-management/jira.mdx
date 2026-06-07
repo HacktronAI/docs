@@ -1,0 +1,87 @@
+---
+title: "Jira"
+description: "Connect Jira and configure how Hacktron creates Jira issues for security findings."
+---
+
+## Prerequisites
+
+You need to be a Hacktron organization admin to manage the Jira integration.
+
+You also need permission to authorize apps in the Jira workspace you want Hacktron to use.
+
+## Configure Jira
+
+<Steps>
+  <Step title="Open Integrations page">
+    In Hacktron, go to **Integrations** and find **Jira** under **Project
+    Management Apps**.
+
+    <img src="/images/jira.png" alt="Jira integration card in Hacktron" />
+
+  </Step>
+  <Step title="Start the OAuth connection">
+    Click **Connect**. Your browser will redirect to Atlassian.
+  </Step>
+  <Step title="Sign in to Atlassian (if required)">
+    If Atlassian prompts you to sign in, enter your Atlassian login credentials as you normally would.
+  </Step>
+  <Step title="Authorize Hacktron">
+    Hacktron will request access to view and create Jira issues.
+
+    <img src="/images/authorize_atlassian.png" alt="Jira authorization" />
+
+    Click **Accept**.
+
+    <Info>
+      Hacktron requests the following permissions:
+      - Read access to `jira-user`
+      - Read and write access to `jira-work`
+
+      Hacktron uses this access to create Jira issues for security findings and
+      link those issues back to the finding.
+    </Info>
+
+  </Step>
+  <Step title="Return to Hacktron">
+    After authorization, Hacktron redirects you back to **Integrations** and
+    opens the Jira configuration panel.
+  </Step>
+  <Step title="Choose auto-create behavior">
+    Turn on **Automatically create tickets** to have Hacktron create Jira issues for every security finding.
+
+    <Tip>
+      If you disable auto-create, you can still create Jira issues manually from the finding detail view.
+    </Tip>
+
+  </Step>
+  <Step title="Choose ticket defaults">
+    Select the default Jira project and issue type. Hacktron will use these settings to create Jira issues for security findings.
+
+    <Info>
+      **This is required if you enable auto-create.** You can change these settings later.
+    </Info>
+
+    You can also optionally apply a default label (e.g. "security") and a default assignee from your team.
+
+    <img src="/images/jira_config.png" alt="Jira configuration" />
+
+    <Tip>
+      Jira uses "Highest" to "Lowest" for priority levels.
+      You can configure a severity-to-priority mapping in the Jira settings.
+    </Tip>
+
+  </Step>
+  <Step title="Save settings">
+    Click **Save** to apply the Jira configuration.
+  </Step>
+</Steps>
+
+## Using Jira tickets
+
+After Jira is connected, open an approved finding and choose **Create on Jira** to create a Jira issue manually. If the finding already has a Jira issue, Hacktron shows **View on Jira** instead.
+
+## Common checks
+
+- If projects or issue types are missing, confirm that the Atlassian account used for OAuth can access them.
+- If auto-create cannot be saved, make sure both a default project and default issue type are selected.
+- If a ticket already exists for a finding, use **View on Jira** instead of creating another ticket.
