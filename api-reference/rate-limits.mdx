@@ -9,7 +9,7 @@ The Hacktron REST API rate limits requests per API key.
 
 - **100 requests per 60 seconds** per API key, across all REST endpoints.
 
-The window is rolling; there is no fixed start or end. After 100 requests at `t=0`, the next request is accepted at approximately `t=60s`.
+The rate limit is enforced on a rolling-window basis; there is no fixed start or end time. After 100 requests at `t=0`, the next request is accepted at approximately `t=60s`.
 
 Requests authenticated with dashboard sessions (not API keys) do not count against this limit.
 
