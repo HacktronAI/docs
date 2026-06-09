@@ -10,8 +10,8 @@ rss: true
   ## GitLab parity, enterprise GitHub, and smarter triage
 
   This release brings GitLab reviews to parity with GitHub, adds support for
-  self-hosted GitHub, and makes triage conversations flow across the tools your
-  team already uses.
+  self-hosted GitHub, and keeps triage conversations in the tools your team
+  already uses.
 
   **GitHub Enterprise Server** — You can now connect a self-hosted GitHub
   Enterprise Server instance and run both white-box scans and PR reviews
@@ -22,12 +22,9 @@ rss: true
   directly on a merge request, and Hacktron posts a findings summary before its
   inline discussions.
 
-  **Triage that follows the conversation** — Triage activity from the web app
-  and Slack is now mirrored back into the originating GitHub PR or GitLab MR
-  thread, and Slack replies get a 👍 acknowledgment once processed.
-
-  **Slack intake to reviewed PRs** — Report a bug or request a feature from
-  Slack and Hacktron turns it into a reviewed draft pull request.
+  **Triage that follows the conversation** — Finding triage decisions now appear
+  directly in the originating GitHub PR or GitLab MR thread, so the discussion
+  stays in one place.
 
   **Pull request triage in the review flow** — Finding triage is now built into
   the review flow, so you can act on findings without leaving the PR.
@@ -38,9 +35,6 @@ rss: true
   **Org-pooled billing and a Usage page** — Code Review billing is now pooled
   across your organization, with annual prepaid seats and a dedicated Usage
   page for tracking consumption.
-
-  **Brand and competitor digests** — Sentiment search now delivers daily brand
-  and weekly competitor digests to Slack, excluding your own posts.
 
   ### Fixes
   - Jira issue creation now paginates project and assignee dropdowns and links
@@ -64,15 +58,6 @@ rss: true
   **Finding history** — Findings now carry a visible event timeline with a
   deduplicated lineage trail, so you can see how each finding evolved across
   scans.
-
-  **Export your findings** — Admin triage findings can be exported as CSV,
-  SARIF, or JSON.
-
-  **Cost dashboard filters** — The admin cost dashboard can now be filtered by
-  scan type and organization.
-
-  **Scan notifications in Slack** — When a scan completes, Hacktron posts links
-  to the new findings directly in your admin Slack thread.
 
   ### Fixes
   - PR comments are now placed correctly on dotfiles and large-diff files.
