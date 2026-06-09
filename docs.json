@@ -160,10 +160,25 @@
             ]
           }
         ]
+      },
+      {
+        "product": "Changelog",
+        "icon": "clock-rotate-left",
+        "groups": [
+          {
+            "group": "Changelog",
+            "pages": ["changelog"]
+          }
+        ]
       }
     ],
     "global": {
       "anchors": [
+        {
+          "anchor": "Changelog",
+          "href": "/changelog",
+          "icon": "clock-rotate-left"
+        },
         {
           "anchor": "Code Review",
           "href": "/code-review/overview",

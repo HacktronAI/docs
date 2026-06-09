@@ -1,0 +1,82 @@
+---
+title: "Changelog"
+description: "New features, improvements, and fixes to the Hacktron platform."
+rss: true
+---
+
+{/* CHANGELOG:INSERT — the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="June 2026" description="Hacktron Platform">
+  ## GitLab parity, enterprise GitHub, and smarter triage
+
+  This release brings GitLab reviews to parity with GitHub, adds support for
+  self-hosted GitHub, and makes triage conversations flow across the tools your
+  team already uses.
+
+  **GitHub Enterprise Server** — You can now connect a self-hosted GitHub
+  Enterprise Server instance and run both white-box scans and PR reviews
+  against it, scoped cleanly to each connection and host.
+
+  **GitLab merge request reviews** — Merge request comments and finding triage
+  are now on par with GitHub. Trigger a review with `@hacktronai review`
+  directly on a merge request, and Hacktron posts a findings summary before its
+  inline discussions.
+
+  **Triage that follows the conversation** — Triage activity from the web app
+  and Slack is now mirrored back into the originating GitHub PR or GitLab MR
+  thread, and Slack replies get a 👍 acknowledgment once processed.
+
+  **Slack intake to reviewed PRs** — Report a bug or request a feature from
+  Slack and Hacktron turns it into a reviewed draft pull request.
+
+  **Pull request triage in the review flow** — Finding triage is now built into
+  the review flow, so you can act on findings without leaving the PR.
+
+  **Pentest commit targeting** — When starting a pentest you can now pick a
+  specific tag or commit SHA in the repository step.
+
+  **Org-pooled billing and a Usage page** — Code Review billing is now pooled
+  across your organization, with annual prepaid seats and a dedicated Usage
+  page for tracking consumption.
+
+  **Brand and competitor digests** — Sentiment search now delivers daily brand
+  and weekly competitor digests to Slack, excluding your own posts.
+
+  ### Fixes
+  - Jira issue creation now paginates project and assignee dropdowns and links
+    back to the originating finding.
+  - The billing flow resolves your Stripe customer consistently across trials
+    and resubscribes, and skips invoice previews for canceled subscriptions.
+  - Large webhook payloads and oversized diagram traces no longer fail
+    processing or abort PDF report generation.
+</Update>
+
+<Update label="May 2026" description="Hacktron Platform">
+  ## Applications, a redesigned taint trace, and richer findings
+
+  **Applications** — Group related repositories into an Application, give it
+  context and rules, and target it directly from the scan wizard.
+
+  **Redesigned taint trace** — The taint-trace and call-graph views have a new
+  design with smooth collapse animations, making it easier to follow how a
+  vulnerability flows through your code.
+
+  **Finding history** — Findings now carry a visible event timeline with a
+  deduplicated lineage trail, so you can see how each finding evolved across
+  scans.
+
+  **Export your findings** — Admin triage findings can be exported as CSV,
+  SARIF, or JSON.
+
+  **Cost dashboard filters** — The admin cost dashboard can now be filtered by
+  scan type and organization.
+
+  **Scan notifications in Slack** — When a scan completes, Hacktron posts links
+  to the new findings directly in your admin Slack thread.
+
+  ### Fixes
+  - PR comments are now placed correctly on dotfiles and large-diff files.
+  - The "Last scan" dashboard card is scoped to white-box scans.
+  - Trial banners no longer clip the bottom of the page, and the
+    trial-limit-reached call to action now ends the trial as expected.
+</Update>
