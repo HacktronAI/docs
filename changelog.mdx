@@ -2,66 +2,48 @@
 title: "Changelog"
 description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
+hidden: true
 ---
 
 {/* CHANGELOG:INSERT — the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
 
 <Update label="June 2026" description="Hacktron Platform">
-  ## GitLab parity, enterprise GitHub, and smarter triage
+  ## GitLab reviews, self-hosted GitHub, and triage in your PRs
 
-  This release brings GitLab reviews to parity with GitHub, adds support for
-  self-hosted GitHub, and keeps triage conversations in the tools your team
-  already uses.
+  GitLab now gets the same review experience as GitHub, you can connect a
+  self-hosted GitHub Enterprise Server, and finding triage happens right where
+  your team is already talking.
 
-  **GitHub Enterprise Server** — You can now connect a self-hosted GitHub
-  Enterprise Server instance and run both white-box scans and PR reviews
-  against it, scoped cleanly to each connection and host.
+  **GitLab merge request reviews** — Comment `@hacktronai review` on a merge
+  request to get a findings summary and inline review, on par with GitHub.
 
-  **GitLab merge request reviews** — Merge request comments and finding triage
-  are now on par with GitHub. Trigger a review with `@hacktronai review`
-  directly on a merge request, and Hacktron posts a findings summary before its
-  inline discussions.
+  **GitHub Enterprise Server** — Connect a self-hosted GitHub Enterprise
+  instance and run white-box scans and PR reviews against it.
 
-  **Triage that follows the conversation** — Finding triage decisions now appear
-  directly in the originating GitHub PR or GitLab MR thread, so the discussion
-  stays in one place.
+  **Triage in the conversation** — Triage decisions now appear directly in the
+  GitHub PR or GitLab MR thread, so the discussion stays in one place.
 
-  **Pull request triage in the review flow** — Finding triage is now built into
-  the review flow, so you can act on findings without leaving the PR.
+  **Pick a commit for your pentest** — Target a specific tag or commit when you
+  start a pentest.
 
-  **Pentest commit targeting** — When starting a pentest you can now pick a
-  specific tag or commit SHA in the repository step.
+  **Pooled, organization-wide billing** — Code Review billing is now shared
+  across your organization, with annual seats and a new Usage page to track
+  consumption.
 
-  **Org-pooled billing and a Usage page** — Code Review billing is now pooled
-  across your organization, with annual prepaid seats and a dedicated Usage
-  page for tracking consumption.
-
-  ### Fixes
-  - Jira issue creation now paginates project and assignee dropdowns and links
-    back to the originating finding.
-  - The billing flow resolves your Stripe customer consistently across trials
-    and resubscribes, and skips invoice previews for canceled subscriptions.
-  - Large webhook payloads and oversized diagram traces no longer fail
-    processing or abort PDF report generation.
+  **Jira issues link back to findings** — Issues you create in Jira now link
+  straight back to the originating finding.
 </Update>
 
 <Update label="May 2026" description="Hacktron Platform">
-  ## Applications, a redesigned taint trace, and richer findings
+  ## Applications, a clearer taint trace, and finding history
 
   **Applications** — Group related repositories into an Application, give it
-  context and rules, and target it directly from the scan wizard.
+  shared context and rules, and scan it as one.
 
-  **Redesigned taint trace** — The taint-trace and call-graph views have a new
-  design with smooth collapse animations, making it easier to follow how a
-  vulnerability flows through your code.
+  **Clearer taint traces** — The taint-trace and call-graph views have been
+  redesigned so it's easier to follow how a vulnerability moves through your
+  code.
 
-  **Finding history** — Findings now carry a visible event timeline with a
-  deduplicated lineage trail, so you can see how each finding evolved across
-  scans.
-
-  ### Fixes
-  - PR comments are now placed correctly on dotfiles and large-diff files.
-  - The "Last scan" dashboard card is scoped to white-box scans.
-  - Trial banners no longer clip the bottom of the page, and the
-    trial-limit-reached call to action now ends the trial as expected.
+  **Finding history** — Each finding now shows a timeline of how it changed
+  across scans.
 </Update>

@@ -164,9 +164,11 @@
       {
         "product": "Changelog",
         "icon": "clock-rotate-left",
+        "hidden": true,
         "groups": [
           {
             "group": "Changelog",
+            "hidden": true,
             "pages": ["changelog"]
           }
         ]
@@ -174,11 +176,6 @@
     ],
     "global": {
       "anchors": [
-        {
-          "anchor": "Changelog",
-          "href": "/changelog",
-          "icon": "clock-rotate-left"
-        },
         {
           "anchor": "Code Review",
           "href": "/code-review/overview",
