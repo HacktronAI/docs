@@ -10,10 +10,6 @@ hidden: true
 <Update label="June 2026" description="Hacktron Platform">
   ## GitLab reviews, self-hosted GitHub, and triage in your PRs
 
-  GitLab now gets the same review experience as GitHub, you can connect a
-  self-hosted GitHub Enterprise Server, and finding triage happens right where
-  your team is already talking.
-
   **GitLab merge request reviews** — Comment `@hacktronai review` on a merge
   request to get a findings summary and inline review, on par with GitHub.
 
@@ -23,27 +19,29 @@ hidden: true
   **Triage in the conversation** — Triage decisions now appear directly in the
   GitHub PR or GitLab MR thread, so the discussion stays in one place.
 
-  **Pick a commit for your pentest** — Target a specific tag or commit when you
+  **Applications in the scan wizard** — Target an Application directly when you
+  start a scan.
+
+  **Pick a commit for your pentest** — Choose a specific tag or commit when you
   start a pentest.
 
   **Pooled, organization-wide billing** — Code Review billing is now shared
   across your organization, with annual seats and a new Usage page to track
   consumption.
-
-  **Jira issues link back to findings** — Issues you create in Jira now link
-  straight back to the originating finding.
 </Update>
 
 <Update label="May 2026" description="Hacktron Platform">
-  ## Applications, a clearer taint trace, and finding history
+  ## Applications, a redesigned taint trace, and finding history
 
-  **Applications** — Group related repositories into an Application, give it
-  shared context and rules, and scan it as one.
+  **Applications** — Group related repositories into an Application and give it
+  shared context and rules, so reviews understand how your code fits together.
 
-  **Clearer taint traces** — The taint-trace and call-graph views have been
-  redesigned so it's easier to follow how a vulnerability moves through your
-  code.
+  **Redesigned taint trace** — The taint-trace and call-graph views have been
+  rebuilt so it's easier to follow how a vulnerability moves through your code.
 
   **Finding history** — Each finding now shows a timeline of how it changed
-  across scans.
+  across scans, with duplicates linked into a single lineage.
+
+  **On-demand PR reviews** — Comment `@hacktron review` on a pull request to
+  have Hacktron review it on the spot.
 </Update>
