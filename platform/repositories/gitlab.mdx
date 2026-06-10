@@ -82,7 +82,15 @@ step when you connect.
 Follow the same **Configure access** steps to create a service account
 (**Settings** → **Service Accounts**), grant it Maintainer access, and generate
 a token from the service account's **Manage access tokens** with the `api`,
-`read_api`, and `read_user` scopes. These are identical to GitLab.com.
+`read_api`, and `read_user` scopes.
+
+<Note>
+  On self-managed GitLab, service accounts require GitLab EE, and by default
+  only an instance administrator can create them (administrators can also
+  allow top-level group Owners to create them). Alternatively, a personal
+  access token from any user with Maintainer access and the same scopes works
+  identically.
+</Note>
 
 When you open the **Connect GitLab** modal in Hacktron, select **Self-hosted /
 GitLab Enterprise** and enter your instance's base URL (e.g.
@@ -90,7 +98,10 @@ GitLab Enterprise** and enter your instance's base URL (e.g.
 
 <Note>
   Self-hosted prerequisites:
-  - Your GitLab instance must be network-reachable from Hacktron.
-  - The service account's token must carry the `api`, `read_api`, and
-    `read_user` scopes on your self-hosted instance.
+  - Your GitLab instance must be reachable from Hacktron over HTTPS with a
+    valid TLS certificate.
+  - GitLab installed under a URL subpath (e.g. `https://example.com/gitlab`)
+    is not supported — the base URL must be the instance origin.
+  - The token must carry the `api`, `read_api`, and `read_user` scopes on
+    your self-hosted instance.
 </Note>
