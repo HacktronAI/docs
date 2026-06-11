@@ -2,7 +2,6 @@
 title: "Changelog"
 description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
-hidden: true
 ---
 
 {/* CHANGELOG:INSERT — the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
@@ -89,12 +88,8 @@ hidden: true
   Slack Connect step during onboarding to wire up notifications from the start.
 </Update>
 
-<Update label="June 2, 2026" tags={["Applications", "Findings", "Integrations"]}>
-  ## Applications in the scan wizard and smarter duplicate detection
-
-  **Applications in the scan wizard** — Target an Application directly from the
-  scan wizard to scan all of its repositories at once, with the selected repos
-  collapsing into a single row.
+<Update label="June 2, 2026" tags={["Findings", "Integrations"]}>
+  ## Smarter duplicate detection and smoother integration setup
 
   **Cross-finding duplicate detection** — Hacktron now recognizes when a new
   finding duplicates one it already reported and links them automatically, with
@@ -110,12 +105,8 @@ hidden: true
   installs and required fields enforced before dismissal.
 </Update>
 
-<Update label="June 1, 2026" tags={["Whitebox", "Applications", "Findings"]}>
-  ## A redesigned platform: Applications, new finding views, and on-demand reviews
-
-  **Applications** — Group related repositories into a named Application, give it
-  context and rules, and manage its repositories and configuration from a
-  dedicated detail page.
+<Update label="June 1, 2026" tags={["Whitebox", "Findings", "PR Reviews"]}>
+  ## A redesigned platform: new finding views and on-demand reviews
 
   **"Whitebox" terminology** — Scans previously labeled "Pentest" are now called
   "Whitebox" everywhere, with "Whitebox Scans" and "PR Reviews" clearly
@@ -141,62 +132,104 @@ hidden: true
   the issue, fixes the root cause, and adds a regression test.
 </Update>
 
-<Update label="April 2026" description="Hacktron Platform">
-  ## Public API, Code Review, and richer findings
-
-  **Public REST API** — Programmatic access to your scans, findings, and
-  repositories with API keys, plus interactive API docs.
+<Update label="April 22, 2026" tags={["Code Review", "Findings"]}>
+  ## Code Review page and syntax-highlighted findings
 
   **Code Review** — A dedicated Code Review page with scan-scoped findings, and
   PR comments that link straight back to the finding in Hacktron.
 
-  **Richer finding details** — Affected code is now syntax-highlighted and
-  vulnerabilities include a visual trace diagram, in both the finding panel and
-  the PDF report.
-
-  **Context documents** — Upload per-repository context so reviews understand
-  your codebase and conventions.
-
-  **More flexible pentests** — Start a pentest from a public repository URL or
-  an uploaded archive, with clearer cost estimation before you commit.
-
-  **Self-serve billing and integrations** — Cancel or reactivate a subscription
-  and buy credits in-app; finding and scan links unfurl in Slack with live
-  status and triage; and you can create Linear tickets from findings.
+  **Syntax-highlighted affected code** — Affected code in the finding detail view
+  is now syntax-highlighted, making vulnerable snippets far easier to read.
 </Update>
 
-<Update label="March 2026" description="Hacktron Platform">
-  ## Cost estimation, live scan progress, and richer findings
+<Update label="April 19, 2026" tags={["Slack", "Linear"]}>
+  ## Live Slack unfurls and Linear tickets from findings
+
+  **Slack link unfurling** — Finding and scan links now unfurl in Slack with
+  live status that refreshes, plus inline severity and triage, so your team
+  stays in sync without leaving the channel.
+
+  **Linear tickets from findings** — Create a Linear issue directly from a
+  finding, with the finding details rendered into the issue body.
+</Update>
+
+<Update label="April 13, 2026" tags={["API"]}>
+  ## Public REST API
+
+  **Public REST API** — Programmatic access to your scans, findings, and
+  repositories with API keys, plus interactive API docs.
+</Update>
+
+<Update label="April 12, 2026" tags={["Billing"]}>
+  ## Self-serve subscription management
+
+  **Cancel and reactivate in-app** — Cancel or reactivate your subscription
+  directly from the billing page, without contacting support.
+</Update>
+
+<Update label="April 6, 2026" tags={["Whitebox"]}>
+  ## Per-repository context documents
+
+  **Context documents** — Upload per-repository context so reviews understand
+  your codebase and conventions, and manage it from the scan flow.
+</Update>
+
+<Update label="April 1, 2026" tags={["Whitebox", "Findings"]}>
+  ## Visual trace diagrams and more flexible pentests
+
+  **Visual trace diagrams** — Vulnerabilities now include a visual trace diagram
+  in both the finding detail panel and the PDF report, so you can see how a
+  vulnerability flows through your code at a glance.
+
+  **More flexible pentests** — Start a pentest from a public repository URL or an
+  uploaded archive, with the chosen source reflected in cost estimation before
+  you commit.
+
+  **Redesigned billing page** — The billing experience has been rebuilt for
+  clearer plans, credits, and subscription status.
+</Update>
+
+<Update label="March 17, 2026" tags={["Findings", "Whitebox"]}>
+  ## Web-based triage, PDF reports, and full Markdown
+
+  **Triage from the web** — Dismiss findings with a reason and leave feedback in
+  an activity thread, directly in the app.
+
+  **Downloadable pentest reports** — Generate a PDF report of your pentest
+  findings straight from the browser.
+
+  **Richer finding details** — Finding descriptions, dismiss reasons, and
+  activity comments now render full Markdown, with one-click copy of the
+  Markdown report.
+</Update>
+
+<Update label="March 16, 2026" tags={["Whitebox", "Scans"]}>
+  ## Cost estimation and live scan progress
 
   **Cost estimation before you scan** — See an estimated cost based on dynamic
   credit pricing before you start a scan or pentest.
 
   **Live scan progress** — Scans now stream their progress in real time, so you
   can watch findings arrive as they're discovered.
-
-  **Triage from the web** — Dismiss findings with a reason and leave feedback in
-  an activity thread, directly in the app.
-
-  **Richer finding details** — Finding descriptions, dismiss reasons, and
-  activity comments now render full Markdown, with one-click copy of the
-  Markdown report.
-
-  **Downloadable pentest reports** — Generate a PDF report of your pentest
-  findings straight from the browser.
 </Update>
 
-<Update label="February 2026" description="Hacktron Platform">
-  ## Organization billing, pentest credits, and public disclosure
-
-  **Organization seat billing** — New Sec Seat and Dev Seat plans with per-seat
-  billing, PR gating, and automatic Stripe sync.
-
-  **Pentest credits** — Buy pentest credits in-app through Stripe checkout and
-  spend them on pentests.
+<Update label="February 28, 2026" tags={["Findings"]}>
+  ## Public scan disclosure
 
   **Public scan disclosure** — Share a scan and its findings through public,
   read-only pages.
+</Update>
 
-  **Remediation guidance in PR comments** — GitHub PR comments now include a
-  remediation section alongside each finding.
+<Update label="February 23, 2026" tags={["Billing"]}>
+  ## Pentest credits
+
+  **Pentest credits** — Buy pentest credits in-app through Stripe checkout and
+  spend them on pentests.
+</Update>
+
+<Update label="February 17, 2026" tags={["Billing"]}>
+  ## Organization seat billing
+
+  **Organization seat billing** — New Sec Seat and Dev Seat plans with per-seat
+  billing, PR gating, and automatic Stripe sync.
 </Update>
