@@ -175,11 +175,6 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Changelog",
-          "href": "/changelog",
-          "icon": "clock-rotate-left"
-        },
-        {
           "anchor": "Code Review",
           "href": "/code-review/overview",
           "icon": "code-branch"
@@ -193,6 +188,11 @@
           "anchor": "Community",
           "href": "https://discord.gg/eRHCHsvDKh",
           "icon": "discord"
+        },
+        {
+          "anchor": "Changelog",
+          "href": "/changelog",
+          "icon": "clock-rotate-left"
         }
       ]
     }
