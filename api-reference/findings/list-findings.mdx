@@ -46,9 +46,6 @@ curl "https://api.hacktron.ai/v1/findings?severity=critical&state=open&sort_by=f
       "affected_file": "apps/api/src/checkout/checkout.service.ts",
       "affected_code": "const rows = await conn.query(`SELECT * FROM carts WHERE id = '${cartId}'`);",
       "proof_of_concept": "POST /api/v1/checkout with cart_id=1' OR '1'='1",
-      "impact": "Full read access to the carts table, including other customers' items.",
-      "root_cause": "String interpolation instead of parameterised query.",
-      "remediation": "Use parameterised queries via the driver's placeholder API.",
       "tags": ["injection", "sql"],
       "scan_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
       "found_at": "2026-04-13T12:15:00.000Z",
@@ -74,9 +71,6 @@ curl "https://api.hacktron.ai/v1/findings?severity=critical&state=open&sort_by=f
 | `affected_file`    | string        | Path relative to the repository root.                                       |
 | `affected_code`    | string        | Code snippet of the affected location.                                      |
 | `proof_of_concept` | string\|null  | Reproduction steps or payload. `null` if none was captured.                 |
-| `impact`           | string\|null  | Impact narrative.                                                           |
-| `root_cause`       | string\|null  | Root-cause narrative.                                                       |
-| `remediation`      | string\|null  | Suggested fix.                                                              |
 | `tags`             | string[]      | Free‑form tags.                                                             |
 | `scan_id`          | UUID\|null    | Scan that produced this finding.                                            |
 | `found_at`         | string        | ISO 8601 timestamp when the finding was first discovered.                   |
