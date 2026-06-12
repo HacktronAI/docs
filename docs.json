@@ -25,7 +25,10 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": ["index", "platform/overview"]
+            "pages": [
+              "index",
+              "platform/overview"
+            ]
           },
           {
             "group": "Setup",
@@ -59,7 +62,10 @@
           },
           {
             "group": "Resources",
-            "pages": ["privacy", "security"]
+            "pages": [
+              "privacy",
+              "security"
+            ]
           }
         ]
       },
@@ -69,11 +75,16 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": ["code-review/overview"]
+            "pages": [
+              "code-review/overview"
+            ]
           },
           {
             "group": "Getting started",
-            "pages": ["code-review/setup", "code-review/billing"]
+            "pages": [
+              "code-review/setup",
+              "code-review/billing"
+            ]
           },
           {
             "group": "Management",
@@ -105,15 +116,21 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": ["white-box-pentest/overview"]
+            "pages": [
+              "white-box-pentest/overview"
+            ]
           },
           {
             "group": "Getting started",
-            "pages": ["white-box-pentest/quickstart"]
+            "pages": [
+              "white-box-pentest/quickstart"
+            ]
           },
           {
             "group": "Credits and billing",
-            "pages": ["white-box-pentest/billing"]
+            "pages": [
+              "white-box-pentest/billing"
+            ]
           }
         ]
       },
@@ -157,6 +174,18 @@
               "api-reference/findings/get-finding",
               "api-reference/findings/update-finding",
               "api-reference/findings/add-finding-comment"
+            ]
+          }
+        ]
+      },
+      {
+        "product": "MCP",
+        "icon": "plug",
+        "groups": [
+          {
+            "group": "MCP",
+            "pages": [
+              "mcp"
             ]
           }
         ]
