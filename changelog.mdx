@@ -13,12 +13,12 @@ rss: true
   merge-request scans turn on automatically, matching how GitHub repositories
   behave. You can still disable them per project.
 
-  **GitLab recognized in trials and onboarding** — Trial prompts, the "all set"
-  onboarding screens, and trial banners now treat a connected GitLab org the
-  same way they treat GitHub.
+  **GitLab recognized throughout onboarding** — Onboarding and trial flows now
+  treat a connected GitLab organization exactly like GitHub, so GitLab-first
+  teams get the same guided setup.
 
-  **Clearer GitLab connection setup** — The Connect GitLab modal walks you
-  through GitLab's group Service Accounts flow with corrected steps, and adds a
+  **Clearer GitLab connection setup** — The Connect GitLab dialog walks you
+  through GitLab's group Service Accounts flow step by step, and adds a
   GitLab.com / Self-hosted toggle that mirrors the GitHub Enterprise setup.
 
   **PR review nudge after cost estimation** — If you reach cost estimation and
@@ -33,9 +33,8 @@ rss: true
   with AI" action with one-click deep links into Cursor or Claude, so you can go
   from a Slack alert straight to fixing the issue in your editor.
 
-  **No-card free trials** — Start a free trial without entering a credit card,
-  and brand-new organizations that have never subscribed now see the "Start
-  Trial" button on the billing page.
+  **No-card free trials** — Start a free trial without entering a credit card —
+  no payment details until you decide to subscribe.
 
   **Findings close themselves on abandoned PRs** — When a pull request or merge
   request is closed without being merged, its findings move to a new "Closed"
@@ -60,9 +59,9 @@ rss: true
   request, and triage activity mirrors across the web app, Slack, and the MR
   thread.
 
-  **Richer Jira ticketing** — Project and assignee pickers now support
-  server-side search and pagination, and issues created from findings link back
-  to the originating finding.
+  **Richer Jira ticketing** — Search across large Jira projects and assignee
+  lists when filing a ticket, and issues created from findings link back to the
+  original finding.
 </Update>
 
 <Update label="June 4, 2026" description="Hacktron Platform">
@@ -82,7 +81,7 @@ rss: true
   findings without leaving GitLab.
 
   **Whitebox scans by tag or commit** — When picking a repository, target a
-  specific tag or an exact commit, not just a branch, with live validation.
+  specific tag or an exact commit, not just a branch.
 
   **Slack Connect onboarding** — Users signing up with a work email now see a
   Slack Connect step during onboarding to wire up notifications from the start.
@@ -92,8 +91,8 @@ rss: true
   ## Smarter duplicate detection and smoother integration setup
 
   **Cross-finding duplicate detection** — Hacktron now recognizes when a new
-  finding duplicates one it already reported and links them automatically, with
-  lineage annotations and canonical-finding references in PR comments.
+  finding duplicates one it already reported and links them automatically, so PR
+  comments point back to the original finding instead of repeating it.
 
   **Request GitHub access without being an org admin** — If you don't own the
   GitHub organization, clicking Connect now sends an installation request to
@@ -101,8 +100,7 @@ rss: true
   automatically.
 
   **Polished Jira integration setup** — The Jira configuration and per-ticket
-  modals are cleaner and more reliable, with auto-create defaults on for fresh
-  installs and required fields enforced before dismissal.
+  dialogs are cleaner and more reliable, with sensible defaults for new installs.
 </Update>
 
 <Update label="June 1, 2026" description="Hacktron Platform">
@@ -132,8 +130,8 @@ rss: true
   Hacktron review it on the spot, even on drafts or external-contributor PRs.
 
   **Sharper GitHub PR comments** — Pull-request comments now use crisp severity
-  badges in place of emoji, with a hardened "Fix with AI" prompt that reproduces
-  the issue, fixes the root cause, and adds a regression test.
+  badges in place of emoji, with a "Fix with AI" prompt that reproduces the
+  issue, fixes the root cause, and adds a regression test.
 </Update>
 
 <Update label="April 22, 2026" description="Hacktron Platform">
