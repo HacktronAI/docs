@@ -17,10 +17,6 @@ rss: true
   treat a connected GitLab organization exactly like GitHub, so GitLab-first
   teams get the same guided setup.
 
-  **Clearer GitLab connection setup** — The Connect GitLab dialog walks you
-  through GitLab's group Service Accounts flow step by step, and adds a
-  GitLab.com / Self-hosted toggle that mirrors the GitHub Enterprise setup.
-
   **PR review nudge after cost estimation** — If you reach cost estimation and
   close it without enabling PR scans, a one-time prompt on the repositories page
   invites you to turn on PR review.
@@ -44,10 +40,14 @@ rss: true
   **Unsupported-language notices** — Cost estimation now tells you when a
   repository is mostly written in a language Hacktron can't yet trace, with
   guidance to reach out.
+
+  **Clearer GitLab connection setup** — The Connect GitLab dialog walks you
+  through GitLab's group Service Accounts flow step by step, and adds a
+  GitLab.com / Self-hosted toggle that mirrors the GitHub Enterprise setup.
 </Update>
 
 <Update label="June 7, 2026" description="Hacktron Platform">
-  ## GitHub Enterprise Server, GitLab MR feedback, and richer Jira
+  ## GitHub Enterprise Server, GitLab MR feedback, and commit-level scans
 
   **GitHub Enterprise Server** — Connect self-hosted GitHub Enterprise Server
   instances for white-box scans and PR reviews, with multi-host management so
@@ -59,40 +59,37 @@ rss: true
   request, and triage activity mirrors across the web app, Slack, and the MR
   thread.
 
+  **Whitebox scans by tag or commit** — When picking a repository, target a
+  specific tag or an exact commit, not just a branch.
+
   **Richer Jira ticketing** — Search across large Jira projects and assignee
   lists when filing a ticket, and issues created from findings link back to the
   original finding.
 </Update>
 
 <Update label="June 4, 2026" description="Hacktron Platform">
-  ## Org-pooled billing, GitLab MR reviews, and commit-level scans
+  ## Sharper GitHub PR comments
 
-  **Org-pooled Code Review billing and a Usage page** — PR review limits are now
-  pooled across your whole organization rather than capped per seat, with
-  open-source contributions tracked separately. A new owner-only Usage page
-  shows consumption for the billing period and an estimated cost for any
-  overage.
-
-  **Annual prepaid seats** — Purchase developer seats on an annual prepaid plan
-  for a simpler commitment.
-
-  **GitLab merge-request comments and triage** — GitLab merge-request comments
-  and finding triage reach parity with GitHub, so you can review and act on
-  findings without leaving GitLab.
-
-  **Whitebox scans by tag or commit** — When picking a repository, target a
-  specific tag or an exact commit, not just a branch.
-
-  **Slack Connect onboarding** — Users signing up with a work email now see a
-  Slack Connect step during onboarding to wire up notifications from the start.
+  **Sharper GitHub PR comments** — Pull-request comments now use crisp severity
+  badges in place of emoji, with a "Fix with AI" prompt that reproduces the
+  issue, fixes the root cause, and adds a regression test.
 </Update>
 
-<Update label="June 2, 2026" description="Hacktron Platform">
-  ## Smarter duplicate detection and smoother integration setup
+<Update label="June 3, 2026" description="Hacktron Platform">
+  ## Org-pooled billing, redesigned navigation, and on-demand reviews
 
-  **Cross-finding duplicate detection** — Hacktron now recognizes when a new
-  finding duplicates one it already reported and links them automatically, so PR
-  comments point back to the original finding instead of repeating it.
+  **Org-pooled billing, annual seats, and a Usage page** — PR review limits are
+  now pooled across your whole organization rather than capped per seat, with
+  open-source contributions tracked separately; developer seats are available on
+  an annual prepaid plan; and a new owner-only Usage page shows consumption and
+  any overage for the billing period.
+
+  **Redesigned sidebar navigation** — Cleaner, collapsible sections that remember
+  their open and closed state between visits, with account actions in the
+  sidebar header.
+
+  **On-demand PR reviews** — Comment `@hacktron review` on a pull request to have
+  Hacktron review it on the spot, even on drafts or external-contributor PRs.
 
   **Request GitHub access without being an org admin** — If you don't own the
   GitHub organization, clicking Connect now sends an installation request to
@@ -101,10 +98,13 @@ rss: true
 
   **Polished Jira integration setup** — The Jira configuration and per-ticket
   dialogs are cleaner and more reliable, with sensible defaults for new installs.
+
+  **Slack Connect onboarding** — Users signing up with a work email now see a
+  Slack Connect step during onboarding to wire up notifications from the start.
 </Update>
 
 <Update label="June 1, 2026" description="Hacktron Platform">
-  ## Whitebox naming, redesigned finding views, and history
+  ## Whitebox naming and redesigned finding views
 
   **"Whitebox" terminology** — Scans previously labeled "Pentest" are now called
   "Whitebox" everywhere, with "Whitebox Scans" and "PR Reviews" clearly
@@ -116,22 +116,15 @@ rss: true
   actions as the sidebar.
 
   **Finding history** — Each finding now shows a timeline of how it changed
-  across scans, with duplicates linked into a single lineage.
+  across scans.
 </Update>
 
 <Update label="May 26, 2026" description="Hacktron Platform">
-  ## Redesigned navigation and on-demand PR reviews
+  ## Smarter duplicate detection
 
-  **Redesigned sidebar navigation** — Cleaner, collapsible sections that remember
-  their open and closed state between visits, with account actions in the
-  sidebar header.
-
-  **On-demand PR reviews** — Comment `@hacktron review` on a pull request to have
-  Hacktron review it on the spot, even on drafts or external-contributor PRs.
-
-  **Sharper GitHub PR comments** — Pull-request comments now use crisp severity
-  badges in place of emoji, with a "Fix with AI" prompt that reproduces the
-  issue, fixes the root cause, and adds a regression test.
+  **Cross-finding duplicate detection** — Hacktron now recognizes when a new
+  finding duplicates one it already reported and links them automatically, so PR
+  comments point back to the original finding instead of repeating it.
 </Update>
 
 <Update label="April 22, 2026" description="Hacktron Platform">
