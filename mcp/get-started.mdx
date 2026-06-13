@@ -153,19 +153,15 @@ description: "Choose your platform and copy the config. No API key required."
 
 ## Tools
 
-| Name | Scope | What it does |
-| --- | --- | --- |
-| `list_scans` | `read` | List scans with status/type filters and per-severity counts |
-| `get_scan` | `read` | Get a single scan by ID |
-| `export_findings` | `read` | Export a scan's findings as JSON, CSV, or SARIF |
-| `list_findings` | `read` | List findings with severity/state/scan/repo filters |
-| `get_finding` | `read` | Get full finding detail, including the triage thread |
-| `update_finding` | `write` | Change a finding's state and/or severity |
-| `add_finding_comment` | `write` | Add a comment to a finding's triage thread |
-
-<Note>
-  Tools are filtered by your credential's scopes. A read-only credential never sees the `write` tools at all.
-</Note>
+| Name | Description |
+| --- | --- |
+| `list_scans` | List scans with severity breakdown |
+| `get_scan` | Get details about a scan |
+| `export_findings` | Export a scan's findings as JSON, CSV, or SARIF |
+| `list_findings` | List findings across the organisation |
+| `get_finding` | Get details about a finding |
+| `update_finding` | Update a finding's state or severity |
+| `add_finding_comment` | Post a comment on a finding|
 
 ## Related
 
