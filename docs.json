@@ -160,6 +160,16 @@
             ]
           }
         ]
+      },
+      {
+        "product": "Changelog",
+        "icon": "clock-rotate-left",
+        "groups": [
+          {
+            "group": "Changelog",
+            "pages": ["changelog"]
+          }
+        ]
       }
     ],
     "global": {
@@ -178,6 +188,11 @@
           "anchor": "Community",
           "href": "https://discord.gg/eRHCHsvDKh",
           "icon": "discord"
+        },
+        {
+          "anchor": "Changelog",
+          "href": "/changelog",
+          "icon": "clock-rotate-left"
         }
       ]
     }
