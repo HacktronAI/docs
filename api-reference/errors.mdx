@@ -48,7 +48,7 @@ Validation errors may return `message` as an array of field‑level errors:
 
 ## Common failure modes
 
-### "This endpoint requires API key authentication"
+### "This endpoint requires API key authentication (X-Api-Key header)"
 
 A REST endpoint was called with a dashboard session token instead of an API key. REST endpoints under `/v1/*` require the `X-Api-Key` header.
 

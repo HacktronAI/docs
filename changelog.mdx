@@ -1,0 +1,291 @@
+---
+title: "Changelog"
+description: "New features, improvements, and fixes to the Hacktron platform."
+rss: true
+---
+
+{/* CHANGELOG:INSERT - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="June 11, 2026" tags={["Integrations", "Code Review"]}>
+  ## GitLab now works just like GitHub
+
+  **Automatic merge-request scanning**: Connect a GitLab project and
+  merge-request scans turn on by themselves, exactly as they do for GitHub. Turn
+  them off per project whenever you want.
+
+  **GitLab in signup and trials**: Connect GitLab during signup or a trial and
+  it follows the same guided setup as GitHub, start to finish.
+
+  **[<u>Set up GitLab →</u>](/platform/repositories/gitlab)**
+</Update>
+
+<Update label="June 10, 2026" tags={["Code Review", "Billing", "Integrations"]}>
+  ## Go from a Slack alert to a fix in one click
+
+  **Fix with AI in Slack**: Finding alerts in Slack now carry a "Fix with AI"
+  button that deep-links the issue straight into Cursor or Claude. See the
+  alert, open your editor, fix it.
+
+  **No-card free trials**: Start a free trial without a credit card. You enter
+  payment details only when you decide to subscribe.
+
+  **Findings close themselves on abandoned PRs**: Close a pull or merge request
+  without merging and its findings move to a new "Closed" state. Reopen the PR
+  and they come back, and anything you already triaged stays put.
+
+  **Up-front unsupported-language notices**: Cost estimation now tells you when a
+  repository is mostly in a language Hacktron cannot scan yet, instead of failing
+  with no explanation.
+
+  **Clearer GitLab connection setup**: The Connect GitLab dialog walks you
+  through GitLab's group Service Accounts step by step and adds a GitLab.com /
+  Self-hosted toggle that matches the GitHub Enterprise setup.
+
+  **[<u>Connect Slack →</u>](/platform/communication-apps/slack)** · **[<u>Start a free trial →</u>](/code-review/billing)**
+</Update>
+
+<Update label="June 7, 2026" tags={["Self-Hosting", "Integrations", "Code Review", "Whitebox"]}>
+  ## Scan self-hosted GitHub Enterprise Server
+
+  **GitHub Enterprise Server**: Point Hacktron at self-hosted GitHub Enterprise
+  Server for white-box scans and PR reviews, and run several Enterprise hosts
+  next to github.com at the same time.
+
+  **GitLab MR feedback matches GitHub**: Merge-request comments now carry
+  severity badges, collapsible proof-of-concept, trace diagrams, and a "Fix with
+  AI" block. Trigger a review with `@hacktronai review`, and triage shows up the
+  same across the web app, Slack, and the MR thread.
+
+  **Scan an exact tag or commit**: Target a specific tag or commit when you pick
+  a repository for a Whitebox scan, not just a branch.
+
+  **Richer Jira ticketing**: Search large Jira projects and assignee lists while
+  filing a ticket, and issues you create from a finding link back to it.
+
+  **[<u>Set up GitHub Enterprise Server →</u>](/platform/repositories/github-enterprise-server)** · **[<u>See how reviews work →</u>](/code-review/integrations/github-gitlab)** · **[<u>Set up Jira →</u>](/platform/project-management/jira)**
+</Update>
+
+<Update label="June 4, 2026" tags={["Code Review"]}>
+  ## PR comments that fix the bug for you
+
+  **Sharper GitHub PR comments**: Pull-request comments now use crisp severity
+  badges instead of emoji, with a "Fix with AI" prompt that reproduces the
+  issue, fixes the root cause, and adds a regression test.
+
+  **[<u>See how PR reviews work →</u>](/code-review/integrations/github-gitlab)**
+</Update>
+
+<Update label="June 3, 2026" tags={["Billing", "Code Review", "Integrations"]}>
+  ## Share Code Review limits across your whole org
+
+  **Org-pooled limits, annual seats, and a Usage page**: Code Review limits are
+  now pooled across your whole organization instead of capped per seat, you can
+  buy developer seats on an annual prepaid plan, and a new owner-only Usage page
+  shows usage and any overage for the period.
+
+  **Redesigned sidebar navigation**: Cleaner, collapsible sections that remember
+  what you left open, with account actions moved into the sidebar header.
+
+  **On-demand PR reviews**: Comment `@hacktron review` on a pull request to
+  review it on the spot, even on drafts or external-contributor PRs.
+
+  **Request GitHub access without being an admin**: If you do not own the GitHub
+  organization, clicking Connect sends an installation request to your admin and
+  marks it pending. The integration appears the moment they approve.
+
+  **Smoother Jira setup**: A cleaner Jira configuration and per-ticket dialog,
+  with sensible defaults already on for new installs.
+
+  **Slack Connect onboarding**: Sign up with a work email and set up
+  notifications right away through a Slack Connect step.
+
+  **[<u>See billing and plans →</u>](/code-review/billing)** · **[<u>Set up Code Review →</u>](/code-review/setup)**
+</Update>
+
+<Update label="June 1, 2026" tags={["Whitebox", "Code Review"]}>
+  ## Findings open straight into the taint trace
+
+  **Redesigned vulnerability views**: The taint-trace and call-graph views are
+  rebuilt, opening right into the trace with smooth collapse animations, and the
+  full-page finding view now has the same actions as the sidebar.
+
+  **"Whitebox" everywhere**: Scans we used to call "Pentest" are now "Whitebox",
+  with "Whitebox Scans" and "PR Reviews" split apart so it is obvious which is a
+  full code scan and which is a pull-request review.
+
+  **Finding history**: Every finding now shows a timeline of how it changed from
+  one scan to the next.
+
+  **[<u>Explore Whitebox scans →</u>](/white-box-pentest/overview)**
+</Update>
+
+<Update label="May 26, 2026" tags={["Code Review"]}>
+  ## No more repeated comments for the same bug
+
+  **Cross-finding duplicate detection**: Hacktron now spots when a new finding
+  repeats one it already reported and links the two, so PR comments point back to
+  the original instead of saying the same thing twice.
+</Update>
+
+<Update label="May 19, 2026" tags={["Dashboard", "Code Review", "Integrations"]}>
+  ## A rebuilt dashboard, split by the work you do
+
+  **New dashboard**: Separate Overview, PR Review, and Whitebox Scan tabs, so
+  each kind of work shows the metrics that actually matter for it.
+
+  **Taint-trace timeline and call graph**: Vulnerabilities now show a
+  step-by-step taint-trace timeline and an interactive call graph, with source,
+  propagation, and sink marked, so you can follow exactly how an issue moves
+  through your code.
+
+  **Richer Linear integration**: Pick a default Linear project, back-fill tickets
+  for existing findings, map finding severity to Linear priority, and mirror
+  Linear status changes back onto the linked finding.
+
+  **[<u>Set up Linear →</u>](/platform/project-management/linear)**
+</Update>
+
+<Update label="May 16, 2026" tags={["Billing"]}>
+  ## Keep reviewing past your limit instead of getting blocked
+
+  **Owner-controlled spillover billing**: Organization owners can switch on
+  spillover billing so PR reviews keep running past your included limit, billed
+  as overage instead of stopping cold.
+
+  **[<u>See usage and spillover billing →</u>](/code-review/spillover-usage)**
+</Update>
+
+<Update label="May 15, 2026" tags={["Whitebox"]}>
+  ## Share a live view of any scan
+
+  **Public scan activity page**: Shared scans now have a public activity page
+  with the scan's events, timeline, and the agents that worked on it.
+</Update>
+
+<Update label="May 13, 2026" tags={["Billing", "Integrations"]}>
+  ## 50 PR reviews a seat, then $1 each instead of a wall
+
+  **PR review limits with overage**: Every developer seat now includes 50 PR
+  reviews per billing period, and any extra reviews bill at $1 each so they keep
+  running instead of stopping.
+
+  **Resubscribe in one click**: Canceled organizations now get a Resubscribe
+  button to pick their old plan back up.
+
+  **Custom trial duration**: Trials can run for a length you choose, with a clear
+  prompt when you reach their limits.
+
+  **Slack invite flow**: Invite teammates to your Hacktron organization straight
+  from Slack.
+
+  **[<u>See usage and spillover billing →</u>](/code-review/spillover-usage)** · **[<u>Invite your team on Slack →</u>](/platform/communication-apps/slack)**
+</Update>
+
+<Update label="May 4, 2026" tags={["Code Review"]}>
+  ## Stop a scan mid-run
+
+  **Cancel a running scan**: Stop a scan that is already in progress right from
+  the scan view, no waiting for it to finish.
+
+  **Guided setup checklist**: A getting-started checklist walks you through
+  connecting your repositories and turning on Code Review, so new teams reach
+  their first scan faster.
+
+  **[<u>Set up Code Review →</u>](/code-review/setup)**
+</Update>
+
+<Update label="April 23, 2026" tags={["Code Review"]}>
+  ## A home for your Code Review findings
+
+  **Code Review page**: A dedicated page with scan-scoped findings, and PR
+  comments that link straight back to the finding in Hacktron.
+
+  **Syntax-highlighted code**: Affected code in the finding view is now
+  syntax-highlighted, so vulnerable snippets are far easier to read.
+
+  **[<u>Explore Code Review →</u>](/code-review/overview)**
+</Update>
+
+<Update label="April 20, 2026" tags={["API", "Integrations", "Billing"]}>
+  ## Drive Hacktron from your own scripts
+
+  **Public REST API**: Reach your scans, findings, and repositories
+  programmatically with API keys, backed by interactive API docs.
+
+  **Slack link unfurling**: Finding and scan links now unfurl in Slack with live
+  status, severity, and triage, so your team stays in sync without leaving the
+  channel.
+
+  **Linear tickets from findings**: Create a Linear issue straight from a
+  finding, with the details filled in for you.
+
+  **Cancel and reactivate yourself**: Cancel or reactivate your subscription
+  right from the billing page, no support ticket needed.
+
+  **Redesigned billing page**: A rebuilt billing experience with clearer plans,
+  credits, and subscription status.
+
+  **[<u>Read the API reference →</u>](/api-reference/introduction)** · **[<u>Connect Slack →</u>](/platform/communication-apps/slack)** · **[<u>Set up Linear →</u>](/platform/project-management/linear)** · **[<u>Manage your subscription →</u>](/code-review/billing)**
+</Update>
+
+<Update label="April 6, 2026" tags={["Whitebox", "Code Review"]}>
+  ## See how a vulnerability moves through your code
+
+  **Visual trace diagrams**: Vulnerabilities now include a visual diagram, in
+  both the finding view and the PDF report, so you can trace how an issue moves
+  through your code at a glance.
+
+  **More flexible pentests**: Start a pentest from a public repository URL or an
+  uploaded archive, with the source shown in the cost estimate before you commit.
+
+  **Context documents**: Upload notes about a repository so reviews understand
+  your codebase and its conventions.
+
+  **Markdown in findings**: Finding descriptions, dismiss reasons, and comments
+  now render full Markdown, with one-click copy of the report.
+
+  **[<u>Start a Whitebox scan →</u>](/white-box-pentest/quickstart)**
+</Update>
+
+<Update label="March 23, 2026" tags={["Code Review"]}>
+  ## Triage findings without leaving the browser
+
+  **Triage from the web**: Dismiss findings with a reason and leave feedback in
+  an activity thread, right in the app.
+
+  **[<u>Read the triage guide →</u>](/code-review/findings-feedback)**
+</Update>
+
+<Update label="March 18, 2026" tags={["Whitebox", "Billing"]}>
+  ## Watch findings arrive as a scan runs
+
+  **Live scan progress**: Scans now stream their progress in real time, so you
+  watch findings show up as they are discovered instead of waiting for the end.
+
+  **Cost estimation before you scan**: See an estimated cost before you start a
+  scan or pentest.
+
+  **Downloadable reports**: Generate a PDF report of your findings straight from
+  the browser.
+</Update>
+
+<Update label="March 1, 2026" tags={["Billing", "Whitebox"]}>
+  ## Pay for pentests with credits
+
+  **Pentest credits**: Buy pentest credits and spend them on pentests when you
+  are ready.
+
+  **Public scan disclosure**: Share a scan and its findings through public,
+  read-only pages.
+
+  **[<u>See pentest credits →</u>](/white-box-pentest/billing)**
+</Update>
+
+<Update label="February 18, 2026" tags={["Billing"]}>
+  ## Simple per-seat billing for your org
+
+  **Organization seat billing**: New Sec Seat and Dev Seat plans with
+  straightforward per-seat pricing.
+
+  **[<u>See billing and plans →</u>](/code-review/billing)**
+</Update>

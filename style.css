@@ -9,3 +9,79 @@
   :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   border-bottom: 1px solid rgb(var(--primary-dark)) !important;
 }
+
+/* ── Changelog: per-entry tag pills ──────────────────────────────────────
+   The `tags={[...]}` on each <Update> renders as a bare <span> beside the
+   date (Mintlify's `nav-tag-pill` class applies only to sidebar nav tags,
+   not these). Give it a real branded pill. Scoped to .update-container so
+   it can't affect anything in the entry body. */
+.update-container span.inline-block.rounded-lg.font-medium {
+  display: inline-block !important;
+  padding: 0.1875rem 0.5rem !important;
+  border-radius: 9999px !important;
+  font-size: 0.6875rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  line-height: 1.35 !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  background-color: rgb(var(--primary-dark) / 0.08) !important;
+  color: rgb(var(--primary-dark)) !important;
+  border: 1px solid rgb(var(--primary-dark) / 0.15) !important;
+}
+
+.dark .update-container span.inline-block.rounded-lg.font-medium {
+  background-color: rgb(var(--primary-light) / 0.1) !important;
+  color: rgb(var(--primary-light)) !important;
+  border-color: rgb(var(--primary-light) / 0.2) !important;
+}
+
+/* ── Changelog: filter chips (#changelog-filters) ────────────────────────
+   The filter bar buttons. Mintlify swaps the chip class on selection:
+   inactive = .bg-gray-100, active = .bg-primary. Since --primary is near
+   #000, the default active chip is nearly invisible in dark mode, so we
+   give inactive chips the same subtle pill as the entry tags and the active
+   chip a solid inverted fill that reads clearly in both themes. */
+#changelog-filters-content button {
+  border-radius: 9999px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  font-size: 0.6875rem !important;
+  font-weight: 600 !important;
+  padding: 0.25rem 0.6875rem !important;
+  border: 1px solid transparent !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease !important;
+}
+
+/* inactive chips → subtle branded outline pill (matches entry tags) */
+#changelog-filters-content button.bg-gray-100 {
+  background-color: rgb(var(--primary-dark) / 0.08) !important;
+  color: rgb(var(--primary-dark)) !important;
+  border-color: rgb(var(--primary-dark) / 0.15) !important;
+}
+#changelog-filters-content button.bg-gray-100:hover {
+  background-color: rgb(var(--primary-dark) / 0.14) !important;
+  border-color: rgb(var(--primary-dark) / 0.28) !important;
+}
+.dark #changelog-filters-content button.bg-gray-100 {
+  background-color: rgb(var(--primary-light) / 0.1) !important;
+  color: rgb(var(--primary-light)) !important;
+  border-color: rgb(var(--primary-light) / 0.2) !important;
+}
+.dark #changelog-filters-content button.bg-gray-100:hover {
+  background-color: rgb(var(--primary-light) / 0.18) !important;
+  border-color: rgb(var(--primary-light) / 0.38) !important;
+}
+
+/* active/selected chip → solid inverted fill (fixes black-on-dark) */
+#changelog-filters-content button.bg-primary {
+  background-color: rgb(var(--primary-dark)) !important;
+  color: rgb(var(--primary-light)) !important;
+  border-color: rgb(var(--primary-dark)) !important;
+}
+.dark #changelog-filters-content button.bg-primary {
+  background-color: rgb(var(--primary-light)) !important;
+  color: rgb(var(--primary-dark)) !important;
+  border-color: rgb(var(--primary-light)) !important;
+}
