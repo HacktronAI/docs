@@ -13,6 +13,12 @@ description: "Choose your platform and copy the config. No API key required."
     claude mcp add --transport http hacktron https://mcp.hacktron.ai/mcp
     ```
 
+    Then authenticate the connection:
+
+    1. Start Claude Code in your project.
+    2. Type `/mcp`, select `hacktron`, and choose **Authenticate**.
+    3. Complete the Hacktron browser sign-in.
+
     <Accordion title="Prefer using an API key?">
       Create an organization API key — see [Authentication](/api-reference/authentication#creating-an-api-key). Grant `read` & `write` access to let your assistant triage findings.
 
@@ -44,6 +50,8 @@ description: "Choose your platform and copy the config. No API key required."
     ```
 
     Restart Claude Desktop to apply changes.
+
+    When Claude Desktop connects to Hacktron for the first time, complete the Hacktron browser sign-in. If the prompt does not appear, open Claude Desktop's MCP server settings and reconnect `hacktron`.
 
     <Accordion title="Prefer using an API key?">
       Create an organization API key — see [Authentication](/api-reference/authentication#creating-an-api-key). Grant `read` & `write` access to let your assistant triage findings.
@@ -81,6 +89,8 @@ description: "Choose your platform and copy the config. No API key required."
 
     Reload Cursor after saving (`Cmd+Shift+P` → **Reload Window**).
 
+    When Cursor prompts you to authenticate `hacktron`, complete the Hacktron browser sign-in. You can also open Cursor's MCP settings, select `hacktron`, and start authentication from there.
+
     <Accordion title="Prefer using an API key?">
       Create an organization API key — see [Authentication](/api-reference/authentication#creating-an-api-key). Grant `read` & `write` access to let your assistant triage findings.
 
@@ -110,6 +120,14 @@ description: "Choose your platform and copy the config. No API key required."
     ```bash
     codex mcp add hacktron --url https://mcp.hacktron.ai/mcp
     ```
+
+    Then authenticate the connection:
+
+    ```bash
+    codex mcp login hacktron
+    ```
+
+    Complete the Hacktron browser sign-in. In an interactive Codex session, type `/mcp` to check the server's connection and authentication status.
 
     <Accordion title="Prefer using an API key?">
       Create an organization API key — see [Authentication](/api-reference/authentication#creating-an-api-key). Grant `read` & `write` access to let your assistant triage findings.
@@ -147,6 +165,8 @@ description: "Choose your platform and copy the config. No API key required."
     ```
 
     Click **Refresh** in the MCP Servers panel to apply changes.
+
+    Select `hacktron` in the MCP Servers panel and complete the Hacktron browser sign-in when prompted.
 
   </Tab>
 </Tabs>
