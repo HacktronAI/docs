@@ -4,7 +4,25 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=1a68ce744afa7c065e7d3aeb5bb96f76b15665ba - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=38b12cae25e909adbcf975c87b64045c67f1bcf9 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="June 15, 2026" tags={["Code Review","API","Integrations"]}>
+## Control your repository security from .hacktron/config.yaml
+
+**Repository-level scan control**: Add a .hacktron/config.yaml file to your repository's default branch to skip scans on specific file patterns, PR titles with keywords, or labeled PRs. No more scanning documentation PRs or third-party vendor updates.
+
+**PR check failures on high-severity findings**: Configure fail_on.severity in your repository config to fail the GitHub check run or GitLab commit status when findings at or above your chosen severity level are discovered.
+
+**MFA enforcement for account security**: Organization owners can require multi-factor authentication for all members. Users without MFA see a setup prompt and cannot access the platform until they enable it.
+
+**Trial reminder emails**: Get notified 3 days and 1 day before your free trial ends, but only when no payment method is on file. Add a card to continue seamlessly.
+
+**Hacktron API as MCP server**: Connect Claude Desktop, Cursor, or other MCP clients directly to your Hacktron data through the new OAuth 2.1 MCP endpoint. List scans, triage findings, and export reports from your editor.
+
+**Faster findings navigation**: Findings lists now load one page at a time instead of fetching thousands of results at once. Multi-select filters let you view findings across multiple scans or repositories simultaneously.
+
+**[<u>Read the API reference →</u>](/api-reference/introduction)** · **[<u>See billing and plans →</u>](/code-review/billing)** · **[<u>Connect GitHub and GitLab →</u>](/code-review/integrations/github-gitlab)**
+</Update>
 
 <Update label="June 11, 2026" tags={["Integrations", "Code Review"]}>
   ## GitLab now works just like GitHub
