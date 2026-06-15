@@ -4,7 +4,27 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=1a68ce744afa7c065e7d3aeb5bb96f76b15665ba - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=4b314a3536105727eddda2a900d822e02633438f - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="June 15, 2026" tags={["Code Review","Integrations","API","Billing"]}>
+  ## Control your scans and account security like never before
+
+  **Multi-factor authentication controls**: Secure your account with MFA requirements and additional verification steps. Admins can enforce MFA across their organization.
+
+  **API access through MCP protocol**: Connect external tools and scripts to Hacktron's finding-triage toolset through a new remote MCP server endpoint with OAuth and API key authentication.
+
+  **Fix with AI works on any finding size**: Slack finding alerts now use short signed links that work reliably regardless of finding complexity, letting you jump into Cursor or Claude without hitting URL limits.
+
+  **Fail pull requests on security findings**: Set a severity threshold in your repository's `.hacktron/config.yaml` file to automatically fail GitHub checks or GitLab commit status when findings are found above that level.
+
+  **Skip scans with repository configuration**: Use `.hacktron/config.yaml` to skip pull request scans based on file patterns, keywords in titles, or labels.
+
+  **Trial reminder emails**: Organizations get automatic email reminders 3 days and 1 day before their free trial expires when no payment method is on file.
+
+  **Findings load faster on large repositories**: Server-side filtering and pagination keeps the findings list responsive even with thousands of results.
+
+  **[<u>See MCP integration →</u>](/mcp/get-started)** · **[<u>Connect Slack →</u>](/platform/communication-apps/slack)** · **[<u>Read the API reference →</u>](/api-reference/introduction)**
+</Update>
 
 <Update label="June 11, 2026" tags={["Integrations", "Code Review"]}>
   ## GitLab now works just like GitHub
