@@ -1,0 +1,129 @@
+---
+title: "Repository config"
+description: "Use .hacktron/config.yaml to control which pull and merge requests Hacktron scans, and when a finding should fail the check."
+---
+
+Add a `.hacktron/config.yaml` file to your repository to control Hacktron's Code Review behavior:
+
+- **Skip** specific pull and merge requests so they aren't scanned.
+- **Fail** the Hacktron check when a finding meets a severity threshold, so risky changes can't merge.
+
+This is separate from [`.hacktron/rules.md`](/code-review/rules), which shapes the *quality* of a review. `config.yaml` controls *whether* a PR is scanned and *whether* its check passes.
+
+## File location
+
+Place the file at the root of the repository, inside the `.hacktron` directory:
+
+<Tree>
+  <Tree.Folder name=".hacktron" defaultOpen>
+    <Tree.File name="config.yaml" />
+    <Tree.File name="rules.md" />
+  </Tree.Folder>
+  <Tree.Folder name="apps"></Tree.Folder>
+  <Tree.Folder name="packages"></Tree.Folder>
+  <Tree.File name="package.json" />
+</Tree>
+
+Either `.hacktron/config.yaml` or `.hacktron/config.yml` is accepted. If both exist, `.yaml` is used.
+
+<Warning>
+  Hacktron always reads `config.yaml` from your repository's **default branch**
+  (for example `main`), never from the pull or merge request being scanned. A PR
+  cannot change its own scanning rules. Commit `config.yaml` to your default
+  branch for it to take effect.
+</Warning>
+
+## Example
+
+```yaml
+# .hacktron/config.yaml
+
+# Skip a PR/MR from being scanned when any rule below matches.
+skip:
+  labels:
+    - hacktron-skip
+  keywords:
+    - "[skip hacktron]"
+  paths:
+    - "vendor/**"
+    - "**/*.md"
+
+# Fail the Hacktron check when a finding is at or above this severity.
+fail_on:
+  severity: high
+```
+
+Every key is optional. An empty or absent `config.yaml` means Hacktron behaves as it does today: it scans all covered PRs and the check stays green unless the scan itself errors.
+
+## Skip scans
+
+Use the `skip` block to tell Hacktron not to scan a pull or merge request. When a PR matches, Hacktron records a **skipped** check on the PR/MR and posts a short comment naming the rule that matched. No scan runs, and **no developer seat is used**.
+
+Rules are evaluated in this order; the first match wins:
+
+| Key | Matches when | Match style |
+|---|---|---|
+| `skip.labels` | the PR/MR carries one of these labels | exact, case-insensitive |
+| `skip.keywords` | the PR/MR **title** contains one of these strings | case-insensitive substring |
+| `skip.paths` | **every** changed file matches one of these patterns | gitignore-style globs |
+
+```yaml
+skip:
+  labels:
+    - hacktron-skip          # label the PR "hacktron-skip" to skip it
+  keywords:
+    - "[skip hacktron]"      # put this anywhere in the PR/MR title to skip it
+  paths:
+    - "docs/**"              # skip when the PR only touches these paths
+    - "**/*.md"
+```
+
+<Note>
+  `skip.paths` skips a scan **only when every changed file matches** one of the
+  patterns. If even one changed file falls outside the patterns, the PR is
+  scanned as usual. Patterns use the same syntax as `.gitignore` — for example
+  `vendor/**`, `**/*.md`, or `docs/`.
+</Note>
+
+A manual `@hacktronai review` comment always runs a scan, even when a `skip` rule would otherwise match — use it to force a one-off review of an otherwise-skipped PR.
+
+## Fail the check on findings
+
+By default, the Hacktron check is green as long as the scan completes — findings are posted as inline comments but don't block the merge. Set `fail_on.severity` to turn the check **red** when a finding is found at or above a severity threshold.
+
+```yaml
+fail_on:
+  severity: high   # fail the check on any high or critical finding
+```
+
+`severity` must be one of, from most to least severe:
+
+`critical` › `high` › `medium` › `low` › `info`
+
+The threshold is **inclusive**: `severity: high` fails the check on `high` *and* `critical` findings, while `severity: critical` fails only on `critical`. When a finding triggers the gate, the GitHub check run (or GitLab commit status) is marked failed with a reason such as `2 findings at or above high severity`.
+
+<Note>
+  Only findings that haven't been dismissed as **false positives** count toward
+  the threshold. Triaging a finding as a false positive removes it from the
+  gate. If no `fail_on.severity` is set, the check passes regardless of what
+  Hacktron finds.
+</Note>
+
+## How invalid config is handled
+
+Hacktron is **fail-open** about configuration — a config problem never silently blocks your development:
+
+- A missing, empty, or malformed `config.yaml` is ignored. Hacktron scans normally and the check stays green.
+- Unknown keys are ignored, so a config can carry settings for future features without breaking today's scans.
+- A type mismatch on a known key (for example `fail_on.severity: 7`) causes the **whole file** to be ignored. Keep values in the shapes shown above.
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Project rules" icon="file-text" href="/code-review/rules">
+    Add `.hacktron/rules.md` to give reviews repository-specific context.
+  </Card>
+  <Card title="Setup" icon="code-branch" href="/code-review/setup">
+    Connect a Git provider, enable repositories, and choose covered branches.
+  </Card>
+</Columns>

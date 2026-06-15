@@ -91,7 +91,8 @@
             "pages": [
               "code-review/people",
               "code-review/spillover-usage",
-              "code-review/rules"
+              "code-review/rules",
+              "code-review/config"
             ]
           },
           {
