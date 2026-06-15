@@ -1,0 +1,175 @@
+---
+title: "Get Started"
+description: "Choose your platform and copy the config. No API key required."
+---
+
+
+<Tabs>
+  <Tab title="Claude Code (CLI)">
+
+    Run in terminal:
+
+    ```bash
+    claude mcp add --transport http hacktron https://mcp.hacktron.ai/mcp
+    ```
+
+    <Accordion title="Prefer using an API key?">
+      Create an organization API key — see [Authentication](/api-reference/authentication#creating-an-api-key). Grant `read` & `write` access to let your assistant triage findings.
+
+      Run in terminal:
+
+      ```bash
+      claude mcp add --transport http hacktron https://mcp.hacktron.ai/mcp --header "Authorization: Bearer hacktron_your_key_here"
+      ```
+
+      <Warning>
+        An API key is a long-lived secret. Store it in your client's secret settings, never commit it to source control, and grant the narrowest scope your workflow needs.
+      </Warning>
+    </Accordion>
+
+  </Tab>
+  <Tab title="Claude Desktop">
+
+    Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+
+    ```json
+    {
+      "mcpServers": {
+        "hacktron": {
+          "command": "npx",
+          "args": ["-y", "mcp-remote", "https://mcp.hacktron.ai/mcp"]
+        }
+      }
+    }
+    ```
+
+    Restart Claude Desktop to apply changes.
+
+    <Accordion title="Prefer using an API key?">
+      Create an organization API key — see [Authentication](/api-reference/authentication#creating-an-api-key). Grant `read` & `write` access to let your assistant triage findings.
+
+      ```json
+      {
+        "mcpServers": {
+          "hacktron": {
+            "command": "npx",
+            "args": ["-y", "mcp-remote", "https://mcp.hacktron.ai/mcp", "--header", "Authorization: Bearer hacktron_your_key_here"]
+          }
+        }
+      }
+      ```
+
+      <Warning>
+        An API key is a long-lived secret. Store it in your client's secret settings, never commit it to source control, and grant the narrowest scope your workflow needs.
+      </Warning>
+    </Accordion>
+
+  </Tab>
+  <Tab title="Cursor">
+
+    Add to `~/.cursor/mcp.json`:
+
+    ```json
+    {
+      "mcpServers": {
+        "hacktron": {
+          "url": "https://mcp.hacktron.ai/mcp"
+        }
+      }
+    }
+    ```
+
+    Reload Cursor after saving (`Cmd+Shift+P` → **Reload Window**).
+
+    <Accordion title="Prefer using an API key?">
+      Create an organization API key — see [Authentication](/api-reference/authentication#creating-an-api-key). Grant `read` & `write` access to let your assistant triage findings.
+
+      ```json
+      {
+        "mcpServers": {
+          "hacktron": {
+            "url": "https://mcp.hacktron.ai/mcp",
+            "headers": {
+              "Authorization": "Bearer hacktron_your_key_here"
+            }
+          }
+        }
+      }
+      ```
+
+      <Warning>
+        An API key is a long-lived secret. Store it in your client's secret settings, never commit it to source control, and grant the narrowest scope your workflow needs.
+      </Warning>
+    </Accordion>
+
+  </Tab>
+  <Tab title="Codex">
+
+    Run in terminal:
+
+    ```bash
+    codex mcp add hacktron --url https://mcp.hacktron.ai/mcp
+    ```
+
+    <Accordion title="Prefer using an API key?">
+      Create an organization API key — see [Authentication](/api-reference/authentication#creating-an-api-key). Grant `read` & `write` access to let your assistant triage findings.
+
+      **1.** Add your API key to your shell profile (`~/.zshrc` or `~/.bashrc`):
+
+      ```bash
+      export HACKTRON_API_KEY=hacktron_your_key_here
+      ```
+
+      **2.** Register the server:
+
+      ```bash
+      codex mcp add hacktron --url https://mcp.hacktron.ai/mcp --bearer-token-env-var HACKTRON_API_KEY
+      ```
+
+      <Warning>
+        An API key is a long-lived secret. Store it in your client's secret settings, never commit it to source control, and grant the narrowest scope your workflow needs.
+      </Warning>
+    </Accordion>
+
+  </Tab>
+  <Tab title="Antigravity">
+
+    Add to `~/.gemini/config/mcp_config.json`:
+
+    ```json
+    {
+      "mcpServers": {
+        "hacktron": {
+          "serverUrl": "https://mcp.hacktron.ai/mcp"
+        }
+      }
+    }
+    ```
+
+    Click **Refresh** in the MCP Servers panel to apply changes.
+
+  </Tab>
+</Tabs>
+
+## Tools
+
+| Name | Description |
+| --- | --- |
+| `list_scans` | List scans with severity breakdown |
+| `get_scan` | Get details about a scan |
+| `export_findings` | Export a scan's findings as JSON, CSV, or SARIF |
+| `list_findings` | List findings across the organisation |
+| `get_finding` | Get details about a finding |
+| `update_finding` | Update a finding's state or severity |
+| `add_finding_comment` | Post a comment on a finding|
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Authentication & API keys" icon="key" href="/api-reference/authentication">
+    Create and scope the API key used for API-key auth.
+  </Card>
+  <Card title="API reference" icon="code" href="/api-reference/introduction">
+    The same scans and findings, over the REST API.
+  </Card>
+</CardGroup>
