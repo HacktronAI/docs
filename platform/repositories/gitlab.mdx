@@ -40,15 +40,14 @@ This is required to create a service account for Hacktron to use.
 
     <img src="/images/manage_token.png" alt="Manage Service Account Tokens" />
 
-      Click on **Add new token**, and grant it the following permissions:
-      - `read_user`
-      - `read_api`
+      Click on **Add new token**, and grant it the `api` scope:
       - `api`
 
     <Info>
-      This is required for Hacktron to receive merge request events and run code
-      reviews. Hacktron does not retain any source code after each review is
-      complete.
+      The `api` scope is required because Hacktron registers merge-request
+      webhooks on your projects (a write operation) to receive events and run
+      code reviews. Hacktron does not retain any source code after each review
+      is complete.
     </Info>
 
     Click **Generate token**.
@@ -81,8 +80,8 @@ step when you connect.
 
 Follow the same **Configure access** steps to create a service account
 (**Settings** → **Service Accounts**), grant it Maintainer access, and generate
-a token from the service account's **Manage access tokens** with the `api`,
-`read_api`, and `read_user` scopes.
+a token from the service account's **Manage access tokens** with the `api`
+scope.
 
 <Note>
   On self-managed GitLab, service accounts require GitLab EE, and by default
@@ -102,6 +101,5 @@ GitLab Enterprise** and enter your instance's base URL (e.g.
     valid TLS certificate.
   - GitLab installed under a URL subpath (e.g. `https://example.com/gitlab`)
     is not supported — the base URL must be the instance origin.
-  - The token must carry the `api`, `read_api`, and `read_user` scopes on
-    your self-hosted instance.
+  - The token must carry the `api` scope on your self-hosted instance.
 </Note>
