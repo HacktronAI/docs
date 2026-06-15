@@ -4,7 +4,19 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=1a68ce744afa7c065e7d3aeb5bb96f76b15665ba - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=4b314a3536105727eddda2a900d822e02633438f - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="June 15, 2026" tags={["Code Review","Billing","MCP"]}>
+  ## Control your scans and account security like never before
+
+  **Multi-factor authentication controls**: Secure your account with MFA requirements and additional verification steps. Admins can enforce MFA across their organization.
+
+  **API access through MCP protocol**: Connect external tools and scripts to Hacktron's finding-triage toolset through a new remote MCP server endpoint with OAuth and API key authentication.
+
+  **Skip scans with repository configuration**: Use `.hacktron/config.yaml` to skip pull request scans based on file patterns, keywords in titles, or labels.
+
+  **[<u>See MCP integration →</u>](/mcp/get-started)**
+</Update>
 
 <Update label="June 11, 2026" tags={["Integrations", "Code Review"]}>
   ## GitLab now works just like GitHub
