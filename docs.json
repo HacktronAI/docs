@@ -61,6 +61,12 @@
             ]
           },
           {
+            "group": "Account",
+            "pages": [
+              "platform/account-settings"
+            ]
+          },
+          {
             "group": "Resources",
             "pages": [
               "privacy",

@@ -1,0 +1,77 @@
+---
+title: "Account settings"
+description: "Manage your Hacktron profile and secure your account with multi-factor authentication (MFA)."
+---
+
+Use **Account settings** to manage your personal profile and the security of your
+Hacktron account. Open it from the account menu in the sidebar header.
+
+## Profile
+
+Your profile controls how you appear to the rest of your organization.
+
+- **Display name** — the name shown on findings, comments, and activity.
+- **Email** — the address used to sign in and receive account notifications.
+- **Avatar** — the picture shown next to your name across the app.
+
+## Multi-factor authentication (MFA)
+
+Multi-factor authentication adds a second verification step to sign-in, so a
+password alone is not enough to access your account. We strongly recommend
+enabling MFA on every account.
+
+### Enable MFA
+
+<Steps>
+  <Step title="Open Account settings">
+    Open the account menu in the sidebar header and go to **Account settings** >
+    **Security**.
+  </Step>
+  <Step title="Start MFA setup">
+    Select **Enable MFA**. Hacktron shows a QR code for your authenticator app.
+  </Step>
+  <Step title="Add Hacktron to your authenticator app">
+    Scan the QR code with an authenticator app such as 1Password, Google
+    Authenticator, or Authy. If you cannot scan it, enter the setup key manually.
+  </Step>
+  <Step title="Confirm the code">
+    Enter the 6-digit code from your authenticator app to confirm setup. After it
+    is verified, MFA is required the next time you sign in.
+  </Step>
+</Steps>
+
+### Save your recovery codes
+
+When you enable MFA, Hacktron generates one-time recovery codes. Store them in a
+safe place such as a password manager.
+
+<Warning>
+  Recovery codes are the only way to sign in if you lose access to your
+  authenticator app. Save them somewhere secure and do not share them.
+</Warning>
+
+### Disable or reset MFA
+
+You can turn MFA off or re-run setup from **Account settings** > **Security**.
+Disabling MFA weakens your account security, so only do this if you are switching
+to a new device or authenticator app.
+
+## Require MFA for your organization
+
+Organization admins can enforce MFA across the whole organization, so every
+member must complete MFA setup before they can continue using Hacktron.
+
+<Steps>
+  <Step title="Open organization security settings">
+    As an admin or owner, open your organization's security settings.
+  </Step>
+  <Step title="Require MFA">
+    Turn on the **Require MFA** setting. Members without MFA are prompted to set
+    it up the next time they sign in.
+  </Step>
+</Steps>
+
+<Info>
+  Enforcing MFA does not sign existing members out. Members who have not set up
+  MFA are guided through it on their next sign-in.
+</Info>
