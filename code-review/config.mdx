@@ -103,10 +103,11 @@ fail_on:
 The threshold is **inclusive**: `severity: high` fails the check on `high` *and* `critical` findings, while `severity: critical` fails only on `critical`. When a finding triggers the gate, the GitHub check run (or GitLab commit status) is marked failed with a reason such as `2 findings at or above high severity`.
 
 <Note>
-  Only findings that haven't been dismissed as **false positives** count toward
-  the threshold. Triaging a finding as a false positive removes it from the
-  gate. If no `fail_on.severity` is set, the check passes regardless of what
-  Hacktron finds.
+  Triaging a finding updates the existing check directly — it does not start a
+  new scan. A finding only counts toward the threshold while it's still **open
+  or confirmed valid**; triaging it as anything else removes it from the gate
+  and immediately recomputes the check. If no `fail_on.severity` is set, the
+  check passes regardless of what Hacktron finds.
 </Note>
 
 ## How invalid config is handled
