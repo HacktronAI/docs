@@ -4,7 +4,25 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=4b314a3536105727eddda2a900d822e02633438f - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=9ab2b104c0328e20653d433a15624a07c2c6f0d9 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="June 19, 2026" tags={["Code Review","Whitebox","Integrations","Dashboard","Billing"]}>
+  ## Triage findings faster with duplicates, PR links, and live check updates
+
+  **Duplicate finding detection**: You can now mark any finding as a duplicate of another in the same repository. The duplicate inherits its canonical finding's severity for gate calculations, so dismissing the original automatically clears both from your PR check.
+
+  **PR link in the finding detail panel**: The finding slideover now shows a direct link to the pull or merge request that introduced the vulnerability, so you can jump straight to the code context without leaving the findings view.
+
+  **PR and MR checks update when you triage**: Dismissing a finding as a false positive or accepted risk now flips the GitHub check or GitLab commit status back to passing immediately, without waiting for another scan. Reopen a finding and it goes back to failing. Duplicate findings are judged by their canonical finding's severity.
+
+  **Scan volume chart shows PR reviews and whitebox scans side by side**: The dashboard activity chart is now a stacked bar graph broken out by review type. Hover a bar to see the exact PR review and whitebox scan counts for that day.
+
+  **Upload scans named after the archive**: Scans started from an uploaded archive now take their name from the archive filename instead of a generic "Scan" label, so your scan history stays readable.
+
+  **Legal agreement shown before starting a trial**: The terms of service now appear before you start a free trial or add a payment method, so there are no surprises at checkout.
+
+  **[<u>Set up GitHub and GitLab →</u>](/code-review/integrations/github-gitlab)** · **[<u>See billing and plans →</u>](/code-review/billing)**
+</Update>
 
 <Update label="June 15, 2026" tags={["Code Review","Billing","MCP"]}>
   ## Control your scans and account security like never before
