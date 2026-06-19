@@ -6,6 +6,7 @@ description: "Use .hacktron/config.yaml to control which pull and merge requests
 Add a `.hacktron/config.yaml` file to your repository to control Hacktron's Code Review behavior:
 
 - **Skip** specific pull and merge requests so they aren't scanned.
+- **Include** specific pull and merge requests to be scanned.
 - **Fail** the Hacktron check when a finding meets a severity threshold, so risky changes can't merge.
 
 This is separate from [`.hacktron/rules.md`](/code-review/rules), which shapes the *quality* of a review. `config.yaml` controls *whether* a PR is scanned and *whether* its check passes.
@@ -47,6 +48,8 @@ skip:
   paths:
     - "vendor/**"
     - "**/*.md"
+  authors:
+    - dependabot[bot]
 
 # Fail the Hacktron check when a finding is at or above this severity.
 fail_on:
@@ -63,9 +66,10 @@ Rules are evaluated in this order; the first match wins:
 
 | Key | Matches when | Match style |
 |---|---|---|
-| `skip.labels` | the PR/MR carries one of these labels | exact, case-insensitive |
+| `skip.labels` | the PR/MR carries one of these labels | case-insensitive |
 | `skip.keywords` | the PR/MR **title** contains one of these strings | case-insensitive substring |
 | `skip.paths` | **every** changed file matches one of these patterns | gitignore-style globs |
+| `skip.authors` | the PR/MR was opened by one of these usernames | case-insensitive |
 
 ```yaml
 skip:
@@ -76,6 +80,8 @@ skip:
   paths:
     - "docs/**"              # skip when the PR only touches these paths
     - "**/*.md"
+  authors:
+    - "dependabot[bot]"        # skip all PRs opened by dependabot
 ```
 
 <Note>
@@ -86,6 +92,32 @@ skip:
 </Note>
 
 A manual `@hacktronai review` comment always runs a scan, even when a `skip` rule would otherwise match — use it to force a one-off review of an otherwise-skipped PR.
+
+## Include scans
+
+Use the include block to scan **only** pull and merge requests that match specific rules. Similarly, Hacktron records a skip check comment in your PRs/MRs.
+
+```yaml
+include:
+  labels:
+    - security-review        # only scan PRs labelled "security-review"
+  authors:
+    - alice                  # always scan Alice's PRs
+    - bob
+```
+
+| Key | Matches when |
+|---|---|
+| `include.labels` | the PR/MR carries at least one of these labels (case-insensitive) |
+| `include.authors` | the PR/MR was opened by one of these usernames (case-insensitive) |
+
+Both `include.labels` and `include.authors` can be set at the same time. If a PR matches either, it is scanned.
+
+<Warning>
+  `include` rules are **ignored when any `skip` rule is present** in your config.
+  Use one or the other. For example, if you need to exempt specific authors while
+  scanning everything else, use `skip.authors` on its own.
+</Warning>
 
 ## Fail the check on findings
 
