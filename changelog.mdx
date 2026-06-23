@@ -7,7 +7,25 @@ rss: true
 {/* CHANGELOG:INSERT last-prod-sha=fbbbf5cf881c716c00a469e53524fdbbecbb46fd - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
 
 <Update label="June 23, 2026" tags={["Code Review","Whitebox","Integrations","MCP"]}>
-  ## Vulnerability details stay private on public repos
+  ## A new Context page for your repositories, applications, and threat models
+
+  **A new Context page**: A dedicated Context page now gathers what Hacktron knows about your code, split across Repositories and Applications tabs. Cards are sorted by most recent threat-model update and show a badge for each model's status; clicking one opens its threat model.
+
+  **Applications**: Group related repositories into an application, and Hacktron synthesizes an application-level threat model by merging the threat models of its member repos. You can scan an application as a single target so findings are grounded in the combined model, and any context documents you upload to the application are folded into it.
+
+  **Threat models as a reading view**: Repository and application threat models now render inline in a reading layout: a left file tree for the model and its source documents, the model itself in a center reading column with Document and History tabs, and an "On this page" outline on the right. No more opening a separate panel to read the model.
+
+  **Editable threat models**: Per-repo and application threat models are now editable inline. Your changes are wrapped in markers on save and preserved across regenerations, so the next synthesis pass keeps what you wrote.
+
+  **Threat model sync status**: Repositories now show a "Pending" badge while a threat-model sync is running, so you can tell the difference between "not synced" and "sync in progress."
+
+  **Generate vs. Sync label on threat model button**: The threat-model button now reads "Generate" when no model exists yet and "Sync" once one does, matching what the action actually does.
+
+  **Threat model updates noted on your PRs**: When a refreshed threat model grounds a scan, the findings review comment now opens with a short note explaining why the model changed (its initial build, a manual resync, triage feedback, or an application rebuild), folded into the review instead of posting a separate comment.
+
+  **PDF upload limit**: Context document PDFs over 50 pages are rejected at upload with a clear message, instead of being accepted and silently degrading scan context.
+
+  **Add-document modal in the scan wizard**: The "Add document" button in the scan wizard's context documents step now opens a modal with drag-and-drop upload and inline document creation, instead of jumping straight to a file picker.
 
   **Redacted findings on public PRs**: For public repositories, the PR review comment no longer includes full titles, descriptions, proof-of-concept code, or file locations for findings outside the changed lines. You see a count and a link back to Hacktron, so sensitive details stay out of the public thread. Private and internal repos are unchanged, and inline comments on the diff itself are unaffected.
 
@@ -17,21 +35,9 @@ rss: true
 
   **Duplicate marking in the MCP tool**: The `update_finding` MCP tool now accepts a `duplicate_of` field so you can mark or unmark duplicates programmatically.
 
-  **Editable application threat model**: The synthesized threat model for an application is now editable. Your inline changes are wrapped in markers on save and preserved across regenerations, so the next synthesis pass keeps what you wrote.
-
-  **Threat model reading view**: The repository context detail page now renders the threat model inline in a reading layout, with a left file tree for source documents and an "On this page" outline on the right. No more opening a separate panel to read the model.
-
-  **Threat model sync status**: Repositories now show a "Pending" badge while a threat-model sync is running, so you can tell the difference between "not synced" and "sync in progress."
-
-  **Generate vs. Sync label on threat model button**: The per-repo context button now reads "Generate" when no threat model exists yet and "Sync" once one does, matching what the action actually does.
-
   **PR link in the finding detail view**: The finding slideover now shows a direct link to the pull or merge request the finding came from.
 
   **Taint trace expands cleanly at end of file**: Clicking "Expand below" at the last line of a file no longer shows a "Couldn't load more lines" error. The button disappears instead.
-
-  **Add-document modal in the scan wizard**: The "Add document" button in the scan wizard's context documents step now opens a modal with drag-and-drop upload and inline document creation, instead of jumping straight to a file picker.
-
-  **PDF upload limit**: Context document PDFs over 50 pages are rejected at upload with a clear message, instead of being accepted and silently degrading scan context.
 
   **[<u>Set up GitHub or GitLab →</u>](/code-review/integrations/github-gitlab)** · **[<u>Start a Whitebox scan →</u>](/white-box-pentest/quickstart)** · **[<u>Read the API reference →</u>](/api-reference/findings/update-finding)**
 </Update>
