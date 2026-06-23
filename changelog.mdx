@@ -13,15 +13,7 @@ rss: true
 
   **Applications**: Group related repositories into an application, and Hacktron synthesizes an application-level threat model by merging the threat models of its member repos. You can scan an application as a single target so findings are grounded in the combined model, and any context documents you upload to the application are folded into it.
 
-  **Threat models as a reading view**: Repository and application threat models now render inline in a reading layout: a left file tree for the model and its source documents, the model itself in a center reading column with Document and History tabs, and an "On this page" outline on the right. No more opening a separate panel to read the model.
-
-  **Editable threat models**: Per-repo and application threat models are now editable inline. Your changes are wrapped in markers on save and preserved across regenerations, so the next synthesis pass keeps what you wrote.
-
-  **Threat model sync status**: Repositories now show a "Pending" badge while a threat-model sync is running, so you can tell the difference between "not synced" and "sync in progress."
-
-  **Generate vs. Sync label on threat model button**: The threat-model button now reads "Generate" when no model exists yet and "Sync" once one does, matching what the action actually does.
-
-  **Threat model updates noted on your PRs**: When a refreshed threat model grounds a scan, the findings review comment now opens with a short note explaining why the model changed (its initial build, a manual resync, triage feedback, or an application rebuild), folded into the review instead of posting a separate comment.
+  **Threat models**: Repository and application threat models now render inline in a reading layout with a source-document file tree and an "On this page" outline, and you can edit them directly with your changes preserved across regenerations. Repositories show a "Pending" badge while a sync runs, the action button reads "Generate" or "Sync" to match the model's state, and when a refreshed model grounds a scan the findings review opens with a short note on why the model changed.
 
   **PDF upload limit**: Context document PDFs over 50 pages are rejected at upload with a clear message, instead of being accepted and silently degrading scan context.
 
