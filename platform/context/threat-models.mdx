@@ -1,0 +1,109 @@
+---
+title: "Threat models"
+description: "How Hacktron generates a threat model for each repository and application, keeps it in sync with your review activity, and uses it to sharpen scans and PR reviews."
+---
+
+A **threat model** is a living document Hacktron maintains for each repository. It
+tracks what matters to your security review — critical assets, accepted risks, and
+recurring false positives — so the agent learns your codebase over time and applies
+that knowledge to future scans and PR reviews.
+
+There are two kinds of threat model:
+
+- **Repository threat model** — one per repository, generated from your review
+  activity and the context documents you upload.
+- **Application threat model** — one per application, synthesized from its
+  repositories' threat models plus any documents you upload at the application
+  level.
+
+<img src="/images/context_threat_model.png" alt="A repository threat model in the Context page" />
+
+## Repository threat models
+
+### How they are generated
+
+Hacktron generates a repository's threat model automatically. It is created the
+first time a pull request is reviewed in the repository, or as soon as you upload
+context documents for it — whichever comes first.
+
+After that, the threat model keeps learning from your review activity. When you
+triage findings — for example marking something as an accepted risk or a false
+positive — Hacktron folds those decisions in so future reviews reflect them.
+
+### Keep it in sync
+
+When you add or change context documents, the threat model needs to be synced to
+include them. Most syncs happen automatically in the background. You can also sync
+on demand from the repository's **Context** page.
+
+<Steps>
+  <Step title="Open the repository">
+    From the **Context** page, open the repository. The left sidebar lists the
+    threat model and the repository's documents.
+  </Step>
+  <Step title="Sync pending changes">
+    If documents are waiting to be folded in, select **Sync pending** (shown as
+    **Generate pending** when no threat model exists yet). Hacktron updates the
+    threat model in the background.
+
+    <img src="/images/context_sync_pending.png" alt="Syncing pending context documents into the threat model" />
+  </Step>
+  <Step title="Review the result">
+    The threat model refreshes when the sync completes. Use the **History** tab to
+    see what changed.
+  </Step>
+</Steps>
+
+<Info>
+  If everything is already folded in, the sync action reports that there is nothing
+  to sync.
+</Info>
+
+## Application threat models
+
+An application threat model gives Hacktron one view of a system that spans several
+repositories. Hacktron synthesizes it from each member repository's threat model,
+plus any documents you upload at the application level, and uses it as shared
+context when reviewing PRs and running pentests across those repositories.
+
+### Generate an application threat model
+
+<Steps>
+  <Step title="Open the application">
+    On the **Context** page, open the application from the **Applications** tab.
+  </Step>
+  <Step title="Generate">
+    Select **Generate**. Each member repository needs its own threat model first;
+    Hacktron creates any that are missing, then synthesizes the application threat
+    model in the background.
+
+    <img src="/images/context_application_threat_model.png" alt="Generating an application threat model" />
+  </Step>
+  <Step title="Regenerate when things change">
+    After repositories or documents change, select **Regenerate** to resynthesize
+    the application threat model from the latest sources.
+  </Step>
+</Steps>
+
+<Info>
+  If an application has no repositories yet, add some before generating. See
+  [Applications](/platform/context/applications).
+</Info>
+
+## How threat models are used
+
+| Where | What it does |
+| --- | --- |
+| **PR reviews** | The repository threat model is shared context on every pull request review, so findings reflect your accepted risks and priorities. |
+| **White-box pentests** | The repository or application threat model is passed to the pentest so the engine starts with knowledge of your architecture. |
+
+## Next steps
+
+<Columns cols={2}>
+  <Card title="Context overview" icon="file-lines" href="/platform/context">
+    Upload the documents that shape your threat models.
+  </Card>
+  <Card title="Applications" icon="layer-group" href="/platform/context/applications">
+    Group repositories to synthesize a shared threat model.
+  </Card>
+</Columns>

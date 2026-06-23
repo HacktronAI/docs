@@ -1,0 +1,84 @@
+---
+title: "Applications"
+description: "Group related repositories into an application so Hacktron shares context across them and can build a single threat model for the whole system."
+---
+
+An **application** is a named group of repositories from the same codebase.
+Hacktron uses it as shared context for more accurate scans and PR reviews across
+your repos, and it can synthesize one threat model for the whole application.
+
+Use applications when a single system spans several repositories — for example a
+frontend, an API, and a shared library that you want Hacktron to reason about
+together.
+
+<img src="/images/context_applications_tab.png" alt="The Applications tab on the Context page" />
+
+## Prerequisites
+
+- At least one connected repository. Connect your Git provider first if the
+  **Context** page is empty.
+- You need to be a Hacktron organization admin to create, edit, or delete
+  applications.
+
+## Create an application
+
+<Steps>
+  <Step title="Open the Applications tab">
+    On the **Context** page, select the **Applications** tab, then select **New
+    application**.
+
+    <img src="/images/context_new_application.png" alt="Creating a new application" />
+  </Step>
+  <Step title="Name the application">
+    Enter a **Name** that identifies the system, such as `Payments` or `Customer
+    Portal`.
+  </Step>
+  <Step title="Add repositories">
+    Select the repositories that make up the application. A repository can belong to
+    only one application at a time — repositories already in another application are
+    shown as unavailable.
+  </Step>
+  <Step title="Create">
+    Select **Create**. The application appears on the **Applications** tab with its
+    member repositories listed on the card.
+  </Step>
+</Steps>
+
+## Manage an application
+
+Open an application from the **Applications** tab to see its page. The left sidebar
+lists three things:
+
+- The application's **threat model**. See [Threat models](/platform/context/threat-models).
+- Its **member repositories**, each linking to its own context page.
+- Any **context documents** attached at the application level. See
+  [context documents](/platform/context#context-documents).
+
+### Edit an application
+
+Select **Edit Application** to change the application's name or which repositories
+belong to it. Removing a repository detaches it but keeps it available individually
+on the **Repositories** tab.
+
+### Delete an application
+
+Select **Edit Application**, then **Delete application**. Deleting an application:
+
+- Detaches its repositories, which remain available individually.
+- Moves any application-level context documents to their respective repositories.
+
+<Warning>
+  Deleting an application is permanent. The application's synthesized threat model
+  is removed, though each repository keeps its own.
+</Warning>
+
+## Next steps
+
+<Columns cols={2}>
+  <Card title="Threat models" icon="shield-halved" href="/platform/context/threat-models">
+    Generate one threat model for the whole application from its repositories.
+  </Card>
+  <Card title="Context documents" icon="file-lines" href="/platform/context#context-documents">
+    Upload architecture notes and policies at the application level.
+  </Card>
+</Columns>
