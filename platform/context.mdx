@@ -1,105 +1,65 @@
 ---
 title: "Overview"
-description: "Give Hacktron the context it needs — upload documents, group repositories into applications, and maintain threat models that sharpen every scan and PR review."
+description: "Give Hacktron context about your code with documents, applications, and threat models, so every scan and PR review is more accurate."
 ---
 
-**Context** is where you give Hacktron the background it needs to review your code
-well. Upload architecture notes and security policies, group related repositories
-into applications, and let Hacktron build a threat model for each so reviews and
-pentests reflect how your systems actually work.
+Context is where you give Hacktron the background it needs to review your code
+well. Upload documents, group related repositories into applications, and let
+Hacktron build a threat model for each.
 
-Open **Context** from the sidebar. The page has two tabs:
+Open **Context** from the sidebar. It has two tabs:
 
-- **Repositories** — every connected repository, each with its own context
-  documents and threat model.
-- **Applications** — named groups of related repositories that share context.
+- **Repositories**: every connected repository, with its own documents and threat model.
+- **Applications**: named groups of related repositories that share context.
 
-<img src="/images/context_overview.png" alt="The Context page showing the Repositories and Applications tabs" />
-
-## Why context matters
-
-Hacktron reviews your code more accurately when it understands your system. Context
-documents and threat models tell the agent what your critical assets are, which
-risks you have already accepted, and which findings you treat as false positives —
-so it focuses on what matters to you.
-
-This context feeds two places:
-
-- **PR reviews** — Markdown context documents and the repository's threat model are
-  used as shared context on every pull request review.
-- **White-box pentests** — context documents and threat models are passed to the
-  pentest so the engine starts with knowledge of your architecture.
+<img src="/images/context_overview.png" alt="The Context page with the Repositories and Applications tabs" />
 
 ## Context documents
 
-A context document is a file you upload to a repository or application to inform
-Hacktron's reviews. Supported formats:
+A context document is a file you upload to help Hacktron understand a repository or
+application. Good examples are architecture notes, security policies, and prior
+pentest reports.
 
-| Format | Extensions | How it is used |
-| --- | --- | --- |
-| Markdown | `.md`, `.markdown` | Included in scans and the threat model. |
-| Text | `.txt` | Treated as Markdown. |
-| PDF | `.pdf` | Informs the threat model only. |
+Supported formats:
 
-<Info>
-  Good context documents include architecture overviews, data-flow notes, security
-  policies, compliance requirements, API specs, and prior pentest reports.
-</Info>
+- **Markdown** (`.md`, `.txt`): used in scans and the threat model.
+- **PDF** (`.pdf`): used in the threat model only.
 
-### Add a context document
+### Add a document
 
 <Steps>
-  <Step title="Open Context and select a target">
-    From the **Context** page, select **Add Context**. In the dialog, choose one or
-    more repositories or applications the document applies to.
+  <Step title="Select Add Context">
+    On the **Context** page, select **Add Context** and choose the repositories or
+    applications the document applies to.
 
     <img src="/images/context_add_document.png" alt="The Add context document dialog" />
   </Step>
-  <Step title="Upload a file or write one">
-    Drag and drop a file, click to upload, or choose **Create a document** to write
-    Markdown directly in the dialog. You can stage several files at once.
-
-    Only `.md`, `.markdown`, `.txt`, and `.pdf` files are accepted. Unsupported
-    files are skipped with a notice.
+  <Step title="Upload or write">
+    Drag in a file, or choose **Create a document** to write Markdown directly.
   </Step>
-  <Step title="Add the document">
-    Select **Add**. The document appears under each repository or application you
-    selected and is queued to be folded into the threat model.
+  <Step title="Add">
+    Select **Add**. The document is saved and queued for the threat model.
   </Step>
 </Steps>
 
-### View, edit, and remove documents
+### Manage documents
 
-Open a repository or application from the **Context** page to see its documents in
-the left sidebar.
+Open a repository or application to see its documents in the left sidebar. From
+there you can view a document, download a PDF, edit Markdown inline, see past
+versions in the **History** tab, or remove a document you no longer need.
 
-- **View** — select a document to read it. Markdown documents show an outline; PDFs
-  can be downloaded.
-- **Edit** — select **Edit** on a Markdown document to update it inline, then save.
-- **History** — switch to the **History** tab to see every revision, including
-  automatic threat-model syncs.
-- **Remove** — delete a document when it no longer applies. Its revision history is
-  retained, and the threat model is updated to stop relying on it.
+Each document shows whether it is in the threat model yet: **Synced**, **Pending**,
+or **Not synced**.
 
-### Sync status
-
-Each document shows whether it has been folded into the threat model:
-
-| Status | Meaning |
-| --- | --- |
-| **Synced** | The document is included in the threat model. |
-| **Pending** | A threat model sync is running and will include it shortly. |
-| **Not synced** | The document is uploaded but not yet folded in. Run a sync to include it. |
-
-<img src="/images/context_document_status.png" alt="Context documents with synced, pending, and not synced statuses" />
+<img src="/images/context_document_status.png" alt="Context documents with Synced, Pending, and Not synced status" />
 
 ## Next steps
 
 <Columns cols={2}>
   <Card title="Applications" icon="layer-group" href="/platform/context/applications">
-    Group related repositories so they share context across scans and reviews.
+    Group related repositories so they share context.
   </Card>
   <Card title="Threat models" icon="shield-halved" href="/platform/context/threat-models">
-    Understand how Hacktron generates and keeps threat models in sync.
+    See how Hacktron builds and updates threat models.
   </Card>
 </Columns>
