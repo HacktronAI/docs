@@ -9,11 +9,11 @@ rss: true
 <Update label="June 23, 2026" tags={["Code Review","Whitebox","Integrations","MCP"]}>
   ## A new Context page for your repositories, applications, and threat models
 
-  **A new Context page**: A dedicated Context page now gathers what Hacktron knows about your code, split across Repositories and Applications tabs. Cards are sorted by most recent threat-model update and show a badge for each model's status; clicking one opens its threat model.
+  **Context page**: A dedicated Context page now gathers what Hacktron knows about your code, split across Repositories and Applications tabs. Cards are sorted by most recent threat-model update and show a badge for each model's status; clicking one opens its threat model.
 
   **Applications**: Group related repositories into an application, and Hacktron synthesizes an application-level threat model by merging the threat models of its member repos. You can scan an application as a single target so findings are grounded in the combined model, and any context documents you upload to the application are folded into it.
 
-  **Threat models**: Repository and application threat models now render inline in a reading layout with a source-document file tree and an "On this page" outline, and you can edit them directly with your changes preserved across regenerations. Repositories show a "Pending" badge while a sync runs, the action button reads "Generate" or "Sync" to match the model's state, and when a refreshed model grounds a scan the findings review opens with a short note on why the model changed.
+  **Threat models**: Repository and application threat models now open in an inline reading view with a file tree and outline, and you can edit them with your changes preserved across regenerations. A "Pending" badge shows while a sync runs, the button reads "Generate" or "Sync" to match the model's state, and PR reviews note when a refreshed model grounded the scan.
 
   **PDF upload limit**: Context document PDFs over 50 pages are rejected at upload with a clear message, instead of being accepted and silently degrading scan context.
 
