@@ -11,13 +11,9 @@ rss: true
 
   **Redacted findings on public PRs**: For public repositories, the PR review comment no longer includes full titles, descriptions, proof-of-concept code, or file locations for findings outside the changed lines. You see a count and a link back to Hacktron, so sensitive details stay out of the public thread. Private and internal repos are unchanged, and inline comments on the diff itself are unaffected.
 
-  **PR/MR check updates when you triage**: Dismissing a finding as false positive or accepted risk now re-evaluates your fail-on-severity gate and flips a failed GitHub check or GitLab commit status back to success, without waiting for a new scan. It also flips back to failing if you reopen a blocking finding.
-
   **Org-level fail-on severity default**: Organization admins can now set a default severity threshold for PR/MR checks in settings. Individual repo configs still take precedence when set.
 
   **Enterprise SSO sign-in**: A dedicated single sign-on page and a "Single sign-on (SSO)" button on the login screen let users authenticate via your organization's SAML or OIDC identity provider. Invite tokens survive the IdP round-trip, so onboarding links still work.
-
-  **Mark a finding as a duplicate**: You can now mark a finding as a duplicate of another finding in the same repository. Duplicate findings are judged by the canonical finding's severity when evaluating your fail-on threshold, and the API key endpoint supports the same action.
 
   **Duplicate marking in the MCP tool**: The `update_finding` MCP tool now accepts a `duplicate_of` field so you can mark or unmark duplicates programmatically.
 
@@ -37,11 +33,23 @@ rss: true
 
   **PDF upload limit**: Context document PDFs over 50 pages are rejected at upload with a clear message, instead of being accepted and silently degrading scan context.
 
-  **Scan volume chart**: The scan volume widget on the dashboard is now a stacked bar chart, showing PR review and whitebox scan counts separately per day. Hovering a bar shows the breakdown for that day.
+  **[<u>Set up GitHub or GitLab →</u>](/code-review/integrations/github-gitlab)** · **[<u>Start a Whitebox scan →</u>](/white-box-pentest/quickstart)** · **[<u>Read the API reference →</u>](/api-reference/findings/update-finding)**
+</Update>
 
-  **Legal agreement before starting a trial**: The trial start and payment method flows now surface your legal agreements before you confirm, so there are no surprises at checkout.
+<Update label="June 18, 2026" tags={["Code Review","Whitebox","Billing"]}>
+  ## Dismiss a finding and your PR check clears instantly
 
-  **[<u>Set up GitHub or GitLab →</u>](/code-review/integrations/github-gitlab)** · **[<u>See Code Review billing →</u>](/code-review/billing)** · **[<u>Start a Whitebox scan →</u>](/white-box-pentest/quickstart)** · **[<u>Read the API reference →</u>](/api-reference/findings/update-finding)**
+  **PR and MR checks update on triage**: When you mark a finding as a false positive or accepted risk, the GitHub check or GitLab commit status flips back to passing right away, with no manual re-run needed. If you later reopen the finding, the check fails again to match.
+
+  **Close findings as duplicates**: You can now mark a finding as a duplicate of another finding in the same repository, and unmark it if needed. A duplicated finding inherits its canonical finding's severity when the PR gate counts blocking issues.
+
+  **Scan volume chart**: The dashboard's scan volume widget now shows a stacked bar chart instead of a line graph, with a tooltip on each bar showing the Code Review and Whitebox scan counts for that day.
+
+  **Upload scans named after the archive**: When you start a Whitebox scan from an uploaded archive, the scan now takes the archive's filename as its name instead of a generic label.
+
+  **Legal agreement before trial or billing**: You now review and accept the terms of service before starting a free trial or adding a payment method.
+
+  **[<u>Set up GitHub or GitLab →</u>](/code-review/integrations/github-gitlab)**
 </Update>
 
 <Update label="June 15, 2026" tags={["Code Review","Billing","MCP"]}>
