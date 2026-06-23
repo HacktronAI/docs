@@ -15,10 +15,6 @@ rss: true
 
   **Threat models**: Repository and application threat models now open in an inline reading view with a file tree and outline, and you can edit them with your changes preserved across regenerations.
 
-  **PDF upload limit**: Context document PDFs over 50 pages are rejected at upload with a clear message, instead of being accepted and silently degrading scan context.
-
-  **Add-document modal in the scan wizard**: The "Add document" button in the scan wizard's context documents step now opens a modal with drag-and-drop upload and inline document creation, instead of jumping straight to a file picker.
-
   **Redacted findings on public PRs**: For public repositories, the PR review comment no longer includes full titles, descriptions, proof-of-concept code, or file locations for findings outside the changed lines. You see a count and a link back to Hacktron, so sensitive details stay out of the public thread. Private and internal repos are unchanged, and inline comments on the diff itself are unaffected.
 
   **Org-level fail-on severity default**: Organization admins can now set a default severity threshold for PR/MR checks in settings. Individual repo configs still take precedence when set.
@@ -26,10 +22,6 @@ rss: true
   **Enterprise SSO sign-in**: A dedicated single sign-on page and a "Single sign-on (SSO)" button on the login screen let users authenticate via your organization's SAML or OIDC identity provider. Invite tokens survive the IdP round-trip, so onboarding links still work.
 
   **Duplicate marking in the MCP tool**: The `update_finding` MCP tool now accepts a `duplicate_of` field so you can mark or unmark duplicates programmatically.
-
-  **PR link in the finding detail view**: The finding slideover now shows a direct link to the pull or merge request the finding came from.
-
-  **Taint trace expands cleanly at end of file**: Clicking "Expand below" at the last line of a file no longer shows a "Couldn't load more lines" error. The button disappears instead.
 
   **[<u>Set up GitHub or GitLab →</u>](/code-review/integrations/github-gitlab)** · **[<u>Start a Whitebox scan →</u>](/white-box-pentest/quickstart)** · **[<u>Read the API reference →</u>](/api-reference/findings/update-finding)**
 </Update>
