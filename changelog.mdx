@@ -4,7 +4,45 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=4b314a3536105727eddda2a900d822e02633438f - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=fbbbf5cf881c716c00a469e53524fdbbecbb46fd - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="June 23, 2026" tags={["Code Review","Whitebox","Integrations","MCP"]}>
+  ## Vulnerability details stay private on public repos
+
+  **Redacted findings on public PRs**: For public repositories, the PR review comment no longer includes full titles, descriptions, proof-of-concept code, or file locations for findings outside the changed lines. You see a count and a link back to Hacktron, so sensitive details stay out of the public thread. Private and internal repos are unchanged, and inline comments on the diff itself are unaffected.
+
+  **PR/MR check updates when you triage**: Dismissing a finding as false positive or accepted risk now re-evaluates your fail-on-severity gate and flips a failed GitHub check or GitLab commit status back to success, without waiting for a new scan. It also flips back to failing if you reopen a blocking finding.
+
+  **Org-level fail-on severity default**: Organization admins can now set a default severity threshold for PR/MR checks in settings. Individual repo configs still take precedence when set.
+
+  **Enterprise SSO sign-in**: A dedicated single sign-on page and a "Single sign-on (SSO)" button on the login screen let users authenticate via your organization's SAML or OIDC identity provider. Invite tokens survive the IdP round-trip, so onboarding links still work.
+
+  **Mark a finding as a duplicate**: You can now mark a finding as a duplicate of another finding in the same repository. Duplicate findings are judged by the canonical finding's severity when evaluating your fail-on threshold, and the API key endpoint supports the same action.
+
+  **Duplicate marking in the MCP tool**: The `update_finding` MCP tool now accepts a `duplicate_of` field so you can mark or unmark duplicates programmatically.
+
+  **Editable application threat model**: The synthesized threat model for an application is now editable. Your inline changes are wrapped in markers on save and preserved across regenerations, so the next synthesis pass keeps what you wrote.
+
+  **Threat model reading view**: The repository context detail page now renders the threat model inline in a reading layout, with a left file tree for source documents and an "On this page" outline on the right. No more opening a separate panel to read the model.
+
+  **Threat model sync status**: Repositories now show a "Pending" badge while a threat-model sync is running, so you can tell the difference between "not synced" and "sync in progress."
+
+  **Generate vs. Sync label on threat model button**: The per-repo context button now reads "Generate" when no threat model exists yet and "Sync" once one does, matching what the action actually does.
+
+  **PR link in the finding detail view**: The finding slideover now shows a direct link to the pull or merge request the finding came from.
+
+  **Taint trace expands cleanly at end of file**: Clicking "Expand below" at the last line of a file no longer shows a "Couldn't load more lines" error. The button disappears instead.
+
+  **Add-document modal in the scan wizard**: The "Add document" button in the scan wizard's context documents step now opens a modal with drag-and-drop upload and inline document creation, instead of jumping straight to a file picker.
+
+  **PDF upload limit**: Context document PDFs over 50 pages are rejected at upload with a clear message, instead of being accepted and silently degrading scan context.
+
+  **Scan volume chart**: The scan volume widget on the dashboard is now a stacked bar chart, showing PR review and whitebox scan counts separately per day. Hovering a bar shows the breakdown for that day.
+
+  **Legal agreement before starting a trial**: The trial start and payment method flows now surface your legal agreements before you confirm, so there are no surprises at checkout.
+
+  **[<u>Set up GitHub or GitLab →</u>](/code-review/integrations/github-gitlab)** · **[<u>See Code Review billing →</u>](/code-review/billing)** · **[<u>Start a Whitebox scan →</u>](/white-box-pentest/quickstart)** · **[<u>Read the API reference →</u>](/api-reference/findings/update-finding)**
+</Update>
 
 <Update label="June 15, 2026" tags={["Code Review","Billing","MCP"]}>
   ## Control your scans and account security like never before
