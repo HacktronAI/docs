@@ -1,0 +1,67 @@
+---
+title: "Dashboard"
+description: "Track Code Review and Whitebox scan activity across your organization from the Hacktron dashboard."
+---
+
+The dashboard is split into three tabs, so you can view the metrics that matter. In the top right corner
+of each tab, you can configure the time period of the data displayed, and download the data as a PDF report
+by clicking on **Export**.
+
+<Tabs>
+  <Tab title="Overview">
+
+    ## Usage Overview
+
+    View statistics like scan volume, finding counts, and repository coverage at a glance.
+
+    <img src="/images/dashboard.png" alt="Dashboard overview" />
+
+    ## Resolution Health
+
+    From the settings page, you can configure SLA tresholds for remediating findings of different severities.
+
+    <img src="/images/sla_thresholds.png" alt="SLA thresholds" />
+
+    This is used to track your resolution health. Hacktron calculates your Mean Time to Resolution (MTTR),
+    and the percentage of findings that are resolved within the SLA tresholds.
+
+    <img src="/images/mttr.png" alt="Resolution health" />
+
+  </Tab>
+  <Tab title="PR Review">
+
+    ## PR Health
+
+    View the percentage of pull requests that introduced new security issues, and the percentage of issues that have been resolved.
+
+    <img src="/images/pr_health.png" alt="PR Review dashboard" />
+
+    Hacktron also tracks the number of new security issues of varying severities over time, the Mean Time to Resolution (MTTR),
+    and the percentage of issues that are resolved within the SLA tresholds.
+
+    <img src="/images/resolution_health.png" alt="Resolution health" />
+
+  </Tab>
+  <Tab title="Whitebox Scan">
+
+    View the breakdown of findings from whitebox pentests, and the top unresolved findings that you should take action on.
+
+    <img src="/images/whitebox_dashboard.png" alt="Whitebox Scan dashboard" />
+
+  </Tab>
+</Tabs>
+
+## Next steps
+
+<Columns cols={2}>
+  <Card
+    title="Findings and feedback"
+    icon="comment"
+    href="/code-review/findings-feedback"
+  >
+    See where findings are posted and how triage improves reviews.
+  </Card>
+  <Card title="Integrations" icon="gear" href="/platform/integrations">
+    Connect your project management, communication, and other tools to Hacktron.
+  </Card>
+</Columns>
