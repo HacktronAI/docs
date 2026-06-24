@@ -44,9 +44,11 @@ Hacktron builds and updates repository threat models from:
 - Triage feedback such as false positives and accepted risks.
 - `.hacktron/rules.md`, when present.
 
+Hacktron creates a repository's threat model automatically the first time a pull request is reviewed or as soon as you upload context documents for it. After that, it keeps learning from how you triage findings.
+
 Open **Context → Repositories**, choose a repository, and select **Threat model** to view it.
 
-If new documents have been manually added, you can click on **Sync** to update the threat model with the new context.
+If new documents have been manually added, the threat model needs to sync to include them. This usually happens automatically. To sync now, open the repository and select **Sync (number) pending**.
 
 <img src="/images/sync_pending.png" alt="Sync pending documents" />
 

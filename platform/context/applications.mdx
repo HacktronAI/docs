@@ -3,9 +3,15 @@ title: "Applications"
 description: "Group related repositories so Hacktron can reason about them as one product."
 ---
 
-An **Application** is a named group of repositories from the same product or codebase. Use applications when a security question crosses repository boundaries, such as a frontend calling an API service, a worker consuming events from a backend, or several services sharing the same tenant model.
+An **Application** is a group of related repositories that form one product boundary. For example, a web frontend, backend microservices, and infrastructure repositories that interact with each other as part of the same product.
 
-Hacktron uses applications as shared context for reviews and scans across the grouped repositories.
+When you create an application, Hacktron can build a threat model for the whole application, and it can use the threat model to reason about the repositories in that application
+when reviewing code or running a pentest.
+
+## Prerequisites
+
+- At least one connected repository.
+- You must be an organization admin to create, edit, or delete applications.
 
 ## Create an application
 
@@ -18,14 +24,16 @@ Hacktron uses applications as shared context for reviews and scans across the gr
 
     A repository can belong to one application at a time.
 
+    <img src="/images/context_new_application.png" alt="Creating a new application" />
+
   </Step>
   <Step title="Add application context">
     Open the application and click **Add Context** to upload shared product-level documents.
 
-    <Info>
-      Application documents stay attached to the application. They are not
-      automatically expanded into each repository's document list.
-    </Info>
+    <Tip>
+      Application documents stay attached to the application.
+      Repository-specific documents can be [attached to a specific repository](/platform/context/overview#add-a-document).
+    </Tip>
 
   </Step>
   <Step title="Generate the application threat model">
@@ -56,19 +64,19 @@ Avoid using one application as a catch-all for unrelated products. Broad groupin
 
 ## Manage repositories
 
-Open an application from **Context → Applications** to view its member repositories. Use **Edit application** to rename it or change repository membership.
+Open an application from **Context → Applications** to view its member repositories. Use **Edit Application** to rename it or change repository membership.
 
 If you remove a repository from an application, the repository remains connected to Hacktron and can still be managed from **Repositories** and **Context → Repositories**.
 
-## Application context documents
+To delete the application, select **Edit Application**, then **Delete application**.
 
-Application context is best for information that applies across the group:
+## Best practices
+
+Application context is best for information that applies across the application:
 
 - Cross-service trust boundaries.
 - Shared authentication or authorization assumptions.
 - Tenant or workspace isolation rules.
-- Crown jewels that move between services.
-- Accepted risks or false-positive patterns that affect multiple repositories.
 
 For details that only apply to one repository, attach the document to that repository instead.
 
