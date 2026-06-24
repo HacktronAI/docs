@@ -62,9 +62,18 @@
             ]
           },
           {
+            "group": "Context",
+            "pages": [
+              "platform/context/overview",
+              "platform/context/applications",
+              "platform/context/threat-models"
+            ]
+          },
+          {
             "group": "Account",
             "pages": [
-              "platform/account-settings"
+              "platform/account-settings",
+              "platform/security-settings"
             ]
           },
           {

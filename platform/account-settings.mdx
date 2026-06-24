@@ -1,10 +1,10 @@
 ---
 title: "Account settings"
-description: "Manage your Hacktron profile and secure your account with multi-factor authentication (MFA)."
+description: "Manage your Hacktron profile and personal account security."
 ---
 
-Use **Account settings** to manage your personal profile and the security of your
-Hacktron account. Open it from the account menu in the sidebar header.
+Use **Account settings** to manage your personal profile and your own Hacktron
+account security. Open it from the account menu in the sidebar header.
 
 ## Profile
 
@@ -27,6 +27,7 @@ enabling MFA on every account.
     Open the account menu in the sidebar header and select **Account settings**.
 
     <img src="/images/mfa_enable.png" alt="Enable MFA from Account settings" />
+
   </Step>
   <Step title="Start MFA setup">
     Select **Enable MFA**. Hacktron shows a QR code for your authenticator app.
@@ -40,6 +41,15 @@ enabling MFA on every account.
     is verified, MFA is required the next time you sign in.
   </Step>
 </Steps>
+
+<Card
+  title="Organization-wide security controls"
+  icon="shield-check"
+  href="/platform/security-settings"
+>
+  Organization-wide security controls are managed separately from personal
+  account settings.
+</Card>
 
 ### Save your backup codes
 
@@ -56,23 +66,3 @@ safe place such as a password manager.
 You can turn MFA off or re-run setup from **Account settings**. Disabling MFA
 weakens your account security, so only do this if you are switching to a new
 device or authenticator app.
-
-## Require MFA for your organization
-
-Organization admins can enforce MFA across the whole organization, so every
-member must complete MFA setup before they can continue using Hacktron.
-
-<Steps>
-  <Step title="Open Organization Settings">
-    As an admin or owner, go to **Settings** and find the **Security** section.
-  </Step>
-  <Step title="Require MFA for members">
-    Turn on **Require MFA for members**. Members without MFA are prompted to set
-    it up the next time they sign in.
-  </Step>
-</Steps>
-
-<Info>
-  Enforcing MFA does not sign existing members out. Members who have not set up
-  MFA are guided through it on their next sign-in.
-</Info>

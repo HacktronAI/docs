@@ -33,9 +33,11 @@ Findings are posted inline on GitHub PRs and GitLab MRs when a vulnerability is 
 
 ## Public repositories
 
-When a repository is **public**, Hacktron keeps sensitive finding details out of the public pull request thread. In the summary review comment, findings outside the changed lines no longer show their title, description, proof-of-concept, or file location. Instead, you see a count and a link back to the finding in Hacktron.
+When a repository is **public**, Hacktron keeps sensitive outside-diff finding details out of the public pull request thread.
 
-Inline comments on the diff itself are unaffected, so findings on the changed lines still appear in full. **Private and internal repositories are unchanged** and show complete finding details as usual.
+Inline findings on the diff itself are still visible.
+
+![Inline findings](/images/inline_finding.png)
 
 ## Triage comments
 
@@ -81,9 +83,30 @@ so reviews get sharper, with fewer false positives and more of the bugs that act
   </Tab>
 </Tabs>
 
+## Duplicate findings
+
+When a new finding is posted, Hacktron checks if it is a duplicate of a previously posted finding.
+For example, if a pull request is merged containing a vulnerability, Hacktron may automatically deduplicate a new finding
+from a subsequent pull request.
+
+![Duplicate finding](/images/duplicate.png)
+
+<Tip>
+You can also manually mark a finding as a duplicate of another finding by
+clicking on the **Mark as duplicate** button in the finding page.
+
+You would need to select a **canonical (original) finding** in the same repository as the new finding.
+
+<img src="/images/mark_as_dupe.png" alt="Mark as duplicate" />
+
+</Tip>
+
 ## Checks update on triage
 
-Triaging a finding updates the pull request check right away. Marking a finding as a false positive or accepted risk removes it from the [fail-on gate](/code-review/config#fail-the-check-on-findings), so the GitHub check (or GitLab commit status) flips back to passing with no re-run. Reopen the finding and the check fails again to match.
+If a [fail-on gate](/code-review/config#fail-the-check-on-findings) is configured, triaging a finding updates the GitHub check (or GitLab commit status) right away.
+
+For example, if the fail-on gate is configured to fail on high severity findings, triaging a high severity finding as a false positive
+or accepted risk will update the GitHub check (or GitLab commit status) to pass. Reopening the finding will cause the check to fail again.
 
 ## Feedback loop
 

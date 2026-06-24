@@ -1,0 +1,88 @@
+---
+title: "Applications"
+description: "Group related repositories so Hacktron can reason about them as one product."
+---
+
+An **Application** is a named group of repositories from the same product or codebase. Use applications when a security question crosses repository boundaries, such as a frontend calling an API service, a worker consuming events from a backend, or several services sharing the same tenant model.
+
+Hacktron uses applications as shared context for reviews and scans across the grouped repositories.
+
+## Create an application
+
+<Steps>
+  <Step title="Open Context">
+    In Hacktron, go to **Context** and select the **Applications** tab.
+  </Step>
+  <Step title="Create the application">
+    Click **New application**, enter a name, and select the repositories that belong to the application.
+
+    A repository can belong to one application at a time.
+
+  </Step>
+  <Step title="Add application context">
+    Open the application and click **Add Context** to upload shared product-level documents.
+
+    <Info>
+      Application documents stay attached to the application. They are not
+      automatically expanded into each repository's document list.
+    </Info>
+
+  </Step>
+  <Step title="Generate the application threat model">
+    Click **Generate** to create the application threat model.
+    
+    <Columns cols={2}>
+      <Card title="Application threat model" icon="shield-check" href="/platform/context/threat-models#application-threat-models">
+        Learn how application threat models are generated and refreshed.
+      </Card>
+      <Card title="Editing and history" icon="clock-rotate-left" href="/platform/context/threat-models#editing-and-history">
+        Learn how to edit and view the history of application threat models.
+      </Card>
+    </Columns>
+  </Step>
+</Steps>
+
+## What belongs in an application
+
+Group repositories that form one product boundary or security boundary.
+
+Good examples:
+
+- A web frontend, API server, background worker, and infrastructure repo that ship together.
+- Several services that share authentication, authorization, tenant isolation, or sensitive data flows.
+- A monorepo split into deployable components that should be reviewed as one application.
+
+Avoid using one application as a catch-all for unrelated products. Broad groupings make the generated context less precise.
+
+## Manage repositories
+
+Open an application from **Context → Applications** to view its member repositories. Use **Edit application** to rename it or change repository membership.
+
+If you remove a repository from an application, the repository remains connected to Hacktron and can still be managed from **Repositories** and **Context → Repositories**.
+
+## Application context documents
+
+Application context is best for information that applies across the group:
+
+- Cross-service trust boundaries.
+- Shared authentication or authorization assumptions.
+- Tenant or workspace isolation rules.
+- Crown jewels that move between services.
+- Accepted risks or false-positive patterns that affect multiple repositories.
+
+For details that only apply to one repository, attach the document to that repository instead.
+
+## Next steps
+
+<Columns cols={2}>
+  <Card
+    title="Threat models"
+    icon="shield-check"
+    href="/platform/context/threat-models#application-threat-models"
+  >
+    Learn how application threat models are generated and refreshed.
+  </Card>
+  <Card title="Repositories" icon="code-branch" href="/platform/repositories">
+    Connect and enable repositories before grouping them into applications.
+  </Card>
+</Columns>
