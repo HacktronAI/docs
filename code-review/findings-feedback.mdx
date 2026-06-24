@@ -31,6 +31,12 @@ Findings are posted inline on GitHub PRs and GitLab MRs when a vulnerability is 
   </p>
 </Tip>
 
+## Public repositories
+
+When a repository is **public**, Hacktron keeps sensitive finding details out of the public pull request thread. In the summary review comment, findings outside the changed lines no longer show their title, description, proof-of-concept, or file location. Instead, you see a count and a link back to the finding in Hacktron.
+
+Inline comments on the diff itself are unaffected, so findings on the changed lines still appear in full. **Private and internal repositories are unchanged** and show complete finding details as usual.
+
 ## Triage comments
 
 You can leave triage comments on findings to help improve future reviews. This helps Hacktron understand
@@ -74,6 +80,10 @@ so reviews get sharper, with fewer false positives and more of the bugs that act
 
   </Tab>
 </Tabs>
+
+## Checks update on triage
+
+Triaging a finding updates the pull request check right away. Marking a finding as a false positive or accepted risk removes it from the [fail-on gate](/code-review/config#fail-the-check-on-findings), so the GitHub check (or GitLab commit status) flips back to passing with no re-run. Reopen the finding and the check fails again to match.
 
 ## Feedback loop
 

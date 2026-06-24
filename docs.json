@@ -27,7 +27,8 @@
             "group": "Overview",
             "pages": [
               "index",
-              "platform/overview"
+              "platform/overview",
+              "platform/dashboard"
             ]
           },
           {
