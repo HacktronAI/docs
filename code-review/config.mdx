@@ -104,7 +104,7 @@ The threshold is **inclusive**: `high` fails the check on `high` *and* `critical
 You can set the threshold org-wide from the settings page, or per repository in `config.yaml`. The repository config always takes precedence.
 
 <Tabs>
-  <Tab title="Settings page">
+  <Tab title="Organization-wide">
 
     Set a default for all repositories in your organization:
 
@@ -123,7 +123,7 @@ You can set the threshold org-wide from the settings page, or per repository in 
     </Steps>
 
   </Tab>
-  <Tab title="config.yaml">
+  <Tab title="Per repository">
 
     Add a `fail_on` block to `.hacktron/config.yaml` to set or override the threshold for a specific repository:
 
