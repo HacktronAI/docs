@@ -4,7 +4,17 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=fbbbf5cf881c716c00a469e53524fdbbecbb46fd - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=5c58e7cd6b025b18b8d999524c096c2786127c78 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="June 26, 2026" tags={["Code Review"]}>
+  ## Control exactly which PRs Hacktron reviews
+
+  **Author and label filters**: You can now add `skip.authors`, `include.authors`, and `include.labels` rules to your `.hacktron/config.yaml`. Hacktron skips PRs from excluded authors and, when an include list is set, only reviews PRs that match - useful for focusing reviews on human-authored changes or specific workflow labels.
+
+  **Fail-on severity threshold**: The severity threshold that blocks CI when findings exceed a set level is now visible and configurable in your org settings. The gate now evaluates findings across all scans on a PR, so a re-scan on a changed file no longer clears a block set by an earlier scan on the same PR.
+
+  **[<u>Configure scan rules →</u>](/code-review/config)**
+</Update>
 
 <Update label="June 23, 2026" tags={["Context","Code Review","Whitebox","Integrations","MCP"]}>
   ## A new Context page for your repositories, applications, and threat models
