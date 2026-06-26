@@ -89,25 +89,55 @@ A manual `@hacktronai review` comment always runs a scan, even when a `skip` rul
 
 ## Fail the check on findings
 
-By default, the Hacktron check is green as long as the scan completes — findings are posted as inline comments but don't block the merge. Set `fail_on.severity` to turn the check **red** when a finding is found at or above a severity threshold.
+By default, the Hacktron check is green as long as the scan completes. Findings are posted as inline comments but don't block the merge. Configure a severity threshold to turn the check **red** when a finding is at or above that level.
 
-```yaml
-fail_on:
-  severity: high   # fail the check on any high or critical finding
-```
+When a finding triggers the gate, the GitHub check run (or GitLab commit status) is marked failed.
 
-`severity` must be one of, from most to least severe:
+![Failed check example](/images/fail_on_failure_example.png)
 
-`critical` › `high` › `medium` › `low` › `info`
-
-The threshold is **inclusive**: `severity: high` fails the check on `high` *and* `critical` findings, while `severity: critical` fails only on `critical`. When a finding triggers the gate, the GitHub check run (or GitLab commit status) is marked failed with a reason such as `2 findings at or above high severity`.
+The threshold is **inclusive**: `high` fails the check on `high` *and* `critical` findings, while `critical` fails only on `critical`.
 
 <Note>
-  Triaging a finding updates the existing check directly. A finding only counts toward the threshold while it's still **open
-  or confirmed valid**; triaging it as anything else removes it from the gate
-  and immediately recomputes the check. If no `fail_on.severity` is set, the
-  check passes regardless of what Hacktron finds.
+  Triaging a finding updates the existing check directly. A finding only counts toward the threshold while it's still **open or confirmed valid**; triaging it as anything else removes it from the gate and immediately recomputes the check.
 </Note>
+
+You can set the threshold org-wide from the settings page, or per repository in `config.yaml`. The repository config always takes precedence.
+
+<Tabs>
+  <Tab title="Organization-wide">
+
+    Set a default for all repositories in your organization:
+
+    <Steps>
+      <Step title="Open organization settings">
+        Select your organization, then go to **Settings**.
+      </Step>
+      <Step title="Find the Severity threshold card">
+        Locate **Severity threshold**, above the SLA Thresholds card.
+
+        ![Severity threshold settings card](/images/severity_threshold.png)
+      </Step>
+      <Step title="Choose a threshold">
+        Pick a severity from the dropdown: **Critical**, **High**, **Medium**, or **Low**. Select **Off** to disable the gate org-wide.
+      </Step>
+    </Steps>
+
+  </Tab>
+  <Tab title="Per repository">
+
+    Add a `fail_on` block to `.hacktron/config.yaml` to set or override the threshold for a specific repository:
+
+    ```yaml
+    fail_on:
+      severity: high   # fail the check on any high or critical finding
+    ```
+
+    `severity` must be one of, from most to least severe:
+
+    `critical` › `high` › `medium` › `low` › `info`
+
+  </Tab>
+</Tabs>
 
 ## How invalid config is handled
 
