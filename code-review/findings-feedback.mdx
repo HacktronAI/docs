@@ -35,7 +35,18 @@ Findings are posted inline on GitHub PRs and GitLab MRs when a vulnerability is 
 
 When a repository is **public**, Hacktron keeps sensitive outside-diff finding details out of the public pull request thread.
 
-Inline findings on the diff itself are still visible.
+For findings outside your changes, the public comment shows the severity counts
+and links back to Hacktron, but hides titles, descriptions, proof-of-concept
+details, and affected file locations. Review the finding in Hacktron to see the
+full details.
+
+<img
+  src="/images/public_repository_redacted_findings.png"
+  alt="Public repository pull request comment with outside-diff finding details hidden"
+/>
+
+Inline findings on the diff itself are still visible because they are attached
+to the changed code.
 
 ![Inline findings](/images/inline_finding.png)
 
