@@ -4,7 +4,21 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=fbbbf5cf881c716c00a469e53524fdbbecbb46fd - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=5b1387321e41682d7c2b8d146f0371df27dbe77f - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="June 26, 2026" tags={["Code Review"]}>
+  ## Skip the noise: filter scans by author or label
+
+  **Author and label filters**: You can now control exactly which pull and merge requests Hacktron scans. Add `skip.authors`, `include.authors`, or `include.labels` to your `.hacktron/config.yaml` to exclude bot accounts, restrict scanning to specific team members, or gate scans on a trigger label. Skip rules always win over include rules, so exclusions are guaranteed.
+
+  **Fixed and resolved triage commands**: Two new commands let you close out findings directly from a PR comment: `!fixed` marks a finding as fixed in the current change, and `!resolved` marks it resolved. Both join the existing `!fp` and `!accepted_risk` commands in the triage workflow.
+
+  **Severity gate evaluates all scans**: The `fail_on` severity threshold now checks findings across every scan tied to a PR or MR, not just the most recent one. Re-scans that only diff changed files no longer clear a threshold that an earlier scan tripped.
+
+  **Dollar signs in findings render correctly**: Finding descriptions containing `$` no longer get misread as math notation and render as-is.
+
+  **[<u>Configure scan filters →</u>](/code-review/config)**
+</Update>
 
 <Update label="June 23, 2026" tags={["Context","Code Review","Whitebox","Integrations","MCP"]}>
   ## A new Context page for your repositories, applications, and threat models
