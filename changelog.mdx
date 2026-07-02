@@ -4,7 +4,21 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=fbbbf5cf881c716c00a469e53524fdbbecbb46fd - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=e1a164bef2cac7712ff61e0c83919f3895477aa7 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="July 2, 2026" tags={["Whitebox","Code Review","Integrations"]}>
+  ## Choose your scan model and control which PRs get scanned
+
+  **Model tier selection**: When you run a cost estimation, you can now choose between Default and Legacy AI models before the scan starts. Default uses the current generation; Legacy gives you the previous generation if you need it for reproducibility or cost reasons.
+
+  **Per-scan AI triage**: Large scans now include AI-assisted finding triage automatically, while smaller scans let you opt in at the checkout step. The triage fee is applied to your credit balance alongside the scan cost, so you see the full charge before confirming.
+
+  **Mark Resolved from Slack**: The finding overflow menu in Slack now includes a "Mark Resolved" action alongside Mark Valid, Mark False Positive, and Mark Accepted Risk. You can also type `!fixed` or `!resolved` as a thread reply to resolve a finding without leaving Slack.
+
+  **Author and label filters in repo config**: `.hacktron/config.yaml` now supports `skip.authors`, `include.authors`, and `include.labels` fields. Use them to skip bot PRs by author, restrict scanning to PRs from specific contributors, or trigger scans only when a particular label is applied.
+
+  **[Start a Whitebox scan →](/white-box-pentest/quickstart)** · **[Connect Slack →](/platform/communication-apps/slack)** · **[Configure repo scanning →](/code-review/config)**
+</Update>
 
 <Update label="June 23, 2026" tags={["Context","Code Review","Whitebox","Integrations","MCP"]}>
   ## A new Context page for your repositories, applications, and threat models
