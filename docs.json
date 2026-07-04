@@ -27,7 +27,8 @@
             "group": "Overview",
             "pages": [
               "index",
-              "platform/overview"
+              "platform/overview",
+              "platform/dashboard"
             ]
           },
           {
@@ -61,9 +62,18 @@
             ]
           },
           {
+            "group": "Context",
+            "pages": [
+              "platform/context/overview",
+              "platform/context/applications",
+              "platform/context/threat-models"
+            ]
+          },
+          {
             "group": "Account",
             "pages": [
-              "platform/account-settings"
+              "platform/account-settings",
+              "platform/security-settings"
             ]
           },
           {

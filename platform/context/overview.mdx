@@ -1,0 +1,124 @@
+---
+title: "Overview"
+description: "Give Hacktron durable repository and application context for more accurate scans and PR reviews."
+---
+
+Teach Hacktron how your codebase is organized, what matters most, and which security assumptions should carry across future reviews.
+
+Hacktron combines uploaded documents, repository analysis, triage feedback, and generated threat models so Code Review and White-box Pentest runs can reason about your system with more than the current diff or scan target.
+
+<Info>
+  Hacktron can [automatically create threat
+  models](/platform/context/overview#automatically-generated-context) from your
+  code and review activity. It does not automatically decide your application
+  groupings for you.
+</Info>
+
+## How Context is organized
+
+Hacktron organizes context at two levels: the repository level and the application level.
+Repositories are the smallest unit of context, and applications are a group of related repositories that form one product boundary.
+
+<Columns cols={2}>
+  <Card
+    title="Repositories"
+    icon="code-branch"
+    href="/platform/context/threat-models#repository-threat-models"
+  >
+    Add documents and view the generated threat model for a single connected
+    repository.
+  </Card>
+  <Card
+    title="Applications"
+    icon="layer-group"
+    href="/platform/context/applications"
+  >
+    Group related repositories into one product boundary and manage shared
+    application context.
+  </Card>
+</Columns>
+
+## Context documents
+
+A context document is a file you upload or create to help Hacktron understand a repository or application.
+
+<Tip>
+  Good context documents include architecture notes, data-flow diagrams,
+  security policies, threat assessments, and prior pentest reports.
+</Tip>
+
+Hacktron accepts `.md`, `.markdown`, `.txt`, and `.pdf` files.
+
+### Add a document
+
+Upload or create new documents when you want to provide explicit context from your team.
+
+<Steps>
+  <Step title="Select Add Context">
+    On the **Context** page, select **Add Context**.
+  </Step>
+  <Step title="Choose a target">
+    <p>
+      Select one or more repositories or applications.
+    </p>
+
+    <p>
+      Repository context is tied to those specific repositories. Application
+      context is tied to an **application**, which can contain multiple repositories.
+    </p>
+    <Tip>
+      You can [add a new application](/platform/context/applications#create-an-application) in the **Applications** tab.
+    </Tip>
+
+    <img src="/images/context_add_document.png" alt="The Add context document dialog" />
+
+  </Step>
+  <Step title="Upload or create documents">
+    Drag in a file, or choose **Create a document** to write Markdown directly.
+  </Step>
+  <Step title="Add">
+    Select **Add**. The document is saved and queued for the threat model.
+  </Step>
+  <Step title="Sync context">
+    Go to the repository or application context page and select **Regenerate**.
+    This updates the threat model with the new context.
+  </Step>
+</Steps>
+
+### Manage documents
+
+Open a repository or application to see its documents in the left sidebar.
+From there you can view a document, download a PDF, edit Markdown inline, see past versions in the **History** tab, or remove a document you no longer need.
+
+<Tip>
+  Keep context durable. Prefer stable security assumptions, architecture, data
+  ownership, and trust boundaries that are not likely to change frequently.
+</Tip>
+
+## Automatically generated context
+
+Hacktron creates some context on its own:
+
+- **After application creation**: if every repository in the new application already has a threat model, Hacktron can generate the application threat model in the background.
+- **After feedback**: repeated triage signals, especially false positives and accepted risks, are folded into the repository threat model over time.
+- **Before a White-box Pentest**: if a scanned application or repository does not have a threat model yet, Hacktron will bootstrap one before the scan.
+- **Manual sync**: when you upload or remove context documents, you can manually regenerate the threat model.
+
+## Next steps
+
+<Columns cols={2}>
+  <Card
+    title="Applications"
+    icon="layer-group"
+    href="/platform/context/applications"
+  >
+    Create application groupings for related repositories.
+  </Card>
+  <Card
+    title="Threat models"
+    icon="shield-check"
+    href="/platform/context/threat-models"
+  >
+    Understand how Hacktron generates and updates threat models.
+  </Card>
+</Columns>
