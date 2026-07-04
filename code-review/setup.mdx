@@ -41,12 +41,11 @@ You also need permission to connect your Git provider. For more details, choose 
 
   </Step>
   <Step title="Choose covered branches">
-    For each repository, choose whether Hacktron should review pull requests or
-    merge requests targeting all branches or only specific branches such as
-    `main` or `production`.
-
-    <img src="/images/branches.png" alt="Branches" />
-
+    Hacktron reviews all branches by default. Restrict this org-wide in
+    [Organization settings](/platform/organization-settings#scan-filters), or
+    per repository via `skip.branches` / `include.branches` in
+    `.hacktron/config.yaml`. See [Repository
+    configuration](/code-review/config) for the syntax.
   </Step>
   <Step title="Trigger your first review (optional)">
     Go to an existing pull request or merge request and comment `@hacktronai review`.

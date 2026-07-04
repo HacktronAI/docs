@@ -60,12 +60,15 @@ Every key is optional. An empty or absent `config.yaml` means Hacktron behaves a
 
 ## Skip scans
 
-Use the `skip` block to tell Hacktron not to scan a pull or merge request. When a PR matches, Hacktron records a **skipped** check on the PR/MR and posts a short comment naming the rule that matched. No scan runs, and **no developer seat is used**.
+Branches, labels, authors, and keywords can be set per repository here, or org-wide in [Organization settings](/platform/organization-settings#scan-filters). Repo config overrides only the dimensions it sets; other dimensions keep the org default.
 
-Rules are evaluated in this order; the first match wins:
+The `skip` block tells Hacktron not to scan a pull or merge request. A match records a **skipped** check with a comment naming the rule, and uses no developer seat.
+
+Rules are evaluated in this order, first match applies:
 
 | Key | Matches when | Match style |
 |---|---|---|
+| `skip.branches` | the PR/MR targets one of these branches | case-insensitive glob |
 | `skip.labels` | the PR/MR carries one of these labels | case-insensitive |
 | `skip.keywords` | the PR/MR **title** contains one of these strings | case-insensitive substring |
 | `skip.paths` | **every** changed file matches one of these patterns | gitignore-style globs |
@@ -73,6 +76,8 @@ Rules are evaluated in this order; the first match wins:
 
 ```yaml
 skip:
+  branches:
+    - "release/legacy/**"    # skip PRs targeting a legacy release branch
   labels:
     - hacktron-skip          # label the PR "hacktron-skip" to skip it
   keywords:
@@ -85,6 +90,14 @@ skip:
 ```
 
 <Note>
+  `skip.branches` and `include.branches` (and their org-wide equivalents) accept
+  glob patterns mixed with literals: `*`, `**`, `?`, and `{a,b}` brace expansion.
+  Matching is case-insensitive. `[`, `]`, and a leading `!` are literal, not
+  special syntax. Each list allows up to 50 patterns, up to 100 characters each.
+  Labels, authors, and keywords allow up to 20 entries each.
+</Note>
+
+<Note>
   `skip.paths` skips a scan **only when every changed file matches** one of the
   patterns. If even one changed file falls outside the patterns, the PR is
   scanned as usual. Patterns use the same syntax as `.gitignore` — for example
@@ -95,29 +108,34 @@ A manual `@hacktronai review` comment always runs a scan, even when a `skip` rul
 
 ## Include scans
 
-Use the include block to scan **only** pull and merge requests that match specific rules. Similarly, Hacktron records a skip check comment in your PRs/MRs.
+Use the include block to scan **only** pull and merge requests that match specific rules. Hacktron records a skip check comment on PRs/MRs it doesn't scan.
 
 ```yaml
 include:
+  branches:
+    - "main"
+    - "release/**"            # only scan PRs targeting main or a release branch
   labels:
-    - security-review        # only scan PRs labelled "security-review"
+    - security-review         # only scan PRs labelled "security-review"
   authors:
-    - alice                  # always scan Alice's PRs
+    - alice                   # always scan Alice's and Bob's PRs
     - bob
+  keywords:
+    - "please review"         # only scan PRs whose title contains this
 ```
 
 | Key | Matches when |
 |---|---|
+| `include.branches` | the PR/MR targets one of these branches (case-insensitive glob) |
 | `include.labels` | the PR/MR carries at least one of these labels (case-insensitive) |
 | `include.authors` | the PR/MR was opened by one of these usernames (case-insensitive) |
+| `include.keywords` | the PR/MR title contains one of these strings (case-insensitive substring) |
 
-Both `include.labels` and `include.authors` can be set at the same time. If a PR matches either, it is scanned.
+`include.labels: [feature, bugfix]` matches a PR with either label. Setting `include` on more than one dimension requires matching all of them: `include.branches: [main]` with `include.authors: [alice]` only scans Alice's PRs targeting `main`.
 
-<Warning>
-  `include` rules are **ignored when any `skip` rule is present** in your config.
-  Use one or the other. For example, if you need to exempt specific authors while
-  scanning everything else, use `skip.authors` on its own.
-</Warning>
+<Note>
+  `skip` and `include` can both be set for the same dimension: `skip.labels: [wip]` with `include.labels: [feature]` scans PRs labelled `feature`, except ones also labelled `wip`.
+</Note>
 
 ## Fail the check on findings
 
@@ -138,21 +156,7 @@ You can set the threshold org-wide from the settings page, or per repository in 
 <Tabs>
   <Tab title="Organization-wide">
 
-    Set a default for all repositories in your organization:
-
-    <Steps>
-      <Step title="Open organization settings">
-        Select your organization, then go to **Settings**.
-      </Step>
-      <Step title="Find the Severity threshold card">
-        Locate **Severity threshold**, above the SLA Thresholds card.
-
-        ![Severity threshold settings card](/images/severity_threshold.png)
-      </Step>
-      <Step title="Choose a threshold">
-        Pick a severity from the dropdown: **Critical**, **High**, **Medium**, or **Low**. Select **Off** to disable the gate org-wide.
-      </Step>
-    </Steps>
+    Set a default for all repositories in your organization from [Organization settings](/platform/organization-settings#check-gate).
 
   </Tab>
   <Tab title="Per repository">

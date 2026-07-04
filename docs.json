@@ -73,7 +73,8 @@
             "group": "Account",
             "pages": [
               "platform/account-settings",
-              "platform/security-settings"
+              "platform/security-settings",
+              "platform/organization-settings"
             ]
           },
           {
