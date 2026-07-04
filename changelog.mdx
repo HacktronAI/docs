@@ -4,7 +4,25 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=fbbbf5cf881c716c00a469e53524fdbbecbb46fd - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=ff5e8eea5dbc8c0fbc6e4972f81f61e3f1cc2338 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="July 4, 2026" tags={["Whitebox","Code Review","Integrations","Billing"]}>
+  ## Choose your scan model tier and filter by author
+
+  **Model tier selection**: When you start a scan, you can now choose between Default and Legacy model tiers at the cost estimation step. The selection is saved with the scan so the same tier is used when the scan runs.
+
+  **Per-scan triage pricing**: Triage is now priced per scan rather than controlled by a global toggle. Large repositories have triage on automatically; smaller ones let you opt in at checkout. The triage fee appears on the cost estimate before you commit.
+
+  **Author and label filters**: You can now add `skip.authors`, `include.authors`, and `include.labels` rules to your `.hacktron/config.yaml` to skip or trigger scans based on who opened the pull request or which labels it carries. Exclusion rules always take priority over inclusion rules.
+
+  **Taint trace line highlighting**: Code panels inside taint trace blocks now highlight the exact lines covered by each step, so you can follow the data flow without scrolling and counting manually.
+
+  **Mark Resolved from Slack**: The finding overflow menu in Slack now includes a Mark Resolved action alongside the existing Mark Valid, Mark False Positive, and Mark Accepted Risk options.
+
+  **!fixed and !resolved thread commands**: You can now reply `!fixed` or `!resolved` in a finding thread to close it out as remediated, as an alternative to the status dropdown.
+
+  **[Configure repo filters →](/code-review/config)** · **[See Whitebox billing →](/white-box-pentest/billing)** · **[Connect Slack →](/platform/communication-apps/slack)**
+</Update>
 
 <Update label="June 23, 2026" tags={["Context","Code Review","Whitebox","Integrations","MCP"]}>
   ## A new Context page for your repositories, applications, and threat models
