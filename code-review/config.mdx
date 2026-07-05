@@ -11,6 +11,10 @@ Add a `.hacktron/config.yaml` file to your repository to control Hacktron's Code
 
 This is separate from [`.hacktron/rules.md`](/code-review/rules), which shapes the *quality* of a review. `config.yaml` controls *whether* a PR is scanned and *whether* its check passes.
 
+<Tip>
+  Want to override these rules for a single PR? Comment `@hacktronai review` to force a scan.
+</Tip>
+
 ## File location
 
 Place the file at the root of the repository, inside the `.hacktron` directory:
@@ -60,7 +64,7 @@ Every key is optional. An empty or absent `config.yaml` means Hacktron behaves a
 
 ## Skip scans
 
-Branches, labels, authors, and keywords can be set per repository here, or org-wide in [Organization settings](/platform/organization-settings#scan-filters). Repo config overrides only the dimensions it sets; other dimensions keep the org default.
+Branches, labels, authors, and keywords can be set per repository here, or org-wide in [Organization settings](/platform/organization-settings#scan-filters). Repo config overrides only the categories it sets; other categories keep the org default.
 
 The `skip` block tells Hacktron not to scan a pull or merge request. A match records a **skipped** check with a comment naming the rule, and uses no developer seat.
 
@@ -69,10 +73,10 @@ Rules are evaluated in this order, first match applies:
 | Key | Matches when | Match style |
 |---|---|---|
 | `skip.branches` | the PR/MR targets one of these branches | case-insensitive glob |
-| `skip.labels` | the PR/MR carries one of these labels | case-insensitive |
+| `skip.labels` | the PR/MR carries one of these labels | case-insensitive exact match|
 | `skip.keywords` | the PR/MR **title** contains one of these strings | case-insensitive substring |
-| `skip.paths` | **every** changed file matches one of these patterns | gitignore-style globs |
-| `skip.authors` | the PR/MR was opened by one of these usernames | case-insensitive |
+| `skip.paths` | **every** changed file matches one of these patterns | case-insensitive glob |
+| `skip.authors` | the PR/MR was opened by one of these usernames | case-insensitive exact match|
 
 ```yaml
 skip:
@@ -90,21 +94,36 @@ skip:
 ```
 
 <Note>
-  `skip.branches` and `include.branches` (and their org-wide equivalents) accept
-  glob patterns mixed with literals: `*`, `**`, `?`, and `{a,b}` brace expansion.
-  Matching is case-insensitive. `[`, `]`, and a leading `!` are literal, not
-  special syntax. Each list allows up to 50 patterns, up to 100 characters each.
-  Labels, authors, and keywords allow up to 20 entries each.
-</Note>
-
-<Note>
   `skip.paths` skips a scan **only when every changed file matches** one of the
   patterns. If even one changed file falls outside the patterns, the PR is
-  scanned as usual. Patterns use the same syntax as `.gitignore` — for example
-  `vendor/**`, `**/*.md`, or `docs/`.
+  scanned as usual. Patterns use the same glob syntax as `skip.branches` — for
+  example `vendor/**`, `**/*.md`, or `docs/**`.
 </Note>
 
-A manual `@hacktronai review` comment always runs a scan, even when a `skip` rule would otherwise match — use it to force a one-off review of an otherwise-skipped PR.
+<Accordion title="Glob pattern syntax">
+  `skip.branches`, `skip.paths`, and `include.branches` (and their org-wide
+  equivalents) accept glob patterns mixed with literals: `*`, `**`, `?`, and
+  `{a,b}` brace expansion. Matching is case-insensitive. `[`, `]`, and a
+  leading `!` are literal, not special syntax. Each category allows up to 50 entries.
+</Accordion>
+
+<Accordion title="Matching nested branches with * vs **">
+  `*` matches within one path segment; `**` also crosses `/`.
+
+  | Pattern | Matches | Doesn't match |
+  |---|---|---|
+  | `release/*` | `release/foo` | `release/foo/bar` |
+  | `release/**` | `release/foo`, `release/foo/bar` | — |
+  | `release/legacy/**` | `release/legacy/1`, `release/legacy/1/hotfix` | `release/other/1` |
+
+  Use `release/*` for one-level branches (e.g. `release/2.4`). Use `release/**`
+  to cover any depth. Add a literal segment like `release/legacy/**` to target
+  just that subtree.
+
+  Combine `skip` and `include` to exclude a subtree: `include.branches:
+  ["release/**"]` with `skip.branches: ["release/legacy/**"]` scans all
+  release branches except `release/legacy/**`.
+</Accordion>
 
 ## Include scans
 
@@ -127,28 +146,26 @@ include:
 | Key | Matches when |
 |---|---|
 | `include.branches` | the PR/MR targets one of these branches (case-insensitive glob) |
-| `include.labels` | the PR/MR carries at least one of these labels (case-insensitive) |
-| `include.authors` | the PR/MR was opened by one of these usernames (case-insensitive) |
+| `include.labels` | the PR/MR carries at least one of these labels (case-insensitive exact match) |
+| `include.authors` | the PR/MR was opened by one of these usernames (case-insensitive exact match) |
 | `include.keywords` | the PR/MR title contains one of these strings (case-insensitive substring) |
 
-`include.labels: [feature, bugfix]` matches a PR with either label. Setting `include` on more than one dimension requires matching all of them: `include.branches: [main]` with `include.authors: [alice]` only scans Alice's PRs targeting `main`.
+`include.labels: [feature, bugfix]` matches either label. Across categories, `include` requires matching all: `include.branches: [main]` + `include.authors: [alice]` only scans Alice's PRs to `main`.
 
 <Note>
-  `skip` and `include` can both be set for the same dimension: `skip.labels: [wip]` with `include.labels: [feature]` scans PRs labelled `feature`, except ones also labelled `wip`.
+  `skip` and `include` can target the same category. See [glob matching](/code-review/config#matching-nested-branches-with-vs) for pattern syntax.
 </Note>
 
 ## Fail the check on findings
 
 By default, the Hacktron check is green as long as the scan completes. Findings are posted as inline comments but don't block the merge. Configure a severity threshold to turn the check **red** when a finding is at or above that level.
 
-When a finding triggers the gate, the GitHub check run (or GitLab commit status) is marked failed.
-
 ![Failed check example](/images/fail_on_failure_example.png)
 
 The threshold is **inclusive**: `high` fails the check on `high` *and* `critical` findings, while `critical` fails only on `critical`.
 
 <Note>
-  Triaging a finding updates the existing check directly. A finding only counts toward the threshold while it's still **open or confirmed valid**; triaging it as anything else removes it from the gate and immediately recomputes the check.
+  Only **open or confirmed valid** findings count toward the threshold. [Triaging](/code-review/findings-feedback#triage-comments) one recomputes the check immediately.
 </Note>
 
 You can set the threshold org-wide from the settings page, or per repository in `config.yaml`. The repository config always takes precedence.
@@ -177,7 +194,7 @@ You can set the threshold org-wide from the settings page, or per repository in 
 
 ## How invalid config is handled
 
-Hacktron is **fail-open** about configuration — a config problem never silently blocks your development:
+Hacktron is **fail-open** about configuration:
 
 - A missing, empty, or malformed `config.yaml` is ignored. Hacktron scans normally and the check stays green.
 - Unknown keys are ignored, so a config can carry settings for future features without breaking today's scans.

@@ -13,20 +13,20 @@ Organization settings apply to every repository unless a repository's `.hacktron
 
 ## Scan filters
 
-Choose which pull and merge requests Hacktron scans by default, across four dimensions: branches, labels, authors, and keywords.
+Choose which pull and merge requests Hacktron scans by default, across four categories: branches, labels, authors, and keywords.
 
 <Steps>
   <Step title="Find the Filters card">
     Locate **Filters**.
   </Step>
   <Step title="Add a filter">
-    Select **Add filter**. Choose a dimension and a direction, then enter one or more values.
+    Select **Add filter**. Choose a category and a direction, then enter one or more values.
 
     <img src="/images/scan_filters.png" alt="Filters card" />
   </Step>
 </Steps>
 
-| Dimension | Match style |
+| Category | Match style |
 |---|---|
 | Branches | Glob pattern, case-insensitive (e.g. `release/*`) |
 | Labels | Exact name, case-insensitive |
@@ -34,10 +34,10 @@ Choose which pull and merge requests Hacktron scans by default, across four dime
 | Keywords | Substring in the PR/MR title, case-insensitive |
 
 <Note>
-  **Include** and **Skip** can both be set for the same dimension: Skip takes priority within that dimension. Setting a filter for one dimension has no effect on the others.
+  **Include** and **Skip** can both be set for the same category: Skip takes priority within that category. Setting a filter for one category has no effect on the others.
 </Note>
 
-Want per-repo control? Override any dimension in `.hacktron/config.yaml`. See [Repository configuration](/code-review/config) for the glob syntax, limits, and how repo config overrides org defaults.
+Want per-repo control? Override any category in `.hacktron/config.yaml`. See [Repository configuration](/code-review/config) for the glob syntax, limits, and how repo config overrides org defaults.
 
 ## Check gate
 
