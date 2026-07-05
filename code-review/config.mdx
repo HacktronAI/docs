@@ -15,6 +15,15 @@ This is separate from [`.hacktron/rules.md`](/code-review/rules), which shapes t
   Want to override these rules for a single PR? Comment `@hacktronai review` to force a scan.
 </Tip>
 
+## Configuration hierarchy
+
+Each category (`skip.*`, `include.*`, `fail_on.severity`) is resolved independently, not the whole file at once:
+
+1. **`config.yaml`** — used if the repo sets this category.
+2. **[Organization settings](/platform/organization-settings#scan-filters)** — used otherwise.
+
+See the [FAQ](#faq) for worked examples of how repo and org settings combine.
+
 ## File location
 
 Place the file at the root of the repository, inside the `.hacktron` directory:
@@ -60,11 +69,9 @@ fail_on:
   severity: high
 ```
 
-Every key is optional. An empty or absent `config.yaml` means Hacktron behaves as it does today: it scans all covered PRs and the check stays green unless the scan itself errors.
+Every key is optional. An empty or absent `config.yaml` doesn't disable filtering — see [Configuration hierarchy](#configuration-hierarchy) for how org-wide filters still apply. With no repo or org filters set, Hacktron scans all covered PRs and the check stays green unless the scan itself errors.
 
 ## Skip scans
-
-Branches, labels, authors, and keywords can be set per repository here, or org-wide in [Organization settings](/platform/organization-settings#scan-filters). Repo config overrides only the categories it sets; other categories keep the org default.
 
 The `skip` block tells Hacktron not to scan a pull or merge request. A match records a **skipped** check with a comment naming the rule, and uses no developer seat.
 
@@ -77,6 +84,7 @@ Rules are evaluated in this order, first match applies:
 | `skip.keywords` | the PR/MR **title** contains one of these strings | case-insensitive substring |
 | `skip.paths` | **every** changed file matches one of these patterns | case-insensitive glob |
 | `skip.authors` | the PR/MR was opened by one of these usernames | case-insensitive exact match|
+| any key set to `[]` | clears the org-wide default for that key ([Configuration hierarchy](#configuration-hierarchy)) | - |
 
 ```yaml
 skip:
@@ -137,10 +145,10 @@ include:
   labels:
     - security-review         # only scan PRs labelled "security-review"
   authors:
-    - alice                   # always scan Alice's and Bob's PRs
+    - alice                   # ...and were opened by Alice or Bob
     - bob
   keywords:
-    - "please review"         # only scan PRs whose title contains this
+    - "please review"         # ...and title contains "please review"
 ```
 
 | Key | Matches when |
@@ -149,6 +157,7 @@ include:
 | `include.labels` | the PR/MR carries at least one of these labels (case-insensitive exact match) |
 | `include.authors` | the PR/MR was opened by one of these usernames (case-insensitive exact match) |
 | `include.keywords` | the PR/MR title contains one of these strings (case-insensitive substring) |
+| any key set to `[]` | clears the org-wide default for that key ([Configuration hierarchy](#configuration-hierarchy)) |
 
 `include.labels: [feature, bugfix]` matches either label. Across categories, `include` requires matching all: `include.branches: [main]` + `include.authors: [alice]` only scans Alice's PRs to `main`.
 
@@ -168,7 +177,7 @@ The threshold is **inclusive**: `high` fails the check on `high` *and* `critical
   Only **open or confirmed valid** findings count toward the threshold. [Triaging](/code-review/findings-feedback#triage-comments) one recomputes the check immediately.
 </Note>
 
-You can set the threshold org-wide from the settings page, or per repository in `config.yaml`. The repository config always takes precedence.
+You can set the threshold org-wide from the settings page, or per repository in `config.yaml` (see [Configuration hierarchy](#configuration-hierarchy)).
 
 <Tabs>
   <Tab title="Organization-wide">
@@ -199,6 +208,39 @@ Hacktron is **fail-open** about configuration:
 - A missing, empty, or malformed `config.yaml` is ignored. Hacktron scans normally and the check stays green.
 - Unknown keys are ignored, so a config can carry settings for future features without breaking today's scans.
 - A type mismatch on a known key (for example `fail_on.severity: 7`) causes the **whole file** to be ignored. Keep values in the shapes shown above.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="My org requires a label to scan PRs, can one repo skip that rule?">
+    Org default: `include.labels: [security-review]` (only PRs labelled
+    `security-review` get scanned).
+
+    A repo can set its own `include.labels: [needs-review]` in `config.yaml`
+    to require a different label instead, or set `include.labels: []` to
+    remove the requirement entirely and scan PRs regardless of label. Either
+    way, the repo's setting **replaces** the org rule rather than merging
+    with it.
+  </Accordion>
+
+  <Accordion title="Can a repo use a different fail-check threshold than the org?">
+    Org default: `fail_on.severity: critical`.
+
+    A repo handling payment code wants to fail on more than just critical
+    findings, so it sets `fail_on.severity: high` in `config.yaml`. That
+    repo's check now turns red on `high` or `critical` findings; every other
+    repo keeps using `critical`.
+  </Accordion>
+
+  <Accordion title="If a repo only sets one filter, does it lose the rest of the org's filters?">
+    No — each filter category (`skip.branches`, `skip.labels`, `include.branches`, and so on) is inherited independently.
+
+    Org default: `skip.labels: [wip]`. A repo adds `skip.branches:
+    [release/legacy/**]` but doesn't set `skip.labels`. That repo now skips
+    legacy release branches **and** still skips `wip`-labelled PRs — the org's
+    label rule keeps applying because the repo never overrode it.
+  </Accordion>
+</AccordionGroup>
 
 ## Related
 
