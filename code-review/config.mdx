@@ -5,7 +5,7 @@ description: "Use .hacktron/config.yaml to control which pull and merge requests
 
 Add a `.hacktron/config.yaml` file to your repository to control Hacktron's Code Review behavior:
 
-- **Skip** specific pull and merge requests so they aren't scanned.
+- **Exclude** specific pull and merge requests so they aren't scanned.
 - **Include** specific pull and merge requests to be scanned.
 - **Fail** the Hacktron check when a finding meets a severity threshold, so risky changes can't merge.
 
@@ -17,7 +17,7 @@ This is separate from [`.hacktron/rules.md`](/code-review/rules), which shapes t
 
 ## Configuration hierarchy
 
-Each category (`skip.*`, `include.*`, `fail_on.severity`) is resolved independently, not the whole file at once:
+Each category (`exclude.*`, `include.*`, `fail_on.severity`) is resolved independently, not the whole file at once:
 
 1. **`config.yaml`** — used if the repo sets this category.
 2. **[Organization settings](/platform/organization-settings#scan-filters)** — used otherwise.
@@ -52,12 +52,12 @@ Either `.hacktron/config.yaml` or `.hacktron/config.yml` is accepted. If both ex
 ```yaml
 # .hacktron/config.yaml
 
-# Skip a PR/MR from being scanned when any rule below matches.
-skip:
+# Exclude a PR/MR from being scanned when any rule below matches.
+exclude:
   labels:
-    - hacktron-skip
+    - hacktron-exclude
   keywords:
-    - "[skip hacktron]"
+    - "[exclude hacktron]"
   paths:
     - "vendor/**"
     - "**/*.md"
@@ -69,47 +69,47 @@ fail_on:
   severity: high
 ```
 
-Every key is optional. An empty or absent `config.yaml` doesn't disable filtering — see [Configuration hierarchy](#configuration-hierarchy) for how org-wide filters still apply. With no repo or org filters set, Hacktron scans all covered PRs and the check stays green unless the scan itself errors.
+Every key is optional. An empty or absent `config.yaml` doesn't disable filtering; see [Configuration hierarchy](#configuration-hierarchy) for how org-wide filters still apply. With no repo or org filters set, Hacktron scans all covered PRs and the check stays green unless the scan itself errors.
 
-## Skip scans
+## Exclude scans
 
-The `skip` block tells Hacktron not to scan a pull or merge request. A match records a **skipped** check with a comment naming the rule, and uses no developer seat.
+The `exclude` block tells Hacktron not to scan a pull or merge request. A match records a **skipped** check with a comment naming the rule, and uses no developer seat.
 
 Rules are evaluated in this order, first match applies:
 
 | Key | Matches when | Match style |
 |---|---|---|
-| `skip.branches` | the PR/MR targets one of these branches | case-insensitive glob |
-| `skip.labels` | the PR/MR carries one of these labels | case-insensitive exact match|
-| `skip.keywords` | the PR/MR **title** contains one of these strings | case-insensitive substring |
-| `skip.paths` | **every** changed file matches one of these patterns | case-insensitive glob |
-| `skip.authors` | the PR/MR was opened by one of these usernames | case-insensitive exact match|
+| `exclude.branches` | the PR/MR targets one of these branches | case-insensitive glob |
+| `exclude.labels` | the PR/MR carries one of these labels | case-insensitive exact match|
+| `exclude.keywords` | the PR/MR **title** contains one of these strings | case-insensitive substring |
+| `exclude.paths` | **every** changed file matches one of these patterns | case-insensitive glob |
+| `exclude.authors` | the PR/MR was opened by one of these usernames | case-insensitive exact match|
 | any key set to `[]` | clears the org-wide default for that key ([Configuration hierarchy](#configuration-hierarchy)) | - |
 
 ```yaml
-skip:
+exclude:
   branches:
-    - "release/legacy/**"    # skip PRs targeting a legacy release branch
+    - "release/legacy/**"    # exclude PRs targeting a legacy release branch
   labels:
-    - hacktron-skip          # label the PR "hacktron-skip" to skip it
+    - hacktron-exclude       # label the PR "hacktron-exclude" to exclude it
   keywords:
-    - "[skip hacktron]"      # put this anywhere in the PR/MR title to skip it
+    - "[exclude hacktron]"   # put this anywhere in the PR/MR title to exclude it
   paths:
-    - "docs/**"              # skip when the PR only touches these paths
+    - "docs/**"              # exclude when the PR only touches these paths
     - "**/*.md"
   authors:
-    - "dependabot[bot]"        # skip all PRs opened by dependabot
+    - "dependabot[bot]"        # exclude all PRs opened by dependabot
 ```
 
 <Note>
-  `skip.paths` skips a scan **only when every changed file matches** one of the
+  `exclude.paths` excludes a scan **only when every changed file matches** one of the
   patterns. If even one changed file falls outside the patterns, the PR is
-  scanned as usual. Patterns use the same glob syntax as `skip.branches` — for
+  scanned as usual. Patterns use the same glob syntax as `exclude.branches` — for
   example `vendor/**`, `**/*.md`, or `docs/**`.
 </Note>
 
 <Accordion title="Glob pattern syntax">
-  `skip.branches`, `skip.paths`, and `include.branches` (and their org-wide
+  `exclude.branches`, `exclude.paths`, and `include.branches` (and their org-wide
   equivalents) accept glob patterns mixed with literals: `*`, `**`, `?`, and
   `{a,b}` brace expansion. Matching is case-insensitive. `[`, `]`, and a
   leading `!` are literal, not special syntax. Each category allows up to 50 entries.
@@ -128,8 +128,8 @@ skip:
   to cover any depth. Add a literal segment like `release/legacy/**` to target
   just that subtree.
 
-  Combine `skip` and `include` to exclude a subtree: `include.branches:
-  ["release/**"]` with `skip.branches: ["release/legacy/**"]` scans all
+  Combine `exclude` and `include` to exclude a subtree: `include.branches:
+  ["release/**"]` with `exclude.branches: ["release/legacy/**"]` scans all
   release branches except `release/legacy/**`.
 </Accordion>
 
@@ -162,7 +162,7 @@ include:
 `include.labels: [feature, bugfix]` matches either label. Across categories, `include` requires matching all: `include.branches: [main]` + `include.authors: [alice]` only scans Alice's PRs to `main`.
 
 <Note>
-  `skip` and `include` can target the same category. See [glob matching](/code-review/config#matching-nested-branches-with-vs) for pattern syntax.
+  `exclude` and `include` can target the same category. See [glob matching](/code-review/config#matching-nested-branches-with-vs) for pattern syntax.
 </Note>
 
 ## Fail the check on findings
@@ -212,7 +212,7 @@ Hacktron is **fail-open** about configuration:
 ## FAQ
 
 <AccordionGroup>
-  <Accordion title="My org requires a label to scan PRs, can one repo skip that rule?">
+  <Accordion title="My org requires a label to scan PRs, can one repo exclude that rule?">
     Org default: `include.labels: [security-review]` (only PRs labelled
     `security-review` get scanned).
 
@@ -233,11 +233,11 @@ Hacktron is **fail-open** about configuration:
   </Accordion>
 
   <Accordion title="If a repo only sets one filter, does it lose the rest of the org's filters?">
-    No — each filter category (`skip.branches`, `skip.labels`, `include.branches`, and so on) is inherited independently.
+    No, each filter category (`exclude.branches`, `exclude.labels`, `include.branches`, and so on) is inherited independently.
 
-    Org default: `skip.labels: [wip]`. A repo adds `skip.branches:
-    [release/legacy/**]` but doesn't set `skip.labels`. That repo now skips
-    legacy release branches **and** still skips `wip`-labelled PRs — the org's
+    Org default: `exclude.labels: [wip]`. A repo adds `exclude.branches:
+    [release/legacy/**]` but doesn't set `exclude.labels`. That repo now excludes
+    legacy release branches **and** still excludes `wip`-labelled PRs. The org's
     label rule keeps applying because the repo never overrode it.
   </Accordion>
 </AccordionGroup>
