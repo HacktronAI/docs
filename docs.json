@@ -70,6 +70,14 @@
             ]
           },
           {
+            "group": "Remediation",
+            "pages": [
+              "platform/remediation/overview",
+              "platform/remediation/automations",
+              "platform/remediation/credits"
+            ]
+          },
+          {
             "group": "Account",
             "pages": [
               "platform/account-settings",

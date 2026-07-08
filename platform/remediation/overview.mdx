@@ -1,0 +1,77 @@
+---
+title: "Remediation"
+description: "Trigger an AI-generated fix for a finding and receive it as a ready-to-review pull request."
+---
+
+Hacktron can fix findings, not just report them. Trigger remediation on a finding and a Hacktron agent analyzes the vulnerability, writes a fix, and opens a pull or merge request with the change. You review and merge it like any other PR.
+
+Remediation runs consume [automation credits](/platform/remediation/credits). You can trigger it manually from a finding, or automatically with [automations](/platform/remediation/automations) and [repository configuration](/code-review/config#auto-remediate-findings).
+
+## Remediate a finding
+
+<Steps>
+  <Step title="Open a finding">
+    Open the finding in the Hacktron dashboard, either in the finding detail
+    panel or on the full finding page.
+  </Step>
+  <Step title="Select Remediate">
+    Select **Remediate**. Hacktron starts a remediation run for the finding.
+  </Step>
+  <Step title="Review the fix">
+    When the agent produces a fix, Hacktron commits it to a dedicated fix
+    branch and opens a pull or merge request in the finding's repository.
+    Review and merge it as usual.
+  </Step>
+</Steps>
+
+Triggering remediation requires the **Member** role or above. Only one remediation runs per finding: selecting **Remediate** again while a run is active returns the existing run instead of starting a second one.
+
+## Where the fix lands
+
+Hacktron picks the target branch for the fix automatically:
+
+- **Finding from an open PR or MR**: if the source pull or merge request is still open and its branch lives in the same repository, the fix is opened against that PR's branch, so the fix becomes part of the change that introduced the issue.
+- **Everything else**: for merged or closed source PRs, branches from forks, and findings from whitebox scans, the fix is opened against the repository's default branch.
+
+If the source PR merges while the agent is still working, the fix is re-targeted to the default branch.
+
+## Outcomes
+
+A remediation run ends in one of four states:
+
+| Outcome | Meaning |
+| --- | --- |
+| **Success** | A fix was generated and a pull or merge request was opened. |
+| **No fix needed** | The agent completed the run and concluded no code change is required. |
+| **False positive** | The agent concluded the finding is not a real issue. |
+| **Failed** | The run could not complete; the failure reason is recorded. |
+
+Runs triggered by an automation appear in that automation's [run history](/platform/remediation/automations#run-history), including the credits each run consumed.
+
+<Info>
+  To push fix branches, Hacktron's GitHub App needs the **Contents: Read and
+  write** permission. If your installation predates remediation, GitHub asks an
+  organization admin to approve the updated permission before fixes can be
+  pushed.
+</Info>
+
+## Run remediation automatically
+
+<Columns cols={2}>
+  <Card
+    title="Automations"
+    icon="bolt"
+    href="/platform/remediation/automations"
+  >
+    Auto-remediate qualifying findings across repositories and applications,
+    with Slack and email notifications.
+  </Card>
+  <Card
+    title="Repository configuration"
+    icon="file-code"
+    href="/code-review/config#auto-remediate-findings"
+  >
+    Opt a single repository into auto-remediation with a `remediation` block in
+    `.hacktron/config.yaml`.
+  </Card>
+</Columns>

@@ -1,0 +1,82 @@
+---
+title: "Automation credits"
+description: "Understand automation credit purchases, per-run deductions, and auto top-up."
+---
+
+Remediation runs use shared organization automation credits. Every run, whether triggered manually from a finding or by an automation, deducts credits based on the run's cost when it completes.
+
+<Info>
+  Automation credits are organization-wide. They are separate from Code Review
+  seats and from Whitebox Scan credits.
+</Info>
+
+## How credits work
+
+<Steps>
+  <Step title="Keep a balance">
+    An organization starts with zero automation credits. Buy credits from
+    **Billing**, or enable auto top-up to keep the balance above a threshold.
+  </Step>
+  <Step title="Runs check the balance">
+    A remediation run starts only while the organization has credits. When the
+    balance runs out, new runs do not start and the Billing page shows that
+    automations are paused.
+  </Step>
+  <Step title="Runs deduct on completion">
+    Each run's cost is deducted from the balance once, when the run completes.
+    Costs vary with the size of the run.
+  </Step>
+</Steps>
+
+## Buy credits
+
+Organization **Owners** can buy automation credits from **Billing**. A saved payment method is required; if the organization has none, add one first.
+
+<Steps>
+  <Step title="Open Billing">
+    Go to **Billing** in the Hacktron dashboard and find the automation credit
+    balance.
+  </Step>
+  <Step title="Choose an amount">
+    Select **Buy credits**, enter the credit amount, and review the price
+    shown.
+  </Step>
+  <Step title="Complete checkout">
+    Complete any required card authentication (such as 3D Secure). The
+    purchased credits are added to the organization balance after the charge
+    succeeds.
+  </Step>
+</Steps>
+
+The Billing page shows the credit balance and recent activity: purchases, run deductions, and grants.
+
+## Auto top-up
+
+Auto top-up buys credits automatically when the balance drops below a threshold, so automations keep running without manual purchases.
+
+Configure it on the Billing page under the automation credit balance:
+
+- **Trigger**: the balance that starts a top-up.
+- **Target**: the balance the top-up buys back up to. The target must be above the trigger.
+- **Monthly limit**: an optional cap on how many credits auto top-up may buy per month.
+
+Auto top-up requires a saved payment method and charges the card on file without an interactive checkout. If a top-up charge fails, automations stay paused until the balance is topped up manually or the card issue is resolved.
+
+## Related docs
+
+<Columns cols={2}>
+  <Card
+    title="Remediation"
+    icon="wrench"
+    href="/platform/remediation/overview"
+  >
+    Trigger an AI-generated fix for a finding.
+  </Card>
+  <Card
+    title="Automations"
+    icon="bolt"
+    href="/platform/remediation/automations"
+  >
+    Auto-remediate qualifying findings and notify your team.
+  </Card>
+</Columns>
