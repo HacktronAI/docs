@@ -70,11 +70,11 @@
             ]
           },
           {
-            "group": "Remediation",
+            "group": "Automations",
             "pages": [
-              "platform/remediation/overview",
-              "platform/remediation/automations",
-              "platform/remediation/credits"
+              "platform/automations/overview",
+              "platform/automations/remediation",
+              "platform/automations/credits"
             ]
           },
           {

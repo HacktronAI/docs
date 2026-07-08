@@ -3,9 +3,9 @@ title: "Remediation"
 description: "Trigger an AI-generated fix for a finding and receive it as a ready-to-review pull request."
 ---
 
-Hacktron can fix findings, not just report them. Trigger remediation on a finding and a Hacktron agent analyzes the vulnerability, writes a fix, and opens a pull or merge request with the change. You review and merge it like any other PR.
+Remediation is the [Automations](/platform/automations/overview) feature that fixes findings instead of just reporting them. A Hacktron agent analyzes the vulnerability, writes a fix, and opens a pull or merge request with the change. You review and merge it like any other PR.
 
-Remediation runs consume [automation credits](/platform/remediation/credits). You can trigger it manually from a finding, or automatically with [automations](/platform/remediation/automations) and [repository configuration](/code-review/config#auto-remediate-findings).
+Remediation runs consume [automation credits](/platform/automations/credits). You can trigger a run manually from a finding, or automatically with an [automation](/platform/automations/overview)'s Autofix action or [repository configuration](/code-review/config#auto-remediate-findings).
 
 ## Remediate a finding
 
@@ -46,7 +46,7 @@ A remediation run ends in one of four states:
 | **False positive** | The agent concluded the finding is not a real issue. |
 | **Failed** | The run could not complete; the failure reason is recorded. |
 
-Runs triggered by an automation appear in that automation's [run history](/platform/remediation/automations#run-history), including the credits each run consumed.
+Runs triggered by an automation appear in that automation's [run history](/platform/automations/overview#run-history), including the credits each run consumed.
 
 <Info>
   To push fix branches, Hacktron's GitHub App needs the **Contents: Read and
@@ -61,7 +61,7 @@ Runs triggered by an automation appear in that automation's [run history](/platf
   <Card
     title="Automations"
     icon="bolt"
-    href="/platform/remediation/automations"
+    href="/platform/automations/overview"
   >
     Auto-remediate qualifying findings across repositories and applications,
     with Slack and email notifications.

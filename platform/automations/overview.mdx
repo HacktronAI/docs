@@ -1,9 +1,9 @@
 ---
 title: "Automations"
-description: "Automatically remediate qualifying findings across repositories and applications, and notify your team when a fix run starts."
+description: "Act on qualifying findings automatically: remediate them as they are reported and notify your team."
 ---
 
-Automations run [remediation](/platform/remediation/overview) for you. Configure which findings qualify, and when a matching finding is reported Hacktron starts a remediation run automatically and notifies your team over Slack or email.
+Automations act on findings for you. Configure which findings qualify, and when a matching finding is reported Hacktron fires the automation: its **Autofix** action starts a [remediation](/platform/automations/remediation) run that fixes the finding, and its notifiers alert your team over Slack or email.
 
 Automations live under **Automations** in the dashboard sidebar. Organization **Admins** create and manage automations; other members can view them.
 
@@ -26,8 +26,9 @@ Automations live under **Automations** in the dashboard sidebar. Organization **
       finding, plus rules that narrow it down: the severity levels that
       qualify, and scope rules that limit it to specific repositories or
       applications.
-    - **Actions**: what the automation does. **Autofix** starts a remediation
-      run for the matching finding.
+    - **Actions**: what the automation does. **Autofix** starts a
+      [remediation](/platform/automations/remediation) run for the matching
+      finding.
     - **Notifiers**: where to announce a fired run, a Slack channel, email
       recipients from your organization's members, or both.
   </Step>
@@ -47,7 +48,7 @@ Automations live under **Automations** in the dashboard sidebar. Organization **
 
 ## When an automation fires
 
-When a new finding is reported, an enabled automation fires if the finding matches its trigger platform, severity rules, scope rules, and one of its environments (including any branch limits). Firing starts a remediation run, which consumes [automation credits](/platform/remediation/credits), and sends the configured notifications.
+When a new finding is reported, an enabled automation fires if the finding matches its trigger platform, severity rules, scope rules, and one of its environments (including any branch limits). Firing starts a remediation run, which consumes [automation credits](/platform/automations/credits), and sends the configured notifications.
 
 Each finding is remediated at most once: a finding that already has a remediation run does not fire automations again.
 
@@ -70,7 +71,7 @@ Notifications are best-effort: a notification failure never blocks the remediati
 
 The **Run history** tab lists every run the automation has fired, with its status, the environment it matched, and the credits it consumed. Runs matched through an application are attributed to that application.
 
-Run statuses mirror [remediation outcomes](/platform/remediation/overview#outcomes): **Running**, **Success**, **No fix needed**, **False positive**, and **Failed**. You can filter the history by status and search it.
+Run statuses mirror [remediation outcomes](/platform/automations/remediation#outcomes): **Running**, **Success**, **No fix needed**, **False positive**, and **Failed**. You can filter the history by status and search it.
 
 ## Related docs
 
@@ -78,14 +79,14 @@ Run statuses mirror [remediation outcomes](/platform/remediation/overview#outcom
   <Card
     title="Remediation"
     icon="wrench"
-    href="/platform/remediation/overview"
+    href="/platform/automations/remediation"
   >
     How a remediation run works and where the fix lands.
   </Card>
   <Card
     title="Automation credits"
     icon="coins"
-    href="/platform/remediation/credits"
+    href="/platform/automations/credits"
   >
     How runs are billed and how to keep a balance with auto top-up.
   </Card>
