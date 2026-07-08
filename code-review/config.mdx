@@ -59,7 +59,7 @@ remediation:
   severity: high
 ```
 
-Every key is optional. An empty or absent `config.yaml` means Hacktron behaves as it does today: it scans all covered PRs and the check stays green unless the scan itself errors.
+Every key is optional. An empty or absent `config.yaml` means Hacktron scans all covered PRs and the check stays green unless the scan itself errors. It does **not** turn off auto-remediation, though: a repository without a `remediation` block follows your organization's enabled [automations](/platform/automations/overview), which can start credit-consuming remediation runs for its findings. To opt a repository out, set [`remediation.auto: false`](#auto-remediate-findings) instead of omitting the block.
 
 ## Skip scans
 
@@ -172,7 +172,7 @@ Each auto-triggered run consumes [automation credits](/platform/automations/cred
 
 Hacktron is **fail-open** about configuration — a config problem never silently blocks your development:
 
-- A missing, empty, or malformed `config.yaml` is ignored. Hacktron scans normally and the check stays green.
+- A missing, empty, or malformed `config.yaml` is ignored. Hacktron scans normally and the check stays green. Because an ignored config has no `remediation` block, the repository follows your organization's enabled [automations](/platform/automations/overview).
 - Unknown keys are ignored, so a config can carry settings for future features without breaking today's scans.
 - A type mismatch on a known key (for example `fail_on.severity: 7`) causes the **whole file** to be ignored. Keep values in the shapes shown above.
 
