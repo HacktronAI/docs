@@ -276,6 +276,7 @@
   "contextual": {
     "options": [
       "copy",
+      "download-spec",
       "view",
       "chatgpt",
       "claude",
