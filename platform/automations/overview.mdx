@@ -1,11 +1,11 @@
 ---
 title: "Automations"
-description: "Act on qualifying findings automatically: remediate them as they are reported and notify your team."
+description: "Act on findings automatically. Set the rules for which findings qualify, and Hacktron fixes them the moment they're reported, then alerts your team. "
 ---
 
-Automations act on findings for you. Configure which findings qualify, and when a matching finding is reported Hacktron fires the automation: its **Autofix** action starts a [remediation](/platform/automations/remediation) run that fixes the finding, and its notifiers alert your team over Slack or email.
+Findings don't fix themselves, until now. An automation watches for the security findings you care about and acts on them the moment they appear: it starts a fix and tells your team it's handled. Instead of vulnerabilities waiting in a dashboard for someone to get to them, you set the rules once and Hacktron takes it from there. 
 
-Automations live under **Automations** in the dashboard sidebar. Organization **Admins** create and manage automations; other members can view them.
+Automations can be found in the dashboard sidebar. Organization **Admins** create and manage automations; other members can view them.
 
 ## Create an automation
 
@@ -14,41 +14,37 @@ Automations live under **Automations** in the dashboard sidebar. Organization **
     On the **Automations** page, select **New automation** and give it a name.
 
     <Frame>
-      ![Image](/images/image.png)
+      ![Automations 1](/images/automations-1-1.png)
     </Frame>
   </Step>
   <Step title="Pick environments">
-    On the **Environments** tab, add the repositories and [applications](/platform/context/applications) the automation covers. Each entry can be limited to specific branches (up to two); leaving the branch selection empty covers all branches.
+    Choose the repositories and [applications](/platform/context/applications) the automation covers. You can limit each entry to specific branches (up to two) or leave the branch selection empty to cover all branches.
 
     <Frame>
       ![Image](/images/image-1.png)
     </Frame>
   </Step>
   <Step title="Configure settings">
-    On the **Settings** tab, configure:
+    On the **Settings** tab, set:
 
-    - **Triggers**: the event that fires the automation, for example a PR scan finding, plus rules that narrow it down: the severity levels that qualify, and scope rules that limit it to specific repositories or applications.
+    - **Triggers**: when the automation runs, for example a PR scan finding, it's narrowed by the rules you set, the severity levels that qualify, and scope rules that limit it to specific repositories or applications.
     - **Actions**: what the automation does. **Autofix** starts a [remediation](/platform/automations/remediation) run for the matching finding.
-    - **Notifiers**: where to announce a fired run, a Slack channel, email recipients from your organization's members, or both.
+    - **Notifiers**: who hears about a run, whether it's a Slack channel, email recipients from your organization's members, or both.
 
     <Frame>
       ![Image](/images/image-2.png)
     </Frame>
   </Step>
   <Step title="Save">
-    Select **Save**. An automation with environments, a trigger, and an action is enabled automatically; you can toggle it off at any time from the list or detail page.
+    Select **Save**. An automation needs at least one environment, one trigger, and one action to run. Incomplete automations show an **Incomplete** badge and cannot be enabled. A save that removes required configuration disables the automation until it is complete again.
   </Step>
 </Steps>
 
-<Note>
-  An automation needs at least one environment, one trigger, and one action to run. Incomplete automations show an **Incomplete** badge and cannot be enabled. A save that removes required configuration disables the automation until it is complete again.
-</Note>
-
 ## When an automation fires
 
-When a new finding is reported, an enabled automation fires if the finding matches its trigger platform, severity rules, scope rules, and one of its environments (including any branch limits). Firing starts a remediation run, which consumes [automation credits](/platform/automations/credits), and sends the configured notifications.
+When a new finding is reported, an enabled automation fires if the finding matches its trigger, severity rules, scope rules, and one of its environments (including any branch limits). Firing starts a remediation run, which uses [automation credits](/platform/automations/credits), and sends your notifications.
 
-Each finding is remediated at most once: a finding that already has a remediation run does not fire automations again.
+Each finding is fixed at most once, a finding that already has a remediation run won't fire automations again.
 
 <Info>
   A repository with a `remediation` block in its [`.hacktron/config.yaml`](/code-review/config#auto-remediate-findings) follows that block exclusively, including `auto: false`, which turns auto-remediation off for that repository. Organization automations apply only to repositories without a `remediation` block.
@@ -56,14 +52,14 @@ Each finding is remediated at most once: a finding that already has a remediatio
 
 ### Notifications
 
-- **Slack**: Hacktron posts a message to the configured channel linking the finding. The Hacktron bot joins public channels automatically; for a private channel, invite the bot to the channel first.
-- **Email**: Hacktron emails the configured recipients. Recipients are chosen from your organization's members.
+- **Slack**: Hacktron posts a message to your channel linking the finding. The Hacktron bot joins public channels automatically; for a private channel, invite the bot to the channel first.
+- **Email**: Hacktron emails the recipients you choose from your organization's members.
 
-Notifications are best-effort: a notification failure never blocks the remediation run itself.
+Notifications are best-effort, if one fails to send, it never blocks the remediation run itself. 
 
 ## Run history
 
-The **Run history** tab lists every run the automation has fired, with its status, the environment it matched, and the credits it consumed. Runs matched through an application are attributed to that application.
+The **Run history** tab lists every run your automation has fired, with its status, the environment it matched, and the credits it used. Runs matched through an application are attributed to that application.
 
 Run statuses mirror [remediation outcomes](/platform/automations/remediation#outcomes): **Running**, **Success**, **No fix needed**, **False positive**, and **Failed**. You can filter the history by status and search it.
 
