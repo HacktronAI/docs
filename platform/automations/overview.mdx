@@ -1,11 +1,18 @@
 ---
 title: "Automations"
-description: "Act on findings automatically. Set the rules for which findings qualify, and Hacktron fixes them the moment they're reported, then alerts your team. "
+description: "Act on qualifying findings automatically: configure triggers, actions, and notifiers, and Hacktron takes it from there."
 ---
 
-Findings don't fix themselves, until now. An automation watches for the security findings you care about and acts on them the moment they appear: it starts a fix and tells your team it's handled. Instead of vulnerabilities waiting in a dashboard for someone to get to them, you set the rules once and Hacktron takes it from there. 
+Automations act on findings for you. Configure which findings qualify, and when a matching finding is reported, Hacktron fires the automation:
+its **actions** run against the finding, and its **notifiers** alert your team over Slack or email.
 
-Automations can be found in the dashboard sidebar. Organization **Admins** create and manage automations; other members can view them.
+<Tip>
+  **Autofix** is the first available action — it starts a
+  [remediation](/platform/automations/remediation) run that fixes the finding —
+  and we'll expand automations with more actions over time.
+</Tip>
+
+Automations live under **Automations** in the dashboard sidebar. Organization **Admins** create and manage automations; other members can view them.
 
 ## Create an automation
 
@@ -14,11 +21,13 @@ Automations can be found in the dashboard sidebar. Organization **Admins** creat
     On the **Automations** page, select **New automation** and give it a name.
 
     ![New automation](/images/autofix-1.png)
+
   </Step>
   <Step title="Pick environments">
     Choose the repositories and [applications](/platform/context/applications) the automation covers. You can limit each entry to specific branches (up to two) or leave the branch selection empty to cover all branches.
 
     ![Pick environments](/images/autofix-2.png)
+
   </Step>
   <Step title="Configure settings">
     On the **Settings** tab, set:
@@ -28,6 +37,7 @@ Automations can be found in the dashboard sidebar. Organization **Admins** creat
     - **Notifiers**: who hears about a run, whether it's a Slack channel, email recipients from your organization's members, or both.
 
     ![Configure settings](/images/autofix-3.png)
+
   </Step>
   <Step title="Save">
     Select **Save**. An automation needs at least one environment, one trigger, and one action to run. Incomplete automations show an **Incomplete** badge and cannot be enabled. A save that removes required configuration disables the automation until it is complete again.
@@ -36,12 +46,16 @@ Automations can be found in the dashboard sidebar. Organization **Admins** creat
 
 ## When an automation fires
 
-When a new finding is reported, an enabled automation fires if the finding matches its trigger, severity rules, scope rules, and one of its environments (including any branch limits). Firing starts a remediation run, which uses [automation credits](/platform/automations/credits), and sends your notifications.
+When a new finding is reported, an enabled automation fires if the finding matches its trigger, severity rules, scope rules, and one of its environments (including any branch limits). Firing runs the automation's actions — an **Autofix** action starts a remediation run, which uses [automation credits](/platform/automations/credits) — and sends your notifications.
 
 Each finding is fixed at most once, a finding that already has a remediation run won't fire automations again.
 
 <Info>
-  A repository with a `remediation` block in its [`.hacktron/config.yaml`](/code-review/config#auto-remediate-findings) follows that block exclusively, including `auto: false`, which turns auto-remediation off for that repository. Organization automations apply only to repositories without a `remediation` block.
+  A repository with a `remediation` block in its
+  [`.hacktron/config.yaml`](/code-review/config#auto-remediate-findings) follows
+  that block exclusively, including `auto: false`, which turns auto-remediation
+  off for that repository. Organization automations apply only to repositories
+  without a `remediation` block.
 </Info>
 
 ### Notifications
@@ -49,7 +63,7 @@ Each finding is fixed at most once, a finding that already has a remediation run
 - **Slack**: Hacktron posts a message to your channel linking the finding. The Hacktron bot joins public channels automatically; for a private channel, invite the bot to the channel first.
 - **Email**: Hacktron emails the recipients you choose from your organization's members.
 
-Notifications are best-effort, if one fails to send, it never blocks the remediation run itself. 
+Notifications are best-effort, if one fails to send, it never blocks the remediation run itself.
 
 ## Run history
 
