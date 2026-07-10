@@ -13,18 +13,10 @@ Automations can be found in the dashboard sidebar. Organization **Admins** creat
   <Step title="Create">
     On the **Automations** page, select **New automation** and give it a name.
 
-    <Frame>
-      ![Automations 1](/images/automations-1-1.png)
-    </Frame>
-
     ![New automation](/images/autofix-1.png)
   </Step>
   <Step title="Pick environments">
     Choose the repositories and [applications](/platform/context/applications) the automation covers. You can limit each entry to specific branches (up to two) or leave the branch selection empty to cover all branches.
-
-    <Frame>
-      ![Image](/images/image-1.png)
-    </Frame>
 
     ![Pick environments](/images/autofix-2.png)
   </Step>
@@ -34,10 +26,6 @@ Automations can be found in the dashboard sidebar. Organization **Admins** creat
     - **Triggers**: when the automation runs, for example a PR scan finding, it's narrowed by the rules you set, the severity levels that qualify, and scope rules that limit it to specific repositories or applications.
     - **Actions**: what the automation does. **Autofix** starts a [remediation](/platform/automations/remediation) run for the matching finding.
     - **Notifiers**: who hears about a run, whether it's a Slack channel, email recipients from your organization's members, or both.
-
-    <Frame>
-      ![Image](/images/image-2.png)
-    </Frame>
 
     ![Configure settings](/images/autofix-3.png)
   </Step>
