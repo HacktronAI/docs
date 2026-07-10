@@ -15,10 +15,9 @@ Remediation runs consume [automation credits](/platform/automations/credits). Yo
   </Step>
   <Step title="Select Remediate">
     Select **Remediate**. Hacktron starts a remediation run for the finding.
+    
+    ![Remediate finding](/images/remediation-2.png)
 
-    <Frame>
-      ![Image](/images/image-3.png)
-    </Frame>
   </Step>
   <Step title="Review the fix">
     When the agent produces a fix, Hacktron commits it to a dedicated fix branch and opens a pull or merge request in the finding's repository. Review and merge it as usual.
@@ -40,17 +39,20 @@ If the source PR merges while the agent is still working, the fix is re-targeted
 
 A remediation run ends in one of four states:
 
-| Outcome | Meaning |
-| --- | --- |
-| **Success** | A fix was generated and a pull or merge request was opened. |
-| **No fix needed** | The agent completed the run and concluded no code change is required. |
-| **False positive** | The agent concluded the finding is not a real issue. |
-| **Failed** | The run could not complete; the failure reason is recorded. |
+| Outcome            | Meaning                                                               |
+| ------------------ | --------------------------------------------------------------------- |
+| **Success**        | A fix was generated and a pull or merge request was opened.           |
+| **No fix needed**  | The agent completed the run and concluded no code change is required. |
+| **False positive** | The agent concluded the finding is not a real issue.                  |
+| **Failed**         | The run could not complete; the failure reason is recorded.           |
 
 Runs triggered by an automation appear in that automation's [run history](/platform/automations/overview#run-history), including the credits each run consumed.
 
 <Info>
-  To push fix branches, Hacktron's GitHub App needs the **Contents: Read and write** permission. If your installation predates remediation, GitHub asks an organization admin to approve the updated permission before fixes can be pushed.
+  To push fix branches, Hacktron's GitHub App needs the **Contents: Read and
+  write** permission. If your installation predates remediation, GitHub asks an
+  organization admin to approve the updated permission before fixes can be
+  pushed.
 </Info>
 
 ## Run remediation automatically
