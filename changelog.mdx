@@ -4,7 +4,31 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=fbbbf5cf881c716c00a469e53524fdbbecbb46fd - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=80aaeaa1fbb8d840afa9d54626843e408e6d9904 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="July 11, 2026" tags={["Whitebox","Code Review","Integrations","API"]}>
+  ## Read taint traces line by line, export findings your way
+
+  **Interactive taint trace reader**: The taint trace on a finding now opens as an annotated code view. Each propagation step is highlighted inline in the file, with a numbered sidebar you can click to jump to any step. Source, propagation, and sink nodes are color-coded so you can follow the data flow without switching tabs.
+
+  **Findings export on the findings page**: You can now download your findings directly from the findings list as CSV, JSON, or SARIF. The export respects your active filters, so you get exactly the findings you are looking at.
+
+  **REST API findings export filtered by repository**: A new API endpoint lets you export approved findings as CSV, JSON, or SARIF, scoped to a single repository or any combination of the existing filters (severity, state, scan type, date range).
+
+  **Bitbucket PR scanning**: Bitbucket is back as a fully supported integration. Connect your Bitbucket workspace and Hacktron will automatically scan pull requests as you open them.
+
+  **Model tier on cost estimation**: When you kick off a Whitebox scan you can now choose between the Default and Legacy model tiers before committing. The choice is saved with the scan so reruns use the same configuration.
+
+  **File-level GitHub comments for line-number-less findings**: When a Code Review finding cannot be pinned to a specific line (for example, a file-level secret or a config issue), GitHub now receives a file-level review comment instead of silently dropping the finding.
+
+  **Author and label filters for PR scanning**: `.hacktron/config.yaml` now supports `skip.authors`, `include.authors`, and `include.labels` so you can exclude bot authors, run scans only for labeled PRs, or combine both. Exclusions always take priority over allowlists.
+
+  **Mark a finding resolved from Slack**: The finding overflow menu in Slack now includes a "Mark Resolved" action alongside Mark Valid, Mark False Positive, and Mark Accepted Risk. You no longer need to open the app to set a finding as resolved.
+
+  **Findings list defaults to newest first, open findings only**: The findings table now opens sorted by newest and pre-filtered to hide false positives and closed findings. Clearing filters resets to this baseline, not to the unfiltered all-states view.
+
+  **[Read the API reference →](/api-reference/introduction)** · **[Connect Slack →](/platform/communication-apps/slack)** · **[Configure Code Review →](/code-review/config)**
+</Update>
 
 <Update label="June 23, 2026" tags={["Context","Code Review","Whitebox","Integrations","MCP"]}>
   ## A new Context page for your repositories, applications, and threat models
