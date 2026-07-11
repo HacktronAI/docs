@@ -1,6 +1,6 @@
 ---
 title: "Update finding"
-api: "PATCH /findings/{id}"
+openapi: "PATCH /findings/{id}"
 description: "Change a finding's state, severity, and/or duplicate link."
 ---
 
@@ -9,64 +9,3 @@ Updates the `state`, `severity`, `duplicate_of`, or any combination of them on a
 <Info>
   **Scope required**: `write`
 </Info>
-
-## Request
-
-```bash
-curl -X PATCH https://api.hacktron.ai/v1/findings/d1e2f3a4-b5c6-7890-1234-567890abcdef \
-  -H "X-Api-Key: $HACKTRON_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "state": "true_positive",
-    "severity": "critical",
-    "duplicate_of": null,
-    "reason": "Confirmed reproducible against staging. Raising from high to critical."
-  }'
-```
-
-### Path parameters
-
-| Parameter | Type | Description       |
-| --------- | ---- | ----------------- |
-| `id`      | UUID | Finding UUID.     |
-
-### Body
-
-At least one of `state`, `severity`, or `duplicate_of` must be provided. Providing none of them returns `400`.
-
-| Field             | Type   | Description                                                                                                  |
-| ----------------- | ------ | ------------------------------------------------------------------------------------------------------------ |
-| `state`           | enum   | New state. One of `open`, `true_positive`, `false_positive`, `accepted_risk`, `resolved`.                    |
-| `severity`        | enum   | New severity. One of `critical`, `high`, `medium`, `low`, `info`.                                            |
-| `duplicate_of`    | UUID\|null | Canonical finding UUID to mark this finding as a duplicate of, or `null` to unmark it. The canonical finding must be in the same repository. |
-| `state_reason`    | string | Reason for the state change. Max 2000 chars. Falls back to `reason` if omitted.                              |
-| `severity_reason` | string | Reason for the severity change. Max 2000 chars. Falls back to `reason` if omitted.                           |
-| `reason`          | string | Shorthand applied to both state and severity when their specific reason fields are omitted. Max 2000 chars.  |
-
-<Tip>
-  Pass `reason` alone when the same justification applies to both state and severity. Use `state_reason` and `severity_reason` only when the justifications differ.
-</Tip>
-
-<Info>
-  Setting `duplicate_of` to another finding UUID closes this finding as a duplicate. Setting `duplicate_of` to `null` removes the duplicate link and reopens the finding.
-</Info>
-
-## Response
-
-`200 OK`
-
-```json
-{
-  "id": "d1e2f3a4-b5c6-7890-1234-567890abcdef",
-  "state": "true_positive",
-  "severity": "critical",
-  "duplicate_of": null
-}
-```
-
-The response contains only the updated state, severity, and duplicate link. Fetch the full finding via [`GET /findings/{id}`](/api-reference/findings/get-finding) for the remaining fields.
-
-## Errors
-
-- `400` — none of `state`, `severity`, or `duplicate_of` provided, or field validation failed.
-- `404` — finding not found, still in verification, or not visible to your organization.
