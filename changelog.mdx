@@ -11,8 +11,6 @@ rss: true
 
   **Interactive taint trace reader**: The finding detail view now shows an annotated, step-by-step code reader for taint traces. You can jump between source, propagation, and sink steps, see highlighted ranges in the exact file, and navigate up or down through each step without leaving the page.
 
-  **AI remediation**: For supported findings, you can now trigger an automated fix directly from a finding. Hacktron opens a pull request with the proposed change applied, so you go from alert to candidate fix without leaving your workflow. Automatic triggers are also available through automations.
-
   **Findings export on the findings page**: The findings list now has a CSV, SARIF, and JSON export button that honors your active filters, so you can export exactly the findings you are looking at into your own tooling or ticketing system.
 
   **Findings export via the REST API**: A new `GET /rest/findings/export` endpoint lets you pull approved findings as CSV, SARIF, or JSON over an API key. You can scope it to a single repository with the `repo_url` filter and combine it with the existing severity, state, and date filters.
