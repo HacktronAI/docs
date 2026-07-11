@@ -1,0 +1,13 @@
+---
+title: "Get package verdict"
+openapi: "openapi.json GET /hfw/verdict/{ecosystem}/{packageName}"
+description: "Get a fast dependency verdict for a package."
+---
+
+Returns a fast dependency verdict for a single package, used by GitHub Action scans to flag known-malicious dependencies. Provide the package `version` as a query parameter.
+
+For scoped npm packages (for example `@scope/name`), use [Get scoped npm package verdict](/api-reference/hfw/get-scoped-npm-verdict) instead.
+
+<Info>
+  This is a public, fast-mode endpoint and does **not** require authentication. It is scoped to feed-backed verdicts and normally returns immediately; use `wait_seconds` to wait briefly for an upstream verdict.
+</Info>
