@@ -4,7 +4,31 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=fbbbf5cf881c716c00a469e53524fdbbecbb46fd - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=ae06975838cf55342ddb4a17c8ae26a0a5837e10 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="July 11, 2026" tags={["Whitebox","Code Review","Integrations","API"]}>
+  ## See every taint step and export findings your way
+
+  **Interactive taint trace reader**: The finding detail view now shows an annotated, step-by-step code reader for taint traces. You can jump between source, propagation, and sink steps, see highlighted ranges in the exact file, and navigate up or down through each step without leaving the page.
+
+  **AI remediation**: For supported findings, you can now trigger an automated fix directly from a finding. Hacktron opens a pull request with the proposed change applied, so you go from alert to candidate fix without leaving your workflow. Automatic triggers are also available through automations.
+
+  **Findings export on the findings page**: The findings list now has a CSV, SARIF, and JSON export button that honors your active filters, so you can export exactly the findings you are looking at into your own tooling or ticketing system.
+
+  **Findings export via the REST API**: A new `GET /rest/findings/export` endpoint lets you pull approved findings as CSV, SARIF, or JSON over an API key. You can scope it to a single repository with the `repo_url` filter and combine it with the existing severity, state, and date filters.
+
+  **Model tier selection**: The cost estimation step now shows a Default / Legacy model picker. Your choice is saved with the scan and used when the scan starts, so you can trade off depth against cost before committing.
+
+  **Bitbucket automatic PR scans**: Bitbucket is back as a fully working integration. Connect your Bitbucket workspace, activate repositories, and Hacktron will scan pull requests automatically, the same way it does for GitHub and GitLab.
+
+  **Author and label filters in repo config**: `.hacktron/config.yaml` now supports `skip.authors`, `include.authors`, and `include.labels` so you can exclude specific committers or restrict scans to PRs with particular labels. Exclusions always win over includes.
+
+  **GitHub inline comments for no-line findings**: When a finding has no associated line number, Hacktron now posts a file-level comment on the GitHub pull request instead of silently skipping the annotation. Nothing gets lost.
+
+  **Mark Resolved from Slack**: The finding Work Object overflow menu in Slack now includes a "Mark Resolved" action alongside the existing Mark Valid / Mark False Positive / Mark Accepted Risk options.
+
+  **[Read the API reference →](/api-reference/introduction)** · **[Set up GitLab →](/platform/repositories/gitlab)** · **[Connect Slack →](/platform/communication-apps/slack)**
+</Update>
 
 <Update label="June 23, 2026" tags={["Context","Code Review","Whitebox","Integrations","MCP"]}>
   ## A new Context page for your repositories, applications, and threat models
