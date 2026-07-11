@@ -4,7 +4,31 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=fbbbf5cf881c716c00a469e53524fdbbecbb46fd - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=cf0d0032f4878c28a1a0d00771d4564a7dff068a - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="July 11, 2026" tags={["Whitebox","Code Review","Integrations","API"]}>
+  ## See every taint step in context, export findings anywhere
+
+  **Interactive taint trace reader**: The finding detail view now shows each taint step as an annotated, syntax-highlighted code block with inline source, propagation, and sink markers. Click any step in the sidebar to jump straight to its code, or step through the trace sequentially without losing your place.
+
+  **Findings export**: You can now download your findings directly from the findings page as CSV, SARIF, or JSON. The export respects whatever filters you have active, so you can export just the findings you care about.
+
+  **Findings export API**: A new API endpoint lets you pull approved findings programmatically, filtered by repository, severity, state, scan type, or date range. Pipe the output straight into your existing security tooling.
+
+  **Bitbucket integration**: You can now connect a Bitbucket workspace and get automatic PR scans the same way you would with GitHub or GitLab.
+
+  **Model tier picker**: The cost estimation step now lets you choose between the Default and Legacy scan model tiers before you commit to a scan, so you can balance depth against cost up front.
+
+  **File-level GitHub comments**: When a Code Review finding cannot be pinned to a specific line, Hacktron now posts it as a file-level comment on the pull request instead of dropping it silently.
+
+  **Mark Resolved in Slack**: The finding overflow menu in Slack now includes a Mark Resolved action alongside the existing Mark Valid, Mark False Positive, and Mark Accepted Risk options.
+
+  **Unsaved changes warning for context documents**: Navigating away from an unsaved context document now triggers a confirmation prompt, so you no longer lose a draft by clicking the wrong tab.
+
+  **Findings list defaults**: The findings table now opens newest-first with false positives and closed findings hidden, so the list shows actionable findings without any manual filtering.
+
+  **[Start a Whitebox scan →](/white-box-pentest/quickstart)** · **[Read the API reference →](/api-reference/findings/list-findings)** · **[Connect Bitbucket →](/platform/integrations)**
+</Update>
 
 <Update label="June 23, 2026" tags={["Context","Code Review","Whitebox","Integrations","MCP"]}>
   ## A new Context page for your repositories, applications, and threat models
