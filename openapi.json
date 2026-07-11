@@ -541,6 +541,161 @@
         ]
       }
     },
+    "/findings/export": {
+      "get": {
+        "operationId": "RestFindingController_exportFindings",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "The page number to retrieve.",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "The number of items to retrieve per page.",
+            "schema": {
+              "default": 15,
+              "type": "number"
+            }
+          },
+          {
+            "name": "severity",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low",
+                "info"
+              ]
+            }
+          },
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "open",
+                "true_positive",
+                "false_positive",
+                "accepted_risk",
+                "resolved",
+                "closed"
+              ]
+            }
+          },
+          {
+            "name": "scan_id",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scan_type",
+            "required": false,
+            "in": "query",
+            "description": "Filter by scan type across all scans associated with the finding.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pr",
+                "full"
+              ]
+            }
+          },
+          {
+            "name": "repo_url",
+            "required": false,
+            "in": "query",
+            "description": "Filter by exact repository URL.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "found_since",
+            "required": false,
+            "in": "query",
+            "description": "Only include findings discovered on/after this ISO 8601 timestamp.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "found_until",
+            "required": false,
+            "in": "query",
+            "description": "Only include findings discovered before this ISO 8601 timestamp.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort_by",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "found_at",
+                "updated_at",
+                "severity"
+              ]
+            }
+          },
+          {
+            "name": "sort_order",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "DESC",
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          },
+          {
+            "name": "format",
+            "required": true,
+            "in": "query",
+            "description": "Export format",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json",
+                "csv",
+                "sarif"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Export findings as JSON, CSV, or SARIF, optionally filtered by repository",
+        "tags": [
+          "REST API - Findings"
+        ]
+      }
+    },
     "/findings/{id}": {
       "patch": {
         "operationId": "RestFindingController_update",
