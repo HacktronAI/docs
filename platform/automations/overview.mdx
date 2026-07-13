@@ -40,7 +40,7 @@ Automations live under **Automations** in the dashboard sidebar. Organization **
 
 ## When an automation fires
 
-When a new finding is reported, an enabled automation fires if the finding matches its trigger, severity rules, scope rules, and one of its environments (including any branch limits). Firing runs the automation's actions — an **Autofix** action starts a remediation run, which uses [automation credits](/platform/automations/credits) — and sends your notifications.
+When a new finding matches an enabled automation's trigger, severity rules, scope rules, and environment (including any branch limits), the automation fires: an Autofix action starts a remediation run, which uses [automation credits](/platform/automations/credits). After taking action, we send you a notification.
 
 Each finding is fixed at most once, a finding that already has a remediation run won't fire automations again.
 
