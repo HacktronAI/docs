@@ -86,6 +86,13 @@ Rules are evaluated in this order, first match applies:
 | `exclude.authors` | the PR/MR was opened by one of these usernames | case-insensitive exact match|
 | any key set to `[]` | clears the org-wide default for that key ([Configuration hierarchy](#configuration-hierarchy)) | - |
 
+<Note>
+  On Bitbucket, `exclude.labels`/`include.labels` are unused, since Bitbucket
+  pull requests don't have labels. Author filters
+  (`exclude.authors`/`include.authors`) match on the author's Bitbucket
+  nickname, not their display name, so use that when listing authors.
+</Note>
+
 ```yaml
 exclude:
   branches:
