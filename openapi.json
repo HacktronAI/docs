@@ -54,7 +54,7 @@
             "in": "query",
             "description": "The number of items to retrieve per page.",
             "schema": {
-              "default": 15,
+              "default": 100,
               "type": "number"
             }
           },
@@ -234,7 +234,7 @@
             "in": "query",
             "description": "The number of items to retrieve per page.",
             "schema": {
-              "default": 15,
+              "default": 100,
               "type": "number"
             }
           },
@@ -413,7 +413,7 @@
             "in": "query",
             "description": "The number of items to retrieve per page.",
             "schema": {
-              "default": 15,
+              "default": 100,
               "type": "number"
             }
           },
@@ -561,7 +561,7 @@
             "in": "query",
             "description": "The number of items to retrieve per page.",
             "schema": {
-              "default": 15,
+              "default": 100,
               "type": "number"
             }
           },
@@ -2205,10 +2205,10 @@
             "example": true
           },
           "prScanBranches": {
-            "description": "Target branches for PR/MR scans (GitHub and GitLab)",
+            "description": "Target branch patterns for PR/MR scans (GitHub and GitLab)",
             "example": [
               "main",
-              "develop"
+              "**/release/**"
             ],
             "type": "array",
             "items": {
