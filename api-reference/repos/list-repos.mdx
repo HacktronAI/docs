@@ -1,0 +1,13 @@
+---
+title: "List repositories"
+openapi: "openapi.json GET /repos"
+description: "List repositories from all connected providers."
+---
+
+Returns every repository across all of your connected providers (GitHub, GitLab, and Bitbucket), including whether automatic pull-request scans are enabled for each one.
+
+Use this endpoint to discover the repositories available to your organization before triggering a [scan](/api-reference/scans/create-scan) or [cost estimation](/api-reference/cost-estimations/create-cost-estimation), and to confirm which repositories have PR scanning turned on.
+
+<Info>
+  **Scope required**: `read`
+</Info>

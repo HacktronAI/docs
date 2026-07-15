@@ -1,0 +1,39 @@
+---
+title: "Export findings"
+openapi: "openapi.json GET /findings/export"
+description: "Export findings across all scans as JSON, CSV, or SARIF."
+---
+
+Exports findings across every scan in your organization in one of three formats. This is the organization-wide counterpart to [Export scan findings](/api-reference/scans/export-scan-findings), which is scoped to a single scan. Only findings that have passed automated verification (`verification_status = approved`) are returned.
+
+Use the same filters available on [List findings](/api-reference/findings/list-findings) — including `severity`, `state`, `scan_type`, `found_since`, and `found_until` — to export exactly the findings you are looking at. Scope the export to one repository with the `repo_url` filter.
+
+<Info>
+  **Scope required**: `read`
+</Info>
+
+### `format=json`
+
+```http
+Content-Type: application/json; charset=utf-8
+```
+
+Returns a JSON array of finding objects, each matching the schema described in [List findings](/api-reference/findings/list-findings#response-data).
+
+### `format=csv`
+
+```http
+Content-Type: text/csv; charset=utf-8
+Content-Disposition: attachment; filename="findings.csv"
+```
+
+Returns a CSV document with one row per finding and a header row. Intended for spreadsheets, BI tools, and ad‑hoc review.
+
+### `format=sarif`
+
+```http
+Content-Type: application/sarif+json; charset=utf-8
+Content-Disposition: attachment; filename="findings.sarif"
+```
+
+Returns a [SARIF 2.1.0](https://sarifweb.azurewebsites.net/) document. SARIF is consumed by GitHub code scanning, Azure DevOps, and most IDE security plugins; use this format to integrate Hacktron findings into existing security tooling.
