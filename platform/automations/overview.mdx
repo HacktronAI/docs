@@ -6,7 +6,7 @@ description: "Configure actions that run on triggers. Automate routine work such
 Automations act for you. Configure the rules that qualify a match, and when one comes in, Hacktron fires the automation: its **actions** run, and **notifiers** alert your team over Slack or email.
 
 <Tip>
-  **Autofix** is the first available action. It starts a [remediation](/platform/automations/remediation) run that fixes the finding, and we'll expand automations with more actions over time.
+  **Remediation** is the first available action. It starts a [remediation](/platform/automations/remediation) run that fixes the finding, and we'll expand automations with more actions over time.
 </Tip>
 
 Automations live under **Automations** in the dashboard sidebar. Organization **Admins** create and manage automations; other members can view them.
@@ -28,7 +28,7 @@ Automations live under **Automations** in the dashboard sidebar. Organization **
     On the **Settings** tab, set:
 
     - **Triggers**: when the automation runs, for example a PR scan finding, it's narrowed by the rules you set, the severity levels that qualify, and scope rules that limit it to specific repositories or applications.
-    - **Actions**: what the automation does. **Autofix** starts a [remediation](/platform/automations/remediation) run for the matching finding.
+    - **Actions**: what the automation does. **Remediation** starts a [remediation](/platform/automations/remediation) run for the matching finding.
     - **Notifiers**: who hears about a run, whether it's a Slack channel, email recipients from your organization's members, or both.
 
     ![Configure settings](/images/autofix-3.png)
@@ -53,7 +53,7 @@ Each finding is fixed at most once, a finding that already has a remediation run
 - **Slack**: Hacktron posts a message to your channel linking the finding. The Hacktron bot joins public channels automatically; for a private channel, invite the bot to the channel first.
 - **Email**: Hacktron emails the recipients you choose from your organization's members.
 
-Notifications are best-effort, if one fails to send, it never blocks the remediation run itself. 
+Notifications are best-effort, if one fails to send, it never blocks the remediation run itself.
 
 ## Run history
 
@@ -62,19 +62,19 @@ The **Run history** tab lists every run your automation has fired, with its stat
 Run statuses mirror [remediation outcomes](/platform/automations/remediation#outcomes): **Running**, **Success**, **No fix needed**, **False positive**, and **Failed**. You can filter the history by status and search it.
 
 <img
-  src="/images/run-history.png"
   alt="Image"
   title="Image"
   lightAlt="Run history"
   darkAlt="Run history"
+  src="/images/run-history.png"
   className="dark:hidden"
 />
 <img
-  src="/images/image.png"
   alt="Image"
   title="Image"
   lightAlt="Run history"
   darkAlt="Run history"
+  src="/images/image.png"
   className="hidden dark:block"
 />
 
