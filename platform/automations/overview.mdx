@@ -6,7 +6,9 @@ description: "Configure actions that run on triggers. Automate routine work such
 Automations act for you. Configure the rules that qualify a match, and when one comes in, Hacktron fires the automation: its **actions** run, and **notifiers** alert your team over Slack or email.
 
 <Tip>
-  **Remediation** is the first available action. It starts a [remediation](/platform/automations/remediation) run that fixes the finding, and we'll expand automations with more actions over time.
+  **Remediation** is the first available action. It starts a
+  [remediation](/platform/automations/remediation) run that fixes the finding,
+  and we'll expand automations with more actions over time.
 </Tip>
 
 Automations live under **Automations** in the dashboard sidebar. Organization **Admins** create and manage automations; other members can view them.
@@ -18,11 +20,13 @@ Automations live under **Automations** in the dashboard sidebar. Organization **
     On the **Automations** page, select **New automation** and give it a name.
 
     ![New automation](/images/autofix-1.png)
+
   </Step>
   <Step title="Pick environments">
     Choose the repositories and [applications](/platform/context/applications) the automation covers. You can limit each entry to specific branches (up to two) or leave the branch selection empty to cover all branches.
 
     ![Pick environments](/images/autofix-2.png)
+
   </Step>
   <Step title="Configure settings">
     On the **Settings** tab, set:
@@ -32,6 +36,7 @@ Automations live under **Automations** in the dashboard sidebar. Organization **
     - **Notifiers**: who hears about a run, whether it's a Slack channel, email recipients from your organization's members, or both.
 
     ![Configure settings](/images/autofix-3.png)
+
   </Step>
   <Step title="Save">
     Select **Save**. An automation needs at least one environment, one trigger, and one action to run. Incomplete automations show an **Incomplete** badge and cannot be enabled. A save that removes required configuration disables the automation until it is complete again.
@@ -40,7 +45,7 @@ Automations live under **Automations** in the dashboard sidebar. Organization **
 
 ## When an automation fires
 
-When a new finding matches an enabled automation's trigger, severity rules, scope rules, and environment (including any branch limits), the automation fires: an Autofix action starts a remediation run, which uses [automation credits](/platform/automations/credits). After taking action, we send you a notification.
+When a new finding matches an enabled automation's trigger, severity rules, scope rules, and environment (including any branch limits), the automation fires: a **Remediation** action starts a remediation run, which uses [automation credits](/platform/automations/credits). After taking action, we send you a notification.
 
 Each finding is fixed at most once, a finding that already has a remediation run won't fire automations again.
 
