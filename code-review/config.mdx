@@ -1,13 +1,12 @@
 ---
 title: "Repository configuration"
-description: "Use .hacktron/config.yaml to control which pull and merge requests Hacktron scans, when a finding should fail the check, and whether findings are remediated automatically."
+description: "Use .hacktron/config.yaml to control which pull and merge requests Hacktron scans, and when a finding should fail the check."
 ---
 
 Add a `.hacktron/config.yaml` file to your repository to control Hacktron's Code Review behavior:
 
 - **Skip** specific pull and merge requests so they aren't scanned.
 - **Fail** the Hacktron check when a finding meets a severity threshold, so risky changes can't merge.
-- **Auto-remediate** findings at or above a severity, so qualifying findings get an AI-generated fix PR automatically.
 
 This is separate from [`.hacktron/rules.md`](/code-review/rules), which shapes the *quality* of a review. `config.yaml` controls *whether* a PR is scanned and *whether* its check passes.
 
@@ -52,14 +51,9 @@ skip:
 # Fail the Hacktron check when a finding is at or above this severity.
 fail_on:
   severity: high
-
-# Automatically remediate findings at or above this severity.
-remediation:
-  auto: true
-  severity: high
 ```
 
-Every key is optional. An empty or absent `config.yaml` means Hacktron scans all covered PRs and the check stays green unless the scan itself errors. It does **not** turn off auto-remediation, though: a repository without a `remediation` block follows your organization's enabled [automations](/platform/automations/overview), which can start credit-consuming remediation runs for its findings. To opt a repository out, set [`remediation.auto: false`](#auto-remediate-findings) instead of omitting the block.
+Every key is optional. An empty or absent `config.yaml` means Hacktron behaves as it does today: it scans all covered PRs and the check stays green unless the scan itself errors.
 
 ## Skip scans
 
@@ -145,34 +139,11 @@ You can set the threshold org-wide from the settings page, or per repository in 
   </Tab>
 </Tabs>
 
-## Auto-remediate findings
-
-Add a `remediation` block to have Hacktron [remediate](/platform/automations/remediation) qualifying findings in this repository automatically. When a finding at or above the configured severity is reported, Hacktron starts a remediation run: an agent writes a fix and opens a pull or merge request with it.
-
-```yaml
-remediation:
-  auto: true       # turn auto-remediation on for this repository
-  severity: high   # remediate findings at or above this severity
-```
-
-- `auto` turns auto-remediation on (`true`) or off (`false`) for the repository.
-- `severity` is **inclusive** and uses the same levels as `fail_on.severity`: `critical` › `high` › `medium` › `low` › `info`. When omitted, it defaults to `critical`.
-
-Each auto-triggered run consumes [automation credits](/platform/automations/credits), so pick a threshold that matches how much you want remediated automatically. Each finding is remediated at most once.
-
-<Note>
-  A repository with a `remediation` block follows that block **exclusively**:
-  `auto: false` also turns off any organization
-  [automations](/platform/automations/overview) for this repository.
-  Repositories without a `remediation` block follow the organization's enabled
-  automations instead.
-</Note>
-
 ## How invalid config is handled
 
 Hacktron is **fail-open** about configuration — a config problem never silently blocks your development:
 
-- A missing, empty, or malformed `config.yaml` is ignored. Hacktron scans normally and the check stays green. Because an ignored config has no `remediation` block, the repository follows your organization's enabled [automations](/platform/automations/overview).
+- A missing, empty, or malformed `config.yaml` is ignored. Hacktron scans normally and the check stays green.
 - Unknown keys are ignored, so a config can carry settings for future features without breaking today's scans.
 - A type mismatch on a known key (for example `fail_on.severity: 7`) causes the **whole file** to be ignored. Keep values in the shapes shown above.
 
@@ -184,11 +155,5 @@ Hacktron is **fail-open** about configuration — a config problem never silentl
   </Card>
   <Card title="Setup" icon="code-branch" href="/code-review/setup">
     Connect a Git provider, enable repositories, and choose covered branches.
-  </Card>
-  <Card title="Remediation" icon="wrench" href="/platform/automations/remediation">
-    How a remediation run works and where the fix PR lands.
-  </Card>
-  <Card title="Automations" icon="bolt" href="/platform/automations/overview">
-    Auto-remediate findings org-wide with notifications and run history.
   </Card>
 </Columns>

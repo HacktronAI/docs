@@ -13,7 +13,7 @@ Remediation is a part of [Automations](/platform/automations/overview) that fixe
   3. **Tests the fix.** Runs the existing test suite for the repository, if any. Adds relevant regression tests & makes sure the fix correctly addresses the issue while avoiding breaking anything else.
 </Card>
 
-Remediation runs use [automation credits](/platform/automations/credits). You can start a run yourself from a finding, let it happen automatically through an [automation](/platform/automations/overview)'s Remediation action or your [repository configuration](/code-review/config#auto-remediate-findings).
+Remediation runs use [automation credits](/platform/automations/credits). You can start a run yourself from a finding or let it happen automatically through an [automation](/platform/automations/overview)'s Remediation action.
 
 ## Remediate a finding
 
@@ -29,11 +29,10 @@ Remediation runs use [automation credits](/platform/automations/credits). You ca
   <Step title="Review the fix">
     When the agent produces a fix, Hacktron commits it to a dedicated fix branch and opens a pull or merge request in the finding's repository. Review and merge it as usual.
 
-    ![Review the fix](/images/remediation-pr.png)
   </Step>
 </Steps>
 
-Triggering remediation requires the **Member** role or above. Only one run happens per finding, if you select Remediate again while a run is active, Hacktron returns the existing run instad of starting a second one.
+Triggering remediation requires the **Member** role or above. Only one run happens per finding; if you select **Remediate** again while a run is active, Hacktron returns the existing run instead of starting a second one.
 
 <Info>
   To push fix branches, Hacktron's GitHub App needs the **Contents: Read and write** permission. If your installation predates remediation, GitHub asks an organization admin to approve the updated permission before fixes can be pushed.
@@ -63,12 +62,6 @@ Runs triggered by an automation appear in that automation's [run history](/platf
 
 ## Run remediation automatically
 
-<Columns cols={2}>
-  <Card title="Automations" icon="bolt" href="/platform/automations/overview">
-    Auto-remediate qualifying findings across repositories and applications, with Slack and email notifications.
-  </Card>
-
-  <Card title="Repository configuration" icon="file-code" href="/code-review/config#auto-remediate-findings">
-    Opt a single repository into auto-remediation with a `remediation` block in `.hacktron/config.yaml`.
-  </Card>
-</Columns>
+<Card title="Automations" icon="bolt" href="/platform/automations/overview">
+  Auto-remediate qualifying findings across repositories and applications, with Slack and email notifications.
+</Card>
