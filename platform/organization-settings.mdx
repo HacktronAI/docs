@@ -1,0 +1,85 @@
+---
+title: "Organization settings"
+description: "Configure scan filters, the check gate, and SLA thresholds for your organization."
+---
+
+Organization settings apply to every repository unless a repository's `.hacktron/config.yaml` overrides them. Only organization admins and owners can change these settings.
+
+<Steps>
+  <Step title="Open organization settings">
+    Select your organization, then go to **Settings**.
+  </Step>
+</Steps>
+
+## Scan filters
+
+Choose which pull and merge requests Hacktron scans by default, across four categories: branches, labels, authors, and keywords.
+
+<Steps>
+  <Step title="Find the Filters card">
+    Locate **Filters**.
+  </Step>
+  <Step title="Add a filter">
+    Select **Add filter**. Choose a category and a direction, then enter one or more values.
+
+    <img src="/images/scan_filters.png" alt="Filters card" />
+  </Step>
+</Steps>
+
+| Category | Match style |
+|---|---|
+| Branches | Glob pattern, case-insensitive (e.g. `release/*`) |
+| Labels | Exact name, case-insensitive |
+| Authors | Exact username, case-insensitive |
+| Keywords | Substring in the PR/MR title, case-insensitive |
+
+<Note>
+  **Include** and **Exclude** can both be set for the same category: Exclude takes priority within that category. Setting a filter for one category has no effect on the others.
+</Note>
+
+Want per-repo control? Override any category in `.hacktron/config.yaml`. See [Repository configuration](/code-review/config) for the glob syntax, limits, and how repo config overrides org defaults.
+
+## Check gate
+
+Set an org-wide severity threshold that fails a PR or MR check when a finding meets or exceeds it.
+
+<Steps>
+  <Step title="Find the Severity threshold card">
+    Locate **Severity threshold**.
+
+    <img src="/images/severity_threshold.png" alt="Severity threshold settings card" />
+  </Step>
+  <Step title="Choose a threshold">
+    Pick a severity: **Critical**, **High**, **Medium**, or **Low**. Select **Off** to disable the gate org-wide.
+  </Step>
+</Steps>
+
+See [Fail the check on findings](/code-review/config#fail-the-check-on-findings) for the full severity table and per-repository overrides.
+
+## SLA thresholds
+
+Set the resolution window and minimum compliance target for each severity.
+
+<Steps>
+  <Step title="Find the SLA Thresholds card">
+    Locate **SLA Thresholds**.
+
+    <img src="/images/sla_thresholds.png" alt="SLA thresholds settings card" />
+  </Step>
+  <Step title="Set days and target per severity">
+    For each severity, set the number of days findings have to be resolved in, and the minimum percentage that should meet it.
+  </Step>
+</Steps>
+
+These values drive the Resolution Health widget on the [dashboard](/platform/dashboard#resolution-health), including Mean Time to Resolution (MTTR) and SLA compliance.
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Setup" icon="code-branch" href="/code-review/setup">
+    Connect a Git provider, enable repositories, and choose covered branches.
+  </Card>
+  <Card title="Repository configuration" icon="file-text" href="/code-review/config">
+    Use `.hacktron/config.yaml` to override scan filters and the check gate per repository.
+  </Card>
+</Columns>

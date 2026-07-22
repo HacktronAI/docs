@@ -82,6 +82,7 @@
             "pages": [
               "platform/account-settings",
               "platform/security-settings",
+              "platform/organization-settings",
               "platform/billing"
             ]
           },
@@ -199,7 +200,23 @@
               "api-reference/findings/list-findings",
               "api-reference/findings/get-finding",
               "api-reference/findings/update-finding",
-              "api-reference/findings/add-finding-comment"
+              "api-reference/findings/add-finding-comment",
+              "api-reference/findings/export-findings"
+            ]
+          },
+          {
+            "group": "Repositories",
+            "pages": [
+              "api-reference/repos/list-repos"
+            ]
+          },
+          {
+            "group": "Dependency Firewall",
+            "pages": [
+              "api-reference/hfw/get-package-verdict",
+              "api-reference/hfw/get-scoped-npm-verdict",
+              "api-reference/hfw/batch-verdicts",
+              "api-reference/hfw/osv-feed"
             ]
           }
         ]
@@ -285,6 +302,7 @@
   "contextual": {
     "options": [
       "copy",
+      "download-spec",
       "view",
       "chatgpt",
       "claude",

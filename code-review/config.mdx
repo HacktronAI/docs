@@ -5,10 +5,24 @@ description: "Use .hacktron/config.yaml to control which pull and merge requests
 
 Add a `.hacktron/config.yaml` file to your repository to control Hacktron's Code Review behavior:
 
-- **Skip** specific pull and merge requests so they aren't scanned.
+- **Exclude** specific pull and merge requests so they aren't scanned.
+- **Include** specific pull and merge requests to be scanned.
 - **Fail** the Hacktron check when a finding meets a severity threshold, so risky changes can't merge.
 
 This is separate from [`.hacktron/rules.md`](/code-review/rules), which shapes the *quality* of a review. `config.yaml` controls *whether* a PR is scanned and *whether* its check passes.
+
+<Tip>
+  Want to override these rules for a single PR? Comment `@hacktronai review` to force a scan.
+</Tip>
+
+## Configuration hierarchy
+
+Each category (`exclude.*`, `include.*`, `fail_on.severity`) is resolved independently, not the whole file at once:
+
+1. **`config.yaml`** — used if the repo sets this category.
+2. **[Organization settings](/platform/organization-settings#scan-filters)** — used otherwise.
+
+See the [FAQ](#faq) for worked examples of how repo and org settings combine.
 
 ## File location
 
@@ -38,89 +52,144 @@ Either `.hacktron/config.yaml` or `.hacktron/config.yml` is accepted. If both ex
 ```yaml
 # .hacktron/config.yaml
 
-# Skip a PR/MR from being scanned when any rule below matches.
-skip:
+# Exclude a PR/MR from being scanned when any rule below matches.
+exclude:
   labels:
-    - hacktron-skip
+    - hacktron-exclude
   keywords:
-    - "[skip hacktron]"
+    - "[exclude hacktron]"
   paths:
     - "vendor/**"
     - "**/*.md"
+  authors:
+    - dependabot[bot]
 
 # Fail the Hacktron check when a finding is at or above this severity.
 fail_on:
   severity: high
 ```
 
-Every key is optional. An empty or absent `config.yaml` means Hacktron behaves as it does today: it scans all covered PRs and the check stays green unless the scan itself errors.
+Every key is optional. An empty or absent `config.yaml` doesn't disable filtering; see [Configuration hierarchy](#configuration-hierarchy) for how org-wide filters still apply. With no repo or org filters set, Hacktron scans all covered PRs and the check stays green unless the scan itself errors.
 
-## Skip scans
+## Exclude scans
 
-Use the `skip` block to tell Hacktron not to scan a pull or merge request. When a PR matches, Hacktron records a **skipped** check on the PR/MR and posts a short comment naming the rule that matched. No scan runs, and **no developer seat is used**.
+The `exclude` block tells Hacktron not to scan a pull or merge request. A match records a **skipped** check with a comment naming the rule, and uses no developer seat.
 
-Rules are evaluated in this order; the first match wins:
+Rules are evaluated in this order, first match applies:
 
 | Key | Matches when | Match style |
 |---|---|---|
-| `skip.labels` | the PR/MR carries one of these labels | exact, case-insensitive |
-| `skip.keywords` | the PR/MR **title** contains one of these strings | case-insensitive substring |
-| `skip.paths` | **every** changed file matches one of these patterns | gitignore-style globs |
+| `exclude.branches` | the PR/MR targets one of these branches | case-insensitive glob |
+| `exclude.labels` | the PR/MR carries one of these labels | case-insensitive exact match|
+| `exclude.keywords` | the PR/MR **title** contains one of these strings | case-insensitive substring |
+| `exclude.paths` | **every** changed file matches one of these patterns | case-insensitive glob |
+| `exclude.authors` | the PR/MR was opened by one of these usernames | case-insensitive exact match|
+| any key set to `[]` | clears the org-wide default for that key ([Configuration hierarchy](#configuration-hierarchy)) | - |
+
+<Note>
+  On Bitbucket, `exclude.labels`/`include.labels` are unused, since Bitbucket
+  pull requests don't have labels. Author filters
+  (`exclude.authors`/`include.authors`) match on the author's Bitbucket
+  nickname, not their display name, so use that when listing authors.
+</Note>
 
 ```yaml
-skip:
+exclude:
+  branches:
+    - "release/legacy/**"    # exclude PRs targeting a legacy release branch
   labels:
-    - hacktron-skip          # label the PR "hacktron-skip" to skip it
+    - hacktron-exclude       # label the PR "hacktron-exclude" to exclude it
   keywords:
-    - "[skip hacktron]"      # put this anywhere in the PR/MR title to skip it
+    - "[exclude hacktron]"   # put this anywhere in the PR/MR title to exclude it
   paths:
-    - "docs/**"              # skip when the PR only touches these paths
+    - "docs/**"              # exclude when the PR only touches these paths
     - "**/*.md"
+  authors:
+    - "dependabot[bot]"        # exclude all PRs opened by dependabot
 ```
 
 <Note>
-  `skip.paths` skips a scan **only when every changed file matches** one of the
+  `exclude.paths` excludes a scan **only when every changed file matches** one of the
   patterns. If even one changed file falls outside the patterns, the PR is
-  scanned as usual. Patterns use the same syntax as `.gitignore` — for example
-  `vendor/**`, `**/*.md`, or `docs/`.
+  scanned as usual. Patterns use the same glob syntax as `exclude.branches` — for
+  example `vendor/**`, `**/*.md`, or `docs/**`.
 </Note>
 
-A manual `@hacktronai review` comment always runs a scan, even when a `skip` rule would otherwise match — use it to force a one-off review of an otherwise-skipped PR.
+<Accordion title="Glob pattern syntax">
+  `exclude.branches`, `exclude.paths`, and `include.branches` (and their org-wide
+  equivalents) accept glob patterns mixed with literals: `*`, `**`, `?`, and
+  `{a,b}` brace expansion. Matching is case-insensitive. `[`, `]`, and a
+  leading `!` are literal, not special syntax. Each category allows up to 50 entries.
+</Accordion>
+
+<Accordion title="Matching nested branches with * vs **">
+  `*` matches within one path segment; `**` also crosses `/`.
+
+  | Pattern | Matches | Doesn't match |
+  |---|---|---|
+  | `release/*` | `release/foo` | `release/foo/bar` |
+  | `release/**` | `release/foo`, `release/foo/bar` | — |
+  | `release/legacy/**` | `release/legacy/1`, `release/legacy/1/hotfix` | `release/other/1` |
+
+  Use `release/*` for one-level branches (e.g. `release/2.4`). Use `release/**`
+  to cover any depth. Add a literal segment like `release/legacy/**` to target
+  just that subtree.
+
+  Combine `exclude` and `include` to exclude a subtree: `include.branches:
+  ["release/**"]` with `exclude.branches: ["release/legacy/**"]` scans all
+  release branches except `release/legacy/**`.
+</Accordion>
+
+## Include scans
+
+Use the include block to scan **only** pull and merge requests that match specific rules. Hacktron records a skip check comment on PRs/MRs it doesn't scan.
+
+```yaml
+include:
+  branches:
+    - "main"
+    - "release/**"            # only scan PRs targeting main or a release branch
+  labels:
+    - security-review         # only scan PRs labelled "security-review"
+  authors:
+    - alice                   # ...and were opened by Alice or Bob
+    - bob
+  keywords:
+    - "please review"         # ...and title contains "please review"
+```
+
+| Key | Matches when |
+|---|---|
+| `include.branches` | the PR/MR targets one of these branches (case-insensitive glob) |
+| `include.labels` | the PR/MR carries at least one of these labels (case-insensitive exact match) |
+| `include.authors` | the PR/MR was opened by one of these usernames (case-insensitive exact match) |
+| `include.keywords` | the PR/MR title contains one of these strings (case-insensitive substring) |
+| any key set to `[]` | clears the org-wide default for that key ([Configuration hierarchy](#configuration-hierarchy)) |
+
+`include.labels: [feature, bugfix]` matches either label. Across categories, `include` requires matching all: `include.branches: [main]` + `include.authors: [alice]` only scans Alice's PRs to `main`.
+
+<Note>
+  `exclude` and `include` can target the same category. See [glob matching](/code-review/config#matching-nested-branches-with-vs) for pattern syntax.
+</Note>
 
 ## Fail the check on findings
 
 By default, the Hacktron check is green as long as the scan completes. Findings are posted as inline comments but don't block the merge. Configure a severity threshold to turn the check **red** when a finding is at or above that level.
-
-When a finding triggers the gate, the GitHub check run (or GitLab commit status) is marked failed.
 
 ![Failed check example](/images/fail_on_failure_example.png)
 
 The threshold is **inclusive**: `high` fails the check on `high` *and* `critical` findings, while `critical` fails only on `critical`.
 
 <Note>
-  Triaging a finding updates the existing check directly. A finding only counts toward the threshold while it's still **open or confirmed valid**; triaging it as anything else removes it from the gate and immediately recomputes the check.
+  Only **open or confirmed valid** findings count toward the threshold. [Triaging](/code-review/findings-feedback#triage-comments) one recomputes the check immediately.
 </Note>
 
-You can set the threshold org-wide from the settings page, or per repository in `config.yaml`. The repository config always takes precedence.
+You can set the threshold org-wide from the settings page, or per repository in `config.yaml` (see [Configuration hierarchy](#configuration-hierarchy)).
 
 <Tabs>
   <Tab title="Organization-wide">
 
-    Set a default for all repositories in your organization:
-
-    <Steps>
-      <Step title="Open organization settings">
-        Select your organization, then go to **Settings**.
-      </Step>
-      <Step title="Find the Severity threshold card">
-        Locate **Severity threshold**, above the SLA Thresholds card.
-
-        ![Severity threshold settings card](/images/severity_threshold.png)
-      </Step>
-      <Step title="Choose a threshold">
-        Pick a severity from the dropdown: **Critical**, **High**, **Medium**, or **Low**. Select **Off** to disable the gate org-wide.
-      </Step>
-    </Steps>
+    Set a default for all repositories in your organization from [Organization settings](/platform/organization-settings#check-gate).
 
   </Tab>
   <Tab title="Per repository">
@@ -141,11 +210,44 @@ You can set the threshold org-wide from the settings page, or per repository in 
 
 ## How invalid config is handled
 
-Hacktron is **fail-open** about configuration — a config problem never silently blocks your development:
+Hacktron is **fail-open** about configuration:
 
 - A missing, empty, or malformed `config.yaml` is ignored. Hacktron scans normally and the check stays green.
 - Unknown keys are ignored, so a config can carry settings for future features without breaking today's scans.
 - A type mismatch on a known key (for example `fail_on.severity: 7`) causes the **whole file** to be ignored. Keep values in the shapes shown above.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="My org requires a label to scan PRs, can one repo exclude that rule?">
+    Org default: `include.labels: [security-review]` (only PRs labelled
+    `security-review` get scanned).
+
+    A repo can set its own `include.labels: [needs-review]` in `config.yaml`
+    to require a different label instead, or set `include.labels: []` to
+    remove the requirement entirely and scan PRs regardless of label. Either
+    way, the repo's setting **replaces** the org rule rather than merging
+    with it.
+  </Accordion>
+
+  <Accordion title="Can a repo use a different fail-check threshold than the org?">
+    Org default: `fail_on.severity: critical`.
+
+    A repo handling payment code wants to fail on more than just critical
+    findings, so it sets `fail_on.severity: high` in `config.yaml`. That
+    repo's check now turns red on `high` or `critical` findings; every other
+    repo keeps using `critical`.
+  </Accordion>
+
+  <Accordion title="If a repo only sets one filter, does it lose the rest of the org's filters?">
+    No, each filter category (`exclude.branches`, `exclude.labels`, `include.branches`, and so on) is inherited independently.
+
+    Org default: `exclude.labels: [wip]`. A repo adds `exclude.branches:
+    [release/legacy/**]` but doesn't set `exclude.labels`. That repo now excludes
+    legacy release branches **and** still excludes `wip`-labelled PRs. The org's
+    label rule keeps applying because the repo never overrode it.
+  </Accordion>
+</AccordionGroup>
 
 ## Related
 

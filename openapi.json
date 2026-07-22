@@ -1,0 +1,2454 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/scans": {
+      "post": {
+        "operationId": "RestScanController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestCreateScanDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCreateScanResponseDto"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Insufficient credits"
+          }
+        },
+        "summary": "Trigger a pentest scan",
+        "tags": [
+          "REST API - Scans"
+        ]
+      },
+      "get": {
+        "operationId": "RestScanController_list",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "The page number to retrieve.",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "The number of items to retrieve per page.",
+            "schema": {
+              "default": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "scan_type",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pr",
+                "full"
+              ]
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "running",
+                "completed",
+                "failed",
+                "stopped",
+                "cancelled",
+                "skipped",
+                "pending_verification",
+                "pending_triage",
+                "draft",
+                "estimating",
+                "estimated"
+              ]
+            }
+          },
+          {
+            "name": "sort_by",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "created_at",
+                "updated_at",
+                "status"
+              ]
+            }
+          },
+          {
+            "name": "sort_order",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "DESC",
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestScanListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List scans with pagination and filters",
+        "tags": [
+          "REST API - Scans"
+        ]
+      }
+    },
+    "/scans/{id}/status": {
+      "get": {
+        "operationId": "RestScanController_getStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestScanStatusResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get scan status",
+        "tags": [
+          "REST API - Scans"
+        ]
+      }
+    },
+    "/scans/{id}/findings/export": {
+      "get": {
+        "operationId": "RestScanController_exportFindings",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "format",
+            "required": true,
+            "in": "query",
+            "description": "Export format",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json",
+                "csv",
+                "sarif"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Export findings for a scan",
+        "tags": [
+          "REST API - Scans"
+        ]
+      }
+    },
+    "/scans/{id}/findings": {
+      "get": {
+        "operationId": "RestScanController_listScanFindings",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "The page number to retrieve.",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "The number of items to retrieve per page.",
+            "schema": {
+              "default": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "severity",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low",
+                "info"
+              ]
+            }
+          },
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "open",
+                "true_positive",
+                "false_positive",
+                "accepted_risk",
+                "resolved",
+                "closed"
+              ]
+            }
+          },
+          {
+            "name": "scan_id",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scan_type",
+            "required": false,
+            "in": "query",
+            "description": "Filter by scan type across all scans associated with the finding.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pr",
+                "full"
+              ]
+            }
+          },
+          {
+            "name": "repo_url",
+            "required": false,
+            "in": "query",
+            "description": "Filter by exact repository URL.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "found_since",
+            "required": false,
+            "in": "query",
+            "description": "Only include findings discovered on/after this ISO 8601 timestamp.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "found_until",
+            "required": false,
+            "in": "query",
+            "description": "Only include findings discovered before this ISO 8601 timestamp.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort_by",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "found_at",
+                "updated_at",
+                "severity"
+              ]
+            }
+          },
+          {
+            "name": "sort_order",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "DESC",
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestFindingListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List findings for a specific scan",
+        "tags": [
+          "REST API - Scans"
+        ]
+      }
+    },
+    "/scans/{id}": {
+      "get": {
+        "operationId": "RestScanController_getById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestScanResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get scan by UUID",
+        "tags": [
+          "REST API - Scans"
+        ]
+      }
+    },
+    "/findings": {
+      "get": {
+        "operationId": "RestFindingController_list",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "The page number to retrieve.",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "The number of items to retrieve per page.",
+            "schema": {
+              "default": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "severity",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low",
+                "info"
+              ]
+            }
+          },
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "open",
+                "true_positive",
+                "false_positive",
+                "accepted_risk",
+                "resolved",
+                "closed"
+              ]
+            }
+          },
+          {
+            "name": "scan_id",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scan_type",
+            "required": false,
+            "in": "query",
+            "description": "Filter by scan type across all scans associated with the finding.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pr",
+                "full"
+              ]
+            }
+          },
+          {
+            "name": "repo_url",
+            "required": false,
+            "in": "query",
+            "description": "Filter by exact repository URL.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "found_since",
+            "required": false,
+            "in": "query",
+            "description": "Only include findings discovered on/after this ISO 8601 timestamp.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "found_until",
+            "required": false,
+            "in": "query",
+            "description": "Only include findings discovered before this ISO 8601 timestamp.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort_by",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "found_at",
+                "updated_at",
+                "severity"
+              ]
+            }
+          },
+          {
+            "name": "sort_order",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "DESC",
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestFindingListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List findings with pagination and filters",
+        "tags": [
+          "REST API - Findings"
+        ]
+      }
+    },
+    "/findings/export": {
+      "get": {
+        "operationId": "RestFindingController_exportFindings",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "The page number to retrieve.",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "The number of items to retrieve per page.",
+            "schema": {
+              "default": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "severity",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low",
+                "info"
+              ]
+            }
+          },
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "open",
+                "true_positive",
+                "false_positive",
+                "accepted_risk",
+                "resolved",
+                "closed"
+              ]
+            }
+          },
+          {
+            "name": "scan_id",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scan_type",
+            "required": false,
+            "in": "query",
+            "description": "Filter by scan type across all scans associated with the finding.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pr",
+                "full"
+              ]
+            }
+          },
+          {
+            "name": "repo_url",
+            "required": false,
+            "in": "query",
+            "description": "Filter by exact repository URL.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "found_since",
+            "required": false,
+            "in": "query",
+            "description": "Only include findings discovered on/after this ISO 8601 timestamp.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "found_until",
+            "required": false,
+            "in": "query",
+            "description": "Only include findings discovered before this ISO 8601 timestamp.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort_by",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "found_at",
+                "updated_at",
+                "severity"
+              ]
+            }
+          },
+          {
+            "name": "sort_order",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "DESC",
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          },
+          {
+            "name": "format",
+            "required": true,
+            "in": "query",
+            "description": "Export format",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json",
+                "csv",
+                "sarif"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Export findings as JSON, CSV, or SARIF, optionally filtered by repository",
+        "tags": [
+          "REST API - Findings"
+        ]
+      }
+    },
+    "/findings/{id}": {
+      "patch": {
+        "operationId": "RestFindingController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestUpdateFindingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestUpdateFindingResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update finding state, severity, and/or duplicate link",
+        "tags": [
+          "REST API - Findings"
+        ]
+      },
+      "get": {
+        "operationId": "RestFindingController_getById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestFindingDetailResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get finding details",
+        "tags": [
+          "REST API - Findings"
+        ]
+      }
+    },
+    "/findings/{id}/comments": {
+      "post": {
+        "operationId": "RestFindingController_addComment",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestAddCommentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestAddCommentResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Add a comment to a finding",
+        "tags": [
+          "REST API - Findings"
+        ]
+      }
+    },
+    "/cost-estimations": {
+      "post": {
+        "operationId": "RestCostEstimationController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCostEstimationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CostEstimationResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a cost estimation for one or more repos",
+        "tags": [
+          "REST API - Cost Estimations"
+        ]
+      },
+      "get": {
+        "operationId": "RestCostEstimationController_list",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCostEstimationListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List cost estimations",
+        "tags": [
+          "REST API - Cost Estimations"
+        ]
+      }
+    },
+    "/cost-estimations/{id}": {
+      "get": {
+        "operationId": "RestCostEstimationController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CostEstimationResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get cost estimation details",
+        "tags": [
+          "REST API - Cost Estimations"
+        ]
+      }
+    },
+    "/repos": {
+      "get": {
+        "operationId": "RestRepoController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MergedReposResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List repositories from all connected providers, including whether PR scans are enabled",
+        "tags": [
+          "REST API - Repos"
+        ]
+      }
+    },
+    "/hfw/verdicts/batch": {
+      "post": {
+        "description": "Public, fast-mode HFW batch verdict proxy. This endpoint is intentionally scoped to feed-backed verdicts and can be moved behind X-Api-Key later.",
+        "operationId": "RestHfwController_getBatchVerdicts",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestHfwBatchRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestHfwBatchResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "Get fast dependency verdicts for landing and GitHub Action scans",
+        "tags": [
+          "REST API - HFW"
+        ]
+      }
+    },
+    "/hfw/osv/feed": {
+      "get": {
+        "operationId": "RestHfwController_getOsvFeed",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 500,
+              "default": 200,
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 0,
+              "default": 0,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestHfwOsvFeedResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "List known-malware feed entries for package sitemap generation",
+        "tags": [
+          "REST API - HFW"
+        ]
+      }
+    },
+    "/hfw/verdict/{ecosystem}/{packageName}": {
+      "get": {
+        "description": "Public, fast-mode HFW verdict proxy. This endpoint is intentionally scoped to feed-backed verdicts and can be moved behind X-Api-Key later.",
+        "operationId": "RestHfwController_getPackageVerdict",
+        "parameters": [
+          {
+            "name": "version",
+            "required": true,
+            "in": "query",
+            "description": "Package version to check",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wait_seconds",
+            "required": false,
+            "in": "query",
+            "description": "Seconds to wait for an upstream verdict. Fast mode normally returns immediately.",
+            "schema": {
+              "minimum": 0,
+              "maximum": 60,
+              "default": 0,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestHfwVerdictResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "Get a fast dependency verdict for GitHub Action scans",
+        "tags": [
+          "REST API - HFW"
+        ]
+      }
+    },
+    "/hfw/verdict/{ecosystem}/{scope}/{packageName}": {
+      "get": {
+        "operationId": "RestHfwController_getScopedNpmPackageVerdict",
+        "parameters": [
+          {
+            "name": "version",
+            "required": true,
+            "in": "query",
+            "description": "Package version to check",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wait_seconds",
+            "required": false,
+            "in": "query",
+            "description": "Seconds to wait for an upstream verdict. Fast mode normally returns immediately.",
+            "schema": {
+              "minimum": 0,
+              "maximum": 60,
+              "default": 0,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestHfwVerdictResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "Get a fast dependency verdict for scoped npm GitHub Action scans",
+        "tags": [
+          "REST API - HFW"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Hacktron REST API",
+    "description": "Public REST API for programmatic access to Hacktron",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [
+    {
+      "url": "https://api.hacktron.ai/v1"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "api-key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Api-Key"
+      }
+    },
+    "schemas": {
+      "RestRepoDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Repository URL"
+          },
+          "branch": {
+            "type": "string",
+            "description": "Branch name"
+          },
+          "source": {
+            "type": "string",
+            "description": "Repository source",
+            "enum": [
+              "connected",
+              "public",
+              "upload"
+            ],
+            "default": "connected"
+          }
+        },
+        "required": [
+          "url",
+          "branch"
+        ]
+      },
+      "RestCreateScanDto": {
+        "type": "object",
+        "properties": {
+          "cost_estimation_id": {
+            "type": "string",
+            "description": "Completed cost estimation UUID"
+          },
+          "repos": {
+            "description": "Repositories to scan",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestRepoDto"
+            }
+          },
+          "target_urls": {
+            "description": "Target URLs for pentest",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "auth_instructions": {
+            "type": "string",
+            "description": "Authentication instructions for the target",
+            "maxLength": 2000
+          },
+          "custom_context": {
+            "type": "string",
+            "description": "Custom context for the pentest",
+            "maxLength": 2000
+          },
+          "context_document_ids": {
+            "description": "Context document UUIDs to include",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "cost_estimation_id",
+          "repos"
+        ]
+      },
+      "RestCreateScanResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "task_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "task_id",
+          "status",
+          "message"
+        ]
+      },
+      "RestScanFindingsSummaryDto": {
+        "type": "object",
+        "properties": {
+          "critical": {
+            "type": "number"
+          },
+          "high": {
+            "type": "number"
+          },
+          "medium": {
+            "type": "number"
+          },
+          "low": {
+            "type": "number"
+          },
+          "info": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "critical",
+          "high",
+          "medium",
+          "low",
+          "info"
+        ]
+      },
+      "RestScanResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "task_id": {
+            "type": "string"
+          },
+          "scan_type": {
+            "type": "string",
+            "enum": [
+              "pr",
+              "full"
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "repo_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "branch": {
+            "type": "string",
+            "nullable": true
+          },
+          "pr_number": {
+            "type": "number",
+            "nullable": true
+          },
+          "target_urls": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "findings_summary": {
+            "$ref": "#/components/schemas/RestScanFindingsSummaryDto"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "task_id",
+          "scan_type",
+          "status",
+          "name",
+          "repo_url",
+          "branch",
+          "pr_number",
+          "target_urls",
+          "findings_summary",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "RestScanListResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestScanResponseDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "limit": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "limit"
+        ]
+      },
+      "RestScanStatusResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "task_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "running",
+              "completed",
+              "failed",
+              "stopped",
+              "cancelled",
+              "skipped",
+              "pending_verification",
+              "pending_triage",
+              "draft",
+              "estimating",
+              "estimated"
+            ]
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "task_id",
+          "status",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "RestFindingResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Finding UUID"
+          },
+          "title": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "open",
+              "true_positive",
+              "false_positive",
+              "accepted_risk",
+              "resolved",
+              "closed"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "affected_file": {
+            "type": "string"
+          },
+          "affected_code": {
+            "type": "string"
+          },
+          "proof_of_concept": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "found_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "resolved_at": {
+            "type": "string",
+            "nullable": true,
+            "description": "Timestamp of the most recent transition to resolved (ISO 8601). Null if never resolved."
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "category",
+          "severity",
+          "state",
+          "description",
+          "affected_file",
+          "affected_code",
+          "proof_of_concept",
+          "tags",
+          "scan_id",
+          "found_at",
+          "updated_at",
+          "resolved_at"
+        ]
+      },
+      "RestFindingListResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestFindingResponseDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "limit": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "limit"
+        ]
+      },
+      "RestUpdateFindingDto": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "open",
+              "true_positive",
+              "false_positive",
+              "accepted_risk",
+              "resolved",
+              "closed"
+            ],
+            "description": "New finding state"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ],
+            "description": "New severity level"
+          },
+          "state_reason": {
+            "type": "string",
+            "description": "Reason for the state change (defaults to reason if omitted)"
+          },
+          "severity_reason": {
+            "type": "string",
+            "description": "Reason for the severity change (defaults to reason if omitted)"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Shorthand reason applied to both state and severity changes when their specific reason is not provided"
+          },
+          "duplicate_of": {
+            "type": "string",
+            "nullable": true,
+            "description": "UUID of the canonical finding to mark this finding as a duplicate of, or null to unmark. The target must be in the same repository."
+          }
+        }
+      },
+      "RestUpdateFindingResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "open",
+              "true_positive",
+              "false_positive",
+              "accepted_risk",
+              "resolved",
+              "closed"
+            ]
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ]
+          },
+          "duplicate_of": {
+            "type": "string",
+            "nullable": true,
+            "description": "UUID of the canonical finding this duplicates, if any."
+          }
+        },
+        "required": [
+          "id",
+          "state",
+          "severity",
+          "duplicate_of"
+        ]
+      },
+      "RestAddCommentDto": {
+        "type": "object",
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "Comment text",
+            "maxLength": 4000
+          }
+        },
+        "required": [
+          "comment"
+        ]
+      },
+      "RestAddCommentResponseDto": {
+        "type": "object",
+        "properties": {
+          "comment_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "comment_id"
+        ]
+      },
+      "RestTriageThreadEntryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "reaction": {
+            "type": "string",
+            "nullable": true
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "reaction",
+          "comment",
+          "user_id",
+          "source",
+          "timestamp"
+        ]
+      },
+      "TaintStepDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "source",
+              "propagation",
+              "sink"
+            ]
+          },
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "number"
+          },
+          "end_line": {
+            "type": "number"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string",
+            "description": "Raw symbol docstring; supplemental context for the stepped taint flow."
+          },
+          "taint_sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "code": {
+            "type": "string",
+            "description": "Source code lines for this step's symbol, pre-sliced by the worker."
+          },
+          "code_start_line": {
+            "type": "number",
+            "description": "1-based start line number of the `code` slice in the source file. Used by the frontend as the anchor for chevron-expand requests to GET /findings/:uuid/source."
+          },
+          "code_end_line": {
+            "type": "number",
+            "description": "1-based end line number of the `code` slice in the source file. Used by the frontend as the anchor for chevron-expand requests to GET /findings/:uuid/source."
+          }
+        },
+        "required": [
+          "type",
+          "file",
+          "line",
+          "end_line",
+          "symbol",
+          "description",
+          "taint_sources"
+        ]
+      },
+      "RestFindingDetailResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Finding UUID"
+          },
+          "title": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "open",
+              "true_positive",
+              "false_positive",
+              "accepted_risk",
+              "resolved",
+              "closed"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "affected_file": {
+            "type": "string"
+          },
+          "affected_code": {
+            "type": "string"
+          },
+          "proof_of_concept": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "found_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "resolved_at": {
+            "type": "string",
+            "nullable": true,
+            "description": "Timestamp of the most recent transition to resolved (ISO 8601). Null if never resolved."
+          },
+          "triage_thread": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestTriageThreadEntryDto"
+            }
+          },
+          "taint_path": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaintStepDto"
+            }
+          },
+          "occurrence_count": {
+            "type": "number"
+          },
+          "repo_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "scan_type": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "category",
+          "severity",
+          "state",
+          "description",
+          "affected_file",
+          "affected_code",
+          "proof_of_concept",
+          "tags",
+          "scan_id",
+          "found_at",
+          "updated_at",
+          "resolved_at",
+          "triage_thread",
+          "taint_path",
+          "occurrence_count",
+          "repo_url",
+          "scan_type"
+        ]
+      },
+      "ConnectedCostEstimationRepoDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "Source type",
+            "enum": [
+              "connected"
+            ],
+            "default": "connected"
+          },
+          "repo_url": {
+            "type": "string",
+            "description": "Repository URL"
+          },
+          "branch": {
+            "type": "string",
+            "description": "Branch name"
+          },
+          "github_installation_id": {
+            "type": "number",
+            "description": "GitHub App installation ID. Omitted for PAT-based connections (e.g. GitHub Enterprise), where the installation is resolved from repo_url and the organization instead."
+          }
+        },
+        "required": [
+          "source",
+          "repo_url",
+          "branch"
+        ]
+      },
+      "PublicCostEstimationRepoDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "Source type",
+            "enum": [
+              "public"
+            ]
+          },
+          "repo_url": {
+            "type": "string",
+            "description": "Repository URL"
+          },
+          "branch": {
+            "type": "string",
+            "description": "Branch name"
+          }
+        },
+        "required": [
+          "source",
+          "repo_url",
+          "branch"
+        ]
+      },
+      "UploadCostEstimationRepoDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "Source type",
+            "enum": [
+              "upload"
+            ]
+          },
+          "archive_id": {
+            "type": "string",
+            "description": "Scan archive ID"
+          }
+        },
+        "required": [
+          "source",
+          "archive_id"
+        ]
+      },
+      "CreateCostEstimationDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Friendly name for this estimation"
+          },
+          "repos": {
+            "type": "array",
+            "description": "Repositories to estimate",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/ConnectedCostEstimationRepoDto"
+                },
+                {
+                  "$ref": "#/components/schemas/PublicCostEstimationRepoDto"
+                },
+                {
+                  "$ref": "#/components/schemas/UploadCostEstimationRepoDto"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "source",
+                "mapping": {
+                  "connected": "#/components/schemas/ConnectedCostEstimationRepoDto",
+                  "public": "#/components/schemas/PublicCostEstimationRepoDto",
+                  "upload": "#/components/schemas/UploadCostEstimationRepoDto"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "repos"
+        ]
+      },
+      "RepoInputResponseDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "Source type",
+            "enum": [
+              "connected",
+              "public",
+              "upload"
+            ]
+          },
+          "repo_url": {
+            "type": "string",
+            "description": "Repository URL",
+            "example": "https://github.com/owner/repo"
+          },
+          "branch": {
+            "type": "string",
+            "description": "Branch name",
+            "example": "main"
+          },
+          "commit_sha": {
+            "type": "string",
+            "description": "Resolved commit SHA",
+            "example": "abc123def456"
+          },
+          "archive_id": {
+            "type": "string",
+            "description": "Archive ID (for upload sources)"
+          }
+        }
+      },
+      "RepoResultApplicationDto": {
+        "type": "object",
+        "properties": {
+          "app_name": {
+            "type": "string",
+            "description": "Application name",
+            "example": "backend-api"
+          },
+          "app_root_path": {
+            "type": "string",
+            "description": "Application root path",
+            "example": "apps/api"
+          },
+          "architecture": {
+            "type": "string",
+            "description": "Architecture description",
+            "example": "NestJS REST API with PostgreSQL"
+          }
+        },
+        "required": [
+          "app_name",
+          "app_root_path"
+        ]
+      },
+      "RepoResultResponseDto": {
+        "type": "object",
+        "properties": {
+          "repo_url": {
+            "type": "string",
+            "description": "Repository URL",
+            "example": "https://github.com/owner/repo"
+          },
+          "branch": {
+            "type": "string",
+            "description": "Branch name",
+            "example": "main"
+          },
+          "commit_sha": {
+            "type": "string",
+            "description": "Commit SHA",
+            "example": "abc123def456"
+          },
+          "status": {
+            "type": "string",
+            "description": "Result status",
+            "enum": [
+              "completed",
+              "failed"
+            ],
+            "example": "completed"
+          },
+          "from_cache": {
+            "type": "boolean",
+            "description": "Whether result was served from cache",
+            "example": false
+          },
+          "applications": {
+            "description": "Detected applications",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RepoResultApplicationDto"
+            }
+          },
+          "credits": {
+            "type": "number",
+            "description": "Estimated credits for this repo",
+            "example": 4000
+          },
+          "error": {
+            "type": "string",
+            "description": "Error message (when status is failed)"
+          },
+          "failure_reason": {
+            "type": "string",
+            "description": "Structured failure reason",
+            "enum": [
+              "unsupported_language"
+            ]
+          },
+          "unsupported_languages": {
+            "description": "Detected unsupported languages among the top languages",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "repo_url",
+          "status",
+          "from_cache"
+        ]
+      },
+      "CostEstimationResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Estimation UUID",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "organization_id": {
+            "type": "string",
+            "description": "Organization UUID",
+            "example": "f336d0bc-b841-465b-8045-024475c079dd"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User UUID",
+            "example": "f336d0bc-b841-465b-8045-024475c079dd"
+          },
+          "name": {
+            "type": "string",
+            "description": "Friendly name for this estimation"
+          },
+          "task_id": {
+            "type": "string",
+            "description": "Task identifier",
+            "example": "cost_est_owner-repo_12345"
+          },
+          "status": {
+            "type": "string",
+            "description": "Estimation status",
+            "enum": [
+              "pending",
+              "running",
+              "completed",
+              "partial",
+              "failed"
+            ],
+            "example": "completed"
+          },
+          "repos": {
+            "description": "Input repositories",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RepoInputResponseDto"
+            }
+          },
+          "total_credits": {
+            "type": "number",
+            "description": "Total estimated credits across all repos",
+            "example": 8000
+          },
+          "repo_results": {
+            "description": "Per-repo estimation results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RepoResultResponseDto"
+            }
+          },
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "triage_required": {
+            "type": "boolean",
+            "description": "Whether human triage is mandatory for a scan of this estimation (large app, above the predicted-cost threshold). The customer cannot opt out when true.",
+            "example": false
+          },
+          "triage_fee_credits": {
+            "type": "number",
+            "description": "Triage fee in credits (a percentage of the scan base credits) added when triage is enabled",
+            "example": 1600
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Timestamp when estimation was created",
+            "example": "2026-03-10T12:00:00.000Z"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Timestamp when estimation was last updated",
+            "example": "2026-03-10T12:05:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "organization_id",
+          "user_id",
+          "task_id",
+          "status",
+          "repos",
+          "triage_required",
+          "triage_fee_credits",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "RestCostEstimationListResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CostEstimationResponseDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "data",
+          "total"
+        ]
+      },
+      "UnifiedRepoDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Internal UUID",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "provider": {
+            "type": "string",
+            "description": "Source provider",
+            "enum": [
+              "github",
+              "gitlab",
+              "bitbucket"
+            ],
+            "example": "github"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name (owner/repo for GitHub, namespace/project for GitLab, workspace/slug for Bitbucket)",
+            "example": "octocat/Hello-World"
+          },
+          "providerKey": {
+            "type": "string",
+            "description": "Provider-native identifier for mutation endpoints. GitHub: owner/repo, GitLab: numeric projectId (as string), Bitbucket: repository UUID.",
+            "example": "octocat/Hello-World"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether the repository is enabled for scanning",
+            "example": true
+          },
+          "threatModelUpdatedAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO timestamp of the repo's most recent threat_model.md update, or null if it has none. Repos are returned ordered by this (most recent first; repos without a threat model last).",
+            "example": "2026-06-22T12:00:00.000Z"
+          },
+          "prScansEnabled": {
+            "type": "boolean",
+            "description": "Whether PR/MR scans are enabled (GitHub and GitLab)",
+            "example": true
+          },
+          "prScanBranches": {
+            "description": "Target branch patterns for PR/MR scans (GitHub and GitLab)",
+            "example": [
+              "main",
+              "**/release/**"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "installationId": {
+            "type": "number",
+            "description": "GitHub App installation ID (GitHub only)",
+            "example": 12345678
+          },
+          "baseUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "GitHub Enterprise base URL for self-hosted (PAT) installations. Null/absent for github.com. Clients should build clone/display URLs from this host instead of assuming github.com (GitHub only).",
+            "example": "https://ghe.example.com"
+          },
+          "defaultBranch": {
+            "type": "string",
+            "description": "Default branch (GitLab only)",
+            "example": "main"
+          },
+          "visibility": {
+            "type": "string",
+            "description": "Project visibility (GitLab only)",
+            "example": "private"
+          },
+          "webhookRegistered": {
+            "type": "boolean",
+            "description": "Whether a webhook is registered for this project (GitLab only)",
+            "example": true
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "Whether the repository is private (Bitbucket only)",
+            "example": true
+          }
+        },
+        "required": [
+          "id",
+          "provider",
+          "name",
+          "providerKey",
+          "enabled",
+          "threatModelUpdatedAt"
+        ]
+      },
+      "MergedReposResponseDto": {
+        "type": "object",
+        "properties": {
+          "repos": {
+            "description": "Unified list of repositories from all providers",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UnifiedRepoDto"
+            }
+          },
+          "errors": {
+            "description": "Providers that failed to respond",
+            "example": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "repos",
+          "errors"
+        ]
+      },
+      "RestHfwBatchPackageDto": {
+        "type": "object",
+        "properties": {
+          "ecosystem": {
+            "type": "string",
+            "enum": [
+              "npm",
+              "pypi"
+            ]
+          },
+          "package": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "ecosystem",
+          "package",
+          "version"
+        ]
+      },
+      "RestHfwBatchRequestDto": {
+        "type": "object",
+        "properties": {
+          "packages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestHfwBatchPackageDto"
+            }
+          }
+        },
+        "required": [
+          "packages"
+        ]
+      },
+      "RestHfwVerdictResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ready",
+              "pending",
+              "scanning"
+            ]
+          },
+          "ecosystem": {
+            "type": "string",
+            "enum": [
+              "npm",
+              "pypi"
+            ]
+          },
+          "package": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "level": {
+            "type": "string",
+            "enum": [
+              "clean",
+              "suspicious",
+              "malicious",
+              "unknown"
+            ]
+          },
+          "confidence": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "source": {
+            "type": "string"
+          },
+          "osv_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "ecosystem",
+          "package",
+          "version",
+          "level",
+          "confidence",
+          "summary",
+          "findings"
+        ]
+      },
+      "RestHfwBatchResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "verdicts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestHfwVerdictResponseDto"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "verdicts",
+          "errors"
+        ]
+      },
+      "RestHfwOsvFeedResultDto": {
+        "type": "object",
+        "properties": {
+          "ecosystem": {
+            "type": "string"
+          },
+          "package": {
+            "type": "string"
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "ecosystem",
+          "package",
+          "versions"
+        ]
+      },
+      "RestHfwOsvFeedResponseDto": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestHfwOsvFeedResultDto"
+            }
+          }
+        },
+        "required": [
+          "results"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "api-key": []
+    }
+  ]
+}

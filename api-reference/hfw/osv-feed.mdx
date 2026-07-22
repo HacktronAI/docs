@@ -1,0 +1,11 @@
+---
+title: "List malware feed"
+openapi: "openapi.json GET /hfw/osv/feed"
+description: "List known-malware feed entries."
+---
+
+Returns entries from the known-malware feed, used to generate the package sitemap. Page through the feed with the `limit` and `offset` query parameters.
+
+<Info>
+  This is a public endpoint and does **not** require authentication.
+</Info>

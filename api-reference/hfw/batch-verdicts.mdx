@@ -1,0 +1,13 @@
+---
+title: "Get batch verdicts"
+openapi: "openapi.json POST /hfw/verdicts/batch"
+description: "Get fast dependency verdicts for many packages at once."
+---
+
+Returns fast dependency verdicts for a list of packages in a single request, used by landing-page and GitHub Action scans to flag known-malicious dependencies. Pass the packages to check in the `packages` array of the request body.
+
+To look up a single package instead, use [Get package verdict](/api-reference/hfw/get-package-verdict).
+
+<Info>
+  This is a public, fast-mode endpoint and does **not** require authentication. It is scoped to feed-backed verdicts and returns immediately.
+</Info>
