@@ -1,9 +1,3 @@
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
-
 .bg-primary-dark,
 .bg-primary-dark *,
 #banner * {
