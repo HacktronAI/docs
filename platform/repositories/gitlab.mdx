@@ -85,10 +85,9 @@ scope.
 
 <Note>
   On self-managed GitLab, service accounts require GitLab EE, and by default
-  only an instance administrator can create them (administrators can also
-  allow top-level group Owners to create them). Alternatively, a personal
-  access token from any user with Maintainer access and the same scopes works
-  identically.
+  only an instance administrator can create them (administrators can also allow
+  top-level group Owners to create them). Alternatively, a personal access token
+  from any user with Maintainer access and the same scopes works identically.
 </Note>
 
 When you open the **Connect GitLab** modal in Hacktron, select **Self-hosted /
@@ -96,10 +95,9 @@ GitLab Enterprise** and enter your instance's base URL (e.g.
 `https://gitlab.example.com`) before entering the token.
 
 <Note>
-  Self-hosted prerequisites:
-  - Your GitLab instance must be reachable from Hacktron over HTTPS with a
-    valid TLS certificate.
-  - GitLab installed under a URL subpath (e.g. `https://example.com/gitlab`)
-    is not supported — the base URL must be the instance origin.
-  - The token must carry the `api` scope on your self-hosted instance.
+  Self-hosted prerequisites: - Your GitLab instance must be reachable from
+  Hacktron over HTTPS with a valid TLS certificate. - GitLab installed under a
+  URL subpath (e.g. `https://example.com/gitlab`) is not supported — the base
+  URL must be the instance origin. - The token must carry the `api` scope on
+  your self-hosted instance.
 </Note>

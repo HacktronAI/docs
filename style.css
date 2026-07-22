@@ -9,9 +9,8 @@
    ugly line under the icon. */
 .dark
   .prose
-  :where(a):not(
-    :where([class~="not-prose"], [class~="not-prose"] *, [class~="border-0"])
-  ) {
+  :where(a):not(:where([class~="not-prose"], [class~="not-prose"]
+      *, [class~="border-0"])) {
   border-bottom: 1px solid rgb(var(--primary-light)) !important;
 }
 

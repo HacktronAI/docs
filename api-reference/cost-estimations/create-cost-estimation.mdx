@@ -8,9 +8,7 @@ A cost estimation resolves the repositories you plan to scan, detects applicatio
 
 Cost estimations run asynchronously. The `POST` returns a record in `pending` or `running` state; poll [`GET /cost-estimations/{id}`](/api-reference/cost-estimations/get-cost-estimation) until `status` reaches `completed`, `partial`, or `failed`.
 
-<Info>
-  **Scope required**: `write`
-</Info>
+<Info>**Scope required**: `write`</Info>
 
 ### Terminal statuses
 

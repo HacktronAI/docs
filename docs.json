@@ -25,11 +25,7 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": [
-              "index",
-              "platform/overview",
-              "platform/dashboard"
-            ]
+            "pages": ["index", "platform/overview", "platform/dashboard"]
           },
           {
             "group": "Setup",
@@ -88,10 +84,7 @@
           },
           {
             "group": "Resources",
-            "pages": [
-              "privacy",
-              "security"
-            ]
+            "pages": ["privacy", "security"]
           }
         ]
       },
@@ -101,16 +94,11 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": [
-              "code-review/overview"
-            ]
+            "pages": ["code-review/overview"]
           },
           {
             "group": "Getting started",
-            "pages": [
-              "code-review/setup",
-              "code-review/billing"
-            ]
+            "pages": ["code-review/setup", "code-review/billing"]
           },
           {
             "group": "Management",
@@ -143,21 +131,15 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": [
-              "white-box-pentest/overview"
-            ]
+            "pages": ["white-box-pentest/overview"]
           },
           {
             "group": "Getting started",
-            "pages": [
-              "white-box-pentest/quickstart"
-            ]
+            "pages": ["white-box-pentest/quickstart"]
           },
           {
             "group": "Credits and billing",
-            "pages": [
-              "white-box-pentest/billing"
-            ]
+            "pages": ["white-box-pentest/billing"]
           }
         ]
       },
@@ -206,9 +188,7 @@
           },
           {
             "group": "Repositories",
-            "pages": [
-              "api-reference/repos/list-repos"
-            ]
+            "pages": ["api-reference/repos/list-repos"]
           },
           {
             "group": "Dependency Firewall",
@@ -227,9 +207,7 @@
         "groups": [
           {
             "group": "MCP",
-            "pages": [
-              "mcp/get-started"
-            ]
+            "pages": ["mcp/get-started"]
           }
         ]
       },

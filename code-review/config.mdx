@@ -9,10 +9,11 @@ Add a `.hacktron/config.yaml` file to your repository to control Hacktron's Code
 - **Include** specific pull and merge requests to be scanned.
 - **Fail** the Hacktron check when a finding meets a severity threshold, so risky changes can't merge.
 
-This is separate from [`.hacktron/rules.md`](/code-review/rules), which shapes the *quality* of a review. `config.yaml` controls *whether* a PR is scanned and *whether* its check passes.
+This is separate from [`.hacktron/rules.md`](/code-review/rules), which shapes the _quality_ of a review. `config.yaml` controls _whether_ a PR is scanned and _whether_ its check passes.
 
 <Tip>
-  Want to override these rules for a single PR? Comment `@hacktronai review` to force a scan.
+  Want to override these rules for a single PR? Comment `@hacktronai review` to
+  force a scan.
 </Tip>
 
 ## Configuration hierarchy
@@ -77,14 +78,14 @@ The `exclude` block tells Hacktron not to scan a pull or merge request. A match 
 
 Rules are evaluated in this order, first match applies:
 
-| Key | Matches when | Match style |
-|---|---|---|
-| `exclude.branches` | the PR/MR targets one of these branches | case-insensitive glob |
-| `exclude.labels` | the PR/MR carries one of these labels | case-insensitive exact match|
-| `exclude.keywords` | the PR/MR **title** contains one of these strings | case-insensitive substring |
-| `exclude.paths` | **every** changed file matches one of these patterns | case-insensitive glob |
-| `exclude.authors` | the PR/MR was opened by one of these usernames | case-insensitive exact match|
-| any key set to `[]` | clears the org-wide default for that key ([Configuration hierarchy](#configuration-hierarchy)) | - |
+| Key                 | Matches when                                                                                   | Match style                  |
+| ------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------- |
+| `exclude.branches`  | the PR/MR targets one of these branches                                                        | case-insensitive glob        |
+| `exclude.labels`    | the PR/MR carries one of these labels                                                          | case-insensitive exact match |
+| `exclude.keywords`  | the PR/MR **title** contains one of these strings                                              | case-insensitive substring   |
+| `exclude.paths`     | **every** changed file matches one of these patterns                                           | case-insensitive glob        |
+| `exclude.authors`   | the PR/MR was opened by one of these usernames                                                 | case-insensitive exact match |
+| any key set to `[]` | clears the org-wide default for that key ([Configuration hierarchy](#configuration-hierarchy)) | -                            |
 
 <Note>
   On Bitbucket, `exclude.labels`/`include.labels` are unused, since Bitbucket
@@ -96,48 +97,49 @@ Rules are evaluated in this order, first match applies:
 ```yaml
 exclude:
   branches:
-    - "release/legacy/**"    # exclude PRs targeting a legacy release branch
+    - "release/legacy/**" # exclude PRs targeting a legacy release branch
   labels:
-    - hacktron-exclude       # label the PR "hacktron-exclude" to exclude it
+    - hacktron-exclude # label the PR "hacktron-exclude" to exclude it
   keywords:
-    - "[exclude hacktron]"   # put this anywhere in the PR/MR title to exclude it
+    - "[exclude hacktron]" # put this anywhere in the PR/MR title to exclude it
   paths:
-    - "docs/**"              # exclude when the PR only touches these paths
+    - "docs/**" # exclude when the PR only touches these paths
     - "**/*.md"
   authors:
-    - "dependabot[bot]"        # exclude all PRs opened by dependabot
+    - "dependabot[bot]" # exclude all PRs opened by dependabot
 ```
 
 <Note>
-  `exclude.paths` excludes a scan **only when every changed file matches** one of the
-  patterns. If even one changed file falls outside the patterns, the PR is
-  scanned as usual. Patterns use the same glob syntax as `exclude.branches` — for
-  example `vendor/**`, `**/*.md`, or `docs/**`.
+  `exclude.paths` excludes a scan **only when every changed file matches** one
+  of the patterns. If even one changed file falls outside the patterns, the PR
+  is scanned as usual. Patterns use the same glob syntax as `exclude.branches` —
+  for example `vendor/**`, `**/*.md`, or `docs/**`.
 </Note>
 
 <Accordion title="Glob pattern syntax">
-  `exclude.branches`, `exclude.paths`, and `include.branches` (and their org-wide
-  equivalents) accept glob patterns mixed with literals: `*`, `**`, `?`, and
-  `{a,b}` brace expansion. Matching is case-insensitive. `[`, `]`, and a
-  leading `!` are literal, not special syntax. Each category allows up to 50 entries.
+  `exclude.branches`, `exclude.paths`, and `include.branches` (and their
+  org-wide equivalents) accept glob patterns mixed with literals: `*`, `**`,
+  `?`, and `{(a, b)}` brace expansion. Matching is case-insensitive. `[`, `]`,
+  and a leading `!` are literal, not special syntax. Each category allows up to
+  50 entries.
 </Accordion>
 
 <Accordion title="Matching nested branches with * vs **">
   `*` matches within one path segment; `**` also crosses `/`.
 
-  | Pattern | Matches | Doesn't match |
-  |---|---|---|
-  | `release/*` | `release/foo` | `release/foo/bar` |
-  | `release/**` | `release/foo`, `release/foo/bar` | — |
-  | `release/legacy/**` | `release/legacy/1`, `release/legacy/1/hotfix` | `release/other/1` |
+| Pattern             | Matches                                       | Doesn't match     |
+| ------------------- | --------------------------------------------- | ----------------- |
+| `release/*`         | `release/foo`                                 | `release/foo/bar` |
+| `release/**`        | `release/foo`, `release/foo/bar`              | —                 |
+| `release/legacy/**` | `release/legacy/1`, `release/legacy/1/hotfix` | `release/other/1` |
 
-  Use `release/*` for one-level branches (e.g. `release/2.4`). Use `release/**`
-  to cover any depth. Add a literal segment like `release/legacy/**` to target
-  just that subtree.
+Use `release/*` for one-level branches (e.g. `release/2.4`). Use `release/**`
+to cover any depth. Add a literal segment like `release/legacy/**` to target
+just that subtree.
 
-  Combine `exclude` and `include` to exclude a subtree: `include.branches:
-  ["release/**"]` with `exclude.branches: ["release/legacy/**"]` scans all
-  release branches except `release/legacy/**`.
+Combine `exclude` and `include` to exclude a subtree: `include.branches: ["release/**"]` with `exclude.branches: ["release/legacy/**"]` scans all
+release branches except `release/legacy/**`.
+
 </Accordion>
 
 ## Include scans
@@ -148,28 +150,30 @@ Use the include block to scan **only** pull and merge requests that match specif
 include:
   branches:
     - "main"
-    - "release/**"            # only scan PRs targeting main or a release branch
+    - "release/**" # only scan PRs targeting main or a release branch
   labels:
-    - security-review         # only scan PRs labelled "security-review"
+    - security-review # only scan PRs labelled "security-review"
   authors:
-    - alice                   # ...and were opened by Alice or Bob
+    - alice # ...and were opened by Alice or Bob
     - bob
   keywords:
-    - "please review"         # ...and title contains "please review"
+    - "please review" # ...and title contains "please review"
 ```
 
-| Key | Matches when |
-|---|---|
-| `include.branches` | the PR/MR targets one of these branches (case-insensitive glob) |
-| `include.labels` | the PR/MR carries at least one of these labels (case-insensitive exact match) |
-| `include.authors` | the PR/MR was opened by one of these usernames (case-insensitive exact match) |
-| `include.keywords` | the PR/MR title contains one of these strings (case-insensitive substring) |
+| Key                 | Matches when                                                                                   |
+| ------------------- | ---------------------------------------------------------------------------------------------- |
+| `include.branches`  | the PR/MR targets one of these branches (case-insensitive glob)                                |
+| `include.labels`    | the PR/MR carries at least one of these labels (case-insensitive exact match)                  |
+| `include.authors`   | the PR/MR was opened by one of these usernames (case-insensitive exact match)                  |
+| `include.keywords`  | the PR/MR title contains one of these strings (case-insensitive substring)                     |
 | any key set to `[]` | clears the org-wide default for that key ([Configuration hierarchy](#configuration-hierarchy)) |
 
 `include.labels: [feature, bugfix]` matches either label. Across categories, `include` requires matching all: `include.branches: [main]` + `include.authors: [alice]` only scans Alice's PRs to `main`.
 
 <Note>
-  `exclude` and `include` can target the same category. See [glob matching](/code-review/config#matching-nested-branches-with-vs) for pattern syntax.
+  `exclude` and `include` can target the same category. See [glob
+  matching](/code-review/config#matching-nested-branches-with-vs) for pattern
+  syntax.
 </Note>
 
 ## Fail the check on findings
@@ -178,10 +182,12 @@ By default, the Hacktron check is green as long as the scan completes. Findings 
 
 ![Failed check example](/images/fail_on_failure_example.png)
 
-The threshold is **inclusive**: `high` fails the check on `high` *and* `critical` findings, while `critical` fails only on `critical`.
+The threshold is **inclusive**: `high` fails the check on `high` _and_ `critical` findings, while `critical` fails only on `critical`.
 
 <Note>
-  Only **open or confirmed valid** findings count toward the threshold. [Triaging](/code-review/findings-feedback#triage-comments) one recomputes the check immediately.
+  Only **open or confirmed valid** findings count toward the threshold.
+  [Triaging](/code-review/findings-feedback#triage-comments) one recomputes the
+  check immediately.
 </Note>
 
 You can set the threshold org-wide from the settings page, or per repository in `config.yaml` (see [Configuration hierarchy](#configuration-hierarchy)).
@@ -228,6 +234,7 @@ Hacktron is **fail-open** about configuration:
     remove the requirement entirely and scan PRs regardless of label. Either
     way, the repo's setting **replaces** the org rule rather than merging
     with it.
+
   </Accordion>
 
   <Accordion title="Can a repo use a different fail-check threshold than the org?">
@@ -237,6 +244,7 @@ Hacktron is **fail-open** about configuration:
     findings, so it sets `fail_on.severity: high` in `config.yaml`. That
     repo's check now turns red on `high` or `critical` findings; every other
     repo keeps using `critical`.
+
   </Accordion>
 
   <Accordion title="If a repo only sets one filter, does it lose the rest of the org's filters?">
@@ -246,6 +254,7 @@ Hacktron is **fail-open** about configuration:
     [release/legacy/**]` but doesn't set `exclude.labels`. That repo now excludes
     legacy release branches **and** still excludes `wip`-labelled PRs. The org's
     label rule keeps applying because the repo never overrode it.
+
   </Accordion>
 </AccordionGroup>
 

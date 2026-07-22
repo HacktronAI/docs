@@ -8,10 +8,10 @@ Remediation is a part of [Automations](/platform/automations/overview) that fixe
 <Card title="Remediations test the patch like a real engineer" icon="check-circle">
   When a remediation runs, Hacktron does the following:
 
-  1. **Verifies that the finding is real.** Tests whether the reported issue is actually exploitable in this code. If the finding is wrong (e.g. the code is unreachable), Hacktron reports it as a false positive. We will never attempt to fix already sound code.
-  2. **Implements the fix.** Makes the minimal correct fix that addresses the root cause of the vulnerability.
-  3. **Tests the fix.** Runs the existing test suite for the repository, if any. Adds relevant regression tests & makes sure the fix correctly addresses the issue while avoiding breaking anything else.
-</Card>
+1. **Verifies that the finding is real.** Tests whether the reported issue is actually exploitable in this code. If the finding is wrong (e.g. the code is unreachable), Hacktron reports it as a false positive. We will never attempt to fix already sound code.
+2. **Implements the fix.** Makes the minimal correct fix that addresses the root cause of the vulnerability.
+3. **Tests the fix.** Runs the existing test suite for the repository, if any. Adds relevant regression tests & makes sure the fix correctly addresses the issue while avoiding breaking anything else.
+   </Card>
 
 Remediation runs use [automation credits](/platform/automations/credits). You can start a run yourself from a finding or let it happen automatically through an [automation](/platform/automations/overview)'s Remediation action.
 
@@ -25,18 +25,23 @@ Remediation runs use [automation credits](/platform/automations/credits). You ca
     Select **Remediate**. Hacktron starts a remediation run for the finding.
 
     ![Remediate finding](/images/remediation-2.png)
+
   </Step>
   <Step title="Review the fix">
     When the agent produces a fix, Hacktron commits it to a dedicated fix branch and opens a pull or merge request in the finding's repository. Review and merge it as usual.
 
     ![Review the fix](/images/remediation-pr.png)
+
   </Step>
 </Steps>
 
 Triggering remediation requires the **Member** role or above. Only one run happens per finding; if you select **Remediate** again while a run is active, Hacktron returns the existing run instead of starting a second one.
 
 <Info>
-  To push fix branches, Hacktron's GitHub App needs the **Contents: Read and write** permission. If your installation predates remediation, GitHub asks an organization admin to approve the updated permission before fixes can be pushed.
+  To push fix branches, Hacktron's GitHub App needs the **Contents: Read and
+  write** permission. If your installation predates remediation, GitHub asks an
+  organization admin to approve the updated permission before fixes can be
+  pushed.
 </Info>
 
 ## Where the fix lands
@@ -52,17 +57,18 @@ If the source PR merges while the agent is still working, the fix is re-targeted
 
 A remediation run ends in one of four states:
 
-| Outcome | Meaning |
-| --- | --- |
-| **Success** | A fix was generated and a pull or merge request was opened. |
-| **No fix needed** | The agent completed the run and concluded no code change is required. |
-| **False positive** | The agent concluded the finding is not a real issue. |
-| **Failed** | The run could not complete; the failure reason is recorded. |
+| Outcome            | Meaning                                                               |
+| ------------------ | --------------------------------------------------------------------- |
+| **Success**        | A fix was generated and a pull or merge request was opened.           |
+| **No fix needed**  | The agent completed the run and concluded no code change is required. |
+| **False positive** | The agent concluded the finding is not a real issue.                  |
+| **Failed**         | The run could not complete; the failure reason is recorded.           |
 
 Runs triggered by an automation appear in that automation's [run history](/platform/automations/overview#run-history), including the credits each run consumed.
 
 ## Run remediation automatically
 
 <Card title="Automations" icon="bolt" href="/platform/automations/overview">
-  Auto-remediate qualifying findings across repositories and applications, with Slack and email notifications.
+  Auto-remediate qualifying findings across repositories and applications, with
+  Slack and email notifications.
 </Card>

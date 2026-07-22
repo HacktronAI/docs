@@ -11,8 +11,9 @@ API keys are:
 - **Scoped** — each key declares one or more scopes (`read`, `write`, `delete`) that gate which endpoints it can call.
 
 <Note>
-  Connecting an AI assistant (Claude, Cursor, Codex, …) instead of calling the API directly? See the
-  [MCP](/mcp/get-started) guide — it can authenticate with one of these API keys or with OAuth.
+  Connecting an AI assistant (Claude, Cursor, Codex, …) instead of calling the
+  API directly? See the [MCP](/mcp/get-started) guide — it can authenticate with
+  one of these API keys or with OAuth.
 </Note>
 
 ## Creating an API key
@@ -28,7 +29,9 @@ API keys are created from the Hacktron dashboard. You must have the **Admin** or
 7. Click **Create**.
 
 <Warning>
-  The full API key is shown **only once**, immediately after creation. Copy it and store it in a secret manager right away. If you lose it, you will need to revoke the key and create a new one.
+  The full API key is shown **only once**, immediately after creation. Copy it
+  and store it in a secret manager right away. If you lose it, you will need to
+  revoke the key and create a new one.
 </Warning>
 
 Each organization can have at most **10 active API keys** at a time. Revoke unused keys before creating new ones if you hit the limit.
@@ -54,7 +57,8 @@ curl https://api.hacktron.ai/v1/scans \
 ```
 
 <Tip>
-  Never hardcode API keys in source control or client-side code. Load them from environment variables or a secret manager at runtime.
+  Never hardcode API keys in source control or client-side code. Load them from
+  environment variables or a secret manager at runtime.
 </Tip>
 
 ## Scopes
@@ -87,13 +91,15 @@ curl https://api.hacktron.ai/v1/scans?limit=1 \
 A successful response returns HTTP `200` and a JSON body containing `data`, `total`, `page`, and `limit` fields.
 
 <Tip>
-  Endpoints can also be exercised interactively in the Swagger UI at [https://api.hacktron.ai/docs](https://api.hacktron.ai/docs). The "Authorize" button accepts an `X-Api-Key` value and persists it for subsequent requests.
+  Endpoints can also be exercised interactively in the Swagger UI at
+  [https://api.hacktron.ai/docs](https://api.hacktron.ai/docs). The "Authorize"
+  button accepts an `X-Api-Key` value and persists it for subsequent requests.
 </Tip>
 
 Common failures:
 
-| Status | Meaning                                                                                      |
-| ------ | -------------------------------------------------------------------------------------------- |
-| `401`  | Missing, malformed, revoked, or expired API key.                                             |
-| `403`  | Key is valid but is missing the required scope.                                              |
-| `429`  | You have hit the rate limit for this key. See [Rate limits](/api-reference/rate-limits).    |
+| Status | Meaning                                                                                  |
+| ------ | ---------------------------------------------------------------------------------------- |
+| `401`  | Missing, malformed, revoked, or expired API key.                                         |
+| `403`  | Key is valid but is missing the required scope.                                          |
+| `429`  | You have hit the rate limit for this key. See [Rate limits](/api-reference/rate-limits). |

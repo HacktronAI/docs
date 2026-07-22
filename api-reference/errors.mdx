@@ -7,19 +7,19 @@ The Hacktron REST API uses standard HTTP status codes to indicate success and fa
 
 ## Status codes
 
-| Status | Meaning                                                                                                    |
-| ------ | ---------------------------------------------------------------------------------------------------------- |
-| `200`  | Successful `GET` or `PATCH`.                                                                               |
-| `201`  | Successful `POST` — a new resource was created.                                                            |
-| `204`  | Successful request with no response body (for example, revoking a key).                                    |
-| `400`  | Bad request. Typically a validation failure; `message` identifies the field that failed validation.        |
-| `401`  | Missing, malformed, revoked, or expired API key.                                                           |
+| Status | Meaning                                                                                                   |
+| ------ | --------------------------------------------------------------------------------------------------------- |
+| `200`  | Successful `GET` or `PATCH`.                                                                              |
+| `201`  | Successful `POST` — a new resource was created.                                                           |
+| `204`  | Successful request with no response body (for example, revoking a key).                                   |
+| `400`  | Bad request. Typically a validation failure; `message` identifies the field that failed validation.       |
+| `401`  | Missing, malformed, revoked, or expired API key.                                                          |
 | `402`  | Payment required. Returned by `POST /scans` when the organization has insufficient Whitebox Scan credits. |
-| `403`  | Your API key does not have the required scope.                                                             |
-| `404`  | The resource does not exist, or is not visible to your organization.                                       |
-| `409`  | Conflict. For example, exceeding the maximum active API key count when creating a new key.                 |
-| `429`  | Rate limit exceeded. See [Rate limits](/api-reference/rate-limits).                                        |
-| `500`  | Unexpected server error. Safe to retry with backoff; contact support if it persists.                       |
+| `403`  | Your API key does not have the required scope.                                                            |
+| `404`  | The resource does not exist, or is not visible to your organization.                                      |
+| `409`  | Conflict. For example, exceeding the maximum active API key count when creating a new key.                |
+| `429`  | Rate limit exceeded. See [Rate limits](/api-reference/rate-limits).                                       |
+| `500`  | Unexpected server error. Safe to retry with backoff; contact support if it persists.                      |
 
 ## Error body shape
 

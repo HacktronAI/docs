@@ -16,11 +16,11 @@ We welcome contributions from the community to improve our documentation, e.g. f
 
 ### Prerequisites
 
-* Node.js 24
+- Node.js 24
 
-* Git
+- Git
 
-* A code editor (we recommend VS Code with MDX extension)
+- A code editor (we recommend VS Code with MDX extension)
 
 ### Local Development
 
@@ -44,11 +44,11 @@ pnpm dev
 
 For VS Code users, we recommend installing these extensions:
 
-* MDX
+- MDX
 
-* Prettier
+- Prettier
 
-* Tailwind CSS IntelliSense
+- Tailwind CSS IntelliSense
 
 ## Writing Guidelines
 
@@ -58,8 +58,8 @@ Each document should follow this structure:
 
 ```mdx
 ---
-title: 'Document Title'
-description: 'A brief description of the content'
+title: "Document Title"
+description: "A brief description of the content"
 ---
 
 ## Overview
@@ -71,6 +71,7 @@ Brief introduction to the topic.
 Your primary content sections.
 
 ## Related
+
 - Link to related doc 1
 - Link to related doc 2
 ```
@@ -81,34 +82,26 @@ Use Mintlify components to enhance documentation:
 
 ```mdx
 <Tabs>
-  <Tab title="Example 1">
-    Content for example 1
-  </Tab>
-  <Tab title="Example 2">
-    Content for example 2
-  </Tab>
+  <Tab title="Example 1">Content for example 1</Tab>
+  <Tab title="Example 2">Content for example 2</Tab>
 </Tabs>
 
 <Steps>
-  <Step title="First Step">
-    Instructions for first step
-  </Step>
+  <Step title="First Step">Instructions for first step</Step>
 </Steps>
 
-<Card>
-  Important information here
-</Card>
+<Card>Important information here</Card>
 ```
 
 ### Code Examples
 
-* Use syntax highlighting
+- Use syntax highlighting
 
-* Include comments and write idiomatic code
+- Include comments and write idiomatic code
 
-* Keep examples concise
+- Keep examples concise
 
-* Test all code examples
+- Test all code examples
 
 Good example:
 

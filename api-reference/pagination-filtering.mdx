@@ -9,16 +9,18 @@ List endpoints in the Hacktron REST API share a consistent set of query paramete
 
 Most list endpoints use **page‑based pagination**:
 
-| Parameter | Type    | Default | Max | Description                   |
-| --------- | ------- | ------- | --- | ----------------------------- |
-| `page`    | integer | `1`     | —   | 1‑based page number.          |
-| `limit`   | integer | `15`    | `100` | Number of items per page.   |
+| Parameter | Type    | Default | Max   | Description               |
+| --------- | ------- | ------- | ----- | ------------------------- |
+| `page`    | integer | `1`     | —     | 1‑based page number.      |
+| `limit`   | integer | `15`    | `100` | Number of items per page. |
 
 The response echoes the current `page` and `limit`, and includes `total` for building pagination controls or iterating until exhausted:
 
 ```json
 {
-  "data": [/* items for this page */],
+  "data": [
+    /* items for this page */
+  ],
   "total": 284,
   "page": 2,
   "limit": 50
@@ -38,17 +40,20 @@ done
 ```
 
 <Note>
-  **Cost Estimations** use offset‑based pagination instead, with `limit` (default `50`, max `100`) and `offset` (default `0`). This is called out explicitly on the [List Cost Estimations](/api-reference/cost-estimations/list-cost-estimations) page.
+  **Cost Estimations** use offset‑based pagination instead, with `limit`
+  (default `50`, max `100`) and `offset` (default `0`). This is called out
+  explicitly on the [List Cost
+  Estimations](/api-reference/cost-estimations/list-cost-estimations) page.
 </Note>
 
 ## Sorting
 
 Endpoints that support sorting accept two parameters:
 
-| Parameter    | Type   | Description                                       |
-| ------------ | ------ | ------------------------------------------------- |
-| `sort_by`    | enum   | Which field to sort by. Valid values vary per endpoint. |
-| `sort_order` | enum   | `ASC` or `DESC`. Defaults to `DESC`.              |
+| Parameter    | Type | Description                                             |
+| ------------ | ---- | ------------------------------------------------------- |
+| `sort_by`    | enum | Which field to sort by. Valid values vary per endpoint. |
+| `sort_order` | enum | `ASC` or `DESC`. Defaults to `DESC`.                    |
 
 The allowed `sort_by` values are documented on each list endpoint. Examples:
 
