@@ -6,9 +6,11 @@
     "node": "24.x"
   },
   "scripts": {
-    "dev": "mintlify dev"
+    "dev": "mintlify dev",
+    "lint": "prettier --check ."
   },
   "devDependencies": {
-    "mintlify": "4.2.678"
+    "mintlify": "4.2.678",
+    "prettier": "3.9.6"
   }
 }
