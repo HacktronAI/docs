@@ -1,72 +1,42 @@
 ---
 title: "Billing"
+description: "Trials, seats, and credits across the Hacktron Platform."
 ---
 
-Every organization gets a 14-day free trial. No payment information required.
+Hacktron bills each product separately. Code Review runs on seats, with a 14-day free trial. Whitebox Scans and Automations each run on their own credits, which are organization-wide and kept separate from each other.
 
-## Start a Trial
+## How billing works
 
-<Steps>
-  <Step title="Open Billing">
-    Open Billing from the side bar. You must be an organization owner to see this. 
+| Product | Billed by | Charged when |
+| --- | --- | --- |
+| [Code Review](/code-review/billing) | Seats | Monthly, for seats active during the period |
+| [Whitebox Scans](/white-box-pentest/billing) | Scan credits | When a scan completes |
+| [Automations](/platform/automations/credits) | Automation credits | When a remediation run completes |
 
-    ![Billing Dashboard](/images/billing-dashboard-1.png)
-  </Step>
-  <Step title="Start the Code Review Trial">
-    Review and accept the terms of service and start the trial. No payment method is required during the free trial.
-  </Step>
-  <Step title="Done!">
-    Once the trial is active, Hacktron starts running code reviews on all covered repositories.
-  </Step>
-</Steps>
+Organization owners manage billing. Other members cannot see the Billing page.
 
-## How seats are billed
+## Code Review
 
-Each developer with Code Review enabled counts as one Code Review seat. Seats can be assigned manually, or Hacktron can assign seats automatically when developers open pull requests in covered repositories.
+Code Review is billed by seat. Each developer with Code Review enabled counts as one seat, charged monthly for the seats active during that billing period. Every organization starts with a 14-day free trial. Learn more about it [here](/platform/billing/code-review). 
 
-Code Review is billed as a monthly subscription. At the end of each billing period, your organization is charged for the number of Code Review seats that were active during that period.
+## Whitebox Scans
 
-<Info>
-  If a developer no longer needs Code Review, remove their seat from **People**.
+Whitebox Scans run on organization-wide scan credits. Estimate a scan's cost before you start it, and credits are deducted when it completes. Learn more about them [here](/white-box-pentest/billing).
 
-  The removed seat can be reassigned to someone else during the same billing period, but removing a seat in the middle of the billing period will not reduce the seat count for the current billing period.
-</Info>
+## Automation Credits
 
-## End Trial Early
+Automation credits are organization-wide. They are separate from Code Review seats and your Whitebox Scan credits. Every paid organization starts with \$50 in Automation Credits. 
 
-Ending the trial early allows you to start the paid plan immediately and enable [**spillover usage**](https://docs.hacktron.ai/code-review/spillover-usage).
+Learn more about them [here](/platform/automations/credits).
 
-<Steps>
-  <Step title="End the trial early">
-    Go to **Billing** and end the trial early to start the paid plan immediately.
+<img
+  src="/images/automation.png"
+  alt="automation"
+  title="Image"
+  lightAlt="Image"
+  darkAlt="Image"
+/>
 
-    ![End trial early](/images/end_early.png)
-  </Step>
-  <Step title="Enable spillover">
-    Go to **Usage** to enable spillover billing to continue reviewing pull requests or merge requests after the pooled review limit is reached.
-  </Step>
-</Steps>
+## Payment methods and Invoices
 
-## Cancellations and resubscription
-
-If you cancel during a trial or paid subscription, Code Review remains available until the end of the current trial or billing period. After cancellation takes effect, new pull requests or merge requests are no longer reviewed.
-
-If the organization resubscribes later, Code Review starts as a paid subscription. The free trial does not restart.
-
-<Card title="Spillover and usage" icon="chart-line" href="/code-review/spillover-usage">
-  Understand pooled review limits and overage pricing.
-</Card>
-
-## Using Automation Credits
-
-Automation credits are organization-wide. They are separate from Code Review seats and your Whitebox Scan credits. Learn more about them [here](/platform/automations/credits).
-
-<Frame>
-  <img
-    src="/images/automation.png"
-    alt="automation"
-    title="Image"
-    lightAlt="Image"
-    darkAlt="Image"
-  />
-</Frame>
+Organization owners add and manage payment methods from **Billing**, where you can also view invoices and recent billing activity.
