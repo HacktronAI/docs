@@ -70,11 +70,20 @@
             ]
           },
           {
+            "group": "Automations",
+            "pages": [
+              "platform/automations/overview",
+              "platform/automations/remediation",
+              "platform/automations/credits"
+            ]
+          },
+          {
             "group": "Account",
             "pages": [
               "platform/account-settings",
               "platform/security-settings",
-              "platform/organization-settings"
+              "platform/organization-settings",
+              "platform/billing"
             ]
           },
           {

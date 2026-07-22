@@ -120,6 +120,12 @@ If a [fail-on gate](/code-review/config#fail-the-check-on-findings) is configure
 For example, if the fail-on gate is configured to fail on high severity findings, triaging a high severity finding as a false positive
 or accepted risk will update the GitHub check (or GitLab commit status) to pass. Reopening the finding will cause the check to fail again.
 
+## Remediate a finding
+
+Hacktron can also fix a finding for you. Select **Remediate** on a finding in the web platform and a Hacktron agent writes a fix and opens a pull or merge request with it. You can also remediate qualifying findings automatically with [automations](/platform/automations/overview).
+
+See [Remediation](/platform/automations/remediation) for how runs work, where the fix lands, and billing.
+
 ## Feedback loop
 
 Triage feedback helps Hacktron adapt to your codebase. Comments and project rules
