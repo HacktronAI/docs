@@ -55,6 +55,8 @@ service hooks that trigger reviews.
     Click **Create**, then copy the generated token. Azure DevOps shows it only
     once.
 
+    <img src="/images/azure_copy_token.png" alt="Azure DevOps Copy Token" />
+
   </Step>
   <Step title="Open Integrations page">
     In Hacktron, go to **Integrations** and click **Connect** under **Azure
@@ -64,7 +66,16 @@ service hooks that trigger reviews.
 
   </Step>
   <Step title="Enter the token">
-    Enter the token you created earlier, and click **Connect**.
+    Enter your organization URL (e.g. https://dev.azure.com/hacktronai) and the token you created earlier, and click **Connect**.
+
+    <img src="/images/azure_devops_connect.png" alt="Azure DevOps Integration Connect Step" />
+
+  </Step>
+  <Step title="Select your repository scopes">
+    Select the repositories that you want Hacktron to have access to.
+
+    <img src="/images/azure_devops_select_repositories.png" alt="Azure DevOps Integration Select Repositories" />
+
   </Step>
 </Steps>
 
@@ -80,8 +91,8 @@ Follow the same **Configure access** steps to create a Personal Access Token
 with the same scopes on your Azure DevOps Server instance.
 
 When you open the **Connect Azure DevOps** modal in Hacktron, select **Azure
-DevOps Server** and enter your instance's base URL (e.g.
-`https://azuredevops.example.com/DefaultCollection`) before entering the token.
+DevOps Server** and enter your instance's base URL and organization (e.g.
+`https://azuredevops.example.com/DefaultCollection`) as well.
 
 <Note>
   Self-hosted prerequisites: - Your Azure DevOps Server instance must be

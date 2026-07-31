@@ -11,7 +11,8 @@ Remediation is a part of [Automations](/platform/automations/overview) that fixe
 1. **Verifies that the finding is real.** Tests whether the reported issue is actually exploitable in this code. If the finding is wrong (e.g. the code is unreachable), Hacktron reports it as a false positive. We will never attempt to fix already sound code.
 2. **Implements the fix.** Makes the minimal correct fix that addresses the root cause of the vulnerability.
 3. **Tests the fix.** Runs the existing test suite for the repository, if any. Adds relevant regression tests & makes sure the fix correctly addresses the issue while avoiding breaking anything else.
-   </Card>
+
+</Card>
 
 Remediation runs use [automation credits](/platform/automations/credits). You can start a run yourself from a finding or let it happen automatically through an [automation](/platform/automations/overview)'s Remediation action.
 
