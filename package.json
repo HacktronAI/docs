@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "mintlify dev",
-    "lint": "prettier --check ."
+    "lint": "prettier --check .",
+    "lint:write": "prettier --write ."
   },
   "devDependencies": {
     "mintlify": "4.2.678",

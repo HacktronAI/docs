@@ -1,0 +1,101 @@
+---
+title: "Azure DevOps"
+description: "Configure repository access for Azure DevOps Services and Azure DevOps Server."
+---
+
+## Prerequisites
+
+You need to be an administrator of the Azure DevOps organization you want to
+connect to Hacktron. This is required to create a Personal Access Token with the
+scopes Hacktron uses to read code, post pull request statuses, and register the
+service hooks that trigger reviews.
+
+## Configure access
+
+<Steps>
+  <Step title="Open Personal Access Tokens">
+    In Azure DevOps, open **User settings** (the icon next to your avatar in the
+    top right) and select **Personal access tokens**.
+
+    <img src="/images/azure_pat.png" alt="Azure DevOps Personal Access Tokens" />
+
+  </Step>
+  <Step title="Create a new token">
+    Click **New Token**. Give it a descriptive name, e.g. "Hacktron", and select
+    the organization you want to connect.
+
+    <img src="/images/azure_new_token.png" alt="Create Azure DevOps Token" />
+
+    <Warning>
+      **Personal access tokens have expiration dates.** Set the expiration to
+      cover the duration of your intended use of Hacktron to avoid service
+      interruption.
+    </Warning>
+
+  </Step>
+  <Step title="Grant the required scopes">
+    Switch the scope selector to **Show all scopes** and grant the following:
+
+    - **Code** - "Read & write" and "Status"
+    - **Project and Team** - "Read"
+    - **Service Connections** - "Read, query & manage"
+    - **Identity** - "Read"
+
+    <Info>
+      The "Read & write" Code scope lets Hacktron clone repositories and post
+      review comments; "Status" lets it report pull request check results. The
+      Service Connections scope lets Hacktron register the service hooks that
+      notify it when a pull request is opened or updated, so reviews run
+      automatically. Hacktron does not retain any source code after each review
+      is complete.
+    </Info>
+
+    <img src="/images/azure_scopes.png" alt="Azure DevOps Token Scopes" />
+
+    Click **Create**, then copy the generated token. Azure DevOps shows it only
+    once.
+
+    <img src="/images/azure_copy_token.png" alt="Azure DevOps Copy Token" />
+
+  </Step>
+  <Step title="Open Integrations page">
+    In Hacktron, go to **Integrations** and click **Connect** under **Azure
+    DevOps**.
+
+    <img src="/images/azure.png" alt="Azure DevOps Integration" />
+
+  </Step>
+  <Step title="Enter the token">
+    Enter your organization URL (e.g. https://dev.azure.com/hacktronai) and the token you created earlier, and click **Connect**.
+
+    <img src="/images/azure_devops_connect.png" alt="Azure DevOps Integration Connect Step" />
+
+  </Step>
+  <Step title="Select your repository scopes">
+    Select the repositories that you want Hacktron to have access to.
+
+    <img src="/images/azure_devops_select_repositories.png" alt="Azure DevOps Integration Select Repositories" />
+
+  </Step>
+</Steps>
+
+That's it! Hacktron will now run security reviews for every pull request in the selected repositories.
+
+## Azure DevOps Server
+
+Hacktron supports self-hosted Azure DevOps Server through the same Personal
+Access Token flow described above. The only difference is one extra step when
+you connect.
+
+Follow the same **Configure access** steps to create a Personal Access Token
+with the same scopes on your Azure DevOps Server instance.
+
+When you open the **Connect Azure DevOps** modal in Hacktron, select **Azure
+DevOps Server** and enter your instance's base URL and organization (e.g.
+`https://azuredevops.example.com/DefaultCollection`) as well.
+
+<Note>
+  Self-hosted prerequisites: - Your Azure DevOps Server instance must be
+  reachable from Hacktron over HTTPS with a valid TLS certificate. - The token
+  must carry the same scopes listed above on your Azure DevOps Server instance.
+</Note>
