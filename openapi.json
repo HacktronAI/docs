@@ -31,7 +31,9 @@
           }
         },
         "summary": "Trigger a pentest scan",
-        "tags": ["REST API - Scans"]
+        "tags": [
+          "REST API - Scans"
+        ]
       },
       "get": {
         "operationId": "RestScanController_list",
@@ -62,7 +64,10 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["pr", "full"]
+              "enum": [
+                "pr",
+                "full"
+              ]
             }
           },
           {
@@ -93,7 +98,11 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["created_at", "updated_at", "status"]
+              "enum": [
+                "created_at",
+                "updated_at",
+                "status"
+              ]
             }
           },
           {
@@ -103,7 +112,10 @@
             "schema": {
               "default": "DESC",
               "type": "string",
-              "enum": ["ASC", "DESC"]
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
             }
           }
         ],
@@ -120,7 +132,9 @@
           }
         },
         "summary": "List scans with pagination and filters",
-        "tags": ["REST API - Scans"]
+        "tags": [
+          "REST API - Scans"
+        ]
       }
     },
     "/scans/{id}/status": {
@@ -149,7 +163,9 @@
           }
         },
         "summary": "Get scan status",
-        "tags": ["REST API - Scans"]
+        "tags": [
+          "REST API - Scans"
+        ]
       }
     },
     "/scans/{id}/findings/export": {
@@ -171,7 +187,11 @@
             "description": "Export format",
             "schema": {
               "type": "string",
-              "enum": ["json", "csv", "sarif"]
+              "enum": [
+                "json",
+                "csv",
+                "sarif"
+              ]
             }
           }
         ],
@@ -181,7 +201,9 @@
           }
         },
         "summary": "Export findings for a scan",
-        "tags": ["REST API - Scans"]
+        "tags": [
+          "REST API - Scans"
+        ]
       }
     },
     "/scans/{id}/findings": {
@@ -222,7 +244,13 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["critical", "high", "medium", "low", "info"]
+              "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low",
+                "info"
+              ]
             }
           },
           {
@@ -256,7 +284,10 @@
             "description": "Filter by scan type across all scans associated with the finding.",
             "schema": {
               "type": "string",
-              "enum": ["pr", "full"]
+              "enum": [
+                "pr",
+                "full"
+              ]
             }
           },
           {
@@ -292,7 +323,11 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["found_at", "updated_at", "severity"]
+              "enum": [
+                "found_at",
+                "updated_at",
+                "severity"
+              ]
             }
           },
           {
@@ -302,7 +337,10 @@
             "schema": {
               "default": "DESC",
               "type": "string",
-              "enum": ["ASC", "DESC"]
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
             }
           }
         ],
@@ -319,7 +357,9 @@
           }
         },
         "summary": "List findings for a specific scan",
-        "tags": ["REST API - Scans"]
+        "tags": [
+          "REST API - Scans"
+        ]
       }
     },
     "/scans/{id}": {
@@ -348,7 +388,9 @@
           }
         },
         "summary": "Get scan by UUID",
-        "tags": ["REST API - Scans"]
+        "tags": [
+          "REST API - Scans"
+        ]
       }
     },
     "/findings": {
@@ -381,7 +423,13 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["critical", "high", "medium", "low", "info"]
+              "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low",
+                "info"
+              ]
             }
           },
           {
@@ -415,7 +463,10 @@
             "description": "Filter by scan type across all scans associated with the finding.",
             "schema": {
               "type": "string",
-              "enum": ["pr", "full"]
+              "enum": [
+                "pr",
+                "full"
+              ]
             }
           },
           {
@@ -451,7 +502,11 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["found_at", "updated_at", "severity"]
+              "enum": [
+                "found_at",
+                "updated_at",
+                "severity"
+              ]
             }
           },
           {
@@ -461,7 +516,10 @@
             "schema": {
               "default": "DESC",
               "type": "string",
-              "enum": ["ASC", "DESC"]
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
             }
           }
         ],
@@ -478,7 +536,9 @@
           }
         },
         "summary": "List findings with pagination and filters",
-        "tags": ["REST API - Findings"]
+        "tags": [
+          "REST API - Findings"
+        ]
       }
     },
     "/findings/export": {
@@ -511,7 +571,13 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["critical", "high", "medium", "low", "info"]
+              "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low",
+                "info"
+              ]
             }
           },
           {
@@ -545,7 +611,10 @@
             "description": "Filter by scan type across all scans associated with the finding.",
             "schema": {
               "type": "string",
-              "enum": ["pr", "full"]
+              "enum": [
+                "pr",
+                "full"
+              ]
             }
           },
           {
@@ -581,7 +650,11 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["found_at", "updated_at", "severity"]
+              "enum": [
+                "found_at",
+                "updated_at",
+                "severity"
+              ]
             }
           },
           {
@@ -591,7 +664,10 @@
             "schema": {
               "default": "DESC",
               "type": "string",
-              "enum": ["ASC", "DESC"]
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
             }
           },
           {
@@ -601,7 +677,11 @@
             "description": "Export format",
             "schema": {
               "type": "string",
-              "enum": ["json", "csv", "sarif"]
+              "enum": [
+                "json",
+                "csv",
+                "sarif"
+              ]
             }
           }
         ],
@@ -611,7 +691,9 @@
           }
         },
         "summary": "Export findings as JSON, CSV, or SARIF, optionally filtered by repository",
-        "tags": ["REST API - Findings"]
+        "tags": [
+          "REST API - Findings"
+        ]
       }
     },
     "/findings/{id}": {
@@ -650,7 +732,9 @@
           }
         },
         "summary": "Update finding state, severity, and/or duplicate link",
-        "tags": ["REST API - Findings"]
+        "tags": [
+          "REST API - Findings"
+        ]
       },
       "get": {
         "operationId": "RestFindingController_getById",
@@ -677,7 +761,9 @@
           }
         },
         "summary": "Get finding details",
-        "tags": ["REST API - Findings"]
+        "tags": [
+          "REST API - Findings"
+        ]
       }
     },
     "/findings/{id}/comments": {
@@ -716,7 +802,9 @@
           }
         },
         "summary": "Add a comment to a finding",
-        "tags": ["REST API - Findings"]
+        "tags": [
+          "REST API - Findings"
+        ]
       }
     },
     "/cost-estimations": {
@@ -746,7 +834,9 @@
           }
         },
         "summary": "Create a cost estimation for one or more repos",
-        "tags": ["REST API - Cost Estimations"]
+        "tags": [
+          "REST API - Cost Estimations"
+        ]
       },
       "get": {
         "operationId": "RestCostEstimationController_list",
@@ -781,7 +871,9 @@
           }
         },
         "summary": "List cost estimations",
-        "tags": ["REST API - Cost Estimations"]
+        "tags": [
+          "REST API - Cost Estimations"
+        ]
       }
     },
     "/cost-estimations/{id}": {
@@ -810,7 +902,9 @@
           }
         },
         "summary": "Get cost estimation details",
-        "tags": ["REST API - Cost Estimations"]
+        "tags": [
+          "REST API - Cost Estimations"
+        ]
       }
     },
     "/repos": {
@@ -830,7 +924,9 @@
           }
         },
         "summary": "List repositories from all connected providers, including whether PR scans are enabled",
-        "tags": ["REST API - Repos"]
+        "tags": [
+          "REST API - Repos"
+        ]
       }
     },
     "/hfw/verdicts/batch": {
@@ -862,7 +958,9 @@
         },
         "security": [],
         "summary": "Get fast dependency verdicts for landing and GitHub Action scans",
-        "tags": ["REST API - HFW"]
+        "tags": [
+          "REST API - HFW"
+        ]
       }
     },
     "/hfw/osv/feed": {
@@ -905,7 +1003,9 @@
         },
         "security": [],
         "summary": "List known-malware feed entries for package sitemap generation",
-        "tags": ["REST API - HFW"]
+        "tags": [
+          "REST API - HFW"
+        ]
       }
     },
     "/hfw/verdict/{ecosystem}/{packageName}": {
@@ -949,7 +1049,9 @@
         },
         "security": [],
         "summary": "Get a fast dependency verdict for GitHub Action scans",
-        "tags": ["REST API - HFW"]
+        "tags": [
+          "REST API - HFW"
+        ]
       }
     },
     "/hfw/verdict/{ecosystem}/{scope}/{packageName}": {
@@ -992,7 +1094,9 @@
         },
         "security": [],
         "summary": "Get a fast dependency verdict for scoped npm GitHub Action scans",
-        "tags": ["REST API - HFW"]
+        "tags": [
+          "REST API - HFW"
+        ]
       }
     }
   },
@@ -1031,11 +1135,18 @@
           "source": {
             "type": "string",
             "description": "Repository source",
-            "enum": ["connected", "public", "upload"],
+            "enum": [
+              "connected",
+              "public",
+              "upload"
+            ],
             "default": "connected"
           }
         },
-        "required": ["url", "branch"]
+        "required": [
+          "url",
+          "branch"
+        ]
       },
       "RestCreateScanDto": {
         "type": "object",
@@ -1076,7 +1187,10 @@
             }
           }
         },
-        "required": ["cost_estimation_id", "repos"]
+        "required": [
+          "cost_estimation_id",
+          "repos"
+        ]
       },
       "RestCreateScanResponseDto": {
         "type": "object",
@@ -1094,7 +1208,12 @@
             "type": "string"
           }
         },
-        "required": ["id", "task_id", "status", "message"]
+        "required": [
+          "id",
+          "task_id",
+          "status",
+          "message"
+        ]
       },
       "RestScanFindingsSummaryDto": {
         "type": "object",
@@ -1115,7 +1234,13 @@
             "type": "number"
           }
         },
-        "required": ["critical", "high", "medium", "low", "info"]
+        "required": [
+          "critical",
+          "high",
+          "medium",
+          "low",
+          "info"
+        ]
       },
       "RestScanResponseDto": {
         "type": "object",
@@ -1128,7 +1253,10 @@
           },
           "scan_type": {
             "type": "string",
-            "enum": ["pr", "full"]
+            "enum": [
+              "pr",
+              "full"
+            ]
           },
           "status": {
             "type": "string"
@@ -1200,7 +1328,12 @@
             "type": "number"
           }
         },
-        "required": ["data", "total", "page", "limit"]
+        "required": [
+          "data",
+          "total",
+          "page",
+          "limit"
+        ]
       },
       "RestScanStatusResponseDto": {
         "type": "object",
@@ -1235,7 +1368,13 @@
             "type": "string"
           }
         },
-        "required": ["id", "task_id", "status", "created_at", "updated_at"]
+        "required": [
+          "id",
+          "task_id",
+          "status",
+          "created_at",
+          "updated_at"
+        ]
       },
       "RestFindingResponseDto": {
         "type": "object",
@@ -1252,7 +1391,13 @@
           },
           "severity": {
             "type": "string",
-            "enum": ["critical", "high", "medium", "low", "info"]
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ]
           },
           "state": {
             "type": "string",
@@ -1336,7 +1481,12 @@
             "type": "number"
           }
         },
-        "required": ["data", "total", "page", "limit"]
+        "required": [
+          "data",
+          "total",
+          "page",
+          "limit"
+        ]
       },
       "RestUpdateFindingDto": {
         "type": "object",
@@ -1355,7 +1505,13 @@
           },
           "severity": {
             "type": "string",
-            "enum": ["critical", "high", "medium", "low", "info"],
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ],
             "description": "New severity level"
           },
           "state_reason": {
@@ -1396,7 +1552,13 @@
           },
           "severity": {
             "type": "string",
-            "enum": ["critical", "high", "medium", "low", "info"]
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ]
           },
           "duplicate_of": {
             "type": "string",
@@ -1404,7 +1566,12 @@
             "description": "UUID of the canonical finding this duplicates, if any."
           }
         },
-        "required": ["id", "state", "severity", "duplicate_of"]
+        "required": [
+          "id",
+          "state",
+          "severity",
+          "duplicate_of"
+        ]
       },
       "RestAddCommentDto": {
         "type": "object",
@@ -1415,7 +1582,9 @@
             "maxLength": 4000
           }
         },
-        "required": ["comment"]
+        "required": [
+          "comment"
+        ]
       },
       "RestAddCommentResponseDto": {
         "type": "object",
@@ -1424,7 +1593,9 @@
             "type": "string"
           }
         },
-        "required": ["comment_id"]
+        "required": [
+          "comment_id"
+        ]
       },
       "RestTriageThreadEntryDto": {
         "type": "object",
@@ -1467,7 +1638,11 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["source", "propagation", "sink"]
+            "enum": [
+              "source",
+              "propagation",
+              "sink"
+            ]
           },
           "file": {
             "type": "string"
@@ -1532,7 +1707,13 @@
           },
           "severity": {
             "type": "string",
-            "enum": ["critical", "high", "medium", "low", "info"]
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ]
           },
           "state": {
             "type": "string",
@@ -1631,7 +1812,9 @@
           "source": {
             "type": "string",
             "description": "Source type",
-            "enum": ["connected"],
+            "enum": [
+              "connected"
+            ],
             "default": "connected"
           },
           "repo_url": {
@@ -1647,7 +1830,11 @@
             "description": "GitHub App installation ID. Omitted for PAT-based connections (e.g. GitHub Enterprise), where the installation is resolved from repo_url and the organization instead."
           }
         },
-        "required": ["source", "repo_url", "branch"]
+        "required": [
+          "source",
+          "repo_url",
+          "branch"
+        ]
       },
       "PublicCostEstimationRepoDto": {
         "type": "object",
@@ -1655,7 +1842,9 @@
           "source": {
             "type": "string",
             "description": "Source type",
-            "enum": ["public"]
+            "enum": [
+              "public"
+            ]
           },
           "repo_url": {
             "type": "string",
@@ -1666,7 +1855,11 @@
             "description": "Branch name"
           }
         },
-        "required": ["source", "repo_url", "branch"]
+        "required": [
+          "source",
+          "repo_url",
+          "branch"
+        ]
       },
       "UploadCostEstimationRepoDto": {
         "type": "object",
@@ -1674,14 +1867,19 @@
           "source": {
             "type": "string",
             "description": "Source type",
-            "enum": ["upload"]
+            "enum": [
+              "upload"
+            ]
           },
           "archive_id": {
             "type": "string",
             "description": "Scan archive ID"
           }
         },
-        "required": ["source", "archive_id"]
+        "required": [
+          "source",
+          "archive_id"
+        ]
       },
       "CreateCostEstimationDto": {
         "type": "object",
@@ -1716,7 +1914,9 @@
             }
           }
         },
-        "required": ["repos"]
+        "required": [
+          "repos"
+        ]
       },
       "RepoInputResponseDto": {
         "type": "object",
@@ -1724,7 +1924,11 @@
           "source": {
             "type": "string",
             "description": "Source type",
-            "enum": ["connected", "public", "upload"]
+            "enum": [
+              "connected",
+              "public",
+              "upload"
+            ]
           },
           "repo_url": {
             "type": "string",
@@ -1766,7 +1970,10 @@
             "example": "NestJS REST API with PostgreSQL"
           }
         },
-        "required": ["app_name", "app_root_path"]
+        "required": [
+          "app_name",
+          "app_root_path"
+        ]
       },
       "RepoResultResponseDto": {
         "type": "object",
@@ -1789,7 +1996,10 @@
           "status": {
             "type": "string",
             "description": "Result status",
-            "enum": ["completed", "failed"],
+            "enum": [
+              "completed",
+              "failed"
+            ],
             "example": "completed"
           },
           "from_cache": {
@@ -1816,7 +2026,9 @@
           "failure_reason": {
             "type": "string",
             "description": "Structured failure reason",
-            "enum": ["unsupported_language"]
+            "enum": [
+              "unsupported_language"
+            ]
           },
           "unsupported_languages": {
             "description": "Detected unsupported languages among the top languages",
@@ -1826,7 +2038,11 @@
             }
           }
         },
-        "required": ["repo_url", "status", "from_cache"]
+        "required": [
+          "repo_url",
+          "status",
+          "from_cache"
+        ]
       },
       "CostEstimationResponseDto": {
         "type": "object",
@@ -1858,7 +2074,13 @@
           "status": {
             "type": "string",
             "description": "Estimation status",
-            "enum": ["pending", "running", "completed", "partial", "failed"],
+            "enum": [
+              "pending",
+              "running",
+              "completed",
+              "partial",
+              "failed"
+            ],
             "example": "completed"
           },
           "repos": {
@@ -1933,7 +2155,10 @@
             "type": "number"
           }
         },
-        "required": ["data", "total"]
+        "required": [
+          "data",
+          "total"
+        ]
       },
       "UnifiedRepoDto": {
         "type": "object",
@@ -1946,17 +2171,22 @@
           "provider": {
             "type": "string",
             "description": "Source provider",
-            "enum": ["github", "gitlab", "bitbucket"],
+            "enum": [
+              "github",
+              "gitlab",
+              "bitbucket",
+              "azure"
+            ],
             "example": "github"
           },
           "name": {
             "type": "string",
-            "description": "Display name (owner/repo for GitHub, namespace/project for GitLab, workspace/slug for Bitbucket)",
+            "description": "Display name (owner/repo for GitHub, namespace/project for GitLab, workspace/slug for Bitbucket, project/repository for Azure DevOps)",
             "example": "octocat/Hello-World"
           },
           "providerKey": {
             "type": "string",
-            "description": "Provider-native identifier for mutation endpoints. GitHub: owner/repo, GitLab: numeric projectId (as string), Bitbucket: repository UUID.",
+            "description": "Provider-native identifier for mutation endpoints. GitHub: owner/repo, GitLab: numeric projectId (as string), Bitbucket: repository UUID, Azure DevOps: repository UUID.",
             "example": "octocat/Hello-World"
           },
           "enabled": {
@@ -1977,7 +2207,10 @@
           },
           "prScanBranches": {
             "description": "Target branch patterns for PR/MR scans (GitHub and GitLab)",
-            "example": ["main", "**/release/**"],
+            "example": [
+              "main",
+              "**/release/**"
+            ],
             "type": "array",
             "items": {
               "type": "string"
@@ -1991,7 +2224,7 @@
           "baseUrl": {
             "type": "string",
             "nullable": true,
-            "description": "GitHub Enterprise base URL for self-hosted (PAT) installations. Null/absent for github.com. Clients should build clone/display URLs from this host instead of assuming github.com (GitHub only).",
+            "description": "GitHub Enterprise base URL for self-hosted (PAT) installations (null/absent for github.com), or the Azure DevOps organization URL. Clients should build clone/display URLs from this host instead of assuming github.com (GitHub and Azure DevOps only).",
             "example": "https://ghe.example.com"
           },
           "defaultBranch": {
@@ -2043,14 +2276,20 @@
             }
           }
         },
-        "required": ["repos", "errors"]
+        "required": [
+          "repos",
+          "errors"
+        ]
       },
       "RestHfwBatchPackageDto": {
         "type": "object",
         "properties": {
           "ecosystem": {
             "type": "string",
-            "enum": ["npm", "pypi"]
+            "enum": [
+              "npm",
+              "pypi"
+            ]
           },
           "package": {
             "type": "string"
@@ -2059,7 +2298,11 @@
             "type": "string"
           }
         },
-        "required": ["ecosystem", "package", "version"]
+        "required": [
+          "ecosystem",
+          "package",
+          "version"
+        ]
       },
       "RestHfwBatchRequestDto": {
         "type": "object",
@@ -2071,18 +2314,27 @@
             }
           }
         },
-        "required": ["packages"]
+        "required": [
+          "packages"
+        ]
       },
       "RestHfwVerdictResponseDto": {
         "type": "object",
         "properties": {
           "status": {
             "type": "string",
-            "enum": ["ready", "pending", "scanning"]
+            "enum": [
+              "ready",
+              "pending",
+              "scanning"
+            ]
           },
           "ecosystem": {
             "type": "string",
-            "enum": ["npm", "pypi"]
+            "enum": [
+              "npm",
+              "pypi"
+            ]
           },
           "package": {
             "type": "string"
@@ -2092,7 +2344,12 @@
           },
           "level": {
             "type": "string",
-            "enum": ["clean", "suspicious", "malicious", "unknown"]
+            "enum": [
+              "clean",
+              "suspicious",
+              "malicious",
+              "unknown"
+            ]
           },
           "confidence": {
             "type": "string"
@@ -2143,7 +2400,11 @@
             }
           }
         },
-        "required": ["status", "verdicts", "errors"]
+        "required": [
+          "status",
+          "verdicts",
+          "errors"
+        ]
       },
       "RestHfwOsvFeedResultDto": {
         "type": "object",
@@ -2161,7 +2422,11 @@
             }
           }
         },
-        "required": ["ecosystem", "package", "versions"]
+        "required": [
+          "ecosystem",
+          "package",
+          "versions"
+        ]
       },
       "RestHfwOsvFeedResponseDto": {
         "type": "object",
@@ -2176,7 +2441,9 @@
             }
           }
         },
-        "required": ["results"]
+        "required": [
+          "results"
+        ]
       }
     }
   },
