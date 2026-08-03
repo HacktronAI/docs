@@ -84,7 +84,7 @@ Rules are evaluated in this order, first match applies:
 | `exclude.labels`    | the PR/MR carries one of these labels                                                          | case-insensitive exact match |
 | `exclude.keywords`  | the PR/MR **title** contains one of these strings                                              | case-insensitive substring   |
 | `exclude.paths`     | **every** changed file matches one of these patterns                                           | case-insensitive glob        |
-| `exclude.authors`   | the PR/MR was opened by one of these usernames                                                 | case-insensitive exact match |
+| `exclude.authors`   | the PR/MR was opened by an author matching one of these patterns                               | case-insensitive glob        |
 | any key set to `[]` | clears the org-wide default for that key ([Configuration hierarchy](#configuration-hierarchy)) | -                            |
 
 <Note>
@@ -107,6 +107,7 @@ exclude:
     - "**/*.md"
   authors:
     - "dependabot[bot]" # exclude all PRs opened by dependabot
+    - "*-bot" # glob: exclude any author ending in "-bot"
 ```
 
 <Note>
@@ -117,11 +118,11 @@ exclude:
 </Note>
 
 <Accordion title="Glob pattern syntax">
-  `exclude.branches`, `exclude.paths`, and `include.branches` (and their
-  org-wide equivalents) accept glob patterns mixed with literals: `*`, `**`,
-  `?`, and `{(a, b)}` brace expansion. Matching is case-insensitive. `[`, `]`,
-  and a leading `!` are literal, not special syntax. Each category allows up to
-  50 entries.
+  `exclude.branches`, `exclude.paths`, `exclude.authors`/`include.authors`, and
+  `include.branches` (and their org-wide equivalents) accept glob patterns mixed
+  with literals: `*`, `**`, `?`, and `{(a, b)}` brace expansion. Matching is
+  case-insensitive. `[`, `]`, and a leading `!` are literal, not special syntax.
+  Each category allows up to 50 entries.
 </Accordion>
 
 <Accordion title="Matching nested branches with * vs **">
@@ -154,8 +155,9 @@ include:
   labels:
     - security-review # only scan PRs labelled "security-review"
   authors:
-    - alice # ...and were opened by Alice or Bob
+    - alice # ...and were opened by Alice, Bob, or a bot account
     - bob
+    - "*-bot"
   keywords:
     - "please review" # ...and title contains "please review"
 ```
@@ -164,7 +166,7 @@ include:
 | ------------------- | ---------------------------------------------------------------------------------------------- |
 | `include.branches`  | the PR/MR targets one of these branches (case-insensitive glob)                                |
 | `include.labels`    | the PR/MR carries at least one of these labels (case-insensitive exact match)                  |
-| `include.authors`   | the PR/MR was opened by one of these usernames (case-insensitive exact match)                  |
+| `include.authors`   | the PR/MR was opened by an author matching one of these patterns (case-insensitive glob)       |
 | `include.keywords`  | the PR/MR title contains one of these strings (case-insensitive substring)                     |
 | any key set to `[]` | clears the org-wide default for that key ([Configuration hierarchy](#configuration-hierarchy)) |
 
