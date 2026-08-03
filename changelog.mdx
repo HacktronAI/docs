@@ -9,23 +9,24 @@ rss: true
 <Update label="July 15, 2026" tags={["Whitebox","Code Review","Integrations","API"]}>
   ## Walk a taint trace, export your findings, and scan Bitbucket PRs
 
-  **Interactive taint trace reader**: Taint findings now open an annotated code view where you can step through each source, propagation, and sink in sequence. Click any step in the sidebar to jump directly to that line in the file.
+**Interactive taint trace reader**: Taint findings now open an annotated code view where you can step through each source, propagation, and sink in sequence. Click any step in the sidebar to jump directly to that line in the file.
 
-  **Findings export**: Download your findings as CSV, JSON, or SARIF directly from the findings page, filtered to exactly what is currently visible. The export respects all active filters - severity, status, scan, and repository.
+**Findings export**: Download your findings as CSV, JSON, or SARIF directly from the findings page, filtered to exactly what is currently visible. The export respects all active filters - severity, status, scan, and repository.
 
-  **Findings export API**: A new API endpoint (`GET /rest/findings/export`) lets you pull findings programmatically in CSV, JSON, or SARIF, with the same filter options available in the UI including scoping by repository.
+**Findings export API**: A new API endpoint (`GET /rest/findings/export`) lets you pull findings programmatically in CSV, JSON, or SARIF, with the same filter options available in the UI including scoping by repository.
 
-  **Bitbucket PR scanning**: Connect a Bitbucket workspace and Hacktron will automatically scan pull requests, the same way it does for GitHub and GitLab.
+**Bitbucket PR scanning**: Connect a Bitbucket workspace and Hacktron will automatically scan pull requests, the same way it does for GitHub and GitLab.
 
-  **Model tier selection for scans**: When starting a whitebox scan, you can now choose between the Default and Legacy model tiers before committing to a cost estimate.
+**Model tier selection for scans**: When starting a whitebox scan, you can now choose between the Default and Legacy model tiers before committing to a cost estimate.
 
-  **PR filter rules for authors and labels**: Your `.hacktron/config.yaml` now supports `skip.authors` and `include.authors` to exclude or restrict scans by PR author, and `include.labels` to trigger scans only on labeled pull requests.
+**PR filter rules for authors and labels**: Your `.hacktron/config.yaml` now supports `skip.authors` and `include.authors` to exclude or restrict scans by PR author, and `include.labels` to trigger scans only on labeled pull requests.
 
-  **GitHub file-level comments for line-agnostic findings**: Findings with no specific line number now post as file-level comments on the GitHub pull request instead of being silently dropped.
+**GitHub file-level comments for line-agnostic findings**: Findings with no specific line number now post as file-level comments on the GitHub pull request instead of being silently dropped.
 
-  **Mark Resolved from Slack**: The finding Work Object overflow menu in Slack now includes a Mark Resolved action alongside the existing triage options.
+**Mark Resolved from Slack**: The finding Work Object overflow menu in Slack now includes a Mark Resolved action alongside the existing triage options.
 
-  **[Read the API reference →](/api-reference/findings/list-findings)** · **[Set up GitLab →](/platform/repositories/gitlab)** · **[Connect Slack →](/platform/communication-apps/slack)**
+**[Read the API reference →](/api-reference/findings/list-findings)** · **[Set up GitLab →](/platform/repositories/gitlab)** · **[Connect Slack →](/platform/communication-apps/slack)**
+
 </Update>
 
 <Update label="June 23, 2026" tags={["Context","Code Review","Whitebox","Integrations","MCP"]}>
