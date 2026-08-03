@@ -4,7 +4,41 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=df2c8ebd8a794625c913f722090c5e6777cb8d38 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=4319321f8e884fb0b46a31b9abca0e5180e44f56 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="August 3, 2026" tags={["Integrations","Code Review","Dashboard","Whitebox","Billing"]}>
+  ## Azure DevOps is here, plus bulk triage and live AI runs
+
+  **Azure DevOps PR scanning**: Connect your Azure DevOps organization with a personal access token and Hacktron will review pull requests automatically, assign developer seats, and report findings - matching the GitHub and GitLab experience end to end.
+
+  **Bulk findings triage**: Select any number of findings with checkboxes, then change their status or severity in one action. When a full page is selected, you can extend the action to every finding that matches your current filters across all pages.
+
+  **Per-run credit caps**: Set a credit limit on each automation environment and a run that hits the cap stops cleanly instead of running unbounded. Once you raise the limit, you can restart the stopped run from where it left off.
+
+  **Live automation run transcript**: Watch the AI agent's reasoning, tool calls, and output appear in real time on the run detail page as a run executes, rather than seeing the result only after it finishes.
+
+  **Manual remediation runs in history**: Every run started from the "Remediate" button on a finding now appears in the main runs list alongside scheduled automation runs, so you have one place to review all activity.
+
+  **Triage thread auto-resolution**: Posting a triage command (!fp, !valid, !accepted_risk, !fixed) as a reply to a finding comment on a GitHub PR or GitLab MR now resolves that review thread automatically.
+
+  **Fix PRs loop in the original author**: When an automation opens a fix PR into a developer's feature branch rather than the default branch, it adds that branch's author as a reviewer so the right person sees the fix.
+
+  **Finding category filter**: Findings now show their OWASP category as a badge and you can filter the findings list by category to focus on a class of issues.
+
+  **Usage page by product**: The usage page is reorganized into three tabs - PR Reviews, Automations, and Whitebox - each with its own credit and usage breakdown.
+
+  **Bot-authored PRs now reviewed**: Hacktron no longer skips PRs opened by bots such as Dependabot or Renovate. If you want to exclude specific bot authors you can do so through your existing author filter settings.
+
+  **Glob patterns in author filters**: Author include and exclude filters in `.hacktron/config.yaml` and org-wide scan settings now accept glob patterns (`*`, `**`, `?`, ``), the same dialect already supported for branch and path filters.
+
+  **GitLab and Bitbucket reviews count against your pool**: MR and PR reviews on GitLab and Bitbucket now draw from the same org-wide review pool as GitHub, with spillover billing and the per-file cap applied consistently across all three platforms.
+
+  **Cleaner Whitebox scan setup**: Pasting a browser URL (including `/tree/branch` or `/commit/sha` suffixes) into the repository field during cost estimation now strips the suffix automatically. Private repos that cannot be accessed show an error immediately instead of proceeding silently.
+
+  **5,000 automation credits on first subscription**: Organizations receive a one-time grant of 5,000 automation credits when they subscribe for the first time, applied at the point of payment.
+
+  **[Connect Azure DevOps →](/platform/repositories/azure-devops)** · **[See automations →](/platform/automations/overview)** · **[Start a Whitebox scan →](/white-box-pentest/quickstart)** · **[Manage seats and usage →](/code-review/people)**
+</Update>
 
 <Update label="July 15, 2026" tags={["Whitebox","Code Review","Integrations","API"]}>
   ## Walk a taint trace, export your findings, and scan Bitbucket PRs
