@@ -4,7 +4,25 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=4319321f8e884fb0b46a31b9abca0e5180e44f56 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=499883e9c5b29bf4802ed65fffe001439be23374 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="August 11, 2026" tags={["Billing","Whitebox","Self-Hosting","Integrations"]}>
+  ## See exactly where your credits are going
+
+  **Separate automation and scan credit balances**: Your credits page now shows two independent balances - one for Automation credits and one for Whitebox Scan credits - each with its own usage history and top-up controls. You can see at a glance which workload is drawing down your budget without the two pools masking each other.
+
+  **Connect your Microsoft account**: Members can now link their Microsoft account from account settings. Azure DevOps reviews attribute to you once your account is linked, so your seat is recognized across every PR you author.
+
+  **GitHub Enterprise Server repos in Whitebox scans**: On-prem installations can now select GHES-connected repositories as the source for a Whitebox scan, bringing GHES-hosted codebases into the same scan workflow as cloud-hosted repos.
+
+  **Glob patterns in author filters**: Repository-level and org-wide author include/exclude filters now accept glob patterns (such as `bot-*` or ``) in addition to exact logins, using the same dialect already supported for branch and path filters.
+
+  **Automations feedback toasts**: Deleting an automation now shows a confirmation toast naming the automation you removed. Trying to enable an automation that is not fully configured shows a toast explaining what is missing instead of silently ignoring the toggle.
+
+  **On-prem edition boot and archive upload**: Self-hosted installations now build and boot the correct on-prem edition, accept scan archive uploads, enforce the SSRF allowlist, and retrieve worker logs in air-gapped environments.
+
+  **[See billing and plans →](/platform/billing)** · **[Connect Azure DevOps →](/platform/repositories/azure-devops)** · **[Set up GitHub Enterprise Server →](/platform/repositories/github-enterprise-server)** · **[Configure repo settings →](/code-review/config)** · **[Manage automations →](/platform/automations/overview)**
+</Update>
 
 <Update label="August 3, 2026" tags={["Integrations","Code Review","Dashboard","Whitebox","Billing"]}>
   ## Azure DevOps is here, plus bulk triage and live AI runs
