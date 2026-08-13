@@ -4,7 +4,25 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=4319321f8e884fb0b46a31b9abca0e5180e44f56 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=7a27f420d8c2c85776bea18a015773eedf4e6d35 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="August 13, 2026" tags={["Billing","Self-Hosting","Whitebox","Integrations"]}>
+  ## See exactly where your credits go
+
+  **Separate Automation and Whitebox credit balances**: The billing page now shows two independent credit accounts instead of one shared wallet. Automation credits and Whitebox Scan credits each display their own balance, usage for the current period, and auto top-up settings, so you can see at a glance which workload is consuming credits.
+
+  **Microsoft account linking**: You can now connect your Microsoft account on the account settings page. Linking it lets Azure DevOps pull requests attribute correctly to your Hacktron seat, so your reviews count against the right developer.
+
+  **GHES repositories as on-prem Whitebox scan sources**: When running Hacktron on-premises, you can now select repositories connected through GitHub Enterprise Server as the source for a Whitebox scan, alongside the existing options.
+
+  **On-prem edition: boot, archive uploads, and air-gapped log retrieval**: The self-hosted edition now boots correctly, accepts scan archive uploads, and retrieves engine logs without requiring an outbound internet connection.
+
+  **Glob patterns in author filters**: The author include/exclude filters in `.hacktron/config.yaml` (and org-wide scan settings) now accept glob patterns using `*`, `**`, `?`, and `` syntax, matching the same dialect already supported for branch and path filters.
+
+  **Automations feedback**: Deleting an automation now shows a confirmation toast with the automation's name. Trying to enable an incomplete automation shows a toast that explains what is missing instead of silently ignoring the toggle.
+
+  **[See billing and plans →](/platform/billing)** · **[Connect your account →](/platform/account-settings)** · **[Set up GitHub Enterprise Server →](/platform/repositories/github-enterprise-server)** · **[Start a Whitebox scan →](/white-box-pentest/quickstart)** · **[Manage automations →](/platform/automations/overview)**
+</Update>
 
 <Update label="August 3, 2026" tags={["Integrations","Code Review","Dashboard","Whitebox","Billing"]}>
   ## Azure DevOps is here, plus bulk triage and live AI runs
