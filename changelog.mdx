@@ -4,7 +4,23 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=4319321f8e884fb0b46a31b9abca0e5180e44f56 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=c5f6cff6fbfb06a5c12d2ab205dfde7737f1ed0d - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="August 19, 2026" tags={["Billing","Integrations","Whitebox","Dashboard"]}>
+  ## Two credit balances, plus Azure DevOps and GHES gains
+
+  **Separate Automation and Whitebox credit accounts**: The billing page now shows your Automation credits and Whitebox Scan Credits as two independent balances, each with its own usage history, billing period, and top-up settings. You can see at a glance what you have left for each product without the two pools blending together.
+
+  **Microsoft account connection**: You can now link your Microsoft account from your personal account settings. Connecting it ties your Azure DevOps identity to your Hacktron seat, so PRs you open in Azure DevOps are attributed to you correctly and count against your seat.
+
+  **GHES repositories as a Whitebox scan source**: On-prem users can now select a GitHub Enterprise Server repository as the source for a Whitebox scan. Previously only repos from other connected providers were available in the scan wizard.
+
+  **Glob patterns in author filters**: The `include.authors` and `exclude.authors` fields in `.hacktron/config.yaml` (and the equivalent org-wide settings) now accept glob patterns (`*`, `**`, `?`, ``) in addition to exact login names, using the same dialect already supported for branch and path filters.
+
+  **Clearer feedback on incomplete automations**: Toggling the enable switch on an automation that is missing required configuration now shows a toast explaining what needs to be filled in before the automation can go live, instead of silently failing.
+
+  **[See billing and plans →](/platform/billing)** · **[Connect Azure DevOps →](/platform/repositories/azure-devops)** · **[Set up Whitebox →](/white-box-pentest/quickstart)** · **[Configure scan rules →](/code-review/config)** · **[Manage automations →](/platform/automations/overview)**
+</Update>
 
 <Update label="August 3, 2026" tags={["Integrations","Code Review","Dashboard","Whitebox","Billing"]}>
   ## Azure DevOps is here, plus bulk triage and live AI runs
