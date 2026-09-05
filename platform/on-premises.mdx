@@ -1,0 +1,100 @@
+---
+title: "On-premises deployment"
+description: "Set up the Hacktron Enterprise appliance, connect internal Git hosts, and collect support logs without internet access."
+---
+
+Hacktron Enterprise runs as a single-VM appliance in your environment. This page covers first boot and the operator tasks needed for Whitebox Scans. Use the version-specific install or import instructions supplied with your release package before starting here.
+
+## First boot
+
+<Steps>
+  <Step title="Boot the appliance">
+    Start the delivered VM or complete the Enterprise installer. Keep an operator account with SSH access available for setup and maintenance.
+  </Step>
+  <Step title="Open the setup wizard">
+    Desktop appliances open the wizard in Chromium. For a headless or remote VM, forward the wizard's loopback port from your workstation:
+
+    ```bash
+    ssh -L 8081:127.0.0.1:8081 <operator>@<vm-ip>
+    ```
+
+    Open `http://127.0.0.1:8081` while the tunnel is running. Do not expose port `8081` on the network because the wizard stores appliance secrets and controls stack restarts.
+
+  </Step>
+  <Step title="Enter the configuration">
+    Set the first admin account, the application URL, and the model provider. If the appliance must reach an internal Git server, add its hostname under **Internal Git host(s)**. Add any private or inspection CA certificates under **Trusted CA certificates**.
+  </Step>
+  <Step title="Save and start">
+    Select **Save & Start**. The appliance writes its configuration and starts the local services. Startup normally takes one to two minutes.
+  </Step>
+  <Step title="Sign in">
+    Open the application URL and sign in with the admin credentials from the wizard. Later boots start the configured stack automatically.
+  </Step>
+</Steps>
+
+## Allow an internal Git host
+
+The appliance blocks private network destinations unless an operator explicitly allows the hostname. This protects server-side URL requests while still permitting an in-network GitHub Enterprise Server or self-hosted GitLab instance.
+
+1. Open the setup wizard through the SSH tunnel.
+2. Enter one or more comma-separated hostnames under **Internal Git host(s)**, for example `ghe.corp.internal,gitlab.corp.internal`. Enter hostnames only, without a scheme or path.
+3. If the server certificate uses a private CA or TLS inspection, paste or upload its PEM chain under **Trusted CA certificates**.
+4. Select **Save & Restart**.
+
+Allow only the hosts Hacktron needs. Adding a hostname does not disable TLS certificate validation.
+
+## Scan connected repositories and archives
+
+An on-premises Whitebox Scan can use either an enabled connected repository or a source archive.
+
+For GitHub Enterprise Server, finish the [GHES connection](/platform/repositories/github-enterprise-server) first and enable the repository for the organization. The repository then appears under **Connected sources** in the Whitebox scan wizard.
+
+To upload source instead, open **Upload archive** in the repository step. The appliance accepts `.zip`, `.7z`, `.tar.gz`, and `.tgz` files up to 2 GiB. It stores the archive in the appliance's local object storage, so this upload does not require an external storage service.
+
+## Collect logs in an air-gapped environment
+
+The appliance can build a diagnostic archive without contacting Hacktron. Run:
+
+```bash
+sudo /opt/enterprise/bin/support-bundle.sh
+```
+
+The command writes an owner-only archive to:
+
+```text
+/opt/enterprise/support-bundles/support-<version>-<UTCtimestamp>.tar.gz
+```
+
+The bundle includes service status, recent container logs, complete per-scan worker logs, host resource information, and migration state. It also includes configuration file shapes with secret values masked. Review the archive for sensitive metadata, then transfer it to Hacktron Support using your organization's approved process.
+
+## Basic checks
+
+If the application is still unavailable after the initial startup period, check the service state and backend logs:
+
+```bash
+sudo docker compose -f /opt/enterprise/docker-compose.yml ps
+sudo docker compose -f /opt/enterprise/docker-compose.yml logs --tail 100 enterprise-iva
+```
+
+If the wizard is unavailable, verify its service, then reopen the SSH tunnel:
+
+```bash
+sudo systemctl status enterprise-setup-ui.service
+```
+
+<Columns cols={2}>
+  <Card
+    title="GitHub Enterprise Server"
+    icon="github"
+    href="/platform/repositories/github-enterprise-server"
+  >
+    Connect GHES repositories for Whitebox Scans.
+  </Card>
+  <Card
+    title="Whitebox quickstart"
+    icon="magnifying-glass"
+    href="/white-box-pentest/quickstart"
+  >
+    Define scope, estimate credits, and start a scan.
+  </Card>
+</Columns>

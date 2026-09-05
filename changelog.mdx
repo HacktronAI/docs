@@ -4,7 +4,26 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=4319321f8e884fb0b46a31b9abca0e5180e44f56 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=c5f6cff6fbfb06a5c12d2ab205dfde7737f1ed0d - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="August 19, 2026" tags={["Billing","Integrations","Whitebox","Self-Hosting"]}>
+  ## Separate credit accounts and more on-premises scan options
+
+**Automation and Whitebox credits**: Billing now shows separate accounts for Automation credits and Whitebox Scan Credits. Each account has its own balance, current-period usage, purchase flow, and history. Auto top-up is available for Automation credits only.
+
+**Microsoft account connection**: Members can connect the Microsoft account they use for Azure DevOps from Personal settings. When its email matches the pull request author's Azure DevOps UPN, Hacktron can attribute later pull request activity to the correct member and Code Review seat.
+
+**More Whitebox sources on-premises**: On-premises deployments can select enabled GitHub Enterprise Server repositories or upload `.zip`, `.7z`, `.tar.gz`, and `.tgz` source archives when starting a Whitebox Scan.
+
+**Internal Git and air-gapped support**: Appliance operators can allow specific private Git hosts, add trusted CA certificates, and collect masked support bundles without an outbound internet connection.
+
+**Glob patterns for author filters**: Repository and organization author filters accept `*`, `**`, `?`, and `{a,b}` patterns as well as exact names. Pattern length, wildcard count, and brace alternatives have bounded limits.
+
+**Clearer Automation feedback**: Deleting an automation shows a confirmation with its name. Trying to enable an incomplete automation identifies the missing configuration.
+
+**[See billing and plans →](/platform/billing)** · **[Connect your Microsoft account →](/platform/account-settings#connect-microsoft-for-azure-devops)** · **[Configure on-premises deployments →](/platform/on-premises)** · **[Configure scan filters →](/code-review/config#glob-pattern-syntax)**
+
+</Update>
 
 <Update label="August 3, 2026" tags={["Integrations","Code Review","Dashboard","Whitebox","Billing"]}>
   ## Azure DevOps is here, plus bulk triage and live AI runs
@@ -27,9 +46,9 @@ rss: true
 
 **Usage page by product**: The usage page is reorganized into three tabs - PR Reviews, Automations, and Whitebox - each with its own credit and usage breakdown.
 
-**Bot-authored PRs now reviewed**: Hacktron no longer skips PRs opened by bots such as Dependabot or Renovate. If you want to exclude specific bot authors you can do so through your existing author filter settings.
+**Bot-authored PRs now reviewed**: On GitHub, Hacktron reviews eligible bot PRs when the source branch belongs to the same repository. Bot PRs from forks and PRs from outside human contributors are not scanned automatically. Use author filters to exclude specific bot accounts.
 
-**Glob patterns in author filters**: Author include and exclude filters in `.hacktron/config.yaml` and org-wide scan settings now accept glob patterns (`*`, `**`, `?`, ``), the same dialect already supported for branch and path filters.
+**Glob patterns in author filters**: Author include and exclude filters in `.hacktron/config.yaml` and organization scan settings accept `*`, `**`, `?`, and `{a,b}` patterns as well as exact names.
 
 **GitLab and Bitbucket reviews count against your pool**: MR and PR reviews on GitLab and Bitbucket now draw from the same org-wide review pool as GitHub, with spillover billing and the per-file cap applied consistently across all three platforms.
 

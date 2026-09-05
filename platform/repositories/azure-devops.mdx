@@ -79,7 +79,23 @@ service hooks that trigger reviews.
   </Step>
 </Steps>
 
-That's it! Hacktron will now run security reviews for every pull request in the selected repositories.
+Hacktron now has organization-level access to the selected repositories.
+
+## Link member accounts for PR attribution
+
+The organization-level connection lets Hacktron access repositories and receive pull request events. Members who author Azure DevOps pull requests should also link their Microsoft account so Hacktron can attribute those pull requests to the correct Code Review seat.
+
+Go to **Personal settings**, find **Microsoft** under **Connected accounts**, and select **Connect**. Sign in with the Microsoft account whose email matches your Azure DevOps user principal name (UPN).
+
+<Card
+  title="Connect your Microsoft account"
+  icon="microsoft"
+  href="/platform/account-settings#connect-microsoft-for-azure-devops"
+>
+  Follow the account-linking steps and check the email requirement.
+</Card>
+
+Linking an account does not rerun completed reviews. Future activity on an existing Azure DevOps pull request can reconcile its author with the linked Hacktron member.
 
 ## Azure DevOps Server
 

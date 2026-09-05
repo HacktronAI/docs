@@ -20,8 +20,8 @@ This is separate from [`.hacktron/rules.md`](/code-review/rules), which shapes t
 
 Each category (`exclude.*`, `include.*`, `fail_on.severity`) is resolved independently, not the whole file at once:
 
-1. **`config.yaml`** — used if the repo sets this category.
-2. **[Organization settings](/platform/organization-settings#scan-filters)** — used otherwise.
+1. **`config.yaml`**: used if the repo sets this category.
+2. **[Organization settings](/platform/organization-settings#scan-filters)**: used otherwise.
 
 See the [FAQ](#faq) for worked examples of how repo and org settings combine.
 
@@ -74,7 +74,16 @@ Every key is optional. An empty or absent `config.yaml` doesn't disable filterin
 
 ## Exclude scans
 
-The `exclude` block tells Hacktron not to scan a pull or merge request. A match records a **skipped** check with a comment naming the rule, and uses no developer seat.
+The `exclude` block tells Hacktron not to scan a pull or merge request. A match records a **skipped** check and uses no developer seat. On GitHub, excluded bot PRs do not receive a skip comment.
+
+<Note>
+  GitHub bot PRs are reviewed automatically only when the source branch belongs
+  to the same repository. Bot PRs from forks and PRs from outside human
+  contributors are not scanned automatically. GitLab and Bitbucket bot or
+  service accounts follow the normal coverage, filter, and seat rules. An
+  eligible bot author can take a Code Review seat when auto-assignment is on.
+  Add its username to `exclude.authors` to skip its future PRs or MRs.
+</Note>
 
 Rules are evaluated in this order, first match applies:
 
@@ -113,16 +122,33 @@ exclude:
 <Note>
   `exclude.paths` excludes a scan **only when every changed file matches** one
   of the patterns. If even one changed file falls outside the patterns, the PR
-  is scanned as usual. Patterns use the same glob syntax as `exclude.branches` —
+  is scanned as usual. Patterns use the same glob syntax as `exclude.branches`:
   for example `vendor/**`, `**/*.md`, or `docs/**`.
 </Note>
 
 <Accordion title="Glob pattern syntax">
   `exclude.branches`, `exclude.paths`, `exclude.authors`/`include.authors`, and
   `include.branches` (and their org-wide equivalents) accept glob patterns mixed
-  with literals: `*`, `**`, `?`, and `{(a, b)}` brace expansion. Matching is
-  case-insensitive. `[`, `]`, and a leading `!` are literal, not special syntax.
-  Each category allows up to 50 entries.
+  with literals. Matching is case-insensitive.
+
+| Syntax  | Meaning                                          | Example                      |
+| ------- | ------------------------------------------------ | ---------------------------- |
+| `*`     | Any number of characters within one path segment | `*-bot`                      |
+| `**`    | Any number of characters, including across `/`   | `release/**`                 |
+| `?`     | Exactly one character                            | `release/?.x`                |
+| `{a,b}` | One of the comma-separated alternatives          | `{dependabot,renovate}[bot]` |
+
+For author names, `*` and `**` usually behave the same because author names do not contain `/`. The characters `[`, `]`, and a leading `!` are treated literally. Bracket classes, negation, nested braces, and extended glob forms such as `@(a|b)` are not supported.
+
+The same safety limits apply to repository and organization settings:
+
+- Up to 50 entries in each filter category
+- Up to 100 characters in each pattern
+- Up to five `*` characters in each pattern
+- Up to 10 comma-separated alternatives in one brace expression
+
+If a repository pattern exceeds these limits, Hacktron treats the repository configuration as invalid and scans with the fail-open behavior described below.
+
 </Accordion>
 
 <Accordion title="Matching nested branches with * vs **">
@@ -131,7 +157,7 @@ exclude:
 | Pattern             | Matches                                       | Doesn't match     |
 | ------------------- | --------------------------------------------- | ----------------- |
 | `release/*`         | `release/foo`                                 | `release/foo/bar` |
-| `release/**`        | `release/foo`, `release/foo/bar`              | —                 |
+| `release/**`        | `release/foo`, `release/foo/bar`              | None              |
 | `release/legacy/**` | `release/legacy/1`, `release/legacy/1/hotfix` | `release/other/1` |
 
 Use `release/*` for one-level branches (e.g. `release/2.4`). Use `release/**`
@@ -173,9 +199,8 @@ include:
 `include.labels: [feature, bugfix]` matches either label. Across categories, `include` requires matching all: `include.branches: [main]` + `include.authors: [alice]` only scans Alice's PRs to `main`.
 
 <Note>
-  `exclude` and `include` can target the same category. See [glob
-  matching](/code-review/config#matching-nested-branches-with-vs) for pattern
-  syntax.
+  `exclude` and `include` can target the same category. See [glob pattern
+  syntax](/code-review/config#glob-pattern-syntax) for the supported patterns.
 </Note>
 
 ## Fail the check on findings

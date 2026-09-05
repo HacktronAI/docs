@@ -1,17 +1,46 @@
 ---
-title: "Account settings"
-description: "Manage your Hacktron profile and personal account security."
+title: "Personal settings"
+description: "Manage your profile, connected accounts, and personal account security."
 ---
 
-Use **Account settings** to manage your personal profile and your own Hacktron account security. Open it from the account menu in the sidebar header.
+Use **Personal settings** to manage your profile, connected accounts, and Hacktron account security. Open it from the account menu in the sidebar header.
 
 ## Profile
 
 Your profile controls how you appear to the rest of your organization.
 
-- **Display name** — the name shown on findings, comments, and activity.
-- **Email** — the address used to sign in and receive account notifications.
-- **Avatar** — the picture shown next to your name across the app.
+- **Display name**: the name shown on findings, comments, and activity.
+- **Email**: the address used to sign in and receive account notifications.
+- **Avatar**: the picture shown next to your name across the app.
+
+## Connected accounts
+
+Connect a source control account when Hacktron needs to associate your activity on that provider with your member account. Each provider appears separately under **Connected accounts**.
+
+### Connect Microsoft for Azure DevOps
+
+Linking your Microsoft account allows Hacktron to associate Azure DevOps pull requests with your Code Review seat and member profile. The email on the Microsoft account must match the pull request author's Azure DevOps user principal name (UPN).
+
+<Steps>
+  <Step title="Open Personal settings">
+    Open the account menu in the sidebar header and select **Personal
+    settings**.
+  </Step>
+  <Step title="Connect Microsoft">
+    Under **Connected accounts**, find **Microsoft** and select **Connect**.
+    Complete the identity check if Hacktron asks you to verify your account
+    first.
+  </Step>
+  <Step title="Complete Microsoft sign-in">
+    Sign in to the Microsoft account you use for Azure DevOps and approve the
+    connection. Hacktron returns you to Personal settings and shows the linked
+    email on the Microsoft row.
+  </Step>
+</Steps>
+
+The connection does not rerun completed reviews. Future Azure DevOps pull request activity can reconcile an existing unlinked author entry once the matching Microsoft account is connected.
+
+You can remove a connection with **Disconnect**. Disconnecting Microsoft can prevent later Azure DevOps activity from being attributed to your Hacktron member account.
 
 ## Multi-factor authentication (MFA)
 
@@ -20,10 +49,10 @@ Multi-factor authentication adds a second verification step to sign-in, so a pas
 ### Enable MFA
 
 <Steps>
-  <Step title="Open Account settings">
-    Open the account menu in the sidebar header and select **Account settings**.
+  <Step title="Open Personal settings">
+    Open the account menu in the sidebar header and select **Personal settings**.
 
-    ![Enable MFA from Account settings](/images/mfa_enable.png)
+    ![Enable MFA from Personal settings](/images/mfa_enable.png)
 
   </Step>
   <Step title="Start MFA setup">
@@ -43,7 +72,7 @@ Multi-factor authentication adds a second verification step to sign-in, so a pas
   href="/platform/security-settings"
 >
   Organization-wide security controls are managed separately from personal
-  account settings.
+  personal settings.
 </Card>
 
 ### Save your backup codes
@@ -57,4 +86,4 @@ When you enable MFA, Hacktron generates one-time backup codes. Store them in a s
 
 ### Disable or reset MFA
 
-You can turn MFA off or re-run setup from **Account settings**. Disabling MFA weakens your account security, so only do this if you are switching to a new device or authenticator app.
+You can turn MFA off or run setup again from **Personal settings**. Disabling MFA weakens your account security, so only do this if you are switching to a new device or authenticator app.

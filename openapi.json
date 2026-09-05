@@ -1991,7 +1991,7 @@
           "baseUrl": {
             "type": "string",
             "nullable": true,
-            "description": "GitHub Enterprise base URL for self-hosted (PAT) installations (null/absent for github.com), or the Azure DevOps organization URL. Clients should build clone/display URLs from this host instead of assuming github.com (GitHub and Azure DevOps only).",
+            "description": "GitHub Enterprise base URL for self-hosted (PAT) installations (null/absent for github.com), the GitLab installation URL, or the Azure DevOps organization URL. Clients should build clone/display URLs from this host instead of assuming the public provider host.",
             "example": "https://ghe.example.com"
           },
           "defaultBranch": {

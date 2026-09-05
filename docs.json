@@ -30,6 +30,7 @@
           {
             "group": "Setup",
             "pages": [
+              "platform/on-premises",
               "platform/integrations",
               {
                 "group": "Repositories",

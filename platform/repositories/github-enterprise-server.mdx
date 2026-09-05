@@ -118,4 +118,33 @@ There are two ways to configure repository access for GitHub Enterprise Server:
   </Step>
 </Steps>
 
-That's it! Hacktron will now run security reviews for every pull request in the selected repositories.
+## Use a GHES repository in a Whitebox Scan
+
+On-premises deployments can use enabled GitHub Enterprise Server repositories as Whitebox scan sources. Connect the GHES instance first with either method on this page, then make sure the repository is enabled for the organization.
+
+When you create a Whitebox Scan:
+
+1. Open **Connected sources** in the repository step.
+2. Select the enabled GHES repository and the branch or commit to scan.
+3. Add the rest of the scope, calculate the cost, and start the scan.
+
+If the server uses a private network address, add its hostname to the appliance's **Internal Git host(s)** setting. If it uses a private certificate authority, add that CA to **Trusted CA certificates** as well.
+
+<Columns cols={2}>
+  <Card
+    title="On-premises deployment"
+    icon="server"
+    href="/platform/on-premises"
+  >
+    Configure first boot, internal Git access, and air-gapped support.
+  </Card>
+  <Card
+    title="Start a Whitebox Scan"
+    icon="magnifying-glass"
+    href="/white-box-pentest/quickstart"
+  >
+    Select a source, define the scope, and run the assessment.
+  </Card>
+</Columns>
+
+GitHub App connections can also support Code Review for selected repositories. Personal Access Token connections are available as Whitebox scan sources but do not enable pull request reviews.

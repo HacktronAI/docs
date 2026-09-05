@@ -1,6 +1,6 @@
 ---
 title: "Automation credits"
-description: "Understand how you buy automation credit, how each run deducts them, and how auto top-up keeps your balance stocked."
+description: "Understand how to buy Automation credits, how runs use them, and how auto top-up works."
 ---
 
 [Automations](/platform/automations/overview) run on shared organization automation credits. Every [remediation](/platform/automations/remediation) run, whether triggered manually from a finding or by an automation, deducts credits based on what the run costs when it completes.
@@ -15,7 +15,7 @@ Automation credits are organization-wide. They are separate from Code Review sea
       All organizations with an active [Code Review](/code-review/overview) subscription start with \$50 in automation credits.
     </Tip>
 
-    Buy credits from **Billing** (access only for Organization Owners), and / or turn on [auto top-up](#auto-top-up) to keep the balance above a threshold you set.
+    Organization owners can buy credits from **Billing** or turn on [auto top-up](#auto-top-up) to keep the balance above a threshold they set.
 
     ![Billing](/images/billing.png)
 
@@ -42,6 +42,8 @@ Set it up on the Billing page under your automation credit balance:
 - **Monthly limit**: an optional cap on how many credits auto top-up may buy per month.
 
 Auto top-up requires a saved payment method and charges the card on file without an interactive checkout. If a top-up charge fails, your automations stay paused until the balance is topped up manually or the card issue is resolved.
+
+The Automation credits card on **Billing** shows the current balance, credits used in the billing period, auto top-up status, and a link to run history. Whitebox Scan Credits appear in a separate account and are never used for automation runs.
 
 ## Related docs
 
