@@ -74,18 +74,14 @@ Every key is optional. An empty or absent `config.yaml` doesn't disable filterin
 
 ## Exclude scans
 
-The `exclude` block tells Hacktron not to scan a pull or merge request. A match records a **skipped** check and uses no developer seat. On GitHub, excluded bot PRs do not receive a skip comment.
+The `exclude` block tells Hacktron not to scan a pull or merge request. A match records a **skipped** check and uses no developer seat.
 
 <Note>
-  GitHub bot PRs are reviewed automatically only when the source branch belongs
-  to the same repository. Bot PRs from forks and PRs from outside human
-  contributors are not scanned automatically. On GitLab, a bot or service
-  account follows the normal filter and seat rules when it has Developer or
-  higher project access. On Bitbucket, a bot or service account follows the
-  normal filter and seat rules when its source branch belongs to the target
-  repository; fork PRs are not scanned automatically. An eligible bot author can
-  take a Code Review seat when auto-assignment is on. Add its username to
-  `exclude.authors` to skip its future PRs or MRs.
+  Hacktron automatically reviews bot-authored changes only when the provider
+  identifies the bot as trusted for the target repository. Untrusted bots and
+  outside contributors are not auto-scanned. Eligible bots follow the same
+  filters and seat rules as other authors. Add a bot's username to
+  `exclude.authors` to skip its future changes.
 </Note>
 
 Rules are evaluated in this order, first match applies:
