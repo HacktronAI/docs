@@ -4,6 +4,19 @@
   color: #060000 !important;
 }
 
+/* ── Content column background ────────────────────────────────────────────
+   The willow theme paints the main content column (the direct child of
+   #content-area) with its own neutral gray `dark:bg-gray-900` (#161616).
+   That neutral gray sits inside the warm page background configured in
+   docs.json (`background.color.dark` → #181611, --background-dark = 24 22 17),
+   and a neutral surface framed by a warm one reads cool/blue-ish. Pin the
+   content column to the same background so the content area and the frame are
+   one continuous warm tone. Scoped to the direct child so the other
+   `bg-gray-900` surfaces (cards, etc.) are untouched. */
+.dark #content-area > div {
+  background-color: rgb(var(--background-dark)) !important;
+}
+
 /* Underline prose text links in dark mode. Exclude [class~="border-0"] so the
    heading anchor-link buttons (Mintlify gives them `border-0`) don't get an
    ugly line under the icon. */
