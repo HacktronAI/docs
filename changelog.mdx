@@ -4,7 +4,45 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=c5f6cff6fbfb06a5c12d2ab205dfde7737f1ed0d - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=9ef27ae39e3771eb0325077aea78eff4abe12c20 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="September 15, 2026" tags={["Code Review","Whitebox","Dashboard","Integrations","Self-Hosting"]}>
+  ## See more about every finding, across every platform
+
+  **OWASP Top 10:2025 category on findings**: You can now set and edit the OWASP Top 10:2025 category on any finding. The category appears in the findings table and drawer, and you can update it from the overflow menu.
+
+  **CWE ID and fix recommendation on findings**: Findings now display a CWE identifier and a plain-language fix recommendation from the scan engine, giving you more context without leaving the finding detail.
+
+  **Revamped findings drawer and table**: The finding detail drawer has a new layout - a top nav bar with collapse, expand, and previous/next navigation; a tray header with severity, status, and overflow controls; and consolidated actions (Remediate, Copy markdown, Mark as duplicate) in one menu. The findings table is redesigned to match.
+
+  **Scan failure reason**: When a scan fails, the scan detail page now shows the failure message from the engine so you know exactly what went wrong.
+
+  **Bot PR review on GitHub**: Pull requests opened by bots - Dependabot, Renovate, GitHub Actions - are now reviewed on GitHub, matching the behavior already in place for GitLab and Bitbucket.
+
+  **Dashboard application filter**: The PR Review tab on the dashboard now respects the Application filter, including the security score card and low-score banner. All dashboard widgets now scope to the same selected repository or application.
+
+  **GitLab tags and commits in Whitebox scan setup**: When starting a Whitebox scan on a GitLab repository, you can now pin the scan to a specific tag or commit SHA, not just a branch.
+
+  **Linear triage status sync**: When you change a finding's triage status in Hacktron - or dispatch an AI fix - the linked Linear issue's status updates automatically. Findings already mirrored status to GitHub, GitLab, and Slack; Linear is now included.
+
+  **Auto-retry when a fix PR goes stale**: If a remediation fix PR fails to apply because the target file changed while the agent was running, Hacktron now automatically retries up to three times against the latest base branch tip instead of surfacing a raw error.
+
+  **Fix PRs close when the fix lands on its own**: If you merge a fix directly and the engine detects it, any open AI-generated fix PRs for that finding are closed automatically, with an explanatory comment.
+
+  **API key management for every member**: Every organization member can now create and rotate their own API keys from personal settings, without requiring an owner or admin.
+
+  **Consolidated personal settings**: The Account and Settings pages are now one page at /personal-settings, organized into Profile, Security, Connected accounts, Preferences, Sessions, and Organizations.
+
+  **Delete automations from the detail page**: You can now delete an automation directly from its detail page.
+
+  **Self-managed GitLab on on-prem appliances**: On-prem installations can now connect a self-managed GitLab instance and enable merge-request scanning, with the same integration card and controls as GitHub Enterprise.
+
+  **GHES connection via GitHub App on-prem**: On-prem appliances can now connect a GitHub Enterprise Server using a GitHub App installation, not only a personal access token.
+
+  **License visibility and expiry warnings on-prem**: The organization settings page shows your appliance license details - licensed-to name, expiry date, seats, and products. A banner appears 30 days before expiry, and starting new scans is blocked past the grace deadline.
+
+  **[See the dashboard →](/platform/dashboard)** · **[Set up GitLab →](/platform/repositories/gitlab)** · **[Connect Linear →](/platform/project-management/linear)** · **[Remediation automations →](/platform/automations/remediation)** · **[On-premises →](/platform/on-premises)**
+</Update>
 
 <Update label="August 19, 2026" tags={["Billing","Integrations","Whitebox","Self-Hosting"]}>
   ## Separate credit accounts and more on-premises scan options
