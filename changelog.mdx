@@ -4,7 +4,53 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=c5f6cff6fbfb06a5c12d2ab205dfde7737f1ed0d - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=f003dc9a7ce599d97dde3f0f02ebf8d229bf01c9 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="September 16, 2026" tags={["Code Review","Whitebox","Integrations","Self-Hosting","Dashboard"]}>
+  ## Findings get richer data, a cleaner view, and live Linear sync
+
+  **Revamped findings table and drawer**: The findings list and detail drawer are redesigned from scratch. A new header puts severity, status, and actions in a single tray; previous/next navigation, a collapsed full-page view, and a consolidated overflow menu replace the old scattered controls.
+
+  **OWASP Top 10:2025 category on findings**: You can now set and edit the OWASP Top 10:2025 category on any finding directly from the overflow menu. The category appears in the breadcrumb and is filterable in the findings list.
+
+  **CWE ID and fix recommendation on findings**: Findings now store and display a CWE identifier and a plain-language fix recommendation when the scan engine supplies one, so you have the standard reference and the suggested remediation in one place.
+
+  **Linear status sync**: When you triage a finding on any surface (web, Slack, GitHub, GitLab, or API), the linked Linear issue moves to the matching workflow state automatically. Dispatching an AI fix also moves it to In Progress.
+
+  **Application filter on the PR Review dashboard**: The Repository and Application filters on the PR Review tab now scope every widget on the page together, including the security score card and low-score banner that previously stayed org-wide.
+
+  **Scan failure reason on the scan page**: When a scan fails, the reason reported by the engine now appears on the scan detail page instead of leaving you with no explanation.
+
+  **Bot PR scanning on GitHub**: Pull requests opened by bots (Dependabot, Renovate, GitHub Actions, and similar) are now scanned and reviewed on GitHub, matching the behavior already in place for GitLab and Bitbucket.
+
+  **Remediation fix PRs close themselves**: When the engine detects that a finding's fix landed on the target branch independently (a human merged the same change), any open remediation fix PR for that finding is closed automatically with an explanatory comment.
+
+  **Remediation auto-retry on stale diffs**: If a fix PR's diff no longer applies because the target file changed while the agent was running, the agent re-runs against the updated branch tip automatically, up to three retries, instead of surfacing a raw patch error.
+
+  **Azure DevOps remediation**: AI-powered fix PRs now open, update, and track status on Azure DevOps repositories, matching the existing GitHub and GitLab remediation lanes.
+
+  **GitLab tags and pinned commits in pentest selection**: When you set up a Whitebox pentest with a GitLab repository, you can now pick a specific tag or commit SHA as the scan target instead of always scanning the branch tip.
+
+  **Self-serve API key management for all members**: Every org member can now create, view, rotate, and revoke their own API keys from personal settings. Previously only admins could manage keys.
+
+  **Unified personal settings**: The separate Account and Settings pages are merged into a single Personal settings page with six clear sections: Profile, Security, Connected accounts, Preferences, Sessions, and Organizations.
+
+  **Improved pentest PDF reports**: Pentest PDF exports include richer finding detail, correctly numbered findings, and recognized code fence languages in code blocks.
+
+  **Global search shows finding severity**: Findings in the global search results now display their severity badge alongside the title.
+
+  **On-prem: license expiry banner and scan gate**: Appliances now read the installed license and show a warning banner starting 30 days before expiry. Once the grace deadline passes, new scans are blocked while existing findings, reports, and exports stay accessible.
+
+  **On-prem: license details in org settings**: The Organization settings page on an appliance shows the licensed customer name, expiry date, days remaining, seat count, and covered products, with a link to the setup wizard for renewals.
+
+  **On-prem: GitLab MR scanning surfaces in the UI**: The sidebar Reviews link, PR Review dashboard tabs, and source-control settings now appear on appliances with a GitLab integration configured, where they were previously hidden.
+
+  **On-prem: connect GitHub Enterprise by App**: Appliance operators can now connect GitHub Enterprise Server using a GitHub App instead of a personal access token, giving the integration a proper installation identity.
+
+  **On-prem: guided onboarding flow**: First-time on-prem users get a dedicated setup overlay (Welcome, Connect your code, You're all set) instead of the hosted trial flow.
+
+  **[See the findings list →](/api-reference/findings/list-findings)** · **[Set up GitLab →](/platform/repositories/gitlab)** · **[Connect Azure DevOps →](/platform/repositories/azure-devops)** · **[Connect Linear →](/platform/project-management/linear)** · **[On-premises overview →](/platform/on-premises)** · **[See billing and plans →](/code-review/billing)**
+</Update>
 
 <Update label="August 19, 2026" tags={["Billing","Integrations","Whitebox","Self-Hosting"]}>
   ## Separate credit accounts and more on-premises scan options
