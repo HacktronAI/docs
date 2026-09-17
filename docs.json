@@ -39,7 +39,8 @@
                   "platform/repositories/github",
                   "platform/repositories/github-enterprise-server",
                   "platform/repositories/gitlab",
-                  "platform/repositories/azure-devops"
+                  "platform/repositories/azure-devops",
+                  "platform/repositories/bitbucket"
                 ]
               },
               {
