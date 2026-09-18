@@ -4,7 +4,53 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=c5f6cff6fbfb06a5c12d2ab205dfde7737f1ed0d - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=9321818700667bd798dc9b6013da4d4320dc625d - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="September 18, 2026" tags={["Code Review","Whitebox","Integrations","Dashboard","Self-Hosting"]}>
+  ## Fix PRs close themselves, retries happen automatically
+
+  **Revamped findings view**: The findings drawer and table are redesigned with a cleaner header, segmented tabs, and consolidated controls (severity, status, overflow menu) matching the full-page layout. Navigating between findings and reaching triage actions takes fewer clicks.
+
+  **CWE and fix recommendation on findings**: Every finding now shows its CWE identifier and the engine's suggested fix. You get the weakness classification and a starting point for remediation without leaving the finding.
+
+  **OWASP Top 10:2025 category on findings**: You can now set or edit the OWASP Top 10:2025 category on any finding, either inline or from the overflow menu. The category is searchable and filterable across your findings list.
+
+  **Download context docs from triage**: A download button in the triage header lets you pull a scan's full context documents - the threat model, architecture notes, and supporting files the engine used - without leaving the findings view.
+
+  **Scan failure reason**: When a scan fails, the reason the engine reported now appears on the scan detail page so you know exactly what went wrong.
+
+  **Auto-close fix PRs when a finding is fixed independently**: When Hacktron detects that a finding was fixed by a commit in your base branch, any still-open remediation fix PR for that finding is automatically closed with an explanatory comment. You no longer need to clean up stale fix PRs by hand.
+
+  **Auto-retry when a fix PR goes stale**: If a file changes on the base branch while an AI fix is being generated (a normal merge flow), the automation retries the fix against the updated file - up to three retries per chain. Stale-diff failures resolve themselves instead of surfacing as errors.
+
+  **Automations on Azure DevOps**: Automated fix PRs now work on Azure DevOps repositories. An automation trigger configured in an Azure environment opens and tracks a fix pull request on Azure, matching the behavior already available for GitHub and GitLab.
+
+  **Finding status syncs to Linear**: When you triage a finding in Hacktron (via Slack, a PR comment, or the web UI), its status is now pushed to any linked Linear issue automatically. Dispatch an AI fix and the issue moves to In Progress.
+
+  **Dashboard application filter**: The PR Review tab's metrics widgets - security score, resolution health, findings trend, and the rest - now respect the Application filter alongside the existing repository and date filters. Scope your dashboard to a single application and all cards update together.
+
+  **Finding severity in global search**: Global search results for findings now show the severity badge inline, so you can tell at a glance which matches are Critical or High without opening each one.
+
+  **Merged personal settings page**: The separate Account and Settings pages are now one /personal-settings page organized into six sections: Profile, Security, Connected accounts, Preferences, Sessions, and Organizations.
+
+  **API key management for all members**: Every org member can now create, rotate, and retrieve their own API keys from org settings. Previously only owners could manage keys.
+
+  **Improved pentest PDF reports**: Pentest PDF exports include richer content - findings are numbered in display order, code fences render with language highlighting, and the recommendation section is more complete.
+
+  **Bot-authored PR review on GitHub**: Dependabot, Renovate, and other GitHub App bot PRs are now reviewed and scanned. Previously, GitHub's contributor-association rules caused bot PRs to be skipped before reaching the scan gate.
+
+  **On-prem license management**: Appliance admins see a banner starting 30 days before the license expires, and the Organization Settings page now shows the full license details - licensed-to name, expiry date, grace deadline, seat count, and included products. Starting new scans is blocked after the grace period; findings, reports, and exports remain readable throughout.
+
+  **On-prem scan quota**: Appliance licenses can now include a `max_scans` entitlement that caps the number of full scans started since the license was issued. The quota is enforced at scan start, including restarts.
+
+  **On-prem GitLab MR review**: Self-managed GitLab is now available as a fully supported integration in the appliance edition, with merge-request scanning and PR review controls surfaced in the integrations and settings pages.
+
+  **On-prem GHES GitHub App connection**: GitHub Enterprise Server can now be connected on the appliance via a GitHub App, not only via a personal access token. The App connection gives the integration a proper installation identity and avoids long-lived tokens.
+
+  **On-prem onboarding flow**: First-time appliance users see a dedicated onboarding overlay (Welcome, Connect your code, You're all set) instead of the hosted trial flow, pre-filled for the appliance's configured Git host.
+
+  **[Explore findings →](/code-review/findings-feedback)** · **[Set up automations →](/platform/automations/overview)** · **[Connect Azure DevOps →](/platform/repositories/azure-devops)** · **[Connect Linear →](/platform/project-management/linear)** · **[On-premises setup →](/platform/on-premises)**
+</Update>
 
 <Update label="August 19, 2026" tags={["Billing","Integrations","Whitebox","Self-Hosting"]}>
   ## Separate credit accounts and more on-premises scan options
