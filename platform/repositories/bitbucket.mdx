@@ -1,0 +1,86 @@
+---
+title: "Bitbucket"
+description: "Configure repository access for Bitbucket and self-hosted Bitbucket."
+---
+
+## Prerequisites
+
+The Bitbucket account used to connect Hacktron must:
+
+- Have access to the repository you want Hacktron to review.
+- Have Admin permission on each selected repository so Hacktron can create and update repository webhooks.
+- Be able to sign in to Bitbucket and approve the OAuth Request.
+
+<Info>
+  We recommend using a dedicated Bitbucket account for the Hacktron integration instead of an employee's personal account. This keeps repository access and automated pull request comments associated with a separate integration identity.<br /><br />A dedicated account is **optional**; an existing Bitbucket repository administrator can also connect to Hacktron
+</Info>
+
+<Warning>
+  Bitbucket Cloud does not provide native service or bot accounts. A "dedicated Bitbucket account" means a normal, login-capable Bitbucket user created for the integration.
+</Warning>
+
+## Configure access
+
+<Steps>
+  <Step title="Create a dedicated Bitbucket account (recommended)">
+    You can skip this step if you intend to connect Hacktron using an existing Bitbucket repository administration.
+  </Step>
+  <Step title="Grant repository access">
+    In Bitbucket, open **Repository settings** → **Repository permissions** and select **Add users or groups**.
+
+    Add the account that will connect Hacktron, assign the **Admin** permission, and click **Confirm**.
+
+    <Note>
+      For multiple repositories, you can manage access through a Bitbucket group or grant the account **Admin** permission at the project level.
+    </Note>
+
+    ![Grant repository access](/Bitbucket-Grant-User-Repository-Access.png)
+  </Step>
+  <Step title="Sign in to Bitbucket">
+    Sign in with the dedicated Bitbucket account you created in step 1. If you chose to use an existing repository administrator account, sign in with that account instead.
+  </Step>
+  <Step title="Open the Integrations page ">
+    In Hacktron, go to **Integrations** and click **Connect** under **Bitbucket**
+
+    ![Integration Bitbucket](/Integration-Bitbucket.Png)
+  </Step>
+  <Step title="Authorise Hacktron">
+    Review the permissions requested by Hacktron and click **Accept.**
+
+    Bitbucket will redirect you to Hacktron after authorization is complete.
+
+    <img
+      src="/Bitbucket-Integration-Authorisation.png"
+      alt="GitLab Integration"
+      lightAlt="Bitbucket integration authorisation"
+      darkAlt="Bitbucket integration authorisation"
+      className="dark:hidden"
+    />
+    <img
+      src="Bitbucket-Integration-Authorisation.png"
+      alt="GitLab Integration"
+      lightAlt="Bitbucket integration authorisation"
+      darkAlt="Bitbucket integration authorisation"
+      className="hidden dark:block"
+    />
+  </Step>
+  <Step title="Select repositories">
+    Select the repositories you want Hacktron to review and save your selection.
+
+    Hacktron automatically creates the required webhook for each enabled repository. You do not need to configure the webhook manually.
+
+    ![Bitbucket Integration Repo Selection](/Bitbucket-Integration-RepoSelection.png "Bitbucket Integration Repo Selection")
+
+    To verify the webhook, open the repository in Bitbucket and go to **Repository settings** → **Webhooks**. You should see an active webhook named **Hacktron Security Scan** pointing to: `https://iva.hacktron.ai/api/v1/webhooks/bitbucket`
+
+    ![Bitbucket Integration Webhook](/Bitbucket-Integration-Webhook.png "Bitbucket Integration Webhook")
+  </Step>
+</Steps>
+
+That's it! Hacktron will now run security reviews for every pull request in the selected repositories.
+
+## Supported Bitbucket deployments
+
+Hacktron currently supports Bitbucket Cloud. 
+
+Bitbucket Data Center and other self-hosted Bitbucket deployments are not currently supported.
