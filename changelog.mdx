@@ -7,49 +7,52 @@ rss: true
 {/* CHANGELOG:INSERT last-prod-sha=9321818700667bd798dc9b6013da4d4320dc625d - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
 
 <Update label="September 18, 2026" tags={["Code Review","Whitebox","Integrations","Dashboard","Self-Hosting"]}>
-  ## Fix PRs close themselves, retries happen automatically
+  ## A rebuilt findings view, and fix PRs that close themselves
 
-  **Revamped findings view**: The findings drawer and table are redesigned with a cleaner header, segmented tabs, and consolidated controls (severity, status, overflow menu) matching the full-page layout. Navigating between findings and reaching triage actions takes fewer clicks.
+**New findings table and drawer**: The findings list and its detail drawer have a new layout. Severity, status, and the main actions - Remediate, Copy markdown, Mark as duplicate - now sit in one header tray, and previous/next arrows move you through findings without going back to the list. A collapse control opens the drawer as a full page.
 
-  **CWE and fix recommendation on findings**: Every finding now shows its CWE identifier and the engine's suggested fix. You get the weakness classification and a starting point for remediation without leaving the finding.
+**OWASP Top 10:2025 category on findings**: You can set or change a finding's OWASP Top 10:2025 category from the overflow menu. The category appears in the findings table and drawer, and you can filter the list by it.
 
-  **OWASP Top 10:2025 category on findings**: You can now set or edit the OWASP Top 10:2025 category on any finding, either inline or from the overflow menu. The category is searchable and filterable across your findings list.
+**CWE ID and fix recommendation on findings**: Findings now carry a CWE identifier and a plain-language fix recommendation, where the scan engine supplies them. Both appear in the finding detail.
 
-  **Download context docs from triage**: A download button in the triage header lets you pull a scan's full context documents - the threat model, architecture notes, and supporting files the engine used - without leaving the findings view.
+**Download a scan's context documents**: A download button in the triage header pulls the context the scan worked from - the threat model, architecture notes, and any files you uploaded - without leaving the findings view.
 
-  **Scan failure reason**: When a scan fails, the reason the engine reported now appears on the scan detail page so you know exactly what went wrong.
+**Scan failure reason**: When a scan fails, the scan detail page now shows the reason the engine reported, instead of leaving you to guess.
 
-  **Auto-close fix PRs when a finding is fixed independently**: When Hacktron detects that a finding was fixed by a commit in your base branch, any still-open remediation fix PR for that finding is automatically closed with an explanatory comment. You no longer need to clean up stale fix PRs by hand.
+**Severity in global search**: Findings in global search results show their severity badge, so you can pick out the Critical and High matches without opening each one.
 
-  **Auto-retry when a fix PR goes stale**: If a file changes on the base branch while an AI fix is being generated (a normal merge flow), the automation retries the fix against the updated file - up to three retries per chain. Stale-diff failures resolve themselves instead of surfacing as errors.
+**Fix PRs close when the fix lands elsewhere**: If Hacktron detects that a finding was fixed by a commit on your base branch, it closes any open fix PR for that finding and leaves a comment saying why, so you do not have to clear out stale fix PRs by hand.
 
-  **Automations on Azure DevOps**: Automated fix PRs now work on Azure DevOps repositories. An automation trigger configured in an Azure environment opens and tracks a fix pull request on Azure, matching the behavior already available for GitHub and GitLab.
+**Fix PRs retry instead of failing on a stale diff**: If a file changes on the base branch while an AI fix is being generated, the fix no longer applies cleanly. Rather than surfacing a patch error, the automation re-runs against the updated file, up to three retries per chain.
 
-  **Finding status syncs to Linear**: When you triage a finding in Hacktron (via Slack, a PR comment, or the web UI), its status is now pushed to any linked Linear issue automatically. Dispatch an AI fix and the issue moves to In Progress.
+**Remediation on Azure DevOps**: Automations open and track fix pull requests on Azure DevOps repositories, alongside GitHub and GitLab.
 
-  **Dashboard application filter**: The PR Review tab's metrics widgets - security score, resolution health, findings trend, and the rest - now respect the Application filter alongside the existing repository and date filters. Scope your dashboard to a single application and all cards update together.
+**Triage status syncs to Linear**: Triage a finding anywhere - the web app, Slack, a PR comment, or the API - and the linked Linear issue moves to the matching workflow state. Dispatching an AI fix moves it to In Progress. Findings already mirrored status to GitHub, GitLab, and Slack.
 
-  **Finding severity in global search**: Global search results for findings now show the severity badge inline, so you can tell at a glance which matches are Critical or High without opening each one.
+**Bot pull requests reviewed on GitHub**: Eligible bot pull requests - Dependabot, Renovate, and similar - were being skipped on GitHub. They are now reviewed, matching GitLab and Bitbucket. Trust rules and author filters are unchanged, so you can still exclude a bot with `exclude.authors`.
 
-  **Merged personal settings page**: The separate Account and Settings pages are now one /personal-settings page organized into six sections: Profile, Security, Connected accounts, Preferences, Sessions, and Organizations.
+**Pin a GitLab scan to a tag or commit**: When you start a Whitebox Scan on a GitLab repository, you can target a specific tag or commit SHA rather than the tip of a branch.
 
-  **API key management for all members**: Every org member can now create, rotate, and retrieve their own API keys from org settings. Previously only owners could manage keys.
+**Application filter on the PR Review dashboard**: The Application filter now scopes every widget on the PR Review tab, including the security score card and the low-score banner, which previously stayed org-wide.
 
-  **Improved pentest PDF reports**: Pentest PDF exports include richer content - findings are numbered in display order, code fences render with language highlighting, and the recommendation section is more complete.
+**One page for personal settings**: The separate Account and Settings pages are now a single Personal settings page, organized into Profile, Security, Connected accounts, Preferences, Sessions, and Organizations.
 
-  **Bot-authored PR review on GitHub**: Dependabot, Renovate, and other GitHub App bot PRs are now reviewed and scanned. Previously, GitHub's contributor-association rules caused bot PRs to be skipped before reaching the scan gate.
+**API keys for every member**: Any organization member can create, rotate, and revoke their own API keys from personal settings, without an owner or admin doing it for them.
 
-  **On-prem license management**: Appliance admins see a banner starting 30 days before the license expires, and the Organization Settings page now shows the full license details - licensed-to name, expiry date, grace deadline, seat count, and included products. Starting new scans is blocked after the grace period; findings, reports, and exports remain readable throughout.
+**Fuller pentest PDF reports**: Pentest PDF exports carry more detail on each finding, number findings in display order, and highlight code blocks in the right language.
 
-  **On-prem scan quota**: Appliance licenses can now include a `max_scans` entitlement that caps the number of full scans started since the license was issued. The quota is enforced at scan start, including restarts.
+**License details and expiry warnings on appliances**: Organization settings on an appliance show the installed license - who it is licensed to, expiry date, days remaining, seat count, and covered products. A banner appears 30 days before expiry. Once the grace deadline passes, new scans are blocked, while findings, reports, and exports stay readable.
 
-  **On-prem GitLab MR review**: Self-managed GitLab is now available as a fully supported integration in the appliance edition, with merge-request scanning and PR review controls surfaced in the integrations and settings pages.
+**Scan quota on appliance licenses**: An appliance license can include a `max_scans` entitlement that caps how many full scans may start over the life of the license. The cap is checked when a scan starts, including restarts.
 
-  **On-prem GHES GitHub App connection**: GitHub Enterprise Server can now be connected on the appliance via a GitHub App, not only via a personal access token. The App connection gives the integration a proper installation identity and avoids long-lived tokens.
+**Self-managed GitLab on appliances**: Appliances can connect a self-managed GitLab instance and scan merge requests. The Reviews link, PR Review dashboard tabs, and source control settings appear once the integration is configured.
 
-  **On-prem onboarding flow**: First-time appliance users see a dedicated onboarding overlay (Welcome, Connect your code, You're all set) instead of the hosted trial flow, pre-filled for the appliance's configured Git host.
+**GitHub Enterprise Server via GitHub App**: Appliance operators can connect GitHub Enterprise Server through a GitHub App installation rather than a personal access token, which avoids long-lived tokens.
 
-  **[Explore findings →](/code-review/findings-feedback)** · **[Set up automations →](/platform/automations/overview)** · **[Connect Azure DevOps →](/platform/repositories/azure-devops)** · **[Connect Linear →](/platform/project-management/linear)** · **[On-premises setup →](/platform/on-premises)**
+**Appliance onboarding**: First-time users on an appliance get a setup flow of their own - Welcome, Connect your code, You're all set - pre-filled for the configured Git host, in place of the hosted trial flow.
+
+**[Explore findings →](/code-review/findings-feedback)** · **[Set up remediation automations →](/platform/automations/remediation)** · **[Connect Azure DevOps →](/platform/repositories/azure-devops)** · **[Connect Linear →](/platform/project-management/linear)** · **[Configure on-premises deployments →](/platform/on-premises)**
+
 </Update>
 
 <Update label="August 19, 2026" tags={["Billing","Integrations","Whitebox","Self-Hosting"]}>
