@@ -4,7 +4,17 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=9321818700667bd798dc9b6013da4d4320dc625d - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=891fa6e448ac6243bdae1bf49a3a7480ea63b78e - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="September 22, 2026" tags={["Whitebox"]}>
+  ## Retest findings and scan authenticated targets
+
+  **Manual finding retests**: After fixing a Whitebox finding, you can now trigger a retest directly from the finding detail. Hacktron re-runs the check and confirms whether the issue is resolved, without waiting for a full scan.
+
+  **Browser authentication for scans**: You can now configure browser-based login so Hacktron can reach the authenticated parts of your app during a scan. Set up an auth profile with your credentials or step-by-step login instructions, preview the session to confirm it works, then attach it to a scan.
+
+  **[Start a Whitebox scan →](/white-box-pentest/quickstart)**
+</Update>
 
 <Update label="September 18, 2026" tags={["Code Review","Whitebox","Integrations","Dashboard","Self-Hosting"]}>
   ## A rebuilt findings view, and fix PRs that close themselves
