@@ -43,6 +43,10 @@ This is required to create a service account for Hacktron to use.
       Click on **Add new token**, and grant it the `api` scope:
       - `api`
 
+    `api` already covers the read access Hacktron needs, so `read_api` and
+    `read_user` are not required. Create a legacy personal access token:
+    Hacktron does not support fine-grained personal access tokens yet.
+
     <Info>
       The `api` scope is required because Hacktron registers merge-request
       webhooks on your projects (a write operation) to receive events and run
@@ -101,3 +105,26 @@ GitLab Enterprise** and enter your instance's base URL (e.g.
   URL must be the instance origin. - The token must carry the `api` scope on
   your self-hosted instance.
 </Note>
+
+## Troubleshooting
+
+### Every project fails with a permission error, even with Maintainer access
+
+If connecting fails with a message about fine-grained personal access tokens,
+or projects cannot be enabled for scans or merge request reviews even though the
+service account has Maintainer access, check whether the project's top-level
+group requires fine-grained personal access tokens.
+
+Once that requirement is enforced, GitLab still lets a legacy token list the
+group's projects, but rejects every call on the projects themselves (webhooks, branches, merge requests, deploy tokens) with
+`403 insufficient_granular_scope`. Hacktron uses a legacy token, so it cannot
+work with that group until the setting is off.
+
+To fix it, a group Owner turns the setting off:
+
+1. In GitLab, open the top-level group and go to **Settings** > **General**.
+2. Expand **Permissions and group features**.
+3. Clear **Require fine-grained personal access tokens after a specific date**
+   and select **Save changes**.
+4. In Hacktron, connect GitLab again, or re-enable the affected projects in
+   **Integrations**.
