@@ -4,7 +4,29 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=9321818700667bd798dc9b6013da4d4320dc625d - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=5be31f4a044485606ea62b518a50116acad756c7 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="September 25, 2026" tags={["Whitebox","Code Review","Integrations","Self-Hosting","Dashboard"]}>
+  ## Scan behind a login, retest findings, and a faster People page
+
+  **Browser authentication for Whitebox scans**: You can now supply login credentials when starting a Whitebox scan so the engine can reach pages that require authentication. Enter a username and password (or session token) in the scan wizard and Hacktron handles the rest before scanning begins.
+
+  **Manual finding retests**: Request a retest of any individual Whitebox finding directly from the finding detail. A Hacktron engineer re-validates the issue and posts the outcome, so you know whether a fix held or a finding is still exploitable.
+
+  **GitHub repository selection in-app**: Organization admins can now enable and disable individual GitHub repositories from the Repositories page, the same way GitLab, Bitbucket, and Azure DevOps repos are managed. Repositories removed from your GitHub App install and then restored are automatically re-selected.
+
+  **Repositories page revamp**: The Repositories table now splits each entry into a Repository column and an Owner column, scopes the platform filter to only the providers your org has connected, and adds Open Findings and Last Scan columns.
+
+  **People page search and filtering**: The People page now searches names, emails, and SCM usernames server-side and supports filtering by role and Code Review seat, sorting by name, role, or last activity, and pagination across both members and unlinked developers. Previously the list was silently capped and unlinked developers repeated across pages.
+
+  **Review replies on explicit requests**: When you request a review from @hacktronai on a pull or merge request that Hacktron already scanned at that commit, you now receive a direct reply with the existing result. Previously the request went unanswered on a cached scan.
+
+  **Large scan estimates routed to the team**: Whitebox cost estimates above 5,000 credits no longer show a total in the wizard. Instead, you are prompted to contact the team directly so pricing can be confirmed before the scan starts.
+
+  **GitHub PR review on self-hosted deployments**: Self-hosted Hacktron appliances now receive and process GitHub pull request events, enabling Code Review for GitHub repositories on your own infrastructure.
+
+  **[Start a Whitebox scan →](/white-box-pentest/quickstart)** · **[Set up GitHub →](/platform/repositories/github)** · **[Manage repositories →](/platform/repositories)** · **[Manage people →](/code-review/people)** · **[Self-hosting →](/platform/on-premises)**
+</Update>
 
 <Update label="September 18, 2026" tags={["Code Review","Whitebox","Integrations","Dashboard","Self-Hosting"]}>
   ## A rebuilt findings view, and fix PRs that close themselves
