@@ -24,10 +24,9 @@ When auto-assignment is enabled:
 <Info>This can be turned off in **People** > **Auto-assign on PR**.</Info>
 
 <Note>
-  Auto-assignment treats eligible bot authors (for example `dependabot[bot]` or
-  `renovate[bot]`) like any other developer: when a bot opens a pull request in
-  a covered repository, it is assigned a seat and billed the same way. To keep
-  bots out of review and billing, list their usernames in
+  Bots count as developers too. If a bot like Dependabot or Renovate opens a
+  pull request while auto-assignment is on, it gets a seat and is billed like
+  anyone else. To keep bots out of review and billing, add their usernames to
   [`exclude.authors`](/code-review/config#exclude-scans) or the org-wide author
   filter — excluded authors are skipped before a seat is assigned. You can also
   remove a bot's seat from **People** at any time.
