@@ -23,6 +23,16 @@ When auto-assignment is enabled:
 
 <Info>This can be turned off in **People** > **Auto-assign on PR**.</Info>
 
+<Note>
+  Bots count as developers too. If a bot like Devin
+  (`devin-ai-integration[bot]`) or Claude (`claude[bot]`) opens a pull request
+  while auto-assignment is on, it gets a seat and is billed like anyone else. To
+  keep bots out of review and billing, add their usernames to
+  [`exclude.authors`](/code-review/config#exclude-scans) or the org-wide author
+  filter — excluded authors are skipped before a seat is assigned. You can also
+  remove a bot's seat from **People** at any time.
+</Note>
+
 When seats are assigned automatically, the user whom the seat is assigned to will initially have an **Unassigned** role.
 You can change the role to Viewer, Member, Admin, or Owner.
 
