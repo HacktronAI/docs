@@ -170,7 +170,7 @@ release branches except `release/legacy/**`.
 
 ## Include scans
 
-Use the include block to scan **only** pull and merge requests that match specific rules. Hacktron records a skip check comment on PRs/MRs it doesn't scan.
+Use the include block to scan **only** pull and merge requests that match specific rules. Hacktron records a skipped check on PRs/MRs it doesn't scan and, if [code review comments](/platform/organization-settings#code-review-comments) are on, a skip comment.
 
 ```yaml
 include:
@@ -204,7 +204,7 @@ include:
 
 ## Fail the check on findings
 
-By default, the Hacktron check is green as long as the scan completes. Findings are posted as inline comments but don't block the merge. Configure a severity threshold to turn the check **red** when a finding is at or above that level.
+By default, the Hacktron check is green as long as the scan completes, and findings are posted as inline comments but don't block the merge. Configure a severity threshold to turn the check **red** when a finding is at or above that level.
 
 ![Failed check example](/images/fail_on_failure_example.png)
 

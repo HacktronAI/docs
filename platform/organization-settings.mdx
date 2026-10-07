@@ -1,6 +1,6 @@
 ---
 title: "Organization settings"
-description: "Configure scan filters, the check gate, and SLA thresholds for your organization."
+description: "Configure scan filters, the check gate, code review comments, and SLA thresholds for your organization."
 ---
 
 Organization settings apply to every repository unless a repository's `.hacktron/config.yaml` overrides them. Only organization admins and owners can change these settings.
@@ -59,6 +59,28 @@ Set an org-wide severity threshold that fails a PR or MR check when a finding me
 </Steps>
 
 See [Fail the check on findings](/code-review/config#fail-the-check-on-findings) for the full severity table and per-repository overrides.
+
+## Code review comments
+
+Choose whether Hacktron posts scan results as comments on your pull requests and merge requests. This setting applies to every repository in your organization and is on by default.
+
+To change it, go to **Settings → Code review comments**. Only organization admins can change this setting.
+
+<img
+  src="/images/code_review_comments.png"
+  alt="Code review comments settings card"
+/>
+
+When comments are on, Hacktron posts findings and scan summaries directly to your pull requests and merge requests.
+
+When comments are off:
+
+- Scans still run as normal.
+- Check statuses still update and can still block a merge.
+- Findings remain available in Hacktron and connected tools such as Slack, Jira, and Linear.
+- Hacktron does not post findings, summaries, or other comments to the pull request or merge request.
+
+Turning comments off does not remove comments that Hacktron has already posted.
 
 ## SLA thresholds
 
