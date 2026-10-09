@@ -4,7 +4,35 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=9321818700667bd798dc9b6013da4d4320dc625d - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=a9599d5d560ffeb6629766a1baeb078a7d2ef829 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="October 9, 2026" tags={["Whitebox","Code Review","Integrations"]}>
+  ## Whitebox reports show live validation evidence and get a full refresh
+
+  **Refreshed Whitebox report**: The PDF report now includes a methodology section built from what the scan actually analysed, a severity rubric, scope details (target URLs and testing window), limitations, and a confidentiality notice - ready to hand to a customer or auditor.
+
+  **Live validation evidence in reports**: Each finding's Live Validation section now shows the established and not-established claims, the blocker, and the observed output from the exploit attempt - not just a verdict.
+
+  **Browser authentication for dynamic validation**: You can now supply login credentials and instructions so the scan engine authenticates against your application before attempting to validate findings on protected pages.
+
+  **Manual finding retests**: Request a retest of any Whitebox finding directly from the finding detail. The result and outcome appear in the retest report when the pentest team completes it.
+
+  **Finding status synced to Jira and Linear**: When you triage, fix, or reopen a finding in Hacktron, the linked Jira issue or Linear ticket updates its status to match automatically.
+
+  **Redesigned Integrations page**: Each provider now shows a status badge (Connected, Not connected, or an attention state), the connected account, a repository count, and a single primary action, with Disconnect tucked into an overflow menu.
+
+  **GitHub repository selection in Hacktron**: Org admins can now enable or disable individual GitHub repositories for scanning directly in Hacktron, the same as GitLab, Bitbucket, and Azure DevOps.
+
+  **@hacktronai review replies on scanned commits**: Requesting a review on a commit that Hacktron already scanned now gets an immediate reply with the existing result instead of silence.
+
+  **Rebuilt People page**: Search, filters, role and seat filters, sorting, and pagination for your members list now run on the server, so the page loads quickly for large orgs and unlinked developers appear on every page.
+
+  **Docs menu in the top nav**: The help icon now opens a dropdown linking directly to the docs for each product area, the API reference, the MCP server, and the changelog.
+
+  **Repository page revamp**: The Repositories table now splits the repo column into Repository and Owner, scopes the platform filter to the providers your org has connected, and adds Open Findings and Last Scan columns.
+
+  **[Start a Whitebox scan →](/white-box-pentest/quickstart)** · **[Connect integrations →](/platform/integrations)** · **[See billing and plans →](/platform/billing)**
+</Update>
 
 <Update label="September 18, 2026" tags={["Code Review","Whitebox","Integrations","Dashboard","Self-Hosting"]}>
   ## A rebuilt findings view, and fix PRs that close themselves
