@@ -4,7 +4,54 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=9321818700667bd798dc9b6013da4d4320dc625d - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=a9599d5d560ffeb6629766a1baeb078a7d2ef829 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="October 9, 2026" tags={["Whitebox","Integrations","Dashboard"]}>
+  ## See what a Whitebox scan actually established
+
+**Reports describe the assessment**: Whitebox PDF reports now include the repositories and targets in scope, the testing window, a severity rubric, limitations, and a confidentiality notice. Where scan coverage is available, the methodology and coverage detail show which code the analysis passes selected for review.
+
+**Live validation evidence**: Findings with recorded live-validation evidence now have a Live Validation section in the PDF report showing what the attempt established, what it did not establish, and any blocker. Successful exploit attempts can also include the observed output.
+
+**Jira and Linear status sync**: Sync finding status changes to linked Jira and Linear issues, and bring supported issue status changes back into Hacktron. Organization admins can enable or disable each direction separately in the integration settings. Jira updates follow the transitions available in your project's workflow.
+
+**Integration settings in one place**: The Integrations page groups providers into a list with connection details, repository counts where applicable, and a Connect or Manage action. Connected providers show a status badge; connections needing attention show the action to resolve it. Open a provider to manage its settings or disconnect it.
+
+**Docs from the top navigation**: The help menu links directly to each product's documentation, the API reference, the MCP server, and the changelog.
+
+**[Start a Whitebox scan →](/white-box-pentest/quickstart)** · **[Connect Jira →](/platform/project-management/jira)** · **[Connect Linear →](/platform/project-management/linear)** · **[Manage integrations →](/platform/integrations)**
+
+</Update>
+
+<Update label="September 25, 2026" tags={["Code Review","Whitebox","Integrations","Dashboard","Self-Hosting"]}>
+  ## Choose GitHub repositories without leaving Hacktron
+
+**GitHub repository selection**: Organization admins can select which repositories to enable from the GitHub integration in Hacktron, within the access granted to the GitHub App. Repositories added back to the App installation are selected again automatically.
+
+**Separate repository access from PR reviews**: Keep a repository available to Hacktron while switching its automatic PR reviews on or off. The Repositories table now shows Repository and Owner separately, alongside Open Findings, PR Scans, and Last Scan. Its platform filter lists only providers your organization has connected.
+
+**Replies to explicit review requests**: When you post `@hacktronai review` for a commit with an existing review, Hacktron replies with the completed result or tells you that the review is still in progress.
+
+**Contact the team for large estimates**: For organizations using the large-estimate approval flow, Whitebox estimates above 5,000 credits prompt you to contact Hacktron before starting the scan.
+
+**GitHub.com reviews on appliances**: Self-hosted Hacktron deployments can connect a customer-owned GitHub App and review GitHub.com pull requests on their own infrastructure.
+
+**[Set up GitHub →](/platform/repositories/github)** · **[Manage repositories →](/platform/repositories)** · **[Configure Code Review →](/code-review/config)** · **[Configure self-hosting →](/platform/on-premises)**
+
+</Update>
+
+<Update label="September 22, 2026" tags={["Whitebox","Code Review"]}>
+  ## Check your fixes without repeating the full assessment
+
+**Request a finding retest**: On a completed hosted Whitebox scan, choose **Retest findings**, select the findings to check, and provide instructions about your fixes. The Hacktron pentest team reviews the request and records each finding's outcome and notes. Completed retests are available in the scan's retest history and PDF report.
+
+**Preview login for dynamic validation**: Where dynamic validation is enabled, add login instructions and test credentials in the Whitebox scan wizard, then preview the browser session before starting. Hacktron uses those instructions to authenticate against your deployed targets when validating findings.
+
+**Find developers across the People list**: Search by name, email, or SCM username, filter by role or Code Review seat, and sort and page through the results. Search and filters cover the full member list rather than only the rows already loaded.
+
+**[Prepare scan scope and access →](/white-box-pentest/quickstart#add-runtime-context)** · **[Manage Code Review seats →](/code-review/people)**
+
+</Update>
 
 <Update label="September 18, 2026" tags={["Code Review","Whitebox","Integrations","Dashboard","Self-Hosting"]}>
   ## A rebuilt findings view, and fix PRs that close themselves
