@@ -9,13 +9,13 @@ Use Code Review for continuous security coverage on day-to-day development. For 
 
 ## Scan limits
 
-Code Review scans pull requests and merge requests with **up to 500 changed
-files**. Larger changes are skipped, not partially scanned. Split them into
-separate PRs or MRs with no more than 500 changed files each.
+Each PR or MR scan supports **up to 500 changed files**. Hacktron skips larger
+PRs and MRs. This limit is separate from your [pooled review allowance](/code-review/spillover-usage)
+and does not change with spillover.
 
-This per-scan limit is separate from your organization's
-[pooled review allowance](/code-review/spillover-usage). Enabling spillover
-does not raise the file limit.
+We recommend enabling reviews on all PRs and MRs so smaller changes get reviewed
+before they reach a large deployment PR. Keep [all target branches covered](/code-review/setup#choose-covered-branches),
+including development branches.
 
 ## Quickstart
 
