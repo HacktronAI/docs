@@ -7,6 +7,16 @@ Code Review reviews pull requests and merge requests in the repositories you ena
 
 Use Code Review for continuous security coverage on day-to-day development. For broader, scoped assessments of a repository or application, use [White-box Pentest](/white-box-pentest/overview).
 
+## Scan limits
+
+Code Review scans pull requests and merge requests with **up to 500 changed
+files**. Larger changes are skipped, not partially scanned. Split them into
+separate PRs or MRs with no more than 500 changed files each.
+
+This per-scan limit is separate from your organization's
+[pooled review allowance](/code-review/spillover-usage). Enabling spillover
+does not raise the file limit.
+
 ## Quickstart
 
 <Steps>
