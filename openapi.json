@@ -294,7 +294,7 @@
             "name": "repo_url",
             "required": false,
             "in": "query",
-            "description": "Filter by exact repository URL.",
+            "description": "Filter by repository URL. Case-insensitive; a trailing slash or .git suffix is ignored.",
             "schema": {
               "type": "string"
             }
@@ -473,7 +473,7 @@
             "name": "repo_url",
             "required": false,
             "in": "query",
-            "description": "Filter by exact repository URL.",
+            "description": "Filter by repository URL. Case-insensitive; a trailing slash or .git suffix is ignored.",
             "schema": {
               "type": "string"
             }
@@ -621,7 +621,7 @@
             "name": "repo_url",
             "required": false,
             "in": "query",
-            "description": "Filter by exact repository URL.",
+            "description": "Filter by repository URL. Case-insensitive; a trailing slash or .git suffix is ignored.",
             "schema": {
               "type": "string"
             }
