@@ -4,7 +4,33 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=a9599d5d560ffeb6629766a1baeb078a7d2ef829 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=6a95c1c13176024361afffe9932d11ac76694e38 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="October 21, 2026" tags={["Whitebox","Code Review","Self-Hosting"]}>
+  ## Findings get an identity, a history, and a command palette
+
+  **Human-readable finding IDs**: Every finding now has a short, stable ID that appears at the top of the row, in the panel, on the full page, and in the URL. Click the ID to copy it.
+
+  **Finding activity timeline**: The finding detail panel gains an Activity tab that shows the full history of a finding: when the engine detected it, which scans sighted it (collapsed into "Detected again in N scans" when consecutive), and every status or severity edit by a team member, with the actor and changed fields on each entry. Switch to the Comments view to see only the thread.
+
+  **Finding actions in the command palette**: With a finding open, the command palette leads with a group of actions for it - change status, change severity, mark or unmark as duplicate, create a ticket, start remediation, copy its ID, copy its link, and open it on the full page.
+
+  **New finding filters and multi-ID search**: The findings list gains Source, Reopened, and Date range filters, each saved in the URL. Paste two or more finding IDs into the search box to filter to exactly those findings.
+
+  **CWE name on hover**: The CWE badge on a finding now shows the full weakness name in a tooltip so you know what you are looking at without leaving the page.
+
+  **Whitebox retest wizard**: Request a retest for a completed scan directly from the scans list or the scan detail page. The retest covers every reported finding except false positives and accepted risk, and the scan detail shows the retest status and results once it is complete.
+
+  **Clearer whitebox report coverage**: The Methodology section of a whitebox scan report now shows how many functions each area selected, instead of an arbitrary list of five names. Coverage Detail caps the unselected entry-points table at 50 rows rather than listing every one.
+
+  **Inline browser-auth instructions in the scan wizard**: The browser-auth audit instructions in the whitebox scan wizard's target step now appear directly on the page with live verification status, instead of opening in a separate modal.
+
+  **PR Review setup vs. active**: The Repositories page now shows a notice when PR Review is toggled on for a repo but no active trial or subscription is backing it, with a direct link to start a trial for owners.
+
+  **On-prem GitHub.com reachability check**: An on-prem appliance that cannot reach GitHub.com now disables the GitHub.com integration card with a clear reason (DNS, blocked, or TLS) instead of letting you start the setup flow and failing at the code exchange.
+
+  **[See findings →](/api-reference/findings/list-findings)** · **[Start a Whitebox scan →](/white-box-pentest/quickstart)** · **[Set up GitHub →](/platform/repositories/github)**
+</Update>
 
 <Update label="October 9, 2026" tags={["Whitebox","Integrations","Dashboard"]}>
   ## See what a Whitebox scan actually established
