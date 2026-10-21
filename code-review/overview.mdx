@@ -7,16 +7,6 @@ Code Review reviews pull requests and merge requests in the repositories you ena
 
 Use Code Review for continuous security coverage on day-to-day development. For broader, scoped assessments of a repository or application, use [White-box Pentest](/white-box-pentest/overview).
 
-## Scan limits
-
-Each PR or MR scan supports **up to 500 changed files**. Hacktron skips larger
-PRs and MRs. This limit is separate from your [pooled review allowance](/code-review/spillover-usage)
-and does not change with spillover.
-
-We recommend enabling reviews on all PRs and MRs so smaller changes get reviewed
-before they reach a large deployment PR. Keep [all target branches covered](/code-review/setup#configure-code-review),
-including development branches.
-
 ## Quickstart
 
 <Steps>
@@ -81,3 +71,11 @@ including development branches.
     Manage and provide feedback on findings directly from Slack.
   </Card>
 </Columns>
+
+## Scan limits
+
+Each PR or MR scan supports **up to 500 changed files**. Hacktron skips larger
+PRs and MRs.
+
+We recommend [enabling reviews on all PRs and MRs](/code-review/setup#configure-code-review)
+so smaller changes get reviewed before they reach a large deployment PR.
