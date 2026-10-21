@@ -141,6 +141,10 @@
             "pages": ["white-box-pentest/quickstart"]
           },
           {
+            "group": "After the scan",
+            "pages": ["white-box-pentest/retests"]
+          },
+          {
             "group": "Credits and billing",
             "pages": ["white-box-pentest/billing"]
           }

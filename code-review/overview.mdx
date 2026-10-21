@@ -71,3 +71,11 @@ Use Code Review for continuous security coverage on day-to-day development. For 
     Manage and provide feedback on findings directly from Slack.
   </Card>
 </Columns>
+
+## Scan limits
+
+Each PR or MR scan supports **up to 500 changed files**. Hacktron skips larger
+PRs and MRs.
+
+We recommend [enabling reviews on all PRs and MRs](/code-review/setup#configure-code-review)
+so smaller changes get reviewed before they reach a large deployment PR.
