@@ -60,6 +60,10 @@ Examples:
   states the reader needs, especially menus, configuration steps, and results.
   A screenshot of the documentation itself is review evidence, not a product
   screenshot for the guide. API-only or conceptual pages may not need an image.
+- Match the view to the reader. For shared letters and public disclosures, show
+  the public page recipients see. Verify it opens without sign-in and omit
+  issuer/admin controls. For report guides, show a generated document example,
+  such as its contents page, alongside the download instructions.
 - Capture the real current application. Use a dedicated test account and demo
   data. If a state is unavailable, use the actual frontend with sanitized sample
   fixtures and disclose that provenance in the PR. Never draw a replacement UI
