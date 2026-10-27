@@ -141,8 +141,16 @@
             "pages": ["white-box-pentest/quickstart"]
           },
           {
+            "group": "Scan activity",
+            "pages": ["white-box-pentest/logs"]
+          },
+          {
             "group": "After the scan",
-            "pages": ["white-box-pentest/retests"]
+            "pages": [
+              "white-box-pentest/findings-and-reports",
+              "white-box-pentest/retests",
+              "white-box-pentest/attestation-letters"
+            ]
           },
           {
             "group": "Credits and billing",
