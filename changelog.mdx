@@ -4,7 +4,33 @@ description: "New features, improvements, and fixes to the Hacktron platform."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=6a95c1c13176024361afffe9932d11ac76694e38 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=c22caa688fd7a344ce25411a109efd5493bc8369 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="October 27, 2026" tags={["Whitebox","Code Review","Billing","Integrations","Dashboard"]}>
+  ## Scope your pentest to exactly the folders that matter
+
+  **Folder-based scan scope**: The Whitebox pentest wizard now includes a Scope step where you pick which folders to include or exclude using a checkbox file tree. All files are selected by default, so you only need to touch the tree when you want to narrow or skip specific paths.
+
+  **Closed status from the finding menu**: You can now mark a single finding as Closed directly from its status menu, the keyboard shortcut, and the command palette - the same place you set False Positive. No more bulk-only workaround.
+
+  **Attestation letters**: Your organization now has an Attestation Letters page where Hacktron-issued letters appear with a unique shareable link and a PDF download. Share the link with a customer or auditor and they can view or download the letter without logging in.
+
+  **PR reviews up to 500 changed files**: Code Review now accepts pull requests with up to 500 changed files, up from 200. Large refactors and wide migrations no longer hit the limit.
+
+  **Org-level system comment control**: Organization admins can now turn off automated code review comments for the whole org from Settings. OSS organizations also get 50 free PR reviews per month, up from the previous limit.
+
+  **People page with separate Members and Invitations tabs**: The People page now splits into a Members tab and an Invitations tab so you no longer have to scroll past your full member list to reach pending invitations. The Invitations tab includes an empty state and revoked invitations stay listed with a Delete option instead of disappearing.
+
+  **Bot seat disclosure on auto-assignment**: Tooltips and prompts at every auto-assignment opt-in point now say that bot PR authors take billable seats. The excluded-authors filter note clarifies that excluded authors never consume a seat.
+
+  **Enable all repositories in one step**: The trial activation modal now has an enable-all button so you can turn on PR reviews for every connected repository without visiting the Repositories page.
+
+  **GitLab connection with incomplete setup**: Connecting a GitLab installation no longer requires completing every step before saving. You can save a partial setup, and the connection page detects your current access level and shows only the actions available to you.
+
+  **Clearer Whitebox review step**: The final review step before launching a scan is rebuilt as a structured summary panel with Source, Target, Access, and Context sections. Each section shows an Edit button that jumps back to that step, and the verification status for every account is visible at a glance.
+
+  **[Start a Whitebox scan →](/white-box-pentest/quickstart)** · **[See billing and plans →](/white-box-pentest/billing)** · **[Connect GitLab →](/platform/repositories/gitlab)** · **[Manage people →](/code-review/people)**
+</Update>
 
 <Update label="October 21, 2026" tags={["Whitebox","Code Review","Self-Hosting"]}>
   ## Findings get an identity, a history, and a command palette
