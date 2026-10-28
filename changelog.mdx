@@ -9,27 +9,28 @@ rss: true
 <Update label="October 27, 2026" tags={["Whitebox","Code Review","Billing","Integrations","Dashboard"]}>
   ## Scope your pentest to exactly the folders that matter
 
-  **Folder-based scan scope**: The Whitebox pentest wizard now includes a Scope step where you pick which folders to include or exclude using a checkbox file tree. All files are selected by default, so you only need to touch the tree when you want to narrow or skip specific paths.
+**Folder-based scan scope**: The Whitebox pentest wizard now includes a Scope step where you pick which folders to include or exclude using a checkbox file tree. All files are selected by default, so you only need to touch the tree when you want to narrow or skip specific paths.
 
-  **Closed status from the finding menu**: You can now mark a single finding as Closed directly from its status menu, the keyboard shortcut, and the command palette - the same place you set False Positive. No more bulk-only workaround.
+**Closed status from the finding menu**: You can now mark a single finding as Closed directly from its status menu, the keyboard shortcut, and the command palette - the same place you set False Positive. No more bulk-only workaround.
 
-  **Attestation letters**: Your organization now has an Attestation Letters page where Hacktron-issued letters appear with a unique shareable link and a PDF download. Share the link with a customer or auditor and they can view or download the letter without logging in.
+**Attestation letters**: Your organization now has an Attestation Letters page where Hacktron-issued letters appear with a unique shareable link and a PDF download. Share the link with a customer or auditor and they can view or download the letter without logging in.
 
-  **PR reviews up to 500 changed files**: Code Review now accepts pull requests with up to 500 changed files, up from 200. Large refactors and wide migrations no longer hit the limit.
+**PR reviews up to 500 changed files**: Code Review now accepts pull requests with up to 500 changed files, up from 200. Large refactors and wide migrations no longer hit the limit.
 
-  **Org-level system comment control**: Organization admins can now turn off automated code review comments for the whole org from Settings. OSS organizations also get 50 free PR reviews per month, up from the previous limit.
+**Org-level system comment control**: Organization admins can now turn off automated code review comments for the whole org from Settings. OSS organizations also get 50 free PR reviews per month, up from the previous limit.
 
-  **People page with separate Members and Invitations tabs**: The People page now splits into a Members tab and an Invitations tab so you no longer have to scroll past your full member list to reach pending invitations. The Invitations tab includes an empty state and revoked invitations stay listed with a Delete option instead of disappearing.
+**People page with separate Members and Invitations tabs**: The People page now splits into a Members tab and an Invitations tab so you no longer have to scroll past your full member list to reach pending invitations. The Invitations tab includes an empty state and revoked invitations stay listed with a Delete option instead of disappearing.
 
-  **Bot seat disclosure on auto-assignment**: Tooltips and prompts at every auto-assignment opt-in point now say that bot PR authors take billable seats. The excluded-authors filter note clarifies that excluded authors never consume a seat.
+**Bot seat disclosure on auto-assignment**: Tooltips and prompts at every auto-assignment opt-in point now say that bot PR authors take billable seats. The excluded-authors filter note clarifies that excluded authors never consume a seat.
 
-  **Enable all repositories in one step**: The trial activation modal now has an enable-all button so you can turn on PR reviews for every connected repository without visiting the Repositories page.
+**Enable all repositories in one step**: The trial activation modal now has an enable-all button so you can turn on PR reviews for every connected repository without visiting the Repositories page.
 
-  **GitLab connection with incomplete setup**: Connecting a GitLab installation no longer requires completing every step before saving. You can save a partial setup, and the connection page detects your current access level and shows only the actions available to you.
+**GitLab connection with incomplete setup**: Connecting a GitLab installation no longer requires completing every step before saving. You can save a partial setup, and the connection page detects your current access level and shows only the actions available to you.
 
-  **Clearer Whitebox review step**: The final review step before launching a scan is rebuilt as a structured summary panel with Source, Target, Access, and Context sections. Each section shows an Edit button that jumps back to that step, and the verification status for every account is visible at a glance.
+**Clearer Whitebox review step**: The final review step before launching a scan is rebuilt as a structured summary panel with Source, Target, Access, and Context sections. Each section shows an Edit button that jumps back to that step, and the verification status for every account is visible at a glance.
 
-  **[Start a Whitebox scan →](/white-box-pentest/quickstart)** · **[See billing and plans →](/white-box-pentest/billing)** · **[Connect GitLab →](/platform/repositories/gitlab)** · **[Manage people →](/code-review/people)**
+**[Start a Whitebox scan →](/white-box-pentest/quickstart)** · **[See billing and plans →](/white-box-pentest/billing)** · **[Connect GitLab →](/platform/repositories/gitlab)** · **[Manage people →](/code-review/people)**
+
 </Update>
 
 <Update label="October 21, 2026" tags={["Whitebox","Code Review","Self-Hosting"]}>
@@ -76,7 +77,7 @@ rss: true
 
 </Update>
 
-<Update label="September 25, 2026" tags={["Code Review","Whitebox","Integrations","Dashboard","Self-Hosting"]}>
+<Update label="September 25, 2026" tags={["Code Review","Integrations","Dashboard","Self-Hosting"]}>
   ## Choose GitHub repositories without leaving Hacktron
 
 **GitHub repository selection**: Organization admins can select which repositories to enable from the GitHub integration in Hacktron, within the access granted to the GitHub App. Repositories added back to the App installation are selected again automatically.
@@ -84,8 +85,6 @@ rss: true
 **Separate repository access from PR reviews**: Keep a repository available to Hacktron while switching its automatic PR reviews on or off. The Repositories table now shows Repository and Owner separately, alongside Open Findings, PR Scans, and Last Scan. Its platform filter lists only providers your organization has connected.
 
 **Replies to explicit review requests**: When you post `@hacktronai review` for a commit with an existing review, Hacktron replies with the completed result or tells you that the review is still in progress.
-
-**Contact the team for large estimates**: For organizations using the large-estimate approval flow, Whitebox estimates above 5,000 credits prompt you to contact Hacktron before starting the scan.
 
 **GitHub.com reviews on appliances**: Self-hosted Hacktron deployments can connect a customer-owned GitHub App and review GitHub.com pull requests on their own infrastructure.
 
@@ -143,8 +142,6 @@ rss: true
 
 **License details and expiry warnings on appliances**: Organization settings on an appliance show the installed license - who it is licensed to, expiry date, days remaining, seat count, and covered products. A banner appears 30 days before expiry. Once the grace deadline passes, new scans are blocked, while findings, reports, and exports stay readable.
 
-**Scan quota on appliance licenses**: An appliance license can include a `max_scans` entitlement that caps how many full scans may start over the life of the license. The cap is checked when a scan starts, including restarts.
-
 **Self-managed GitLab on appliances**: Appliances can connect a self-managed GitLab instance and scan merge requests. The Reviews link, PR Review dashboard tabs, and source control settings appear once the integration is configured.
 
 **GitHub Enterprise Server via GitHub App**: Appliance operators can connect GitHub Enterprise Server through a GitHub App installation rather than a personal access token, which avoids long-lived tokens.
@@ -199,8 +196,6 @@ rss: true
 
 **Glob patterns in author filters**: Author include and exclude filters in `.hacktron/config.yaml` and organization scan settings accept `*`, `**`, `?`, and `{a,b}` patterns as well as exact names.
 
-**GitLab and Bitbucket reviews count against your pool**: MR and PR reviews on GitLab and Bitbucket now draw from the same org-wide review pool as GitHub, with spillover billing and the per-file cap applied consistently across all three platforms.
-
 **Cleaner Whitebox scan setup**: Pasting a browser URL (including `/tree/branch` or `/commit/sha` suffixes) into the repository field during cost estimation now strips the suffix automatically. Private repos that cannot be accessed show an error immediately instead of proceeding silently.
 
 **5,000 automation credits on first subscription**: Organizations receive a one-time grant of 5,000 automation credits when they subscribe for the first time, applied at the point of payment.
@@ -253,7 +248,7 @@ rss: true
 
 </Update>
 
-<Update label="June 18, 2026" tags={["Code Review","Whitebox","Billing"]}>
+<Update label="June 18, 2026" tags={["Code Review","Whitebox"]}>
   ## Dismiss a finding and your PR check clears instantly
 
 **PR and MR checks update on triage**: When you mark a finding as a false positive or accepted risk, the GitHub check or GitLab commit status flips back to passing right away, with no manual re-run needed. If you later reopen the finding, the check fails again to match.
@@ -263,8 +258,6 @@ rss: true
 **Scan volume chart**: The dashboard's scan volume widget now shows a stacked bar chart instead of a line graph, with a tooltip on each bar showing the Code Review and Whitebox scan counts for that day.
 
 **Upload scans named after the archive**: When you start a Whitebox scan from an uploaded archive, the scan now takes the archive's filename as its name instead of a generic label.
-
-**Legal agreement before trial or billing**: You now review and accept the terms of service before starting a free trial or adding a payment method.
 
 **[Set up GitHub or GitLab →](/code-review/integrations/github-gitlab)**
 
@@ -458,9 +451,6 @@ running instead of stopping.
 
 **Resubscribe in one click**: Canceled organizations now get a Resubscribe
 button to pick their old plan back up.
-
-**Custom trial duration**: Trials can run for a length you choose, with a clear
-prompt when you reach their limits.
 
 **Slack invite flow**: Invite teammates to your Hacktron organization straight
 from Slack.
