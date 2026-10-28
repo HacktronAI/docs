@@ -18,4 +18,21 @@ Cost estimations run asynchronously. The `POST` returns a record in `pending` or
 | `partial`   | Some repos completed, others failed. Check `repo_results[].status` for details. |
 | `failed`    | The whole estimation failed. `error` contains a message.                        |
 
-Once in a terminal state, an estimation is immutable. Pass its `id` as `cost_estimation_id` to [`POST /scans`](/api-reference/scans/create-scan) to start the scan. The scan must use repositories and branches that were included in the estimate.
+Once in a terminal state, an estimation is immutable. Pass its `id` as `cost_estimation_id` to [`POST /scans`](/api-reference/scans/create-scan) to start the scan. The scan must use the same repositories, branches, and path scope as the estimate.
+
+### Repository scope
+
+Each repository can set `include_paths` and `exclude_paths` using
+[path patterns](/white-box-pentest/quickstart#path-patterns). Empty include paths
+select the whole repository. Exclude paths remove matches from that selection.
+For example:
+
+```json
+{
+  "include_paths": ["services/gateway/**"],
+  "exclude_paths": ["**/tests/**", "*.md"]
+}
+```
+
+Pass the same path scope when starting the scan. If you change it, create a new
+estimate first.
