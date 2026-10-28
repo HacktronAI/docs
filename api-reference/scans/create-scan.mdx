@@ -15,16 +15,18 @@ immediately with a scan `id` for polling.
 1. Create a cost estimation with [`POST /cost-estimations`](/api-reference/cost-estimations/create-cost-estimation).
 2. Wait until the estimation reaches `completed` or `partial` status and has a
    positive `total_credits` value.
-3. Submit the same repositories and branches that were included in the
-   estimation. Hacktron rejects scans whose repo, archive, or branch does not
-   match the estimate.
+3. Submit the same repositories, branches, and path scope that were included in
+   the estimation. Keep each repository's `include_paths` and `exclude_paths`
+   the same. Hacktron rejects scans whose repo, archive, branch, or path scope
+   does not match the estimate.
 4. Ensure your organization has enough Whitebox Scan credits. Credits are
    visible in [Credits and billing](/white-box-pentest/billing) in the
    dashboard. Insufficient credits return `402 Payment Required`.
 
 <Warning>
   A cost estimation can only be claimed by one started scan. If you need to
-  change repositories, archives, or branches, create a new estimate first.
+  change repositories, archives, branches, or path scope, create a new estimate
+  first.
 </Warning>
 
 ## Next steps
