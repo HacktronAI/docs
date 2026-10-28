@@ -2054,7 +2054,8 @@
             "type": "string",
             "description": "Structured failure reason",
             "enum": [
-              "unsupported_language"
+              "unsupported_language",
+              "scope_no_match"
             ]
           },
           "unsupported_languages": {
@@ -2063,6 +2064,11 @@
             "items": {
               "type": "string"
             }
+          },
+          "scoped_file_count": {
+            "type": "number",
+            "description": "Files that matched the repository's whitebox scope rules, counted on disk before analysis. Absent for unscoped repositories.",
+            "example": 42
           }
         },
         "required": [
@@ -2237,6 +2243,11 @@
             "nullable": true,
             "description": "ISO timestamp of the most recent completed scan containing this repository, or null if it has not been scanned",
             "example": "2026-09-15T12:00:00.000Z"
+          },
+          "ossApproved": {
+            "type": "boolean",
+            "description": "Whether this github.com repository is approved for free OSS PR reviews. Independent of whether PR scans are enabled.",
+            "example": true
           },
           "prScansEnabled": {
             "type": "boolean",
