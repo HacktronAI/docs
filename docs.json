@@ -55,7 +55,8 @@
                 "group": "Communication Apps",
                 "pages": [
                   "platform/communication-apps",
-                  "platform/communication-apps/slack"
+                  "platform/communication-apps/slack",
+                  "platform/communication-apps/slack-agent"
                 ]
               }
             ]
@@ -188,13 +189,31 @@
               "api-reference/scans/get-scan",
               "api-reference/scans/get-scan-status",
               "api-reference/scans/list-scan-findings",
-              "api-reference/scans/export-scan-findings"
+              "api-reference/scans/export-scan-findings",
+              "api-reference/scans/stop-scan"
             ]
+          },
+          {
+            "group": "Pentests",
+            "pages": [
+              "api-reference/pentests/create-pentest",
+              "api-reference/pentests/update-pentest",
+              "api-reference/pentests/check-pentest-logins",
+              "api-reference/pentests/estimate-pentest",
+              "api-reference/pentests/start-pentest",
+              "api-reference/pentests/discard-pentest",
+              "api-reference/archives/request-archive-upload"
+            ]
+          },
+          {
+            "group": "Credits",
+            "pages": ["api-reference/credits/get-credit-balance"]
           },
           {
             "group": "Findings",
             "pages": [
               "api-reference/findings/list-findings",
+              "api-reference/findings/count-findings",
               "api-reference/findings/get-finding",
               "api-reference/findings/update-finding",
               "api-reference/findings/add-finding-comment",
@@ -203,7 +222,12 @@
           },
           {
             "group": "Repositories",
-            "pages": ["api-reference/repos/list-repos"]
+            "pages": [
+              "api-reference/repos/list-repos",
+              "api-reference/repos/set-pr-reviews",
+              "api-reference/repos/get-pr-review-settings",
+              "api-reference/repos/update-pr-review-settings"
+            ]
           },
           {
             "group": "Dependency Firewall",

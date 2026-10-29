@@ -1,0 +1,121 @@
+---
+title: "Ask Hacktron in Slack"
+description: "Mention @Hacktron AI to ask about findings, set up pentests and manage PR reviews from Slack."
+---
+
+Mention **@Hacktron AI** in a channel, or send it a direct message, to ask about your scans and findings, set up a pentest, turn PR reviews on or off, or ask how Hacktron works. It replies in a thread. Keep talking in that thread without mentioning it again. Teammates can join the thread by mentioning @Hacktron AI, and it acts for each person with their own access.
+
+## Set up
+
+<Steps>
+  <Step title="Connect Slack to Hacktron (organization admin, once)">
+    In Hacktron, go to **Integrations**, find **Slack** under **Communication
+    Apps** and click **Connect**. Approve the Hacktron AI app for your
+    workspace. This installs the app in Slack. See
+    [Slack](/platform/communication-apps/slack) for the full steps.
+
+    <Note>
+      If your organization connected Slack before Hacktron could read files,
+      click **Connect** again so Hacktron can read archives people attach.
+    </Note>
+
+  </Step>
+  <Step title="Link your Slack account (everyone, once)">
+    In Hacktron, open **Account**, scroll to **Connected Accounts** and click
+    **Connect** next to **Slack**. Choose the same workspace. This is how
+    Hacktron knows who's asking. See [Link your Slack
+    identity](/code-review/integrations/slack#link-your-slack-identity).
+  </Step>
+  <Step title="Add Hacktron AI to a channel">
+    In Slack, open the channel and send `/invite @Hacktron AI`. You can also
+    click the channel name, open **Integrations** and click **Add apps**. This
+    works for public and private channels.
+
+    To talk to it privately instead, find **Hacktron AI** under **Apps** in
+    the Slack sidebar and send it a message.
+
+  </Step>
+  <Step title="Mention it and connect your Hacktron account (everyone, once)">
+    Mention **@Hacktron AI** with a question. The first time, Hacktron sends
+    you a private **Connect Hacktron** message that only you can see. Click
+    it, sign in to Hacktron and allow access. The thread says it's waiting for
+    you, then Hacktron carries on with your question.
+  </Step>
+</Steps>
+
+Hacktron acts as you, with your role: viewers can ask questions, members can set up pentests, and organization admins can start them and change settings.
+
+## Ask about findings
+
+Ask in your own words, for example:
+
+- "How many critical findings are open in acme/api?"
+- "Show me the high severity findings from the last pentest"
+- "Which repositories have the most open findings?"
+
+Hacktron answers with counts and posts findings as cards that link to them in Hacktron.
+
+## Ask how Hacktron works
+
+Ask a question about the product, such as "How do I stop reviews of PRs into release branches?". Hacktron answers from these docs and links the page it used. When the docs don't cover it, it says so.
+
+## Manage PR reviews
+
+Ask Hacktron to turn PR reviews on or off for a repository, or to change how they behave across your organization: whether they comment on pull requests, the severity that fails the PR check, and which branches, labels, authors or title keywords get reviewed. Anyone can ask what the settings are. Only organization admins can change them, and Hacktron shows an **Approve** button before it does.
+
+## Set up a pentest
+
+<Steps>
+  <Step title="Say what to test">
+    Name a connected repository, or attach a `.zip`, `.7z` or `.tar.gz` archive
+    of the code (up to 2 GB) to your message.
+  </Step>
+  <Step title="Narrow the scope">
+    To test only part of the code, say so in the thread, for example "only the
+    services/payments folder". There's no need to upload a smaller archive.
+  </Step>
+  <Step title="Add a live site (optional)">
+    Give Hacktron the URL of a deployed copy of the app to test it live as well
+    as the code. A staging copy is the safest choice. Without one, the pentest
+    reviews the code only.
+  </Step>
+  <Step title="Confirm the cost">
+    Hacktron estimates the pentest and asks you to confirm.
+  </Step>
+  <Step title="Start it">
+    Hacktron posts an approval card. An organization admin clicks **Start
+    pentest**. Credits are spent when the pentest starts.
+  </Step>
+  <Step title="Get the results">
+    When the pentest finishes, Hacktron posts the results in the same thread.
+  </Step>
+</Steps>
+
+### Test a site signed in
+
+If the live site needs a login, Hacktron posts an **Add login details** button. It opens a private form that only you can see. The details go straight to Hacktron, are stored encrypted, and never appear in the thread or reach the assistant.
+
+Hacktron then checks that it can sign in and posts the result in the thread. If the check fails, click **Update login details** to fix them.
+
+A pentest tests its live sites either all signed in or all without a login. To test both kinds, set up a separate pentest for each.
+
+<Note>
+  Signed-in testing is enabled per organization. If it isn't available for
+  yours, Hacktron says so and can still test the site without signing in.
+</Note>
+
+## Follow what it's doing
+
+While it works, Hacktron shows its plan and each step it takes in a progress card at the top of its reply.
+
+## Limits
+
+- Hacktron reads attached archives to understand the code, but never runs your code. To test the running app, give it a deployed site.
+- Each thread has a usage limit. When a thread reaches it, Hacktron stops and asks you to mention it in a new thread.
+- If Hacktron can't read files you attach, ask an organization admin to reconnect Slack from **Integrations** so the app gets permission to read files.
+
+## Troubleshooting
+
+- **Hacktron doesn't reply to a mention in a channel.** Add it to the channel with `/invite @Hacktron AI`, and check that Slack is connected under **Integrations** in Hacktron.
+- **"Hacktron couldn't find your account for this workspace."** Link your Slack account from **Account** > **Connected Accounts** in Hacktron, choosing the same workspace, then try again.
+- **A reply without a mention gets no answer.** Only the person who started the thread can reply without mentioning Hacktron. Everyone else mentions **@Hacktron AI** in the thread.
