@@ -1,15 +1,49 @@
 ---
 title: "Ask Hacktron in Slack"
-description: "Mention @Hacktron to ask about findings, set up pentests and manage PR reviews from Slack."
+description: "Mention @Hacktron AI to ask about findings, set up pentests and manage PR reviews from Slack."
 ---
 
-Mention **@Hacktron** in a channel, or send it a direct message, to ask about your scans and findings, set up a pentest, turn PR reviews on or off, or ask how Hacktron works. It replies in a thread. Keep talking in that thread without mentioning it again. Teammates can join the thread by mentioning @Hacktron, and it acts for each person with their own access.
+Mention **@Hacktron AI** in a channel, or send it a direct message, to ask about your scans and findings, set up a pentest, turn PR reviews on or off, or ask how Hacktron works. It replies in a thread. Keep talking in that thread without mentioning it again. Teammates can join the thread by mentioning @Hacktron AI, and it acts for each person with their own access.
 
-## Before you start
+## Set up
 
-- An organization admin has [connected Slack](/platform/communication-apps/slack) to Hacktron.
-- You've [linked your Slack account](/code-review/integrations/slack#link-your-slack-identity) to your Hacktron account. Hacktron acts as you, with your role: viewers can ask questions, members can set up pentests, and organization admins can start them.
-- To mention Hacktron in a channel, add the Hacktron app to that channel first.
+<Steps>
+  <Step title="Connect Slack to Hacktron (organization admin, once)">
+    In Hacktron, go to **Integrations**, find **Slack** under **Communication
+    Apps** and click **Connect**. Approve the Hacktron AI app for your
+    workspace. This installs the app in Slack. See
+    [Slack](/platform/communication-apps/slack) for the full steps.
+
+    <Note>
+      If your organization connected Slack before Hacktron could read files,
+      click **Connect** again so Hacktron can read archives people attach.
+    </Note>
+
+  </Step>
+  <Step title="Link your Slack account (everyone, once)">
+    In Hacktron, open **Account**, scroll to **Connected Accounts** and click
+    **Connect** next to **Slack**. Choose the same workspace. This is how
+    Hacktron knows who's asking. See [Link your Slack
+    identity](/code-review/integrations/slack#link-your-slack-identity).
+  </Step>
+  <Step title="Add Hacktron AI to a channel">
+    In Slack, open the channel and send `/invite @Hacktron AI`. You can also
+    click the channel name, open **Integrations** and click **Add apps**. This
+    works for public and private channels.
+
+    To talk to it privately instead, find **Hacktron AI** under **Apps** in
+    the Slack sidebar and send it a message.
+
+  </Step>
+  <Step title="Mention it and connect your Hacktron account (everyone, once)">
+    Mention **@Hacktron AI** with a question. The first time, Hacktron sends
+    you a private **Connect Hacktron** message that only you can see. Click
+    it, sign in to Hacktron and allow access. The thread says it's waiting for
+    you, then Hacktron carries on with your question.
+  </Step>
+</Steps>
+
+Hacktron acts as you, with your role: viewers can ask questions, members can set up pentests, and organization admins can start them and change settings.
 
 ## Ask about findings
 
@@ -79,3 +113,9 @@ While it works, Hacktron shows its plan and each step it takes in a progress car
 - Hacktron reads attached archives to understand the code, but never runs your code. To test the running app, give it a deployed site.
 - Each thread has a usage limit. When a thread reaches it, Hacktron stops and asks you to mention it in a new thread.
 - If Hacktron can't read files you attach, ask an organization admin to reconnect Slack from **Integrations** so the app gets permission to read files.
+
+## Troubleshooting
+
+- **Hacktron doesn't reply to a mention in a channel.** Add it to the channel with `/invite @Hacktron AI`, and check that Slack is connected under **Integrations** in Hacktron.
+- **"Hacktron couldn't find your account for this workspace."** Link your Slack account from **Account** > **Connected Accounts** in Hacktron, choosing the same workspace, then try again.
+- **A reply without a mention gets no answer.** Only the person who started the thread can reply without mentioning Hacktron. Everyone else mentions **@Hacktron AI** in the thread.
