@@ -203,6 +203,14 @@ Each tool calls the same endpoint as the [REST API](/api-reference/introduction)
 | `start_pentest`          | Start a pentest and spend its credits (admins only)  | [`POST /pentests/{id}/start`](/api-reference/pentests/start-pentest)                |
 | `discard_pentest_draft`  | Delete a pentest that hasn't started                 | [`DELETE /pentests/{id}`](/api-reference/pentests/discard-pentest)                  |
 
+### PR reviews
+
+| Name                        | Description                                                           | REST endpoint                                                                 |
+| --------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `get_pr_review_settings`    | Get how PR reviews behave across the organisation                     | [`GET /pr-review-settings`](/api-reference/repos/get-pr-review-settings)      |
+| `update_pr_review_settings` | Change PR review comments, fail-on severity and filters (admins only) | [`PATCH /pr-review-settings`](/api-reference/repos/update-pr-review-settings) |
+| `set_pr_reviews`            | Turn PR reviews on or off for repositories (admins only)              | [`POST /repos/pr-reviews`](/api-reference/repos/set-pr-reviews)               |
+
 <Warning>
   To test a site signed in, your assistant sends the login details to Hacktron,
   where they're stored encrypted. Anything you type in the conversation also

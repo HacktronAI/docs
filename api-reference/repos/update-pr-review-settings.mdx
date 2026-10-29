@@ -1,0 +1,13 @@
+---
+title: "Update PR review settings"
+openapi: "PATCH /pr-review-settings"
+description: "Change how PR reviews behave across your organization."
+---
+
+Changes your organization's PR review settings and returns all of them. Only the fields you send change. Send `null` to turn off `fail_on_severity` or clear a filter.
+
+<Info>**Scope required**: `write`. **Role**: organization admin.</Info>
+
+A filter is replaced as a whole. To add one branch, read the settings with [Get PR review settings](/api-reference/repos/get-pr-review-settings) first and send the full list.
+
+Branch and author filters take glob patterns (`*`, `**`, `?`, `{a,b}`) and are case-insensitive. Each filter holds up to 50 entries.

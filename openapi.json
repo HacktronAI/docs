@@ -1517,6 +1517,120 @@
           "REST API - Credits"
         ]
       }
+    },
+    "/repos/pr-reviews": {
+      "post": {
+        "operationId": "RestRepoController_setPrReviews",
+        "parameters": [
+          {
+            "name": "X-Organization-Id",
+            "in": "header",
+            "description": "Organization ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepositoryIdBatchDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RepositoryBatchResultDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Turn PR/MR reviews on or off for repositories, by their id from the repository list. A repository must be selected for Hacktron access before its reviews can be turned on.",
+        "tags": [
+          "REST API - Repos"
+        ]
+      }
+    },
+    "/pr-review-settings": {
+      "get": {
+        "operationId": "RestPrReviewSettingsController_get",
+        "parameters": [
+          {
+            "name": "X-Organization-Id",
+            "in": "header",
+            "description": "Organization ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestPrReviewSettingsDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get the organization's PR/MR review settings: whether reviews post comments, the severity that fails the PR check, and which PRs are reviewed",
+        "tags": [
+          "REST API - Repos"
+        ]
+      },
+      "patch": {
+        "operationId": "RestPrReviewSettingsController_update",
+        "parameters": [
+          {
+            "name": "X-Organization-Id",
+            "in": "header",
+            "description": "Organization ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestPrReviewSettingsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestPrReviewSettingsDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Change the organization's PR/MR review settings. Only the fields sent change; null turns off the fail-on severity or clears a filter. A repository's .hacktron/config.yaml overrides these.",
+        "tags": [
+          "REST API - Repos"
+        ]
+      }
     }
   },
   "info": {
@@ -3615,6 +3729,211 @@
           "used_this_period",
           "is_unlimited"
         ]
+      },
+      "RepositoryBatchResultDto": {
+        "type": "object",
+        "properties": {
+          "processed": {
+            "type": "number",
+            "description": "Keys applied",
+            "example": 2
+          },
+          "failed": {
+            "type": "number",
+            "description": "Keys that failed",
+            "example": 0
+          },
+          "failedRepositories": {
+            "description": "Keys that failed, with the reason",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RepositoryBatchFailureDto"
+            }
+          },
+          "webhookPending": {
+            "description": "Keys turned on whose provider webhook could not be registered",
+            "example": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "processed",
+          "failed",
+          "failedRepositories",
+          "webhookPending"
+        ]
+      },
+      "RepositoryBatchFailureDto": {
+        "type": "object",
+        "properties": {
+          "repo": {
+            "type": "string",
+            "description": "The key the request named",
+            "example": "acme/api"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Why the key was not applied",
+            "example": "Repository acme/api not found"
+          }
+        },
+        "required": [
+          "repo",
+          "reason"
+        ]
+      },
+      "RepositoryIdBatchDto": {
+        "type": "object",
+        "properties": {
+          "enable": {
+            "description": "Ids from the repository list of the repositories to turn on",
+            "example": [
+              "123e4567-e89b-12d3-a456-426614174000"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "disable": {
+            "description": "Ids from the repository list of the repositories to turn off",
+            "example": [],
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "enable",
+          "disable"
+        ]
+      },
+      "RestPrReviewSettingsDto": {
+        "type": "object",
+        "properties": {
+          "scm_comments_enabled": {
+            "type": "boolean",
+            "description": "Whether Hacktron publishes comments and finding details to connected source control pull and merge requests"
+          },
+          "scm_system_comments_enabled": {
+            "type": "boolean",
+            "description": "Whether Hacktron posts system comments such as skipped reviews, usage limits, and configuration warnings. Defaults to true. Requires scm_comments_enabled."
+          },
+          "fail_on_severity": {
+            "type": "string",
+            "description": "Org-wide default fail_on severity threshold for PR/MR checks. A repo's .hacktron/config.yaml fail_on.severity overrides this. Send null to disable.",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ],
+            "nullable": true
+          },
+          "scan_include_branches": {
+            "description": "Org-wide default target branch patterns to scan PRs/MRs for (null = all branches). Glob patterns (`*`, `**`, `?`, `{a,b}`), case-insensitive. A repo's .hacktron/config.yaml include.branches overrides this.",
+            "example": [
+              "main",
+              "**/release/**"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_exclude_branches": {
+            "description": "Org-wide default target branch patterns to exclude from PR/MR scans (null = none). Takes precedence over scan_include_branches. A repo's .hacktron/config.yaml exclude.branches overrides this.",
+            "example": [
+              "**/release/legacy/**"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_include_labels": {
+            "description": "Org-wide default labels to require on PRs/MRs for scanning (null = any). A repo's .hacktron/config.yaml include.labels overrides this.",
+            "example": [
+              "feature",
+              "bugfix"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_exclude_labels": {
+            "description": "Org-wide default labels to exclude PR/MR scans for (null = none). Takes precedence over scan_include_labels. A repo's .hacktron/config.yaml exclude.labels overrides this.",
+            "example": [
+              "wip",
+              "no-scan"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_include_authors": {
+            "description": "Org-wide default author patterns to require on PRs/MRs for scanning (null = any). Glob patterns (`*`, `**`, `?`, `{a,b}`), case-insensitive. A repo's .hacktron/config.yaml include.authors overrides this.",
+            "example": [
+              "alice",
+              "bob"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_exclude_authors": {
+            "description": "Org-wide default author patterns to exclude PR/MR scans for (null = none). Glob patterns (`*`, `**`, `?`, `{a,b}`), case-insensitive. Takes precedence over scan_include_authors. A repo's .hacktron/config.yaml exclude.authors overrides this.",
+            "example": [
+              "dependabot[bot]",
+              "renovate[bot]",
+              "*-bot"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_include_keywords": {
+            "description": "Org-wide default title keywords to require on PRs/MRs for scanning (null = any). Case-insensitive substring match. A repo's .hacktron/config.yaml include.keywords overrides this.",
+            "example": [
+              "release",
+              "security"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_exclude_keywords": {
+            "description": "Org-wide default title keywords to exclude PR/MR scans for (null = none). Case-insensitive substring match. A repo's .hacktron/config.yaml exclude.keywords overrides this.",
+            "example": [
+              "[exclude hacktron]",
+              "wip"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       }
     }
   },

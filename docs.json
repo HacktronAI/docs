@@ -222,7 +222,12 @@
           },
           {
             "group": "Repositories",
-            "pages": ["api-reference/repos/list-repos"]
+            "pages": [
+              "api-reference/repos/list-repos",
+              "api-reference/repos/set-pr-reviews",
+              "api-reference/repos/get-pr-review-settings",
+              "api-reference/repos/update-pr-review-settings"
+            ]
           },
           {
             "group": "Dependency Firewall",
