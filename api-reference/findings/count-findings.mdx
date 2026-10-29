@@ -4,6 +4,6 @@ openapi: "GET /findings/counts"
 description: "Count findings by severity, state and repository."
 ---
 
-Counts the findings that match the same filters as [List findings](/api-reference/findings/list-findings), without paging through them. The response has the total, counts by severity and by state, and counts per repository with the most findings first.
+Counts the findings that match the same filters as [List findings](/api-reference/findings/list-findings), without paging through them. The response has the total, counts for every severity and state (zero when there are none), and counts per repository with the most findings first.
 
 <Info>**Scope required**: `read`</Info>
