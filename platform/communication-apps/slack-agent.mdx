@@ -1,0 +1,73 @@
+---
+title: "Ask Hacktron in Slack"
+description: "Mention @Hacktron to ask about findings and set up pentests from Slack."
+---
+
+Mention **@Hacktron** in a channel, or send it a direct message, to ask about your scans and findings or to set up a pentest. It replies in a thread. Keep talking in that thread without mentioning it again.
+
+## Before you start
+
+- An organization admin has [connected Slack](/platform/communication-apps/slack) to Hacktron.
+- You've [linked your Slack account](/code-review/integrations/slack#link-your-slack-identity) to your Hacktron account. Hacktron acts as you, with your role: viewers can ask questions, members can set up pentests, and organization admins can start them.
+- To mention Hacktron in a channel, add the Hacktron app to that channel first.
+
+## Ask about findings
+
+Ask in your own words, for example:
+
+- "How many critical findings are open in acme/api?"
+- "Show me the high severity findings from the last pentest"
+- "Which repositories have the most open findings?"
+
+Hacktron answers with counts and posts findings as cards that link to them in Hacktron.
+
+## Set up a pentest
+
+<Steps>
+  <Step title="Say what to test">
+    Name a connected repository, or attach a `.zip`, `.7z` or `.tar.gz` archive
+    of the code (up to 2 GB) to your message.
+  </Step>
+  <Step title="Narrow the scope">
+    To test only part of the code, say so in the thread, for example "only the
+    services/payments folder". There's no need to upload a smaller archive.
+  </Step>
+  <Step title="Add a live site (optional)">
+    Give Hacktron the URL of a deployed copy of the app to test it live as well
+    as the code. A staging copy is the safest choice. Without one, the pentest
+    reviews the code only.
+  </Step>
+  <Step title="Confirm the cost">
+    Hacktron estimates the pentest and asks you to confirm.
+  </Step>
+  <Step title="Start it">
+    Hacktron posts an approval card. An organization admin clicks **Start
+    pentest**. Credits are spent when the pentest starts.
+  </Step>
+  <Step title="Get the results">
+    When the pentest finishes, Hacktron posts the results in the same thread.
+  </Step>
+</Steps>
+
+### Test a site signed in
+
+If the live site needs a login, Hacktron posts an **Add login details** button. It opens a private form that only you can see. The details go straight to Hacktron, are stored encrypted, and never appear in the thread or reach the assistant.
+
+Hacktron then checks that it can sign in and posts the result in the thread. If the check fails, click **Update login details** to fix them.
+
+A pentest tests its live sites either all signed in or all without a login. To test both kinds, set up a separate pentest for each.
+
+<Note>
+  Signed-in testing is enabled per organization. If it isn't available for
+  yours, Hacktron says so and can still test the site without signing in.
+</Note>
+
+## Follow what it's doing
+
+While it works, Hacktron shows its plan and each step it takes in a progress card at the top of its reply.
+
+## Limits
+
+- Hacktron reads attached archives to understand the code, but never runs your code. To test the running app, give it a deployed site.
+- Each thread has a usage limit. When a thread reaches it, Hacktron stops and asks you to mention it in a new thread.
+- If Hacktron can't read files you attach, ask an organization admin to reconnect Slack from **Integrations** so the app gets permission to read files.

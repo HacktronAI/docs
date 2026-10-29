@@ -172,15 +172,42 @@ description: "Choose your platform and copy the config. No API key required."
 
 ## Tools
 
-| Name                  | Description                                     |
-| --------------------- | ----------------------------------------------- |
-| `list_scans`          | List scans with severity breakdown              |
-| `get_scan`            | Get details about a scan                        |
-| `export_findings`     | Export a scan's findings as JSON, CSV, or SARIF |
-| `list_findings`       | List findings across the organisation           |
-| `get_finding`         | Get details about a finding                     |
-| `update_finding`      | Update a finding's state or severity            |
-| `add_finding_comment` | Post a comment on a finding                     |
+Each tool calls the same endpoint as the [REST API](/api-reference/introduction), with the same permissions. Viewers can read, members can change findings and set up pentests, and only organization admins can start a pentest.
+
+### Scans and findings
+
+| Name                  | Description                                      | REST endpoint                                                                  |
+| --------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `list_scans`          | List scans with severity breakdown               | [`GET /scans`](/api-reference/scans/list-scans)                                |
+| `get_scan`            | Get details about a scan                         | [`GET /scans/{id}`](/api-reference/scans/get-scan)                             |
+| `export_findings`     | Export a scan's findings as JSON, CSV, or SARIF  | [`GET /scans/{id}/findings/export`](/api-reference/scans/export-scan-findings) |
+| `stop_scan`           | Stop a running scan or pentest                   | [`POST /scans/{id}/stop`](/api-reference/scans/stop-scan)                      |
+| `list_findings`       | List findings across the organisation            | [`GET /findings`](/api-reference/findings/list-findings)                       |
+| `count_findings`      | Count findings by severity, state and repository | [`GET /findings/counts`](/api-reference/findings/count-findings)               |
+| `get_finding`         | Get details about a finding                      | [`GET /findings/{id}`](/api-reference/findings/get-finding)                    |
+| `update_finding`      | Update a finding's state or severity             | [`PATCH /findings/{id}`](/api-reference/findings/update-finding)               |
+| `add_finding_comment` | Post a comment on a finding                      | [`POST /findings/{id}/comments`](/api-reference/findings/add-finding-comment)  |
+
+### Pentests
+
+| Name                     | Description                                          | REST endpoint                                                                       |
+| ------------------------ | ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `list_repositories`      | List connected repositories                          | [`GET /repos`](/api-reference/repos/list-repos)                                     |
+| `request_archive_upload` | Get a URL to upload a code archive                   | [`POST /archives/uploads`](/api-reference/archives/request-archive-upload)          |
+| `create_pentest_draft`   | Set up a pentest of code, optionally with live sites | [`POST /pentests`](/api-reference/pentests/create-pentest)                          |
+| `update_pentest_draft`   | Change a pentest that hasn't started                 | [`PATCH /pentests/{id}`](/api-reference/pentests/update-pentest)                    |
+| `verify_pentest_login`   | Check that Hacktron can sign in to each site         | [`POST /pentests/{id}/login-checks`](/api-reference/pentests/check-pentest-logins)  |
+| `estimate_pentest`       | Price a pentest                                      | [`POST /pentests/{id}/estimate`](/api-reference/pentests/estimate-pentest)          |
+| `get_cost_estimation`    | Get a pentest cost estimate                          | [`GET /cost-estimations/{id}`](/api-reference/cost-estimations/get-cost-estimation) |
+| `get_credit_balance`     | Get the organisation's pentest credit balance        | [`GET /credits`](/api-reference/credits/get-credit-balance)                         |
+| `start_pentest`          | Start a pentest and spend its credits (admins only)  | [`POST /pentests/{id}/start`](/api-reference/pentests/start-pentest)                |
+| `discard_pentest_draft`  | Delete a pentest that hasn't started                 | [`DELETE /pentests/{id}`](/api-reference/pentests/discard-pentest)                  |
+
+<Warning>
+  To test a site signed in, your assistant sends the login details to Hacktron,
+  where they're stored encrypted. Anything you type in the conversation also
+  goes to your assistant's model provider, so use a test account.
+</Warning>
 
 ## Related
 
@@ -193,6 +220,6 @@ description: "Choose your platform and copy the config. No API key required."
     Create and scope the API key used for API-key auth.
   </Card>
   <Card title="API reference" icon="code" href="/api-reference/introduction">
-    The same scans and findings, over the REST API.
+    Every tool, over the REST API.
   </Card>
 </CardGroup>
