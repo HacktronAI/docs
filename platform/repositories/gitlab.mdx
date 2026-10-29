@@ -3,6 +3,31 @@ title: "GitLab"
 description: "Connect GitLab with Maintainer access for automatic setup, or Developer access with manual webhooks and a deploy token."
 ---
 
+## Choose an access level
+
+Hacktron supports two GitLab access options. Choose the service account's role
+based on who will manage webhooks and repository clone credentials.
+
+<Tip>
+  **Maintainer: automatic setup (recommended)**
+
+GitLab requires Maintainer access to create project webhooks and read-only
+clone credentials. With this role, Hacktron manages both automatically for
+your selected projects.
+
+</Tip>
+
+<Info>
+  **Developer: manual setup**
+
+Developer access lets Hacktron read merge requests and post review comments.
+A [read-only deploy token provides repository cloning access](#developer-access-setup),
+and a GitLab Maintainer or Owner configures the webhook separately. This lets
+the service account stay at Developer access while an authorized person
+handles the setup operations that require a higher role.
+
+</Info>
+
 ## Prerequisites
 
 You need to be a Hacktron organization admin to connect GitLab and manage its settings.
@@ -61,9 +86,19 @@ project-level setup. The service account itself can keep Developer access.
     click **Generate token**.
 
     <Info>
-      Both access levels use a personal access token for GitLab API operations,
-      including posting review comments. Developer access also needs a separate
-      deploy token to read private repositories.
+      **Why these token scopes?**
+
+      - `api` lets Hacktron post review comments. With Maintainer access, it also
+        lets Hacktron create and manage project webhooks and read-only clone
+        credentials. These write operations need more than read-only API access.
+      - `read_api` covers reading project and merge request information,
+        including the diffs Hacktron reviews.
+      - `read_user` covers reading the connected account's profile so Hacktron
+        can identify the service account during connection.
+
+      GitLab's [`api` scope](https://docs.gitlab.com/security/tokens/access_token_scopes/)
+      includes these read capabilities. Hacktron's connection form lists all
+      three scopes. Token scopes do not raise the account's GitLab project role.
     </Info>
 
     <Warning>
@@ -122,7 +157,7 @@ shows **Needs setup** until a deploy token is saved.
 
     <img
       src="/images/gitlab-developer-access.png"
-      alt="Hacktron GitLab settings with deploy token fields and the webhook URL and secret token"
+      alt="Hacktron GitLab settings showing where to enter and save the deploy token username and token"
     />
 
   </Step>
