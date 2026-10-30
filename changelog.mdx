@@ -6,6 +6,31 @@ rss: true
 
 {/* CHANGELOG:INSERT last-prod-sha=c22caa688fd7a344ce25411a109efd5493bc8369 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
 
+<Update label="October 30, 2026" tags={["Whitebox","Billing","Integrations","Dashboard"]}>
+  ## Clearer retest reports and smoother onboarding
+
+**Retest reports reflect verified fixes**: After a retest, the Whitebox report updates overall risk to reflect fixes Hacktron verified. A fixed finding that shows up again in a later scan counts as outstanding. Reports also separate local reproduction from validation against your deployed target, and describe incomplete test access accurately.
+
+**Higher threshold for large estimates**: Whitebox estimates now ask you to contact Hacktron only above 10,000 credits. When an estimate crosses that line, Hacktron emails you the quote and offers a consultation.
+
+**Simpler finding activity**: The Activity tab on a finding replaces the All activity and Comments tabs with a filter and a newest/oldest sort toggle. The finding ID now shows a copy icon.
+
+**Easier-to-read finding writeups**: Finding descriptions and proof-of-concept writeups are clearer, and every revision of a proof of concept is kept in full.
+
+**Credit purchases without a subscription**: You can now buy credits and save a card before your organization has a subscription.
+
+**GitHub connection recovery**: Connecting GitHub now recovers when the app needs an owner's approval or is already installed on the account. Cancelling a reconnect keeps you on the onboarding step.
+
+**Invitation links that stay put**: Opening an invalid invitation link shows an invalid-invitation screen. A failed check shows an error you can retry, and signing out of the wrong account keeps you on the invitation.
+
+**No more flashing defaults while loading**: Pages such as Integrations and repository selection show loading placeholders until data arrives. Buttons and switches no longer appear in the wrong state for a moment.
+
+**More reliable GitHub scans**: Scans now retry brief GitHub fetch and authorization errors instead of failing.
+
+**[See retests →](/white-box-pentest/retests)** · **[See billing and plans →](/white-box-pentest/billing)** · **[Set up GitHub →](/platform/repositories/github)** · **[Manage people →](/code-review/people)**
+
+</Update>
+
 <Update label="October 27, 2026" tags={["Whitebox","Code Review","Billing","Integrations","Dashboard"]}>
   ## Scope your pentest to exactly the folders that matter
 
