@@ -1,9 +1,21 @@
 ---
-title: "Ask Hacktron in Slack"
-description: "Mention @Hacktron AI to ask about findings, set up pentests and manage PR reviews from Slack."
+title: "Hacktron AI in Slack"
+description: "Mention @Hacktron AI to triage findings, set up pentests and change PR review settings without leaving Slack."
 ---
 
-Mention **@Hacktron AI** in a channel, or send it a direct message, to ask about your scans and findings, set up a pentest, turn PR reviews on or off, or ask how Hacktron works. It replies in a thread. Keep talking in that thread without mentioning it again. Teammates can join the thread by mentioning @Hacktron AI, and it acts for each person with their own access.
+Hacktron AI is an assistant that works in your Slack channels and DMs. Mention **@Hacktron AI** with a request and it does the work in Hacktron as you, with your access, and replies in a thread. Keep talking in that thread without mentioning it again. Teammates can join the thread by mentioning @Hacktron AI, and it acts for each person with their own access.
+
+## What you can ask it to do
+
+| Task                                              | Try                                                                             |
+| ------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [Look into findings](#ask-about-findings)         | "How many critical findings are open in acme/api?"                              |
+| [Triage a finding](#act-on-findings-and-scans)    | "Mark the SSRF finding in acme/api as a false positive, the URL is allowlisted" |
+| [Set up a pentest](#set-up-a-pentest)             | "Pentest acme/api on main and test staging.acme.com signed in"                  |
+| [Manage PR reviews](#manage-pr-reviews)           | "Turn on PR reviews for acme/api and acme/web"                                  |
+| [Ask how Hacktron works](#ask-how-hacktron-works) | "How do I stop reviews of PRs into release branches?"                           |
+
+Before Hacktron changes a finding, a scan or your PR review settings, it shows you an **Approve** button that says what will change. Pentests start only when an organization admin approves them.
 
 ## Set up
 
@@ -25,6 +37,12 @@ Mention **@Hacktron AI** in a channel, or send it a direct message, to ask about
     **Connect** next to **Slack**. Choose the same workspace. This is how
     Hacktron knows who's asking. See [Link your Slack
     identity](/code-review/integrations/slack#link-your-slack-identity).
+
+    <img
+      src="/images/connected_accounts.png"
+      alt="Slack under Connected Accounts in Hacktron"
+    />
+
   </Step>
   <Step title="Add Hacktron AI to a channel">
     In Slack, open the channel and send `/invite @Hacktron AI`. You can also
@@ -54,6 +72,12 @@ Ask in your own words, for example:
 - "Which repositories have the most open findings?"
 
 Hacktron answers with counts and posts findings as cards that link to them in Hacktron.
+
+## Act on findings and scans
+
+Ask Hacktron to change a finding's status, add a comment to a finding, stop a running scan or discard a pentest draft. It shows you an **Approve** button that says what will change, then confirms what it did in the thread.
+
+Each finding card also has buttons to update its status or fix it with AI.
 
 ## Ask how Hacktron works
 

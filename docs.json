@@ -28,6 +28,10 @@
             "pages": ["index", "platform/overview", "platform/dashboard"]
           },
           {
+            "group": "Assistant",
+            "pages": ["platform/slack-assistant"]
+          },
+          {
             "group": "Setup",
             "pages": [
               "platform/on-premises",
@@ -55,8 +59,7 @@
                 "group": "Communication Apps",
                 "pages": [
                   "platform/communication-apps",
-                  "platform/communication-apps/slack",
-                  "platform/communication-apps/slack-agent"
+                  "platform/communication-apps/slack"
                 ]
               }
             ]
