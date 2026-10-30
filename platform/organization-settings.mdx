@@ -44,16 +44,16 @@ Want per-repo control? Override any category in `.hacktron/config.yaml`. See [Re
 
 ## Check gate
 
-Set an org-wide severity threshold that fails a PR or MR check when a finding meets or exceeds it.
+Set an org-wide severity that fails the Hacktron check on a PR or MR when a finding meets or exceeds it. To block the merge, make the Hacktron check required in your source control's branch protection.
 
 <Steps>
-  <Step title="Find the Severity threshold card">
-    Locate **Severity threshold**.
+  <Step title="Find Fail check at severity">
+    Under **Review defaults**, locate **Fail check at severity**.
 
-    <img src="/images/severity_threshold.png" alt="Severity threshold settings card" />
+    <img src="/images/fail_check_at_severity.png" alt="Review defaults section with the Fail check at severity setting" />
 
   </Step>
-  <Step title="Choose a threshold">
+  <Step title="Choose a severity">
     Pick a severity: **Critical**, **High**, **Medium**, or **Low**. Select **Off** to disable the gate org-wide.
   </Step>
 </Steps>
