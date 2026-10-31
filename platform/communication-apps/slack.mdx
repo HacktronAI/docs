@@ -28,8 +28,8 @@ You also need permission to authorize apps in the Slack workspace you want Hackt
 
     <Info>
       Hacktron uses this access to send security notifications and scan updates
-      to the Slack channel you configure, and to answer people who mention
-      @Hacktron AI.
+      to your configured channel. It also lets people work with Hacktron by
+      mentioning @Hacktron AI.
     </Info>
 
   </Step>
@@ -62,14 +62,11 @@ Open the Slack card in **Integrations** and choose **Disconnect**. Hacktron will
 - If a channel is missing, confirm that the Slack workspace account used for OAuth can access that channel.
 - If notifications are not appearing, confirm that the Slack integration is connected and a channel is selected.
 
-## Next: ask Hacktron in Slack
+## Next: use Hacktron in Slack
 
-Connecting Slack installs the Hacktron AI app in your workspace. To let people ask it questions, set up pentests and manage PR reviews, add it to channels with `/invite @Hacktron AI` and have each person link their Slack account.
+Connecting Slack installs the Hacktron AI app in your workspace. Add it to a channel with `/invite @Hacktron AI`. Each person then links their Slack and Hacktron accounts to use the assistant with their own permissions.
 
-<Card
-  title="Ask Hacktron in Slack"
-  icon="slack"
-  href="/platform/communication-apps/slack-agent"
->
-  Set up and use @Hacktron AI in your channels.
+<Card title="Hacktron in Slack" icon="slack" href="/platform/slack-assistant">
+  Triage findings, set up pentests and manage PR reviews by mentioning @Hacktron
+  AI.
 </Card>
