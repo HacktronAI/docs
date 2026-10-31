@@ -1,0 +1,9 @@
+---
+title: "Stop scan"
+openapi: "POST /scans/{id}/stop"
+description: "Stop a running scan or pentest."
+---
+
+Stops a running scan and returns its status. Members can stop their own pentests and any PR scan. Organization admins can stop any scan.
+
+<Info>**Scope required**: `write`. **Role**: member or above.</Info>

@@ -1,0 +1,13 @@
+---
+title: "Turn PR reviews on or off"
+openapi: "POST /repos/pr-reviews"
+description: "Turn automatic pull and merge request reviews on or off for repositories."
+---
+
+Enables automatic pull and merge request reviews for repositories in `enable` and disables them for repositories in `disable`. Use repository IDs from [List repositories](/api-reference/repos/list-repos) for any supported provider. Each list can contain up to 100 IDs per request.
+
+<Info>**Scope required**: `write`. **Role**: organization admin.</Info>
+
+- First, enable Hacktron access to the repository from **Repositories** in Hacktron.
+- If one repository fails, Hacktron continues with the others. The response reports how many changed in `processed` and lists failures with their reasons in `failedRepositories`.
+- `webhookPending` lists enabled repositories whose provider webhook is still pending registration. Reviews begin once the webhook is registered.

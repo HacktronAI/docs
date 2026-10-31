@@ -1,0 +1,20 @@
+---
+title: "Request archive upload"
+openapi: "POST /archives/uploads"
+description: "Get a URL to upload a code archive to, for code that isn't in a connected repository."
+---
+
+Returns a signed URL for uploading a `.zip`, `.7z` or `.tar.gz` source archive.
+
+<Info>**Scope required**: `write`. **Role**: member or above.</Info>
+
+1. Call this endpoint with the archive's `file_name`.
+2. `PUT` the file to `upload_url`, with the `Content-Type` header set to the returned `content_type`.
+3. Add `{ "source": "upload", "archive_id": "<id>" }` to `repos` when you [create a pentest draft](/api-reference/pentests/create-pentest).
+
+To assess part of the archive, set `include_paths` or `exclude_paths` on its entry in `repos`. You can use the same uploaded archive.
+
+<Note>
+  Some self-hosted deployments return `400` because they don't support API
+  uploads. In that case, upload the archive through the Hacktron web app.
+</Note>

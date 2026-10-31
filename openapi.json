@@ -137,6 +137,37 @@
         ]
       }
     },
+    "/scans/{id}/stop": {
+      "post": {
+        "operationId": "RestScanController_stop",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestScanStatusResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Stop a running scan. Members can stop pentests they started and any PR scan; admins can stop any scan.",
+        "tags": [
+          "REST API - Scans"
+        ]
+      }
+    },
     "/scans/{id}/status": {
       "get": {
         "operationId": "RestScanController_getStatus",
@@ -536,6 +567,108 @@
           }
         },
         "summary": "List findings with pagination and filters",
+        "tags": [
+          "REST API - Findings"
+        ]
+      }
+    },
+    "/findings/counts": {
+      "get": {
+        "operationId": "RestFindingController_counts",
+        "parameters": [
+          {
+            "name": "severity",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low",
+                "info"
+              ]
+            }
+          },
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "open",
+                "true_positive",
+                "false_positive",
+                "accepted_risk",
+                "resolved",
+                "closed"
+              ]
+            }
+          },
+          {
+            "name": "scan_id",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scan_type",
+            "required": false,
+            "in": "query",
+            "description": "Filter by scan type across all scans associated with the finding.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pr",
+                "full"
+              ]
+            }
+          },
+          {
+            "name": "repo_url",
+            "required": false,
+            "in": "query",
+            "description": "Filter by repository URL. Case-insensitive; a trailing slash or .git suffix is ignored.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "found_since",
+            "required": false,
+            "in": "query",
+            "description": "Only include findings discovered on/after this ISO 8601 timestamp.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "found_until",
+            "required": false,
+            "in": "query",
+            "description": "Only include findings discovered before this ISO 8601 timestamp.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestFindingCountsResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Count findings matching the list filters, by severity, state and repository",
         "tags": [
           "REST API - Findings"
         ]
@@ -1101,6 +1234,403 @@
           "REST API - HFW"
         ]
       }
+    },
+    "/pentests": {
+      "post": {
+        "operationId": "RestPentestController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestCreatePentestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestPentestResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a draft pentest of repositories or uploaded archives, optionally with live sites",
+        "tags": [
+          "REST API - Pentests"
+        ]
+      }
+    },
+    "/pentests/{id}": {
+      "patch": {
+        "operationId": "RestPentestController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestUpdatePentestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestPentestResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Change a pentest that has not started. Changing its repositories clears the estimate.",
+        "tags": [
+          "REST API - Pentests"
+        ]
+      },
+      "delete": {
+        "operationId": "RestPentestController_discard",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestDiscardPentestResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Discard a pentest that has not started",
+        "tags": [
+          "REST API - Pentests"
+        ]
+      }
+    },
+    "/pentests/{id}/login-checks": {
+      "post": {
+        "operationId": "RestPentestController_checkLogins",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wait_seconds",
+            "required": false,
+            "in": "query",
+            "description": "Wait up to this many seconds for the work to finish before answering",
+            "schema": {
+              "minimum": 0,
+              "maximum": 50,
+              "default": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestPentestResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The pentest has no login targets"
+          }
+        },
+        "summary": "Check that Hacktron can sign in to each login target, which it must before the pentest starts",
+        "tags": [
+          "REST API - Pentests"
+        ]
+      }
+    },
+    "/pentests/{id}/estimate": {
+      "post": {
+        "operationId": "RestPentestController_estimate",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestPentestResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Price a draft pentest; read it at GET /cost-estimations/{cost_estimation_id}",
+        "tags": [
+          "REST API - Pentests"
+        ]
+      }
+    },
+    "/pentests/{id}/start": {
+      "post": {
+        "operationId": "RestPentestController_start",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestStartPentestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestPentestResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A login target has no passing login check from the last hour"
+          },
+          "402": {
+            "description": "Insufficient credits"
+          },
+          "409": {
+            "description": "expected_credits no longer matches the total; read the estimate again and confirm the new total"
+          }
+        },
+        "summary": "Start an estimated pentest, spending the confirmed credits (organization admins only)",
+        "tags": [
+          "REST API - Pentests"
+        ]
+      }
+    },
+    "/archives/uploads": {
+      "post": {
+        "operationId": "RestArchiveController_requestUpload",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestUploadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestUploadResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a URL to upload a code archive (.zip, .7z or .tar.gz) to, then pentest it as a repo with source upload",
+        "tags": [
+          "REST API - Archives"
+        ]
+      }
+    },
+    "/credits": {
+      "get": {
+        "operationId": "RestCreditController_balance",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PentestCreditBalanceResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "The organization's pentest credit balance",
+        "tags": [
+          "REST API - Credits"
+        ]
+      }
+    },
+    "/repos/pr-reviews": {
+      "post": {
+        "operationId": "RestRepoController_setPrReviews",
+        "parameters": [
+          {
+            "name": "X-Organization-Id",
+            "in": "header",
+            "description": "Organization ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepositoryIdBatchDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RepositoryBatchResultDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Turn PR/MR reviews on or off for repositories, by their id from the repository list. A repository must be selected for Hacktron access before its reviews can be turned on.",
+        "tags": [
+          "REST API - Repos"
+        ]
+      }
+    },
+    "/pr-review-settings": {
+      "get": {
+        "operationId": "RestPrReviewSettingsController_get",
+        "parameters": [
+          {
+            "name": "X-Organization-Id",
+            "in": "header",
+            "description": "Organization ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestPrReviewSettingsDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get the organization's PR/MR review settings: whether reviews post comments, the severity that fails the PR check, and which PRs are reviewed",
+        "tags": [
+          "REST API - Repos"
+        ]
+      },
+      "patch": {
+        "operationId": "RestPrReviewSettingsController_update",
+        "parameters": [
+          {
+            "name": "X-Organization-Id",
+            "in": "header",
+            "description": "Organization ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestPrReviewSettingsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestPrReviewSettingsDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Change the organization's PR/MR review settings. Only the fields sent change; null turns off the fail-on severity or clears a filter. A repository's .hacktron/config.yaml overrides these.",
+        "tags": [
+          "REST API - Repos"
+        ]
+      }
     }
   },
   "info": {
@@ -1216,6 +1746,47 @@
           "task_id",
           "status",
           "message"
+        ]
+      },
+      "RestScanStatusResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "task_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "running",
+              "completed",
+              "failed",
+              "stopped",
+              "cancelled",
+              "skipped",
+              "pending_verification",
+              "pending_triage",
+              "draft",
+              "estimating",
+              "estimated"
+            ]
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "task_id",
+          "status",
+          "created_at",
+          "updated_at"
         ]
       },
       "RestScanFindingsSummaryDto": {
@@ -1336,47 +1907,6 @@
           "total",
           "page",
           "limit"
-        ]
-      },
-      "RestScanStatusResponseDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "task_id": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "pending",
-              "running",
-              "completed",
-              "failed",
-              "stopped",
-              "cancelled",
-              "skipped",
-              "pending_verification",
-              "pending_triage",
-              "draft",
-              "estimating",
-              "estimated"
-            ]
-          },
-          "created_at": {
-            "type": "string"
-          },
-          "updated_at": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "task_id",
-          "status",
-          "created_at",
-          "updated_at"
         ]
       },
       "RestFindingResponseDto": {
@@ -1501,6 +2031,112 @@
           "total",
           "page",
           "limit"
+        ]
+      },
+      "RestSeverityCountsDto": {
+        "type": "object",
+        "properties": {
+          "critical": {
+            "type": "number"
+          },
+          "high": {
+            "type": "number"
+          },
+          "medium": {
+            "type": "number"
+          },
+          "low": {
+            "type": "number"
+          },
+          "info": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "critical",
+          "high",
+          "medium",
+          "low",
+          "info"
+        ]
+      },
+      "RestStateCountsDto": {
+        "type": "object",
+        "properties": {
+          "open": {
+            "type": "number"
+          },
+          "true_positive": {
+            "type": "number"
+          },
+          "false_positive": {
+            "type": "number"
+          },
+          "accepted_risk": {
+            "type": "number"
+          },
+          "resolved": {
+            "type": "number"
+          },
+          "closed": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "open",
+          "true_positive",
+          "false_positive",
+          "accepted_risk",
+          "resolved",
+          "closed"
+        ]
+      },
+      "RestRepositoryFindingCountsDto": {
+        "type": "object",
+        "properties": {
+          "repository": {
+            "type": "string",
+            "nullable": true,
+            "description": "Repository URL, or null for findings with no repository"
+          },
+          "total": {
+            "type": "number"
+          },
+          "by_severity": {
+            "$ref": "#/components/schemas/RestSeverityCountsDto"
+          }
+        },
+        "required": [
+          "repository",
+          "total",
+          "by_severity"
+        ]
+      },
+      "RestFindingCountsResponseDto": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number"
+          },
+          "by_severity": {
+            "$ref": "#/components/schemas/RestSeverityCountsDto"
+          },
+          "by_state": {
+            "$ref": "#/components/schemas/RestStateCountsDto"
+          },
+          "by_repository": {
+            "description": "Most findings first",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestRepositoryFindingCountsDto"
+            }
+          }
+        },
+        "required": [
+          "total",
+          "by_severity",
+          "by_state",
+          "by_repository"
         ]
       },
       "RestUpdateFindingDto": {
@@ -2495,6 +3131,809 @@
         "required": [
           "results"
         ]
+      },
+      "ConnectedRepoInputDto": {
+        "type": "object",
+        "properties": {
+          "include_paths": {
+            "description": "Whitebox scope: gitignore-style globs (relative to the repo root) that narrow the scan to matching paths. Empty means the whole repository.",
+            "example": [
+              "services/gateway/**"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "exclude_paths": {
+            "description": "Whitebox scope: gitignore-style globs removed from the scan after include_paths is applied; use `*.md` to drop a file type.",
+            "example": [
+              "**/tests/**",
+              "vendor/",
+              "*.md"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "connected"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "description": "Repository URL",
+            "example": "https://github.com/owner/repo"
+          },
+          "branch": {
+            "type": "string",
+            "description": "Branch name, tag name, or commit SHA"
+          },
+          "ref_type": {
+            "type": "string",
+            "enum": [
+              "branch",
+              "tag",
+              "sha"
+            ],
+            "description": "How `branch` was selected (UI hint for draft re-use)"
+          },
+          "github_installation_id": {
+            "type": "number",
+            "description": "GitHub App installation id. Omitted for PAT-based connections (e.g. GitHub Enterprise), where the installation is resolved from the repository URL and the organization instead."
+          }
+        },
+        "required": [
+          "source",
+          "url",
+          "branch"
+        ]
+      },
+      "PublicRepoInputDto": {
+        "type": "object",
+        "properties": {
+          "include_paths": {
+            "description": "Whitebox scope: gitignore-style globs (relative to the repo root) that narrow the scan to matching paths. Empty means the whole repository.",
+            "example": [
+              "services/gateway/**"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "exclude_paths": {
+            "description": "Whitebox scope: gitignore-style globs removed from the scan after include_paths is applied; use `*.md` to drop a file type.",
+            "example": [
+              "**/tests/**",
+              "vendor/",
+              "*.md"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "public"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "description": "Repository URL",
+            "example": "https://github.com/owner/repo"
+          },
+          "branch": {
+            "type": "string",
+            "description": "Branch name, tag name, or commit SHA"
+          },
+          "ref_type": {
+            "type": "string",
+            "enum": [
+              "branch",
+              "tag",
+              "sha"
+            ],
+            "description": "How `branch` was selected (UI hint for draft re-use)"
+          }
+        },
+        "required": [
+          "source",
+          "url",
+          "branch"
+        ]
+      },
+      "UploadRepoInputDto": {
+        "type": "object",
+        "properties": {
+          "include_paths": {
+            "description": "Whitebox scope: gitignore-style globs (relative to the repo root) that narrow the scan to matching paths. Empty means the whole repository.",
+            "example": [
+              "services/gateway/**"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "exclude_paths": {
+            "description": "Whitebox scope: gitignore-style globs removed from the scan after include_paths is applied; use `*.md` to drop a file type.",
+            "example": [
+              "**/tests/**",
+              "vendor/",
+              "*.md"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "upload"
+            ]
+          },
+          "archive_id": {
+            "type": "string",
+            "description": "Scan archive ID"
+          }
+        },
+        "required": [
+          "source",
+          "archive_id"
+        ]
+      },
+      "RestLoginTargetDto": {
+        "type": "object",
+        "properties": {
+          "site": {
+            "type": "string",
+            "description": "A deployed copy of the app to test signed in, e.g. https://staging.acme.dev",
+            "maxLength": 2048
+          },
+          "login_instructions": {
+            "type": "string",
+            "description": "How to sign in: the login page, username, password and any steps. Stored encrypted and never returned.",
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "site",
+          "login_instructions"
+        ]
+      },
+      "RestCreatePentestDto": {
+        "type": "object",
+        "properties": {
+          "target_urls": {
+            "description": "Target URLs (pentest only)",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "custom_context": {
+            "type": "string",
+            "description": "Custom context (pentest only)"
+          },
+          "application_id": {
+            "type": "string",
+            "description": "iva application this scan targets (group of repos)"
+          },
+          "login_targets": {
+            "description": "Deployed sites to test signed in, each with how to sign in. On update the list replaces the saved one, and [] removes them. A pentest tests live sites either all signed in or all without a login (target_urls). Check each login with POST /pentests/{id}/login-checks before starting.",
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestLoginTargetDto"
+            }
+          },
+          "repos": {
+            "type": "array",
+            "description": "Repositories or uploaded archives to test",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/ConnectedRepoInputDto"
+                },
+                {
+                  "$ref": "#/components/schemas/PublicRepoInputDto"
+                },
+                {
+                  "$ref": "#/components/schemas/UploadRepoInputDto"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "source",
+                "mapping": {
+                  "connected": "#/components/schemas/ConnectedRepoInputDto",
+                  "public": "#/components/schemas/PublicRepoInputDto",
+                  "upload": "#/components/schemas/UploadRepoInputDto"
+                }
+              }
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "repos"
+        ]
+      },
+      "RepoDataDto": {
+        "type": "object",
+        "properties": {
+          "include_paths": {
+            "description": "Whitebox scope: gitignore-style globs (relative to the repo root) that narrow the scan to matching paths. Empty means the whole repository.",
+            "example": [
+              "services/gateway/**"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "exclude_paths": {
+            "description": "Whitebox scope: gitignore-style globs removed from the scan after include_paths is applied; use `*.md` to drop a file type.",
+            "example": [
+              "**/tests/**",
+              "vendor/",
+              "*.md"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "connected",
+              "public",
+              "upload"
+            ]
+          },
+          "provider": {
+            "type": "string",
+            "enum": [
+              "github",
+              "gitlab",
+              "bitbucket",
+              "azure"
+            ],
+            "readOnly": true,
+            "description": "Resolved by the server at scan start; ignored on input"
+          },
+          "url": {
+            "type": "string",
+            "description": "Repository URL",
+            "example": "https://github.com/owner/repo"
+          },
+          "branch": {
+            "type": "string",
+            "description": "Branch name, tag name, or commit SHA"
+          },
+          "ref_type": {
+            "type": "string",
+            "enum": [
+              "branch",
+              "tag",
+              "sha"
+            ],
+            "description": "How `branch` was selected (UI hint for draft re-use)"
+          },
+          "archive_id": {
+            "type": "string",
+            "description": "Scan archive ID"
+          },
+          "github_installation_id": {
+            "type": "number",
+            "description": "GitHub App installation ID (connected repos only)"
+          }
+        }
+      },
+      "RestPentestLoginTargetDto": {
+        "type": "object",
+        "properties": {
+          "site": {
+            "type": "string"
+          },
+          "login_check": {
+            "type": "string",
+            "enum": [
+              "unverified",
+              "pending",
+              "running",
+              "succeeded",
+              "failed",
+              "cancelled",
+              "expired"
+            ],
+            "description": "Whether Hacktron could sign in with the login the site has now. A pass lasts an hour, and changing the site or login makes it unverified."
+          },
+          "failure_reason": {
+            "type": "string",
+            "nullable": true,
+            "description": "Why the check failed, without credentials"
+          }
+        },
+        "required": [
+          "site",
+          "login_check",
+          "failure_reason"
+        ]
+      },
+      "RestPentestResponseDto": {
+        "type": "object",
+        "properties": {
+          "scan_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Stable pentest id; task_id changes when it starts"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "running",
+              "completed",
+              "failed",
+              "stopped",
+              "cancelled",
+              "skipped",
+              "pending_verification",
+              "pending_triage",
+              "draft",
+              "estimating",
+              "estimated"
+            ]
+          },
+          "repos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RepoDataDto"
+            }
+          },
+          "target_urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "login_targets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestPentestLoginTargetDto"
+            }
+          },
+          "custom_context": {
+            "type": "string",
+            "nullable": true
+          },
+          "application_id": {
+            "type": "string",
+            "nullable": true,
+            "format": "uuid"
+          },
+          "cost_estimation_id": {
+            "type": "string",
+            "nullable": true,
+            "format": "uuid"
+          },
+          "triage_enabled": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "credits_used": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": [
+          "scan_id",
+          "status",
+          "repos",
+          "target_urls",
+          "login_targets",
+          "custom_context",
+          "application_id",
+          "cost_estimation_id",
+          "triage_enabled",
+          "credits_used"
+        ]
+      },
+      "RestUpdatePentestDto": {
+        "type": "object",
+        "properties": {
+          "target_urls": {
+            "description": "Target URLs (pentest only)",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "custom_context": {
+            "type": "string",
+            "description": "Custom context (pentest only)"
+          },
+          "application_id": {
+            "type": "string",
+            "description": "iva application this scan targets (group of repos)"
+          },
+          "login_targets": {
+            "description": "Deployed sites to test signed in, each with how to sign in. On update the list replaces the saved one, and [] removes them. A pentest tests live sites either all signed in or all without a login (target_urls). Check each login with POST /pentests/{id}/login-checks before starting.",
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestLoginTargetDto"
+            }
+          },
+          "repos": {
+            "type": "array",
+            "description": "Repositories or uploaded archives to test, replacing the saved ones. Changing them clears the estimate, so estimate again before starting.",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/ConnectedRepoInputDto"
+                },
+                {
+                  "$ref": "#/components/schemas/PublicRepoInputDto"
+                },
+                {
+                  "$ref": "#/components/schemas/UploadRepoInputDto"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "source",
+                "mapping": {
+                  "connected": "#/components/schemas/ConnectedRepoInputDto",
+                  "public": "#/components/schemas/PublicRepoInputDto",
+                  "upload": "#/components/schemas/UploadRepoInputDto"
+                }
+              }
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "RestStartPentestDto": {
+        "type": "object",
+        "properties": {
+          "expected_credits": {
+            "type": "integer",
+            "description": "The total the user confirmed: the estimate's total_credits, plus triage_fee_credits when triage is required or opted in",
+            "minimum": 1
+          },
+          "triage_enabled": {
+            "type": "boolean",
+            "description": "Opt in to human triage of findings when it is not already required"
+          }
+        },
+        "required": [
+          "expected_credits"
+        ]
+      },
+      "RestDiscardPentestResponseDto": {
+        "type": "object",
+        "properties": {
+          "scan_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "discarded": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "scan_id",
+          "discarded"
+        ]
+      },
+      "RequestUploadDto": {
+        "type": "object",
+        "properties": {
+          "file_name": {
+            "type": "string",
+            "description": "Original filename (e.g. \"my-project.zip\")",
+            "example": "my-project.zip"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name (defaults to filename)"
+          }
+        },
+        "required": [
+          "file_name"
+        ]
+      },
+      "RequestUploadResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Archive ID"
+          },
+          "upload_url": {
+            "type": "string",
+            "description": "Signed GCS upload URL (PUT)"
+          },
+          "content_type": {
+            "type": "string",
+            "description": "Content-Type to use in the PUT request",
+            "example": "application/zip"
+          }
+        },
+        "required": [
+          "id",
+          "upload_url",
+          "content_type"
+        ]
+      },
+      "PentestCreditBalanceResponseDto": {
+        "type": "object",
+        "properties": {
+          "organization_id": {
+            "type": "string",
+            "description": "Organization UUID",
+            "example": "f336d0bc-b841-465b-8045-024475c079dd"
+          },
+          "balance": {
+            "type": "number",
+            "description": "Current pentest credit balance available for use",
+            "example": 12000
+          },
+          "total_purchased": {
+            "type": "number",
+            "description": "Total pentest credits purchased across all time",
+            "example": 16000
+          },
+          "total_used": {
+            "type": "number",
+            "description": "Total pentest credits deducted for completed/running pentests",
+            "example": 8000
+          },
+          "total_refunded": {
+            "type": "number",
+            "description": "Total pentest credits refunded from cancelled pentests",
+            "example": 4000
+          },
+          "total_granted": {
+            "type": "number",
+            "description": "Total pentest credits granted at no charge",
+            "example": 2000
+          },
+          "used_this_period": {
+            "type": "number",
+            "nullable": true,
+            "description": "Credits deducted since the start of the current billing period, null when the organization has no billing period",
+            "example": 1240
+          },
+          "is_unlimited": {
+            "type": "boolean",
+            "description": "Whether this organization has internal unlimited pentest entitlement",
+            "example": false
+          }
+        },
+        "required": [
+          "organization_id",
+          "balance",
+          "total_purchased",
+          "total_used",
+          "total_refunded",
+          "total_granted",
+          "used_this_period",
+          "is_unlimited"
+        ]
+      },
+      "RepositoryBatchResultDto": {
+        "type": "object",
+        "properties": {
+          "processed": {
+            "type": "number",
+            "description": "Keys applied",
+            "example": 2
+          },
+          "failed": {
+            "type": "number",
+            "description": "Keys that failed",
+            "example": 0
+          },
+          "failedRepositories": {
+            "description": "Keys that failed, with the reason",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RepositoryBatchFailureDto"
+            }
+          },
+          "webhookPending": {
+            "description": "Keys turned on whose provider webhook could not be registered",
+            "example": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "processed",
+          "failed",
+          "failedRepositories",
+          "webhookPending"
+        ]
+      },
+      "RepositoryBatchFailureDto": {
+        "type": "object",
+        "properties": {
+          "repo": {
+            "type": "string",
+            "description": "The key the request named",
+            "example": "acme/api"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Why the key was not applied",
+            "example": "Repository acme/api not found"
+          }
+        },
+        "required": [
+          "repo",
+          "reason"
+        ]
+      },
+      "RepositoryIdBatchDto": {
+        "type": "object",
+        "properties": {
+          "enable": {
+            "description": "Ids from the repository list of the repositories to turn on",
+            "example": [
+              "123e4567-e89b-12d3-a456-426614174000"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "disable": {
+            "description": "Ids from the repository list of the repositories to turn off",
+            "example": [],
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "enable",
+          "disable"
+        ]
+      },
+      "RestPrReviewSettingsDto": {
+        "type": "object",
+        "properties": {
+          "scm_comments_enabled": {
+            "type": "boolean",
+            "description": "Whether Hacktron publishes comments and finding details to connected source control pull and merge requests"
+          },
+          "scm_system_comments_enabled": {
+            "type": "boolean",
+            "description": "Whether Hacktron posts system comments such as skipped reviews, usage limits, and configuration warnings. Defaults to true. Requires scm_comments_enabled."
+          },
+          "fail_on_severity": {
+            "type": "string",
+            "description": "Org-wide default fail_on severity threshold for PR/MR checks. A repo's .hacktron/config.yaml fail_on.severity overrides this. Send null to disable.",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ],
+            "nullable": true
+          },
+          "scan_include_branches": {
+            "description": "Org-wide default target branch patterns to scan PRs/MRs for (null = all branches). Glob patterns (`*`, `**`, `?`, `{a,b}`), case-insensitive. A repo's .hacktron/config.yaml include.branches overrides this.",
+            "example": [
+              "main",
+              "**/release/**"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_exclude_branches": {
+            "description": "Org-wide default target branch patterns to exclude from PR/MR scans (null = none). Takes precedence over scan_include_branches. A repo's .hacktron/config.yaml exclude.branches overrides this.",
+            "example": [
+              "**/release/legacy/**"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_include_labels": {
+            "description": "Org-wide default labels to require on PRs/MRs for scanning (null = any). A repo's .hacktron/config.yaml include.labels overrides this.",
+            "example": [
+              "feature",
+              "bugfix"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_exclude_labels": {
+            "description": "Org-wide default labels to exclude PR/MR scans for (null = none). Takes precedence over scan_include_labels. A repo's .hacktron/config.yaml exclude.labels overrides this.",
+            "example": [
+              "wip",
+              "no-scan"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_include_authors": {
+            "description": "Org-wide default author patterns to require on PRs/MRs for scanning (null = any). Glob patterns (`*`, `**`, `?`, `{a,b}`), case-insensitive. A repo's .hacktron/config.yaml include.authors overrides this.",
+            "example": [
+              "alice",
+              "bob"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_exclude_authors": {
+            "description": "Org-wide default author patterns to exclude PR/MR scans for (null = none). Glob patterns (`*`, `**`, `?`, `{a,b}`), case-insensitive. Takes precedence over scan_include_authors. A repo's .hacktron/config.yaml exclude.authors overrides this.",
+            "example": [
+              "dependabot[bot]",
+              "renovate[bot]",
+              "*-bot"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_include_keywords": {
+            "description": "Org-wide default title keywords to require on PRs/MRs for scanning (null = any). Case-insensitive substring match. A repo's .hacktron/config.yaml include.keywords overrides this.",
+            "example": [
+              "release",
+              "security"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scan_exclude_keywords": {
+            "description": "Org-wide default title keywords to exclude PR/MR scans for (null = none). Case-insensitive substring match. A repo's .hacktron/config.yaml exclude.keywords overrides this.",
+            "example": [
+              "[exclude hacktron]",
+              "wip"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       }
     }
   },
