@@ -111,7 +111,7 @@
             "group": "Management",
             "pages": [
               "code-review/people",
-              "code-review/spillover-usage",
+              "code-review/overage-usage",
               "code-review/rules",
               "code-review/config"
             ]
@@ -339,5 +339,11 @@
       "github": "https://github.com/HacktronAI",
       "linkedin": "https://linkedin.com/company/hacktron"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/code-review/spillover-usage",
+      "destination": "/code-review/overage-usage"
+    }
+  ]
 }

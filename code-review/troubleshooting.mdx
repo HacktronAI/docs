@@ -15,9 +15,10 @@ Check these first:
 - The pull request or merge request targets a covered branch
 - The pull request or merge request changes no more than 500 files
 - The organization has trial or paid review capacity available
-- The organization has not reached its pooled review limit, or spillover is enabled on a paid plan
+- The organization has not reached its pooled review limit, or overage billing is enabled on a paid plan
 - For GitHub, the GitHub App installation includes the repository
 - For GitLab, the service account still has access and its token has not expired
+- For GitLab with Developer access, the [deploy token and manual webhook setup](/platform/repositories/gitlab#developer-access-setup) are complete
 
 ## Repository is missing
 
@@ -56,10 +57,10 @@ so smaller changes get reviewed before they reach a large deployment PR.
 Code Review uses a pooled organization review limit each billing period. If the limit is reached:
 
 - On a trial, new reviews stop until the period changes or an owner starts the paid plan
-- On a paid plan with spillover off, new reviews stop until the next billing period or until an owner enables spillover
-- On a paid plan with spillover on, reviews continue and overage reviews are billed as spillover
+- On a paid plan with overage billing off, new reviews stop until the next billing period or until an owner enables overage billing
+- On a paid plan with overage billing on, reviews continue and are billed as overage
 
-See [Spillover and usage](/code-review/spillover-usage) for how the pooled limit and spillover work.
+See [Overage and usage](/code-review/overage-usage) for how the pooled limit and overage billing work.
 
 ## Still stuck?
 
