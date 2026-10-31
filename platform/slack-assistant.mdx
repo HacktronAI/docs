@@ -23,26 +23,33 @@ Before changing a finding, stopping a scan or updating PR review settings, Hackt
 
 <Steps>
   <Step title="Connect your workspace (organization admins)">
-    In Hacktron, go to **Integrations**, find **Slack** under **Communication
-    Apps** and click **Connect**. Approve the Hacktron AI app for your
-    workspace. This installs the app in Slack. See
+    In Hacktron, go to **Integrations** and find **Slack** under
+    **Notifications**. Click **Connect**, then **Connect Slack** in the panel
+    that opens. Approve the Hacktron AI app for your workspace to install it.
+    See
     [Slack](/platform/communication-apps/slack) for the full steps.
+
+    <img
+      src="/images/slack-integration-connect.png"
+      alt="Slack under Notifications in Integrations, with a Connect button"
+    />
 
     <Note>
       If Slack is already connected but Hacktron can't read attached archives,
-      click **Connect** again to grant file access.
+      disconnect Slack and connect it again from **Integrations** to grant
+      file access.
     </Note>
 
   </Step>
   <Step title="Link your Slack account">
-    In Hacktron, open **Account**, scroll to **Connected Accounts** and click
+    In Hacktron, open **Personal settings**, find **Connected accounts** and click
     **Connect** next to **Slack**. Choose the workspace connected to your
     organization so Hacktron can match your Slack and Hacktron accounts. See [Link your Slack
     identity](/code-review/integrations/slack#link-your-slack-identity).
 
     <img
-      src="/images/connected_accounts.png"
-      alt="Slack under Connected Accounts in Hacktron"
+      src="/images/slack-connected-accounts.png"
+      alt="Connected accounts in Personal settings, with a Connect button next to Slack"
     />
 
   </Step>
@@ -140,10 +147,10 @@ A progress card at the top of the reply shows Hacktron's plan and the steps it t
 
 - The Slack assistant can read attached archives, but it doesn't build or run your code. Provide a deployed app URL for live testing.
 - Each thread has a usage limit. When a thread reaches it, Hacktron stops and asks you to mention it in a new thread.
-- If Hacktron can't read an attachment, ask an organization admin to reconnect Slack from **Integrations** to grant file access.
+- If Hacktron can't read an attachment, ask an organization admin to disconnect Slack and connect it again from **Integrations** to grant file access.
 
 ## Troubleshooting
 
 - **Hacktron doesn't reply to a mention in a channel.** Add it to the channel with `/invite @Hacktron AI`, and check that Slack is connected under **Integrations** in Hacktron.
-- **"Hacktron couldn't find your account for this workspace."** Link your Slack account from **Account** > **Connected Accounts** in Hacktron, choosing the same workspace, then try again.
+- **"Hacktron couldn't find your account for this workspace."** Link your Slack account from **Personal settings** > **Connected accounts** in Hacktron, choosing the same workspace, then try again.
 - **Hacktron doesn't answer a reply in a thread.** If someone else started the thread, mention **@Hacktron AI** in your reply. Only the person who started it can continue without a mention.
