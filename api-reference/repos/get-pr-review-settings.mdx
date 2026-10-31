@@ -4,13 +4,13 @@ openapi: "GET /pr-review-settings"
 description: "Read how PR reviews behave across your organization."
 ---
 
-Returns your organization's PR review settings, the ones under **Settings** in Hacktron:
+Returns the PR review settings configured for your organization under **Settings** in Hacktron:
 
 - `scm_comments_enabled`: reviews post comments and finding details on pull and merge requests.
 - `scm_system_comments_enabled`: reviews also post system comments, such as skipped reviews, usage limits and configuration warnings.
 - `fail_on_severity`: the severity at or above which a finding fails the PR check, or `null` when it never fails.
 - `scan_include_*` and `scan_exclude_*`: which pull requests are reviewed, by target branch, label, author and title keyword. `null` means no filter.
 
-A repository's [`.hacktron/config.yaml`](/code-review/config) overrides these. Whether each repository has reviews turned on is `prScansEnabled` in [List repositories](/api-reference/repos/list-repos).
+A repository's [`.hacktron/config.yaml`](/code-review/config) takes precedence over these defaults. To check whether reviews are enabled for a repository, read its `prScansEnabled` value from [List repositories](/api-reference/repos/list-repos).
 
 <Info>**Scope required**: `read`</Info>

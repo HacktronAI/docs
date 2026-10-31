@@ -19,7 +19,7 @@ description: "Choose your platform and copy the config. No API key required."
     3. Complete the Hacktron browser sign-in.
 
     <Accordion title="Prefer using an API key?">
-      Create an organization API key — see [Authentication](/api-reference/authentication#creating-an-api-key). Grant `read` & `write` access to let your assistant triage findings.
+      Create an organization API key using the [Authentication guide](/api-reference/authentication#creating-an-api-key). Grant `read` and `write` access if you want your assistant to triage findings.
 
       Run in terminal:
 
@@ -53,7 +53,7 @@ description: "Choose your platform and copy the config. No API key required."
     When Claude Desktop connects to Hacktron for the first time, complete the Hacktron browser sign-in. If the prompt does not appear, open Claude Desktop's MCP server settings and reconnect `hacktron`.
 
     <Accordion title="Prefer using an API key?">
-      Create an organization API key — see [Authentication](/api-reference/authentication#creating-an-api-key). Grant `read` & `write` access to let your assistant triage findings.
+      Create an organization API key using the [Authentication guide](/api-reference/authentication#creating-an-api-key). Grant `read` and `write` access if you want your assistant to triage findings.
 
       ```json
       {
@@ -91,7 +91,7 @@ description: "Choose your platform and copy the config. No API key required."
     When Cursor prompts you to authenticate `hacktron`, complete the Hacktron browser sign-in. You can also open Cursor's MCP settings, select `hacktron`, and start authentication from there.
 
     <Accordion title="Prefer using an API key?">
-      Create an organization API key — see [Authentication](/api-reference/authentication#creating-an-api-key). Grant `read` & `write` access to let your assistant triage findings.
+      Create an organization API key using the [Authentication guide](/api-reference/authentication#creating-an-api-key). Grant `read` and `write` access if you want your assistant to triage findings.
 
       ```json
       {
@@ -129,7 +129,7 @@ description: "Choose your platform and copy the config. No API key required."
     Complete the Hacktron browser sign-in. In an interactive Codex session, type `/mcp` to check the server's connection and authentication status.
 
     <Accordion title="Prefer using an API key?">
-      Create an organization API key — see [Authentication](/api-reference/authentication#creating-an-api-key). Grant `read` & `write` access to let your assistant triage findings.
+      Create an organization API key using the [Authentication guide](/api-reference/authentication#creating-an-api-key). Grant `read` and `write` access if you want your assistant to triage findings.
 
       **1.** Add your API key to your shell profile (`~/.zshrc` or `~/.bashrc`):
 
@@ -172,17 +172,19 @@ description: "Choose your platform and copy the config. No API key required."
 
 ## Tools
 
-Each tool calls the same endpoint as the [REST API](/api-reference/introduction), with the same permissions. Viewers can read, members can change findings and set up pentests, and only organization admins can start a pentest.
+Use these tools to work with Hacktron from your AI assistant. The linked [REST API endpoints](/api-reference/introduction) provide the same operations and permission requirements.
+
+Viewers can read scans and findings. Members can update findings and prepare pentests. Starting a pentest or changing PR review settings requires an organization admin.
 
 ### Scans and findings
 
 | Name                  | Description                                      | REST endpoint                                                                  |
 | --------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `list_scans`          | List scans with severity breakdown               | [`GET /scans`](/api-reference/scans/list-scans)                                |
+| `list_scans`          | List scans with finding counts by severity       | [`GET /scans`](/api-reference/scans/list-scans)                                |
 | `get_scan`            | Get details about a scan                         | [`GET /scans/{id}`](/api-reference/scans/get-scan)                             |
 | `export_findings`     | Export a scan's findings as JSON, CSV, or SARIF  | [`GET /scans/{id}/findings/export`](/api-reference/scans/export-scan-findings) |
 | `stop_scan`           | Stop a running scan or pentest                   | [`POST /scans/{id}/stop`](/api-reference/scans/stop-scan)                      |
-| `list_findings`       | List findings across the organisation            | [`GET /findings`](/api-reference/findings/list-findings)                       |
+| `list_findings`       | List findings across your organization           | [`GET /findings`](/api-reference/findings/list-findings)                       |
 | `count_findings`      | Count findings by severity, state and repository | [`GET /findings/counts`](/api-reference/findings/count-findings)               |
 | `get_finding`         | Get details about a finding                      | [`GET /findings/{id}`](/api-reference/findings/get-finding)                    |
 | `update_finding`      | Update a finding's state or severity             | [`PATCH /findings/{id}`](/api-reference/findings/update-finding)               |
@@ -190,31 +192,31 @@ Each tool calls the same endpoint as the [REST API](/api-reference/introduction)
 
 ### Pentests
 
-| Name                     | Description                                          | REST endpoint                                                                       |
-| ------------------------ | ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `list_repositories`      | List connected repositories                          | [`GET /repos`](/api-reference/repos/list-repos)                                     |
-| `request_archive_upload` | Get a URL to upload a code archive                   | [`POST /archives/uploads`](/api-reference/archives/request-archive-upload)          |
-| `create_pentest_draft`   | Set up a pentest of code, optionally with live sites | [`POST /pentests`](/api-reference/pentests/create-pentest)                          |
-| `update_pentest_draft`   | Change a pentest that hasn't started                 | [`PATCH /pentests/{id}`](/api-reference/pentests/update-pentest)                    |
-| `verify_pentest_login`   | Check that Hacktron can sign in to each site         | [`POST /pentests/{id}/login-checks`](/api-reference/pentests/check-pentest-logins)  |
-| `estimate_pentest`       | Price a pentest                                      | [`POST /pentests/{id}/estimate`](/api-reference/pentests/estimate-pentest)          |
-| `get_cost_estimation`    | Get a pentest cost estimate                          | [`GET /cost-estimations/{id}`](/api-reference/cost-estimations/get-cost-estimation) |
-| `get_credit_balance`     | Get the organisation's pentest credit balance        | [`GET /credits`](/api-reference/credits/get-credit-balance)                         |
-| `start_pentest`          | Start a pentest and spend its credits (admins only)  | [`POST /pentests/{id}/start`](/api-reference/pentests/start-pentest)                |
-| `discard_pentest_draft`  | Delete a pentest that hasn't started                 | [`DELETE /pentests/{id}`](/api-reference/pentests/discard-pentest)                  |
+| Name                     | Description                                         | REST endpoint                                                                       |
+| ------------------------ | --------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `list_repositories`      | List connected repositories                         | [`GET /repos`](/api-reference/repos/list-repos)                                     |
+| `request_archive_upload` | Get a URL to upload a code archive                  | [`POST /archives/uploads`](/api-reference/archives/request-archive-upload)          |
+| `create_pentest_draft`   | Create a draft with code and optional live sites    | [`POST /pentests`](/api-reference/pentests/create-pentest)                          |
+| `update_pentest_draft`   | Change a pentest that hasn't started                | [`PATCH /pentests/{id}`](/api-reference/pentests/update-pentest)                    |
+| `verify_pentest_login`   | Check that Hacktron can sign in to each site        | [`POST /pentests/{id}/login-checks`](/api-reference/pentests/check-pentest-logins)  |
+| `estimate_pentest`       | Estimate a draft pentest's credit cost              | [`POST /pentests/{id}/estimate`](/api-reference/pentests/estimate-pentest)          |
+| `get_cost_estimation`    | Get a pentest cost estimate                         | [`GET /cost-estimations/{id}`](/api-reference/cost-estimations/get-cost-estimation) |
+| `get_credit_balance`     | Read your organization's pentest credit balance     | [`GET /credits`](/api-reference/credits/get-credit-balance)                         |
+| `start_pentest`          | Start a pentest and spend its credits (admins only) | [`POST /pentests/{id}/start`](/api-reference/pentests/start-pentest)                |
+| `discard_pentest_draft`  | Delete a pentest that hasn't started                | [`DELETE /pentests/{id}`](/api-reference/pentests/discard-pentest)                  |
 
 ### PR reviews
 
-| Name                        | Description                                                           | REST endpoint                                                                 |
-| --------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `get_pr_review_settings`    | Get how PR reviews behave across the organisation                     | [`GET /pr-review-settings`](/api-reference/repos/get-pr-review-settings)      |
-| `update_pr_review_settings` | Change PR review comments, fail-on severity and filters (admins only) | [`PATCH /pr-review-settings`](/api-reference/repos/update-pr-review-settings) |
-| `set_pr_reviews`            | Turn PR reviews on or off for repositories (admins only)              | [`POST /repos/pr-reviews`](/api-reference/repos/set-pr-reviews)               |
+| Name                        | Description                                                                      | REST endpoint                                                                 |
+| --------------------------- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `get_pr_review_settings`    | Read your organization's PR review settings                                      | [`GET /pr-review-settings`](/api-reference/repos/get-pr-review-settings)      |
+| `update_pr_review_settings` | Update review comments, the check's severity threshold and filters (admins only) | [`PATCH /pr-review-settings`](/api-reference/repos/update-pr-review-settings) |
+| `set_pr_reviews`            | Turn PR reviews on or off for repositories (admins only)                         | [`POST /repos/pr-reviews`](/api-reference/repos/set-pr-reviews)               |
 
 <Warning>
-  To test a site signed in, your assistant sends the login details to Hacktron,
-  where they're stored encrypted. Anything you type in the conversation also
-  goes to your assistant's model provider, so use a test account.
+  For signed-in testing, your assistant sends login details to Hacktron for
+  encrypted storage. Anything you type in the conversation also goes to your
+  assistant's model provider. Use dedicated test credentials.
 </Warning>
 
 ## Related
@@ -225,9 +227,9 @@ Each tool calls the same endpoint as the [REST API](/api-reference/introduction)
     icon="key"
     href="/api-reference/authentication"
   >
-    Create and scope the API key used for API-key auth.
+    Create an API key and choose its access scopes.
   </Card>
   <Card title="API reference" icon="code" href="/api-reference/introduction">
-    Every tool, over the REST API.
+    Use the same operations from your own scripts and applications.
   </Card>
 </CardGroup>
