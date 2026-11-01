@@ -1,23 +1,25 @@
 ---
 title: "Hacktron in Slack"
-description: "Mention @Hacktron AI to triage findings, set up pentests and change PR review settings without leaving Slack."
+description: "Mention @Hacktron AI to ask security questions, triage findings, set up pentests and change PR review settings without leaving Slack."
 ---
 
-Mention **@Hacktron AI** in a Slack channel or direct message to work with your findings, set up a pentest or manage PR reviews. The assistant uses your Hacktron account and permissions, and replies in a thread.
+Mention **@Hacktron AI** in a Slack channel or direct message to ask security questions about your code and plans, work with your findings, set up a pentest or manage PR reviews. The assistant uses your Hacktron account and permissions, and replies in a thread.
 
 You can continue in that thread without mentioning it again. Teammates can join by mentioning @Hacktron AI. Each person's requests use their own account and permissions.
 
 ## What you can ask it to do
 
-| Task                                              | Example request                                                                      |
-| ------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [Look into findings](#ask-about-findings)         | How many critical findings are open in acme/api?                                     |
-| [Triage a finding](#act-on-findings-and-scans)    | Mark the SSRF finding in acme/api as a false positive because the URL is allowlisted |
-| [Set up a pentest](#set-up-a-pentest)             | Pentest acme/api on main and test staging.acme.com signed in                         |
-| [Manage PR reviews](#manage-pr-reviews)           | Turn on PR reviews for acme/api and acme/web                                         |
-| [Ask how Hacktron works](#ask-how-hacktron-works) | How do I stop reviews of PRs into release branches?                                  |
+| Task                                                           | Example request                                                                               |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [Ask a security question](#ask-security-questions)             | We're adding file uploads to acme/web. What should we think about?                            |
+| [Look into findings](#ask-about-findings)                      | How many critical findings are open in acme/api?                                              |
+| [Triage a finding](#act-on-findings-and-scans)                 | Mark the SSRF finding in acme/api as a false positive because the URL is allowlisted          |
+| [Update your threat model](#keep-your-threat-model-up-to-date) | Save our decision to fetch link previews through the egress proxy and update the threat model |
+| [Set up a pentest](#set-up-a-pentest)                          | Pentest acme/api on main and test staging.acme.com signed in                                  |
+| [Manage PR reviews](#manage-pr-reviews)                        | Turn on PR reviews for acme/api and acme/web                                                  |
+| [Ask how Hacktron works](#ask-how-hacktron-works)              | How do I stop reviews of PRs into release branches?                                           |
 
-Before changing a finding, stopping a scan or updating PR review settings, Hacktron shows you what will change and asks you to click **Approve**. Starting a pentest requires approval from an organization admin.
+Before changing a finding, stopping a scan, updating PR review settings or changing your threat model or context documents, Hacktron shows you what will change and asks you to click **Approve**. Starting a pentest requires approval from an organization admin.
 
 ## Set up
 
@@ -70,7 +72,7 @@ Before changing a finding, stopping a scan or updating PR review settings, Hackt
   </Step>
 </Steps>
 
-Your Hacktron role determines what you can do. Viewers can ask questions, members can prepare pentests, and organization admins can start pentests and change PR review settings.
+Your Hacktron role determines what you can do. Viewers can ask questions. Members can also have Hacktron read your code, prepare pentests and update context documents and threat models. Organization admins can also start pentests, change PR review settings and manage applications.
 
 ## Ask about findings
 
@@ -87,6 +89,45 @@ Hacktron can return counts or post finding cards with links to the details in Ha
 Ask Hacktron to change a finding's status, add a comment, stop a running scan or discard a pentest draft. Review the proposed change and click **Approve**. Hacktron confirms the result in the thread.
 
 Each finding card also has buttons to update its status or fix it with AI.
+
+## Ask security questions
+
+Think of Hacktron as a security engineer you can pull into any conversation. Ask about a feature you're planning, a design doc or PRD, how part of your app handles something like sign-in or file access, or a change you're about to ship.
+
+Hacktron answers from your own code and from what it already knows about your repositories. It can read the code at any branch or pull request, and it checks your threat models, context documents, recent pentests and past findings.
+
+A few things you might ask:
+
+- "We're adding file uploads to acme/web. What should we think about before we build it?"
+- "How does acme/api check that a user can see another team's projects?"
+- "Here's our PRD for shareable report links. What are we missing security-wise?" Paste the PRD into your message or attach it.
+- "Is `https://github.com/acme/api/pull/42` safe to merge?"
+
+Hacktron starts with the few points that matter most for what you're doing, and links each one to where it found it: a file and line, a related finding or your threat model. If something important is still unclear, it ends with a question for you. Reply in the thread to keep going.
+
+<img
+  src="/images/slack-assistant-security-review.png"
+  alt="Hacktron answering a security question in a Slack thread, citing lines of code and linking a related finding"
+/>
+
+Hacktron only calls something exploitable when the code shows it, so treat its points as things to check. To confirm one, ask Hacktron to [review the pull request](/code-review/overview) or [set up a pentest](#set-up-a-pentest).
+
+<Note>
+  Hacktron can read code from repositories connected through GitHub, GitLab and
+  Azure DevOps. The first question about a branch or pull request can take a
+  minute or two while Hacktron gets the code ready.
+</Note>
+
+## Keep your threat model up to date
+
+When a conversation settles something, ask Hacktron to save it. Your scans, PR reviews and later answers then take it into account. Before each change, Hacktron shows an **Approve** button that describes it.
+
+You can ask Hacktron to:
+
+- Save a decision, requirement, PRD or accepted risk from the thread as a [context document](/platform/context/overview#context-documents) on the repository.
+- Edit the [threat model](/platform/context/threat-models), for example to add a trust boundary. Your edits stay in place when the threat model updates later.
+- Update the threat model with new context documents and triage feedback. If a repository doesn't have a threat model yet, Hacktron builds one from the code. Updates run in the background and take a few minutes.
+- Create an [application](/platform/context/applications) from your repositories, add repositories to it or rebuild its threat model. Creating an application and adding repositories need an organization admin.
 
 ## Ask how Hacktron works
 
@@ -143,14 +184,23 @@ A pentest uses the same access mode for all its live sites: signed in or without
 
 A progress card at the top of the reply shows Hacktron's plan and the steps it takes.
 
+## Credits
+
+Replies from the Slack assistant use [automation credits](/platform/automations/credits) from your organization's balance. Pentests and fixes you start from Slack cost the same as when you start them in Hacktron.
+
+If your organization runs out of automation credits, Hacktron tells you in the thread and links to **Billing**. With auto top-up turned on, Hacktron buys more credits first.
+
 ## Limits
 
 - The Slack assistant can read attached archives, but it doesn't build or run your code. Provide a deployed app URL for live testing.
 - Each thread has a usage limit. When a thread reaches it, Hacktron stops and asks you to mention it in a new thread.
+- A conversation ends after a week without activity, and any files attached to it are deleted. To pick it back up, mention @Hacktron AI in the thread. It reads the thread again, but you need to attach files again.
+- Hacktron can't read code from Bitbucket repositories yet.
 - If Hacktron can't read an attachment, ask an organization admin to disconnect Slack and connect it again from **Integrations** to grant file access.
 
 ## Troubleshooting
 
 - **Hacktron doesn't reply to a mention in a channel.** Add it to the channel with `/invite @Hacktron AI`, and check that Slack is connected under **Integrations** in Hacktron.
 - **"Hacktron couldn't find your account for this workspace."** Link your Slack account from **Personal settings** > **Connected accounts** in Hacktron, choosing the same workspace, then try again.
+- **"Your Hacktron organization is out of automation credits."** An organization owner can buy credits from **Billing** or turn on [auto top-up](/platform/automations/credits#auto-top-up).
 - **Hacktron doesn't answer a reply in a thread.** If someone else started the thread, mention **@Hacktron AI** in your reply. Only the person who started it can continue without a mention.
