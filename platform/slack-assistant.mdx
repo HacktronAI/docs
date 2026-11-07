@@ -3,7 +3,7 @@ title: "Hacktron in Slack"
 description: "Mention @Hacktron AI to ask security questions, check a vulnerability against your repositories, triage findings, set up pentests and change PR review settings without leaving Slack."
 ---
 
-Mention **@Hacktron AI** in a Slack channel or direct message to ask security questions about your code and plans, check whether a vulnerability affects your repositories, analyze a file, work with your findings, set up a pentest or manage PR reviews. The assistant uses your Hacktron account and permissions, and replies in a thread.
+Mention **@Hacktron AI** in a Slack channel or direct message to ask security questions about your code and plans, check whether a vulnerability affects your repositories, work with your findings, set up a pentest or manage PR reviews. The assistant uses your Hacktron account and permissions, and replies in a thread.
 
 You can continue in that thread without mentioning it again. Teammates can join by mentioning @Hacktron AI. Each person's requests use their own account and permissions.
 
@@ -13,7 +13,6 @@ You can continue in that thread without mentioning it again. Teammates can join 
 | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | [Ask a security question](#ask-security-questions)                        | We're adding file uploads to acme/web. What should we think about?                            |
 | [Check a vulnerability](#check-a-vulnerability-against-your-repositories) | Does CVE-2025-29927 affect any of our repositories?                                           |
-| [Analyze a file or run a tool](#work-in-a-sandbox)                        | Here's our nginx config. Anything risky in it?                                                |
 | [Look into findings](#ask-about-findings)                                 | How many critical findings are open in acme/api?                                              |
 | [Triage a finding](#act-on-findings-and-scans)                            | Mark the SSRF finding in acme/api as a false positive because the URL is allowlisted          |
 | [Update your threat model](#keep-your-threat-model-up-to-date)            | Save our decision to fetch link previews through the egress proxy and update the threat model |
@@ -21,7 +20,7 @@ You can continue in that thread without mentioning it again. Teammates can join 
 | [Manage PR reviews](#manage-pr-reviews)                                   | Turn on PR reviews for acme/api and acme/web                                                  |
 | [Ask how Hacktron works](#ask-how-hacktron-works)                         | How do I stop reviews of PRs into release branches?                                           |
 
-Before changing a finding, stopping a scan, updating PR review settings or changing your threat model or context documents, Hacktron shows you what will change and asks you to click **Approve**. Starting a pentest requires approval from an organization admin.
+Reading never needs approval. Before Hacktron changes anything, it asks you to approve it in the thread. See [When Hacktron asks you to approve](#when-hacktron-asks-you-to-approve).
 
 ## Set up
 
@@ -75,6 +74,25 @@ Before changing a finding, stopping a scan, updating PR review settings or chang
 </Steps>
 
 Your Hacktron role determines what you can do. Viewers can ask questions. Members can also have Hacktron read your code, prepare pentests and update context documents and threat models. Organization admins can also start pentests, change PR review settings and manage applications.
+
+## When Hacktron asks you to approve
+
+Hacktron never changes anything in your organization on its own. Before an action, it posts a card in the thread that says what will change, with an **Approve** button. The action runs when you click, and Hacktron posts the result in the thread. Only the person who asked can approve, and nothing happens until they do.
+
+Actions that ask for approval:
+
+- **Findings**: changing a finding's status, adding a comment.
+- **Scans and pentests**: stopping a scan, discarding a pentest draft. Starting a pentest is different: Hacktron posts a **Start pentest** card that an organization admin clicks, and credits are spent when the pentest starts.
+- **PR reviews**: reviewing a pull request now, turning PR reviews on or off for repositories, and changing PR review settings. Only organization admins can approve the last two.
+- **Fixes**: opening a fix pull request for a finding.
+- **Context and threat models**: saving a context document, editing a threat model or document, updating a threat model, creating an application, adding repositories to an application and rebuilding its threat model. Creating an application and adding repositories need an organization admin.
+- **Other hosts**: Hacktron can reach source hosts, package registries and advisory databases on its own. When an answer needs another host, it asks you to allow that host, once per thread.
+
+Other prompts you may see:
+
+- **Connect Hacktron**: the first time you mention it, a private message with a button to sign in and link your account.
+- **Login details**: for a signed-in pentest, a button that opens a private form, so credentials never enter the thread.
+- **A choice**: when Hacktron needs you to pick something, such as a repository or a branch, or whether to estimate a draft, it asks with buttons.
 
 ## Ask about findings
 
@@ -135,17 +153,6 @@ Hacktron reads the advisory from a primary source (the project's own advisory, t
   Hacktron checks up to 25 repositories at a time, about a minute each. In a
   large organization, name the repositories or languages to check first.
 </Note>
-
-## Work in a sandbox
-
-For anything your Hacktron data doesn't answer, Hacktron has its own sandbox with bash, git, Node and Python. Ask it to:
-
-- Read a file you attach: a log, a config, a script, a dependency list or an archive of code.
-- Run a script, a scanner or a test, or try a proof of concept against code in the sandbox.
-- Clone a public repository and look through it.
-- Research on the web: advisories, vendor documentation, changelogs. Hacktron links its sources.
-
-The sandbox holds no credentials, and it reaches only source hosts, package registries and advisory databases. When Hacktron needs another host, it asks you to approve it with a button, once per thread. Your connected repositories never go to the sandbox: Hacktron reads them where it keeps your code, with a read-only shell and no network. Files attached to a thread are deleted when the conversation ends.
 
 ## Keep your threat model up to date
 
