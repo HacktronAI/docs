@@ -77,6 +77,7 @@
             "pages": [
               "platform/automations/overview",
               "platform/automations/remediation",
+              "platform/automations/scheduled-whitebox-scans",
               "platform/automations/credits"
             ]
           },

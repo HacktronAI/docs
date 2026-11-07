@@ -3,7 +3,7 @@ title: "Automation credits"
 description: "Understand how to buy Automation credits, how runs use them, and how auto top-up works."
 ---
 
-[Automations](/platform/automations/overview) run on shared organization automation credits. Every [remediation](/platform/automations/remediation) run, whether triggered manually from a finding or by an automation, deducts credits based on what the run costs when it completes. Replies from the [Slack assistant](/platform/slack-assistant#credits) use automation credits too.
+[Remediation](/platform/automations/remediation) runs on shared organization automation credits. Every remediation run, whether you start it from a finding or an [automation](/platform/automations/overview) does, deducts credits based on what the run costs when it completes. [Scheduled whitebox scans](/platform/automations/scheduled-whitebox-scans) spend Whitebox Scan credits instead. Replies from the [Slack assistant](/platform/slack-assistant#credits) use automation credits too.
 
 Automation credits are organization-wide. They are separate from Code Review seats and your Whitebox Scan credits.
 
@@ -43,7 +43,7 @@ Set it up on the Billing page under your automation credit balance:
 
 Auto top-up requires a saved payment method and charges the card on file without an interactive checkout. If a top-up charge fails, your automations stay paused until the balance is topped up manually or the card issue is resolved.
 
-The Automation credits card on **Billing** shows the current balance, credits used in the billing period, auto top-up status, and a link to run history. Whitebox Scan Credits appear in a separate account and are never used for automation runs.
+The Automation credits card on **Billing** shows the current balance, credits used in the billing period, auto top-up status, and a link to run history. Whitebox Scan Credits appear in a separate account and are never used for remediation runs.
 
 ## Related docs
 
