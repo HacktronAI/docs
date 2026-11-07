@@ -1,23 +1,25 @@
 ---
 title: "Hacktron in Slack"
-description: "Mention @Hacktron AI to ask security questions, triage findings, set up pentests and change PR review settings without leaving Slack."
+description: "Mention @Hacktron AI to ask security questions, check a vulnerability against your repositories, triage findings, set up pentests and change PR review settings without leaving Slack."
 ---
 
-Mention **@Hacktron AI** in a Slack channel or direct message to ask security questions about your code and plans, work with your findings, set up a pentest or manage PR reviews. The assistant uses your Hacktron account and permissions, and replies in a thread.
+Mention **@Hacktron AI** in a Slack channel or direct message to ask security questions about your code and plans, check whether a vulnerability affects your repositories, analyze a file, work with your findings, set up a pentest or manage PR reviews. The assistant uses your Hacktron account and permissions, and replies in a thread.
 
 You can continue in that thread without mentioning it again. Teammates can join by mentioning @Hacktron AI. Each person's requests use their own account and permissions.
 
 ## What you can ask it to do
 
-| Task                                                           | Example request                                                                               |
-| -------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| [Ask a security question](#ask-security-questions)             | We're adding file uploads to acme/web. What should we think about?                            |
-| [Look into findings](#ask-about-findings)                      | How many critical findings are open in acme/api?                                              |
-| [Triage a finding](#act-on-findings-and-scans)                 | Mark the SSRF finding in acme/api as a false positive because the URL is allowlisted          |
-| [Update your threat model](#keep-your-threat-model-up-to-date) | Save our decision to fetch link previews through the egress proxy and update the threat model |
-| [Set up a pentest](#set-up-a-pentest)                          | Pentest acme/api on main and test staging.acme.com signed in                                  |
-| [Manage PR reviews](#manage-pr-reviews)                        | Turn on PR reviews for acme/api and acme/web                                                  |
-| [Ask how Hacktron works](#ask-how-hacktron-works)              | How do I stop reviews of PRs into release branches?                                           |
+| Task                                                                      | Example request                                                                               |
+| ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [Ask a security question](#ask-security-questions)                        | We're adding file uploads to acme/web. What should we think about?                            |
+| [Check a vulnerability](#check-a-vulnerability-against-your-repositories) | Does CVE-2025-29927 affect any of our repositories?                                           |
+| [Analyze a file or run a tool](#work-in-a-sandbox)                        | Here's our nginx config. Anything risky in it?                                                |
+| [Look into findings](#ask-about-findings)                                 | How many critical findings are open in acme/api?                                              |
+| [Triage a finding](#act-on-findings-and-scans)                            | Mark the SSRF finding in acme/api as a false positive because the URL is allowlisted          |
+| [Update your threat model](#keep-your-threat-model-up-to-date)            | Save our decision to fetch link previews through the egress proxy and update the threat model |
+| [Set up a pentest](#set-up-a-pentest)                                     | Pentest acme/api on main and test staging.acme.com signed in                                  |
+| [Manage PR reviews](#manage-pr-reviews)                                   | Turn on PR reviews for acme/api and acme/web                                                  |
+| [Ask how Hacktron works](#ask-how-hacktron-works)                         | How do I stop reviews of PRs into release branches?                                           |
 
 Before changing a finding, stopping a scan, updating PR review settings or changing your threat model or context documents, Hacktron shows you what will change and asks you to click **Approve**. Starting a pentest requires approval from an organization admin.
 
@@ -94,7 +96,7 @@ Each finding card also has buttons to update its status or fix it with AI.
 
 Think of Hacktron as a security engineer you can pull into any conversation. Ask about a feature you're planning, a design doc or PRD, how part of your app handles something like sign-in or file access, or a change you're about to ship.
 
-Hacktron answers from your own code and from what it already knows about your repositories. It can read the code at any branch or pull request, and it checks your threat models, context documents, recent pentests and past findings.
+Hacktron answers from your own code and from what it already knows about your repositories. It reads the code at any branch or pull request: it searches it, reads a pull request's changes, and looks at the history to see who changed a line and when. It also checks your threat models, context documents, recent pentests and past findings.
 
 A few things you might ask:
 
@@ -102,6 +104,7 @@ A few things you might ask:
 - "How does acme/api check that a user can see another team's projects?"
 - "Here's our PRD for shareable report links. What are we missing security-wise?" Paste the PRD into your message or attach it.
 - "Is `https://github.com/acme/api/pull/42` safe to merge?"
+- "Who last changed the session middleware in acme/api, and why?"
 
 Hacktron starts with the few points that matter most for what you're doing, and links each one to where it found it: a file and line, a related finding or your threat model. If something important is still unclear, it ends with a question for you. Reply in the thread to keep going.
 
@@ -117,6 +120,32 @@ Hacktron only calls something exploitable when the code shows it, so treat its p
   Azure DevOps. The first question about a branch or pull request can take a
   minute or two while Hacktron gets the code ready.
 </Note>
+
+## Check a vulnerability against your repositories
+
+Ask about a CVE, an advisory, a vulnerable package or this week's new vulnerabilities:
+
+- "Does CVE-2025-29927 affect any of our repositories?"
+- "Which of our repositories use lodash, and which versions?"
+- "Anything published this week that affects our stack?"
+
+Hacktron reads the advisory from a primary source (the project's own advisory, the GitHub advisory database, OSV or NVD), then checks each connected repository that could use the package: its dependency manifests and lock files, so transitive dependencies count too. It answers with the affected repositories, the pinned and fixed versions and where each is pinned (a file and line), the repositories it couldn't check, and any findings Hacktron already has for it. It calls a repository exploitable only when the code shows the vulnerable path is reachable.
+
+<Note>
+  Hacktron checks up to 25 repositories at a time, about a minute each. In a
+  large organization, name the repositories or languages to check first.
+</Note>
+
+## Work in a sandbox
+
+For anything your Hacktron data doesn't answer, Hacktron has its own sandbox with bash, git, Node and Python. Ask it to:
+
+- Read a file you attach: a log, a config, a script, a dependency list or an archive of code.
+- Run a script, a scanner or a test, or try a proof of concept against code in the sandbox.
+- Clone a public repository and look through it.
+- Research on the web: advisories, vendor documentation, changelogs. Hacktron links its sources.
+
+The sandbox holds no credentials, and it reaches only source hosts, package registries and advisory databases. When Hacktron needs another host, it asks you to approve it with a button, once per thread. Your connected repositories never go to the sandbox: Hacktron reads them where it keeps your code, with a read-only shell and no network. Files attached to a thread are deleted when the conversation ends.
 
 ## Keep your threat model up to date
 
@@ -182,7 +211,11 @@ A pentest uses the same access mode for all its live sites: signed in or without
 
 ## Follow what it's doing
 
-A progress card at the top of the reply shows Hacktron's plan and the steps it takes.
+Hacktron reacts with 👀 as soon as it picks up your message. A progress card at the top of the reply shows the steps it takes: checking out the code, searching it, reading the changes, and so on.
+
+## Shared channels
+
+In a Slack Connect channel, Hacktron answers people whose own workspace is connected to a Hacktron organization. When someone from another workspace mentions it, Hacktron replies with how to connect their workspace. Once a guest has posted in a thread, Hacktron stops answering in that thread, for everyone; mention it in a new thread to continue.
 
 ## Credits
 
@@ -192,7 +225,7 @@ If your organization runs out of automation credits, Hacktron tells you in the t
 
 ## Limits
 
-- The Slack assistant can read attached archives, but it doesn't build or run your code. Provide a deployed app URL for live testing.
+- Hacktron runs scripts and tools in its own sandbox, but it doesn't build or run your connected repositories: it reads them. Provide a deployed app URL for live testing.
 - Each thread has a usage limit. When a thread reaches it, Hacktron stops and asks you to mention it in a new thread.
 - A conversation ends after a week without activity, and any files attached to it are deleted. To pick it back up, mention @Hacktron AI in the thread. It reads the thread again, but you need to attach files again.
 - Hacktron can't read code from Bitbucket repositories yet.
