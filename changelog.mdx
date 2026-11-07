@@ -4,7 +4,31 @@ description: "New features, improvements, and fixes."
 rss: true
 ---
 
-{/* CHANGELOG:INSERT last-prod-sha=c22caa688fd7a344ce25411a109efd5493bc8369 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+{/* CHANGELOG:INSERT last-prod-sha=1296a5739ccd60868b80720308318f843a3c74e6 - the changelog workflow inserts new <Update> blocks directly below this line. Do not remove this marker. */}
+
+<Update label="November 5, 2026" tags={["Integrations","Whitebox","Code Review","API","MCP"]}>
+  ## Ask @Hacktron in Slack and get real answers about your security
+
+  **@Hacktron Slack assistant**: Mention @Hacktron in any Slack channel to ask about findings and scans, get a pentest priced, and kick one off with a single approval click. Teammates can jump into an existing thread and the bot acts with each person's own access.
+
+  **Scheduled whitebox scans**: Set up recurring whitebox scans on a daily, weekly, monthly, or custom cron schedule with a timezone of your choice. Each schedule runs with its own scan profile - scope, context, and login configuration - and you can review its history and credit usage alongside your other automations.
+
+  **Start a PR review from Slack, MCP, or the API**: Trigger a full code review on any open pull or merge request on GitHub, GitLab, Bitbucket, or Azure DevOps without commenting on it. The review runs the same analysis as an @hacktronai comment, respects your auto-review settings, and publishes results the same way.
+
+  **Fix in review**: When a pull request addresses one of your findings, the finding moves to a "fix in review" state so your team can see what is being worked on. When the PR merges into the finding's branch, the finding resolves automatically.
+
+  **Finding mentions in PRs and Slack**: Write a finding ID (like HAC-FD-123) in a PR title, description, or comment and Hacktron records a "mentioned" activity on that finding. The same works in Slack - paste a finding ID in a message or thread and it links back to the finding. Finding IDs in PR bodies and comments also become clickable links on every connected provider.
+
+  **Fix PRs from Slack and MCP**: Generate a fix pull request for a finding directly from Slack or through the MCP, without opening the web app.
+
+  **Silent PR scanning**: An organization setting now lets you receive scan results and findings in Hacktron without publishing any GitHub checks, review comments, or status annotations to the pull request.
+
+  **Attestation letters in Slack**: Paste an attestation letter link into Slack and it unfurls a card with the customer, application, test type, and engagement dates. Only workspaces with a connected Hacktron installation can see it.
+
+  **Pentest lifecycle over MCP**: Draft, estimate, start, stop, and discard pentests entirely through the MCP, using the same inputs the web wizard accepts. Upload a code archive from your machine and narrow the scan to specific paths without re-uploading.
+
+  **[Start a Whitebox scan →](/white-box-pentest/quickstart)** · **[Set up automations →](/platform/automations/overview)** · **[Connect Slack →](/platform/communication-apps/slack)** · **[Get started with MCP →](/mcp/get-started)** · **[Read the API reference →](/api-reference/introduction)**
+</Update>
 
 <Update label="October 27, 2026" tags={["Whitebox","Code Review","Billing","Integrations","Dashboard"]}>
   ## Scope your pentest to exactly the folders that matter
