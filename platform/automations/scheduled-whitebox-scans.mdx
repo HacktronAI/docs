@@ -11,7 +11,7 @@ Organization **Admins** create and manage scheduled scans. Runs spend the organi
 
 On **Automations**, select **New automation**, give it a name, and add the repositories or [applications](/platform/context/applications) to scan on the **Environments** tab.
 
-An automation with **On a schedule** runs a whitebox scan of each of its environments at the times you set. Adding the trigger sets the action to **Start whitebox scan**, which the **Settings** tab shows as **Start a whitebox scan for each configured environment**. Removing the trigger removes that action too.
+Choose **On a schedule** to run a whitebox scan of each environment at the times you set. Hacktron adds **Start whitebox scan** automatically. Removing the schedule also removes that scan action.
 
 <Steps>
   <Step title="Set the schedule">
@@ -44,7 +44,7 @@ An automation with **On a schedule** runs a whitebox scan of each of its environ
 
   </Step>
   <Step title="Set up the scan for each environment">
-    On the **Environments** tab, each environment now has **Set up scan** in place of the branch picker. Select it to open the environment's scan settings. They reuse the steps of the [Whitebox Scans wizard](/white-box-pentest/quickstart), with **Scan options** in place of the cost calculation and checkout:
+    On the **Environments** tab, each environment now has **Set up scan** in place of the branch picker. Select it to open the environment's scan settings. Configure the scan using these steps. The [Whitebox quickstart](/white-box-pentest/quickstart) explains source selection, scope, and dynamic testing.
 
     | Step | What it sets |
     | --- | --- |
