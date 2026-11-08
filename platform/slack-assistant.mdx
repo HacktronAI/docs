@@ -88,6 +88,11 @@ Actions that ask for approval:
 - **Context and threat models**: saving a context document, editing a threat model or document, updating a threat model, creating an application, adding repositories to an application and rebuilding its threat model. Creating an application and adding repositories need an organization admin.
 - **Other hosts**: Hacktron can reach source hosts, package registries and advisory databases on its own. When an answer needs another host, it asks you to allow that host, once per thread.
 
+<img
+  src="/images/slack-assistant-approve-card.png"
+  alt="An approval card in a Slack thread asking whether to save a context document on a repository, with Cancel and Approve buttons"
+/>
+
 Other prompts you may see:
 
 - **Connect Hacktron**: the first time you mention it, a private message with a button to sign in and link your account.
@@ -127,8 +132,8 @@ A few things you might ask:
 Hacktron starts with the few points that matter most for what you're doing, and links each one to where it found it: a file and line, a related finding or your threat model. If something important is still unclear, it ends with a question for you. Reply in the thread to keep going.
 
 <img
-  src="/images/slack-assistant-security-review.png"
-  alt="Hacktron answering a security question in a Slack thread, citing lines of code and linking a related finding"
+  src="/images/slack-assistant-code-question.png"
+  alt="Hacktron explaining in a Slack thread how a proxy route decides which destinations it allows, with a file and line for each check"
 />
 
 Hacktron only calls something exploitable when the code shows it, so treat its points as things to check. To confirm one, ask Hacktron to [review the pull request](/code-review/overview) or [set up a pentest](#set-up-a-pentest).
