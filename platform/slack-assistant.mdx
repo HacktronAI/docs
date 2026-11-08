@@ -103,6 +103,11 @@ Ask about a CVE, an advisory, a vulnerable package, or this week's new vulnerabi
 
 Hacktron compares the advisory with dependency versions in your connected repositories, including transitive dependencies recorded in lock files. The answer identifies affected repositories, installed and fixed versions, references to the relevant files and lines, existing findings, and repositories it could not check. Hacktron only calls a vulnerability exploitable when the code shows a reachable vulnerable path.
 
+<img
+  src="/images/slack-assistant-vulnerability-check.png"
+  alt="Hacktron listing which repositories pin a package, with the version and the manifest or lock file line for each"
+/>
+
 <Note>
   For a large organization, name the repositories or languages to check first.
   Hacktron tells you which repositories it could not check.
