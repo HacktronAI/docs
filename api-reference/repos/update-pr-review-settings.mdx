@@ -1,7 +1,7 @@
 ---
 title: "Update PR review settings"
 openapi: "PATCH /pr-review-settings"
-description: "Change how PR reviews behave across your organization."
+description: "Update your organization's PR review settings. Only fields you send change, filters replace the saved list, and null clears a filter or fail_on_severity."
 ---
 
 Updates your organization's PR review settings and returns the full settings object. Only fields in the request change. Send `null` to disable `fail_on_severity` or clear a filter.
