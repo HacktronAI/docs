@@ -1,5 +1,7 @@
 # Hacktron Documentation
 
+**DEPRECATED - Documentation is now maintained in [HacktronAI/landing](https://github.com/hacktronai/landing).**
+
 Welcome to the Hacktron documentation repository! This repository contains the [official documentation](https://docs.hacktron.ai) for Hacktron, powered by [Mintlify](https://mintlify.com/).
 
 Before contributing, please read this document carefully to understand our documentation standards and contribution process.
